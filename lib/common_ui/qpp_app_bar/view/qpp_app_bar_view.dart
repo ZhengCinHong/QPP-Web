@@ -123,15 +123,15 @@ class _Logo extends StatelessWidget {
 
     return IconButton(
         icon: SvgPicture.asset(
-          'assets/desktop-pic-qpp-logo-01.svg',
+          'assets/desktop_image_qpp_logo_01.svg',
           width: isDesktopStyle ? 147.2 : 89,
           height: isDesktopStyle ? 44.4 : 27.4,
         ),
-        onPressed: () => 
+        onPressed: () => context.goNamed(QppGoRouter.information)
         // showLogoutDialog(context)
-        context.canPop()
-            ? context.goNamed(QppGoRouter.app)
-            : context.goNamed(QppGoRouter.home), // 要在修改，現在只有error畫面會跳到home
+        // context.canPop()
+        //     ? context.goNamed(QppGoRouter.app)
+        //     : context.goNamed(QppGoRouter.home), // 要在修改，現在只有error畫面會跳到home
         );
   }
 }

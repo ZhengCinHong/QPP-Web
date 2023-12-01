@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qpp_example/api/core/http_service.dart';
-import 'package:qpp_example/extension/string/text.dart';
 import 'package:qpp_example/go_router/router.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
@@ -23,6 +22,7 @@ void main() async {
 
   HttpService service = HttpService.instance; // dio
   service.initDio();
+  
   runApp(
     EasyLocalization(
       // 支援的語系, 從 QppLocales 直接取出

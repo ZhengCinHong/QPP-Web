@@ -94,8 +94,7 @@ class CMenuAnchor extends StatelessWidget {
       builder: builder,
       menuChildren: items,
       style: MenuStyle(
-        backgroundColor:
-            MaterialStateProperty.all(const Color(0xff000b2b).withOpacity(0.6)),
+        backgroundColor: MaterialStateProperty.all(QppColors.barMask),
       ),
     );
   }

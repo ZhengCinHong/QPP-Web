@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qpp_example/common_ui/qpp_framework/qpp_main_framework.dart';
 import 'package:qpp_example/constants/server_const.dart';
+import 'package:qpp_example/go_router/fade_transition_page.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
 import 'package:qpp_example/page/error_page/model/error_page_model.dart';
 import 'package:qpp_example/page/error_page/view/error_page.dart';
@@ -79,8 +81,11 @@ class QppGoRouter {
         // 首頁
         path: home,
         name: home,
-        builder: (BuildContext context, GoRouterState state) =>
-            const MainFramework(child: HomePage()),
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return FadeTransitionPage(
+            child: const MainFramework(child: HomePage()),
+          );
+        },
         routes: homeRouters +
             _getRouters(home) +
             [
@@ -168,12 +173,14 @@ class QppGoRouter {
       GoRoute(
         path: information,
         name: isHome ? information : appInformation,
-        builder: (BuildContext context, GoRouterState state) {
+        pageBuilder: (BuildContext context, GoRouterState state) {
           final data =
               UniversalLinkParamData.fromJson(state.uri.queryParameters);
-          return MainFramework(
-            child: UserInformationOuterFrame(
-                userID: data.phoneNumber ?? "", url: state.fullURL),
+          return FadeTransitionPage(
+            child: MainFramework(
+              child: UserInformationOuterFrame(
+                  userID: data.phoneNumber ?? "", url: state.fullURL),
+            ),
           );
         },
       ),

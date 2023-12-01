@@ -128,7 +128,7 @@ class _Info extends StatelessWidget {
           ),
           isDesktopStyle
               ? const SizedBox.shrink()
-              : Image.asset('assets/mobile-pic-kv.webp', fit: BoxFit.cover),
+              : Image.asset('assets/desktop-pic-kv.webp', fit: BoxFit.cover),
           SizedBox(height: isDesktopStyle ? 61 : 56.4),
           isDesktopStyle ? const _Qrcode.desktop() : const _Qrcode.mobile(),
           SizedBox(height: isDesktopStyle ? 63 : 37),
