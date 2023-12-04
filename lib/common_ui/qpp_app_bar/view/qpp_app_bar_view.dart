@@ -13,6 +13,7 @@ import 'package:qpp_example/extension/throttle_debounce.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/model/qpp_app_bar_model.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/view_model/qpp_app_bar_view_model.dart';
 import 'package:qpp_example/go_router/router.dart';
+import 'package:qpp_example/utils/display_url.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/model/enum/language.dart';
 import 'package:qpp_example/constants/qpp_contanst.dart';
@@ -122,17 +123,17 @@ class _Logo extends StatelessWidget {
     final bool isDesktopStyle = screenStyle.isDesktop;
 
     return IconButton(
-        icon: SvgPicture.asset(
-          'assets/desktop_image_qpp_logo_01.svg',
-          width: isDesktopStyle ? 147.2 : 89,
-          height: isDesktopStyle ? 44.4 : 27.4,
-        ),
-        onPressed: () => context.goNamed(QppGoRouter.information)
-        // showLogoutDialog(context)
-        // context.canPop()
-        //     ? context.goNamed(QppGoRouter.app)
-        //     : context.goNamed(QppGoRouter.home), // 要在修改，現在只有error畫面會跳到home
-        );
+      icon: SvgPicture.asset(
+        'assets/desktop-pic-qpp-logo-01.svg',
+        width: isDesktopStyle ? 147.2 : 89,
+        height: isDesktopStyle ? 44.4 : 27.4,
+      ),
+      onPressed: () =>
+          // showLogoutDialog(context)
+          context.canPop()
+              ? context.goNamed(QppGoRouter.app)
+              : context.goNamed(QppGoRouter.home), // 要在修改，現在只有error畫面會跳到home
+    );
   }
 }
 
@@ -157,24 +158,41 @@ class _MenuBtns extends StatelessWidget {
                   cursor: SystemMouseCursors.click, // 改鼠標樣式
                   child: GestureDetector(
                     onTap: () {
+                      bool isInHomePage =
+                          ModalRoute.of(context)?.isFirst ?? false;
                       BuildContext? currentContext = e.currentContext;
 
-                      if (currentContext != null) {
-                        Scrollable.ensureVisible(currentContext,
-                            duration: const Duration(seconds: 1));
+                      print(isInHomePage);
+                      if (isInHomePage && currentContext != null) {
+                        Scrollable.ensureVisible(
+                          currentContext,
+                          duration: const Duration(seconds: 1),
+                        );
+                      } else {
+                        context.pop();
+
+                        Future.delayed(
+                          const Duration(milliseconds: 300),
+                          () => Scrollable.ensureVisible(
+                            e.currentContext!,
+                            duration: const Duration(seconds: 1),
+                          ),
+                        );
                       }
                     }.throttleWithTimeout(timeout: 2000),
                     child: Container(
                       constraints: const BoxConstraints(maxWidth: 120),
-                      child: AutoSizeText(
-                        context.tr(e.text),
-                        style: TextStyle(
-                          color: event is PointerEnterEvent
-                              ? QppColors.canaryYellow
-                              : QppColors.white,
-                          fontSize: 18,
+                      child: SelectionContainer.disabled(
+                        child: AutoSizeText(
+                          context.tr(e.text),
+                          style: TextStyle(
+                            color: event is PointerEnterEvent
+                                ? QppColors.canaryYellow
+                                : QppColors.white,
+                            fontSize: 18,
+                          ),
+                          maxLines: 2,
                         ),
-                        maxLines: 2,
                       ),
                     ),
                   ),
@@ -202,7 +220,9 @@ class AnimationMenuBtn extends StatefulWidget {
 class _AnimationMenuBtn extends State<AnimationMenuBtn>
     with TickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
-      vsync: this, duration: const Duration(milliseconds: 500));
+    vsync: this,
+    duration: const Duration(milliseconds: 500),
+  );
 
   int _count = 0;
   final int _targetCount = 1;
@@ -372,7 +392,11 @@ class LanguageDropdownMenu extends StatelessWidget {
       },
       isOpenControllerProvider: isOpenControllerProvider,
       onTap: (BuildContext context, CMeunAnchorData e) {
-        context.setLocale((e as Language).locale);
+        var locale = (e as Language).locale;
+        // context 設定 locale
+        context.setLocale(locale);
+        // 更新網址列
+        DisplayUrl.updateParam('lang', locale.toString());
       },
     );
   }

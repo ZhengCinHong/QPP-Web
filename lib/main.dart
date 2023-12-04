@@ -27,25 +27,11 @@ void main() async {
     EasyLocalization(
       // 支援的語系, 從 QppLocales 直接取出
       supportedLocales: QppLocales.supportedLocales,
-      // 預設語系
-      startLocale: startLocale,
-      // 當前語系缺少翻譯時, 使用此語系
-      fallbackLocale: const Locale('zh', 'TW'),
       path: 'assets/langs/langs.csv',
       assetLoader: CsvAssetLoader(),
       child: const ProviderScope(child: MyApp()),
     ),
   );
-}
-
-/// 取語系參數
-Locale get startLocale {
-  String lang = Uri.base.queryParameters['lang'] ?? "";
-  if (lang.isNotEmpty) {
-    var keys = lang.split('_');
-    return Locale(keys[0], keys[1]);
-  }
-  return const Locale('zh', 'TW');
 }
 
 class MyApp extends StatelessWidget {
