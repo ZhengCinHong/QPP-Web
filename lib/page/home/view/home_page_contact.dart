@@ -31,8 +31,8 @@ class HomePageContact extends StatelessWidget {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: maxWidth.determineScreenStyle().isDesktop // 換背景用一般的螢幕樣式去判斷
-                  ? const AssetImage('assets/desktop-bg-area-03.webp')
-                  : const AssetImage('assets/mobile-bg-area-03.webp'),
+                  ? const AssetImage('assets/desktop-bg-area-03.png')
+                  : const AssetImage('assets/mobile-bg-area-03.png'),
               fit: BoxFit.cover,
             ),
           ),

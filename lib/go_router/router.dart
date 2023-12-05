@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qpp_example/common_ui/qpp_framework/qpp_main_framework.dart';
 import 'package:qpp_example/constants/server_const.dart';
-import 'package:qpp_example/go_router/fade_transition_page.dart';
+import 'package:qpp_example/go_router/qpp_transition_page.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
 import 'package:qpp_example/page/error_page/model/error_page_model.dart';

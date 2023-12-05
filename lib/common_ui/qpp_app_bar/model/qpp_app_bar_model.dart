@@ -34,6 +34,8 @@ enum MainMenu {
       MainMenu.contact => contactKey.currentContext
     };
   }
+
+  Key get key => Key(text);
 }
 
 /// AppBar用戶資訊

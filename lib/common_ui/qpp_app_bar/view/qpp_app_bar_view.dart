@@ -74,7 +74,9 @@ class _QppAppBarTitle extends ConsumerWidget {
                     : 527
                 : 210),
         // 選單按鈕
-        isDesktopStyle ? const _MenuBtns() : const SizedBox.shrink(),
+        isDesktopStyle
+            ? const MenuBtns.horizontal(padding: 30, fontSize: 18)
+            : const SizedBox.shrink(),
         isLogin
             ? Container(
                 constraints: const BoxConstraints(minWidth: 20, maxWidth: 64))
@@ -123,8 +125,8 @@ class _Logo extends StatelessWidget {
     final bool isDesktopStyle = screenStyle.isDesktop;
 
     return IconButton(
-      icon: SvgPicture.asset(
-        'assets/desktop-pic-qpp-logo-01.svg',
+      icon: Image.asset(
+        'assets/desktop-image-qpp-logo-01.png',
         width: isDesktopStyle ? 147.2 : 89,
         height: isDesktopStyle ? 44.4 : 27.4,
       ),
@@ -141,18 +143,41 @@ class _Logo extends StatelessWidget {
 /// 選單按鈕(Row)
 /// - Note: 產品介紹...等
 // -----------------------------------------------------------------------------
-class _MenuBtns extends StatelessWidget {
-  const _MenuBtns();
+class MenuBtns extends StatelessWidget {
+  /// 垂直
+  const MenuBtns.vertical({
+    super.key,
+    required this.padding,
+    required this.fontSize,
+  }) : _direction = Axis.vertical;
+
+  /// 水平
+  const MenuBtns.horizontal({
+    super.key,
+    required this.padding,
+    required this.fontSize,
+  }) : _direction = Axis.horizontal;
+
+  final Axis _direction;
+  final double padding;
+  final double fontSize;
 
   @override
   Widget build(BuildContext context) {
     // debugPrint(toString());
+    final bool isHorizontal = _direction == Axis.horizontal;
 
-    return Row(
+    return Flex(
+      crossAxisAlignment:
+          isHorizontal ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+      direction: _direction,
       children: MainMenu.values
           .map(
             (e) => Padding(
-              padding: EdgeInsets.only(right: e == MainMenu.contact ? 0 : 30),
+              padding: EdgeInsets.only(
+                right: e == MainMenu.contact ? 0 : (isHorizontal ? padding : 0),
+                bottom: isHorizontal ? 0 : padding,
+              ),
               child: MouseRegionCustomWidget(
                 builder: (event) => MouseRegion(
                   cursor: SystemMouseCursors.click, // 改鼠標樣式
@@ -160,12 +185,10 @@ class _MenuBtns extends StatelessWidget {
                     onTap: () {
                       bool isInHomePage =
                           ModalRoute.of(context)?.isFirst ?? false;
-                      BuildContext? currentContext = e.currentContext;
 
-                      print(isInHomePage);
-                      if (isInHomePage && currentContext != null) {
+                      if (isInHomePage) {
                         Scrollable.ensureVisible(
-                          currentContext,
+                          e.currentContext!,
                           duration: const Duration(seconds: 1),
                         );
                       } else {
@@ -184,12 +207,13 @@ class _MenuBtns extends StatelessWidget {
                       constraints: const BoxConstraints(maxWidth: 120),
                       child: SelectionContainer.disabled(
                         child: AutoSizeText(
+                          key: e.key,
                           context.tr(e.text),
                           style: TextStyle(
                             color: event is PointerEnterEvent
                                 ? QppColors.canaryYellow
                                 : QppColors.white,
-                            fontSize: 18,
+                            fontSize: fontSize,
                           ),
                           maxLines: 2,
                         ),

@@ -13,6 +13,7 @@ class CUnderlineText extends StatefulWidget {
     required this.text,
     this.style = QppTextStyles.web_14pt_body_s_white_L,
     required this.onTap,
+    this.maxLines,
   })  : link = '',
         isNewTab = false;
 
@@ -22,6 +23,7 @@ class CUnderlineText extends StatefulWidget {
     this.style = QppTextStyles.web_14pt_body_s_white_L,
     required this.link,
     this.isNewTab = false,
+    this.maxLines,
   }) : onTap = null;
 
   final String text;
@@ -29,6 +31,7 @@ class CUnderlineText extends StatefulWidget {
   final String link;
   final bool isNewTab; // 是否打開新頁面
   final Function? onTap;
+  final int? maxLines;
 
   @override
   State<CUnderlineText> createState() => _CUnderlineText();
@@ -47,9 +50,11 @@ class _CUnderlineText extends State<CUnderlineText> {
         isHovered = value;
       }),
       child: _UnderlineText(
-          text: widget.text,
-          style: widget.style,
-          isShowUnderline: isHovered),
+        text: widget.text,
+        style: widget.style,
+        isShowUnderline: isHovered,
+        maxLines: widget.maxLines,
+      ),
     );
   }
 }
@@ -60,11 +65,13 @@ class _UnderlineText extends StatelessWidget {
     required this.text,
     required this.style,
     required this.isShowUnderline,
+    required this.maxLines,
   });
 
   final String text;
   final TextStyle style;
   final bool isShowUnderline;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +84,7 @@ class _UnderlineText extends StatelessWidget {
         decorationThickness: 2,
         decorationColor: style.color?.withOpacity(isShowUnderline ? 1 : 0),
       ),
+      maxLines: maxLines,
     );
   }
 }
