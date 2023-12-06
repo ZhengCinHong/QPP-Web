@@ -1,11 +1,17 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qpp_example/common_ui/qpp_framework/qpp_main_framework.dart';
+import 'package:qpp_example/constants/server_const.dart';
+import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
-import 'package:qpp_example/page/qpp_home/view/qpp_home_page.dart';
+import 'package:qpp_example/page/error_page/model/error_page_model.dart';
+import 'package:qpp_example/page/error_page/view/error_page.dart';
+import 'package:qpp_example/page/home/view/home_page.dart';
 import 'package:qpp_example/page/instructions/instructions_page.dart';
 import 'package:qpp_example/page/user_information/view/user_information.dart';
 import 'package:qpp_example/universal_link/universal_link_data.dart';
+import 'package:qpp_example/utils/display_url.dart';
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 
@@ -15,7 +21,7 @@ class QppGoRouter {
   // Home
   // -----------------------------------------------------------------------------
   /// 主頁
-  static const String home = 'home';
+  static const String home = '/';
 
   /// 個人資訊頁
   static const String information = 'information';
@@ -38,9 +44,6 @@ class QppGoRouter {
   /// nft教學頁(只有home有)
   static const String nftInfoTeach = 'nft_info_teach';
 
-  /// 粉絲卡挑戰頁(只有home有)
-  static const String fanCardChallenge = '/events/FanCardChallenge';
-
   // static const String membershipFetch = 'membership_fetch';
 
   // -----------------------------------------------------------------------------
@@ -62,110 +65,133 @@ class QppGoRouter {
   static const String appGo = '$app/$go';
 
   /// nft物品資訊頁(只有app有)
-  static const String appNftInfo = '$app/nft_info';
+  static const String nftInfo = 'nft_info';
+
+  /// 外部登入(只有app有)
+  static const String vendorLogin = 'vendor_login';
 
   /// 動態牆登入授權頁(只有app有)
-  static const String appLoginAuth = '$app/login_auth';
+  static const String loginAuth = 'login_auth';
 
   // static const String appMembershipFetch = '$app/$membershipFetch';
+
+  /// 取語系參數
+  static Locale get getLocaleFromPath {
+    String lang = Uri.base.queryParameters['lang'] ?? "";
+    if (lang.isNotEmpty && lang.contains('_')) {
+      var keys = lang.split('_');
+      // 檢查是否有支援
+      Locale locale = Locale(keys[0], keys[1].toUpperCase());
+      if (QppLocales.supportedLocales.contains(locale)) {
+        debugPrint('Set Locale $lang');
+        return locale;
+      }
+    }
+    return const Locale('zh', 'TW');
+  }
 
   // -----------------------------------------------------------------------------
   /// The route configuration.
   // -----------------------------------------------------------------------------
   static final GoRouter router = GoRouter(
-    initialLocation: '/',
+    initialLocation: home,
     routes: <RouteBase>[
       GoRoute(
         // 首頁
-        path: '/',
+        path: home,
         name: home,
-        builder: (BuildContext context, GoRouterState state) =>
-            const MainFramework(child: HomePage()),
+        builder: (BuildContext context, GoRouterState state) {
+          Locale locale = getLocaleFromPath;
+          // context 設定 locale
+          context.setLocale(locale);
+          // 更新網址列
+          DisplayUrl.updateParam('lang', locale.toString());
+          return const MainFramework(child: HomePage());
+        },
         routes: homeRouters +
             _getRouters(home) +
             [
               GoRoute(
-                  path: app,
-                  name: app,
-                  builder: (context, state) =>
-                      const MainFramework(child: HomePage()),
-                  routes: appRouters + _getRouters(app))
+                path: app,
+                name: app,
+                builder: (context, state) =>
+                    const MainFramework(child: HomePage()),
+                routes: appRouters + _getRouters(app),
+              )
             ],
       ),
     ],
-    errorBuilder: (context, state) => const Center(child: Text('錯誤頁')),
+    errorBuilder: (context, state) {
+      return MainFramework(
+        child: ErrorPage(type: ErrorPageType.urlIsWrong, url: state.fullURL),
+      );
+    },
   );
 
+  // -----------------------------------------------------------------------------
   /// Home路由
+  // -----------------------------------------------------------------------------
   static List<RouteBase> homeRouters = <RouteBase>[
-    // -----------------------------------------------------------------------------
     // 隱私權政策頁(只有home有)
-    // -----------------------------------------------------------------------------
     GoRoute(
       path: privacy,
       name: privacy,
       builder: (BuildContext context, GoRouterState state) =>
           const InstructionsPage.privacy(),
     ),
-    // -----------------------------------------------------------------------------
     // 使用者條款頁(只有home有)
-    // -----------------------------------------------------------------------------
     GoRoute(
       path: term,
       name: term,
       builder: (BuildContext context, GoRouterState state) =>
           const InstructionsPage.term(),
     ),
-    // -----------------------------------------------------------------------------
     // nft教學頁(只有home有)
-    // -----------------------------------------------------------------------------
     GoRoute(
       path: nftInfoTeach,
       name: nftInfoTeach,
       builder: (BuildContext context, GoRouterState state) =>
           const MainFramework(child: Center(child: Text('nft教學頁'))),
     ),
-    // -----------------------------------------------------------------------------
-    // 粉絲卡挑戰頁(只有home有)
-    // -----------------------------------------------------------------------------
-    // GoRoute(
-    //   path: fanCardChallenge,
-    //   name: fanCardChallenge,
-    //   builder: (BuildContext context, GoRouterState state) =>
-    //       const MainFramework(child: Center(child: Text('粉絲卡挑戰頁'))),
-    // ),
   ];
 
+  // -----------------------------------------------------------------------------
   /// App路由
+  // -----------------------------------------------------------------------------
   static List<RouteBase> appRouters = <RouteBase>[
-    // -----------------------------------------------------------------------------
-    // nft物品資訊頁(只有app有)
-    // -----------------------------------------------------------------------------
+    // 外部登入(只有app有)
     GoRoute(
-      path: appNftInfo,
-      name: appNftInfo,
+      path: vendorLogin,
+      name: vendorLogin,
+      builder: (BuildContext context, GoRouterState state) => MainFramework(
+          child: ErrorPage(
+              type: ErrorPageType.troubleshootingInstructions,
+              url: state.fullURL)),
+    ),
+    // nft物品資訊頁(只有app有)
+    GoRoute(
+      path: nftInfo,
+      name: nftInfo,
       builder: (BuildContext context, GoRouterState state) =>
           const MainFramework(child: Center(child: Text('nft物品資訊頁'))),
     ),
-    // -----------------------------------------------------------------------------
     // 動態牆登入授權頁(只有app有)
-    // -----------------------------------------------------------------------------
     GoRoute(
-      path: appLoginAuth,
-      name: appLoginAuth,
+      path: loginAuth,
+      name: loginAuth,
       builder: (BuildContext context, GoRouterState state) =>
           const MainFramework(child: Center(child: Text('動態牆登入授權頁'))),
     ),
   ];
 
+  // -----------------------------------------------------------------------------
   /// 共用路徑
+  // -----------------------------------------------------------------------------
   static List<RouteBase> _getRouters(String name) {
     final bool isHome = name == home;
 
     return <RouteBase>[
-      // -----------------------------------------------------------------------------
       // 個人資訊頁
-      // -----------------------------------------------------------------------------
       GoRoute(
         path: information,
         name: isHome ? information : appInformation,
@@ -174,31 +200,25 @@ class QppGoRouter {
               UniversalLinkParamData.fromJson(state.uri.queryParameters);
           return MainFramework(
             child: UserInformationOuterFrame(
-                userID: data.phoneNumber ?? "", uri: state.uri.toString()),
+                userID: data.phoneNumber ?? "", url: state.fullURL),
           );
         },
       ),
-      // -----------------------------------------------------------------------------
       // 物品資訊頁
-      // -----------------------------------------------------------------------------
       GoRoute(
         path: commodityInfo,
         name: isHome ? commodityInfo : appCommodityInfo,
         builder: (BuildContext context, GoRouterState state) =>
             MainFramework(child: CommodityInfoPage(routerState: state)),
       ),
-      // -----------------------------------------------------------------------------
       // 物品出示頁
-      // -----------------------------------------------------------------------------
       GoRoute(
         path: commodityWithToken,
         name: isHome ? commodityWithToken : appCommodityWithToken,
         builder: (BuildContext context, GoRouterState state) =>
             MainFramework(child: CommodityInfoPage(routerState: state)),
       ),
-      // -----------------------------------------------------------------------------
       // 跳轉頁
-      // -----------------------------------------------------------------------------
       GoRoute(
         path: go,
         name: isHome ? go : appGo,
@@ -222,4 +242,9 @@ extension QppGoRouterJumpPage on QppGoRouter {
     context.goNamed(goRoutePath);
     // }
   }
+}
+
+extension GoRouterStateExtension on GoRouterState {
+  /// 完整網址
+  String get fullURL => ServerConst.routerHost + uri.toString();
 }

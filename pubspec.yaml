@@ -34,7 +34,7 @@ dependencies:
     sdk: flutter
 
   flutter_widget_from_html: ^0.14.9
-  cupertino_icons: ^1.0.2
+  # cupertino_icons: ^1.0.2
   flutter_riverpod: ^2.4.0
   dio: ^5.3.3
   qr_flutter: ^4.1.0
@@ -55,6 +55,10 @@ dependencies:
   easy_localization_generator:
     git:
       url: https://github.com/imacuser111/qpp_easy_localiztion_generator.git
+  shared_preferences: ^2.2.2
+  sprintf: ^7.0.0
+  auto_size_text: ^3.0.0
+  flutter_html: ^3.0.0-beta.2
   # easy_localization_generator: ^0.3.2
 
 # 解決有衝突的套件
@@ -78,7 +82,7 @@ flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
-  uses-material-design: true
+  uses-material-design: false
 
   # To add assets to your application, add an assets section, like this:
   assets:

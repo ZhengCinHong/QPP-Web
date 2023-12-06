@@ -24,13 +24,13 @@ class InstructionsPage extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final height = size.height;
     final width = size.width;
-    final isDesktop = size.width.determineScreenStyle().isDesktopStyle;
+    final isDesktop = size.width.determineScreenStyle().isDesktop;
 
     const olTagLineHeight = 25;
     const double fontSize = 16;
 
     const textStyle = TextStyle(
-        color: QppColor.white,
+        color: QppColors.white,
         fontSize: fontSize,
         decoration: TextDecoration.none,
         decorationStyle: TextDecorationStyle.solid);
@@ -81,19 +81,19 @@ class InstructionsPage extends StatelessWidget {
     final width = size.width;
 
     const titleTextStyle = TextStyle(
-        color: QppColor.mayaBlue,
+        color: QppColors.mayaBlue,
         fontSize: 44,
         decoration: TextDecoration.none);
 
     const subTitleTextStyle = TextStyle(
-        color: QppColor.mayaBlue,
+        color: QppColors.mayaBlue,
         fontSize: 24,
         decoration: TextDecoration.none);
 
     final olTextStyle = TextStyle(
         height:
             olTagLineHeight / fontSize, // 25(line-height)/16(fontSize) = 1.5625
-        color: QppColor.white,
+        color: QppColors.white,
         fontSize: fontSize,
         decoration: TextDecoration.none,
         decorationStyle: TextDecorationStyle.solid);
@@ -117,7 +117,7 @@ class InstructionsPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 23),
-            const Divider(height: 1, color: QppColor.lapisLazuli),
+            const Divider(height: 1, color: QppColors.lapisLazuli),
             const SizedBox(height: 48)
           ],
         );
@@ -143,7 +143,7 @@ class InstructionsPage extends StatelessWidget {
                   textCustomWidgetBuilder(olTagLineHeight, olTextStyle),
             ),
             SizedBox(width: listWidth, height: 48),
-            const Divider(height: 1, color: QppColor.lapisLazuli),
+            const Divider(height: 1, color: QppColors.lapisLazuli),
             const SizedBox(height: 48)
           ],
         );
@@ -165,7 +165,7 @@ class InstructionsPage extends StatelessWidget {
       }
       if (element.className == 'text-yellow-100') {
         return {
-          'color': QppColor.laserLemon.toHexString(),
+          'color': QppColors.canaryYellow.toHexString(),
         };
       }
       return null;

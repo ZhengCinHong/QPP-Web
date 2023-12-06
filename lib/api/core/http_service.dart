@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:qpp_example/constants/server_const.dart';
 
 class HttpService {
   HttpService._privateConstructor();
@@ -27,7 +26,7 @@ class HttpService {
     //   "Access-Control-Allow-Origin": "*",
     // };
 
-    dio.options.baseUrl = ServerConst.clientApiUrl;
+    // dio.options.baseUrl = ServerConst.clientApiUrl;
 
     dio.options.connectTimeout = const Duration(seconds: 10);
     dio.options.receiveTimeout = const Duration(seconds: 8);
@@ -49,7 +48,7 @@ class HttpService {
   }
 
   String errorFactory(DioException error) {
-    //請求處理錯誤
+    // 請求處理錯誤
     String? errorMessage = error.message;
     switch (error.type) {
       case DioExceptionType.connectionTimeout:

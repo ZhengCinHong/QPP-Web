@@ -6,9 +6,13 @@ import 'package:qpp_example/common_ui/qpp_button/open_qpp_button.dart';
 import 'package:qpp_example/common_ui/qpp_qrcode/universal_link_qrcode.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/build_context.dart';
+import 'package:qpp_example/model/nft/qpp_nft.dart';
 import 'package:qpp_example/model/qpp_item.dart';
+import 'package:qpp_example/model/vote/qpp_vote.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_empty.dart';
+import 'package:qpp_example/page/commodity_info/view/commodity_nft.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_normal.dart';
+import 'package:qpp_example/page/commodity_info/view/commodity_vote.dart';
 import 'package:qpp_example/page/commodity_info/view_model/commodity_info_model.dart';
 import 'package:qpp_example/universal_link/universal_link_data.dart';
 import 'package:qpp_example/utils/screen.dart';
@@ -43,7 +47,7 @@ class _CommodityInfoPageState extends State<CommodityInfoPage> {
   void didChangeDependencies() {
     size = MediaQuery.of(context).size;
     // 是否為桌面版面
-    isDesktopStyle = size?.width.determineScreenStyle().isDesktopStyle ?? false;
+    isDesktopStyle = size?.width.determineScreenStyle().isDesktop ?? false;
     super.didChangeDependencies();
   }
 
@@ -51,10 +55,18 @@ class _CommodityInfoPageState extends State<CommodityInfoPage> {
   void initState() {
     super.initState();
     qrCodeUrl = ServerConst.routerHost + widget.routerState.uri.toString();
-    commodityID =
-        UniversalLinkParamData.fromJson(widget.routerState.uri.queryParameters)
-                .commodityID ??
-            "";
+    // link 參數資料
+    UniversalLinkParamData universalLinkParamData =
+        UniversalLinkParamData.fromJson(widget.routerState.uri.queryParameters);
+    // 物品 ID or NFT Token ID
+    if (universalLinkParamData.commodityID != null) {
+      commodityID = universalLinkParamData.commodityID!;
+    } else if (universalLinkParamData.metadataID != null) {
+      commodityID = universalLinkParamData.metadataID!;
+    } else {
+      commodityID = '-1';
+    }
+
     // model 初始化
     itemSelectInfoProvider = ChangeNotifierProvider<CommodityInfoModel>((ref) {
       // 開始取資料
@@ -70,8 +82,8 @@ class _CommodityInfoPageState extends State<CommodityInfoPage> {
       isDesktopStyle ? const InfoCard.desktop() : const InfoCard.mobile(),
       // 下方 QR Code / 按鈕
       context.isDesktopPlatform
-          ? UniversalLinkQRCode(str: qrCodeUrl)
-          : const OpenQppButton(),
+          ? UniversalLinkQRCode(url: qrCodeUrl)
+          : const Column(children: [OpenQppButton()]),
       // 底部間距
       const SizedBox(
         height: 40,
@@ -104,7 +116,7 @@ class InfoCard extends StatelessWidget {
           margin: isDesktop
               ? const EdgeInsets.fromLTRB(60, 100, 60, 40)
               : const EdgeInsets.fromLTRB(24, 24, 24, 24),
-          color: QppColor.prussianBlue,
+          color: QppColors.oxfordBlue,
           shape: RoundedRectangleBorder(
             // 圓角參數
             borderRadius: BorderRadius.circular(8),
@@ -113,12 +125,29 @@ class InfoCard extends StatelessWidget {
           elevation: 0,
           child: Consumer(
             builder: (context, ref, child) {
-              // 取資料狀態通知
+              // 一般物品資料狀態通知
               ApiResponse<QppItem> itemInfoState =
                   ref.watch(itemSelectInfoProvider).itemSelectInfoState;
-              if (itemInfoState.status == Status.completed) {
+              // NFT 物品資料狀態通知
+              ApiResponse<QppNFT> nftMetaState =
+                  ref.watch(itemSelectInfoProvider).nftMetaDataState;
+              // 問券 物品資料狀態通知
+              ApiResponse<QppVote> voteDataState =
+                  ref.watch(itemSelectInfoProvider).voteDataState;
+
+              if (itemInfoState.isCompleted) {
                 // 有取得物品資料
-                return const NormalItemInfo();
+                return isDesktop
+                    ? const NormalItemInfo.desktop()
+                    : const NormalItemInfo.mobile();
+              } else if (nftMetaState.isCompleted) {
+                // 有取得 NFT Meta
+                return isDesktop
+                    ? const NFTItemInfo.desktop()
+                    : const NFTItemInfo.mobile();
+              } else if (voteDataState.isCompleted) {
+                // 取得票券資料
+                return const VoteItemInfo();
               } else {
                 // 沒有取得物品資料
                 return isDesktop

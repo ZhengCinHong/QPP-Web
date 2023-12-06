@@ -4,23 +4,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qpp_example/common_ui/qpp_button/open_qpp_button.dart';
 import 'package:qpp_example/common_ui/qpp_qrcode/universal_link_qrcode.dart';
 import 'package:qpp_example/common_ui/qpp_text/read_more_text.dart';
-import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/extension/string/url.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/user_information/view_model/user_information_view_model.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
-import 'package:qpp_example/utils/qpp_contanst.dart';
+import 'package:qpp_example/constants/qpp_contanst.dart';
 import 'package:qpp_example/utils/qpp_image_utils.dart';
+import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
 
 /// 用戶資訊頁
 class UserInformationOuterFrame extends StatefulWidget {
   const UserInformationOuterFrame(
-      {super.key, required this.userID, required this.uri});
+      {super.key, required this.userID, required this.url});
 
   final String userID;
-  final String uri;
+  final String url;
 
   @override
   State<UserInformationOuterFrame> createState() =>
@@ -61,7 +61,7 @@ class _UserInformationOuterFrameState extends State<UserInformationOuterFrame> {
                 child: LayoutBuilder(builder: (context, constraints) {
                   final bool isDesktopStyle = screenWidthWithoutContext()
                       .determineScreenStyle()
-                      .isDesktopStyle;
+                      .isDesktop;
 
                   return Container(
                     constraints: const BoxConstraints(maxWidth: 1280),
@@ -72,16 +72,16 @@ class _UserInformationOuterFrameState extends State<UserInformationOuterFrame> {
                         bottom: isDesktopStyle ? 48 : 20,
                         left: 20,
                         right: 20),
-                    child: Container(
-                      clipBehavior: Clip.hardEdge, // 超出的部分，裁剪掉
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(12))),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
                       child: Column(
                         children: [
                           isDesktopStyle
-                              ? const _AvatarWidget(ScreenStyle.desktop)
-                              : const _AvatarWidget(ScreenStyle.mobile),
-                          const _InformationDescriptionWidget(),
+                              ? const _AvatarWidget.desktop()
+                              : const _AvatarWidget.mobile(),
+                          isDesktopStyle
+                              ? const _InformationDescriptionWidget.desktop()
+                              : const _InformationDescriptionWidget.mobile(),
                         ],
                       ),
                     ),
@@ -94,13 +94,12 @@ class _UserInformationOuterFrameState extends State<UserInformationOuterFrame> {
           Container(
             padding: const EdgeInsets.only(bottom: 24),
             child: context.isDesktopPlatform
-                ? UniversalLinkQRCode(str: ServerConst.routerHost + widget.uri)
+                ? UniversalLinkQRCode(url: widget.url)
                 : Column(
                     children: [
                       Text(
                         context.tr(QppLocales.commodityInfoLaunchQPP),
-                        style: const TextStyle(
-                            fontSize: 16, color: QppColor.platinum),
+                        style: QppTextStyles.web_16pt_body_platinum_L,
                       ),
                       const SizedBox(height: 24),
                       const OpenQppButton(),
@@ -115,7 +114,8 @@ class _UserInformationOuterFrameState extends State<UserInformationOuterFrame> {
 
 // 頭像Widget
 class _AvatarWidget extends ConsumerWidget {
-  const _AvatarWidget(this.screenStyle);
+  const _AvatarWidget.desktop() : screenStyle = ScreenStyle.desktop;
+  const _AvatarWidget.mobile() : screenStyle = ScreenStyle.mobile;
 
   final ScreenStyle screenStyle;
 
@@ -146,7 +146,7 @@ class _AvatarWidget extends ConsumerWidget {
                         as ImageProvider
                     : NetworkImage(userInformation.bgImage),
                 onError: (exception, stackTrace) => userInformation
-                    .imageErrorToggle(style: QppImageStyle.backgroundImage),
+                    .setImageState(style: QppImageStyle.backgroundImage, isSuccess: false),
               ),
             ),
             child: Stack(
@@ -170,26 +170,19 @@ class _AvatarWidget extends ConsumerWidget {
                                   as ImageProvider
                               : NetworkImage(userInformation.avaterImage),
                           onBackgroundImageError: (exception, stackTrace) =>
-                              userInformation.imageErrorToggle(),
+                              userInformation.setImageState(isSuccess: false),
                         ),
                       ),
-                      SizedBox(height: isDesktopStyle ? 20 : 12),
+                      SizedBox(height: isDesktopStyle ? 29 : 12),
                       Text(
                         context.tr(qppUser?.displayName ??
                             QppLocales.errorPageNickname),
-                        style: const TextStyle(
-                          color: Colors.amber,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                        ),
+                        style: QppTextStyles.web_20pt_title_m_Indian_yellow_C,
                       ),
+                      SizedBox(height: isDesktopStyle ? 6 : 2),
                       Text(
                         userID.toString(),
-                        style: const TextStyle(
-                          color: Colors.amber,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                        ),
+                        style: QppTextStyles.mobile_14pt_body_Indian_yellow_L,
                       ),
                     ],
                   ),
@@ -202,18 +195,35 @@ class _AvatarWidget extends ConsumerWidget {
 
 /// 資訊說明Widget
 class _InformationDescriptionWidget extends ConsumerWidget {
-  const _InformationDescriptionWidget();
+  const _InformationDescriptionWidget.desktop()
+      : screenStyle = ScreenStyle.desktop;
+  const _InformationDescriptionWidget.mobile()
+      : screenStyle = ScreenStyle.mobile;
+
+  final ScreenStyle screenStyle;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    debugPrint('InformationDescriptionWidget build');
+    debugPrint(toString());
+
+    final isDesktopStyle = screenStyle.isDesktop;
+
+    final moreStyle = isDesktopStyle
+        ? QppTextStyles.web_16pt_body_category_text_L
+        : QppTextStyles.mobile_14pt_body_category_text_L;
+    final textStyle = isDesktopStyle
+        ? QppTextStyles.web_16pt_body_platinum_L
+        : QppTextStyles.mobile_14pt_body_platinum_L;
+    final linkTextStyle = isDesktopStyle
+        ? QppTextStyles.web_16pt_body_linktext_L
+        : QppTextStyles.mobile_14pt_body_linktext_L;
 
     final response =
         ref.watch(userInformationProvider.select((value) => value.infoState));
 
     return Container(
       width: double.infinity,
-      color: QppColor.oxfordBlue,
+      color: QppColors.oxfordBlue,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 60),
         child: ReadMoreText(
@@ -224,11 +234,9 @@ class _InformationDescriptionWidget extends ConsumerWidget {
           trimMode: TrimMode.Line,
           trimExpandedText: '',
           trimCollapsedText: context.tr('commodity_info_more'),
-          moreStyle:
-              const TextStyle(fontSize: 18, color: QppColor.babyBlueEyes),
-          style: const TextStyle(fontSize: 18, color: QppColor.platinum),
-          linkTextStyle:
-              const TextStyle(fontSize: 18, color: QppColor.mayaBlue),
+          moreStyle: moreStyle,
+          style: textStyle,
+          linkTextStyle: linkTextStyle,
           onLinkPressed: (String url) {
             url.launchURL();
           },

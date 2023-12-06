@@ -21,8 +21,11 @@ class ServerConst {
   /// 使用條款網址
   static const termsOfUseUrl = "https://www.qpptec.com/term?lang=%s";
 
+  /// 信箱顯示字串
+  static const mailStr = 'info@qpptec.com';
+
   /// 信箱
-  static const mailUrl = 'mailto:info@qpptec.com';
+  static const mailUrl = 'mailto:$mailStr';
 
   /// 跨境燃料費 url
   static const crossBorderFueCostUrl =
@@ -51,11 +54,8 @@ class ServerConst {
 
   static const clientApiUrl = "https://dev2-api.qpptec.com/client/";
 
-  /// login api, 正式 拿掉 stage
-  static const loginApiUrl = "https://stage.qpptec.com/api/login/";
-
-  /// login api, 正式 拿掉 stage
-  static const voteApiUrl = "https://stage.qpptec.com/api/vote/";
+  /// local api, 正式 拿掉 stage
+  static const localApiUrl = "https://stage.qpptec.com/api/";
 
   /// Polygonscan位址
   static const polygonUrl = "https://polygonscan.com/tx/";

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qpp_example/common_ui/qpp_menu/c_menu_anchor.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
-import 'package:qpp_example/page/qpp_home/view/qpp_home_page.dart';
+import 'package:qpp_example/page/home/view/home_page.dart';
 
 /// 主頁選單
 enum MainMenu {
@@ -17,12 +17,12 @@ enum MainMenu {
   /// 聯絡我們
   contact;
 
-  String get value {
+  String get text {
     return switch (this) {
-      MainMenu.introduce => '產品介紹',
-      MainMenu.feature => '產品特色',
-      MainMenu.description => '使用說明',
-      MainMenu.contact => '聯絡我們'
+      MainMenu.introduce => QppLocales.menuProductIntro,
+      MainMenu.feature => QppLocales.menuProductFeature,
+      MainMenu.description => QppLocales.menuUsageInstruction,
+      MainMenu.contact => QppLocales.menuContactUS,
     };
   }
 
