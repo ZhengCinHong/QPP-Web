@@ -33,6 +33,7 @@ dependencies:
   flutter_web_plugins:
     sdk: flutter
 
+  flutter_widget_from_html: ^0.14.9
   cupertino_icons: ^1.0.2
   flutter_riverpod: ^2.4.0
   dio: ^5.3.3

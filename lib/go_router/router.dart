@@ -3,8 +3,11 @@ import 'package:go_router/go_router.dart';
 import 'package:qpp_example/common_ui/qpp_framework/qpp_main_framework.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
 import 'package:qpp_example/page/qpp_home/view/qpp_home_page.dart';
+import 'package:qpp_example/page/instructions/instructions_page.dart';
 import 'package:qpp_example/page/user_information/view/user_information.dart';
 import 'package:qpp_example/universal_link/universal_link_data.dart';
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:html' as html;
 
 /// QPP路由
 class QppGoRouter {
@@ -102,7 +105,7 @@ class QppGoRouter {
       path: privacy,
       name: privacy,
       builder: (BuildContext context, GoRouterState state) =>
-          const MainFramework(child: Center(child: Text('隱私權政策頁'))),
+          const InstructionsPage.privacy(),
     ),
     // -----------------------------------------------------------------------------
     // 使用者條款頁(只有home有)
@@ -111,7 +114,7 @@ class QppGoRouter {
       path: term,
       name: term,
       builder: (BuildContext context, GoRouterState state) =>
-          const MainFramework(child: Center(child: Text('使用者條款頁'))),
+          const InstructionsPage.term(),
     ),
     // -----------------------------------------------------------------------------
     // nft教學頁(只有home有)
@@ -203,5 +206,20 @@ class QppGoRouter {
             const MainFramework(child: Center(child: Text('跳轉頁'))),
       ),
     ];
+  }
+}
+
+/// 跳頁處理
+extension QppGoRouterJumpPage on QppGoRouter {
+  /// 前往頁面
+  static void goPage(
+      {required String goRoutePath,
+      required BuildContext context,
+      bool isNewTab = false}) {
+    // if (isNewTab) {
+    //   html.window.open('/$goRoutePath', '_blank');
+    // } else {
+    context.goNamed(goRoutePath);
+    // }
   }
 }

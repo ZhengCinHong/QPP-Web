@@ -4,6 +4,7 @@ import 'package:qpp_example/common_ui/qpp_app_bar/model/qpp_app_bar_model.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/view/qpp_app_bar_view.dart';
 import 'package:qpp_example/common_ui/qpp_text/c_under_line_text.dart';
 import 'package:qpp_example/constants/server_const.dart';
+import 'package:qpp_example/go_router/router.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/screen.dart';
 
@@ -200,26 +201,36 @@ class _Links extends StatelessWidget {
   Widget build(BuildContext context) {
     const double fontSize = 12;
 
+    var termText = CUnderlineText(
+        text: '使用者條款',
+        fontSize: fontSize,
+        onTap: () {
+          QppGoRouterJumpPage.goPage(
+              goRoutePath: QppGoRouter.term, context: context, isNewTab: true);
+        });
+
+    var privacyText = CUnderlineText(
+        text: '隱私權政策',
+        fontSize: fontSize,
+        onTap: () {
+          QppGoRouterJumpPage.goPage(
+              goRoutePath: QppGoRouter.privacy,
+              context: context,
+              isNewTab: true);
+        });
+
     return Wrap(
       spacing: 135,
       runSpacing: runSpacing,
-      children: const [
-        CUnderlineText.link(
-            text: '隱私權政策',
-            link: ServerConst.privacyPolicyUrl,
-            fontSize: fontSize,
-            isNewTab: true),
-        CUnderlineText.link(
+      children: [
+        privacyText,
+        const CUnderlineText.link(
             text: 'Apple Store',
             link: ServerConst.appleStoreUrl,
             fontSize: fontSize,
             isNewTab: true),
-        CUnderlineText.link(
-            text: '使用者條款',
-            link: ServerConst.termsOfUseUrl,
-            fontSize: fontSize,
-            isNewTab: true),
-        CUnderlineText.link(
+        termText,
+        const CUnderlineText.link(
             text: 'Google Play',
             link: ServerConst.googlePlayStoreUrl,
             fontSize: fontSize,
