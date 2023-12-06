@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qpp_example/common_ui/qpp_menu/c_menu_anchor.dart';
 import 'package:qpp_example/common_view_model/auth_service/view_model/auth_service_view_model.dart';
+import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/extension/void/dialog_void.dart';
 import 'package:qpp_example/extension/throttle_debounce.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/model/qpp_app_bar_model.dart';
@@ -287,8 +288,8 @@ class _AnimationMenuBtn extends State<AnimationMenuBtn>
               iconSize: 24,
               onPressed: () => notifier.toggle(),
               icon: widget.isClose || _count < _targetCount
-                  ? const Icon(Icons.close, color: Colors.white)
-                  : const Icon(Icons.menu, color: Colors.white),
+                  ? Image.asset('assets/mobile-icon-actionbar-close-normal.png')
+                  : Image.asset('assets/mobile-icon-actionbar-list-normal.png'),
             );
           }),
         );
@@ -328,7 +329,7 @@ class _UserInfo extends StatelessWidget {
             Future.microtask(
                 () => isOpen ? controller.open() : controller.close());
 
-            return MouseRegion(
+            return CMouseRegion(
               onEnter: (event) => isOpenNotifier.state = true,
               onExit: (event) => isOpenNotifier.state = false,
               child: Row(
@@ -387,10 +388,13 @@ class LanguageDropdownMenu extends StatelessWidget {
             final isOpen = ref.watch(isOpenControllerProvider);
             final isOpenNotifier = ref.read(isOpenControllerProvider.notifier);
 
-            Future.microtask(
-                () => isOpen ? controller.open() : controller.close());
+            if (context.isDesktopPlatform) {
+              Future.microtask(
+                () => isOpen ? controller.open() : controller.close(),
+              );
+            }
 
-            return MouseRegion(
+            return CMouseRegion(
               onEnter: (event) => isOpenNotifier.state = true,
               onExit: (event) => isOpenNotifier.state = false,
               child: child,
@@ -430,14 +434,21 @@ class LanguageDropdownMenu extends StatelessWidget {
 /// 判斷手勢是否在元件上
 // -----------------------------------------------------------------------------
 class MouseRegionCustomWidget extends ConsumerWidget {
-  MouseRegionCustomWidget(
-      {super.key, required this.builder, this.onEnter, this.onExit});
+  MouseRegionCustomWidget({
+    super.key,
+    required this.builder,
+    this.onEnter,
+    this.onExit,
+    this.onTap,
+  });
 
   final Widget Function(PointerEvent isHovered) builder;
 
   final void Function(PointerEnterEvent event)? onEnter;
 
   final void Function(PointerExitEvent event)? onExit;
+
+  final void Function()? onTap;
 
   /// 滑鼠狀態Provider
   final StateNotifierProvider<MouseRegionStateNotifier, PointerEvent>
@@ -452,7 +463,7 @@ class MouseRegionCustomWidget extends ConsumerWidget {
 
     final PointerEvent event = ref.watch(mouseRegionProvider);
 
-    return MouseRegion(
+    return CMouseRegion(
       onEnter: (event) {
         onEnter != null ? onEnter!(event) : ();
         notifier.onEnter();
@@ -464,13 +475,17 @@ class MouseRegionCustomWidget extends ConsumerWidget {
         onExit != null ? onExit!(event) : ();
         notifier.onExit();
       },
+      onTap: () {
+        onExit != null ? onTap!() : ();
+        notifier.onExit();
+      },
       child: builder(event),
     );
   }
 }
 
 // -----------------------------------------------------------------------------
-/// 全螢幕選單按鈕
+/// 全螢幕選單按鈕頁面
 // -----------------------------------------------------------------------------
 class FullScreenMenuBtnPage extends ConsumerWidget {
   const FullScreenMenuBtnPage({super.key});
@@ -544,5 +559,37 @@ class FullScreenMenuBtnPage extends ConsumerWidget {
             ),
           )
         : const SizedBox.shrink();
+  }
+}
+
+/// 客製化滑鼠區域
+///
+/// - Note: 將手機平台變成點擊手勢
+class CMouseRegion extends StatelessWidget {
+  const CMouseRegion({
+    super.key,
+    this.child,
+    this.onEnter,
+    this.onExit,
+    this.onHover,
+    this.onTap,
+  });
+
+  final Widget? child;
+  final void Function(PointerEnterEvent)? onEnter;
+  final void Function(PointerExitEvent)? onExit;
+  final void Function(PointerHoverEvent)? onHover;
+  final void Function()? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return context.isDesktopPlatform
+        ? MouseRegion(
+            onEnter: (event) => onEnter != null ? onEnter!(event) : null,
+            onExit: (event) => onExit != null ? onExit!(event) : null,
+            onHover: (event) => onHover != null ? onHover!(event) : null,
+            child: child,
+          )
+        : GestureDetector(onTap: () => onTap != null ? onTap!() : null, child: child);
   }
 }

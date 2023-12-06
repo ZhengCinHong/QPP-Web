@@ -1,5 +1,6 @@
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/screen.dart';
 
 // -----------------------------------------------------------------------------
@@ -11,8 +12,8 @@ enum PlayStoreType {
 
   String get image {
     return switch (this) {
-      PlayStoreType.google => 'assets/desktop-pic-platform-googleplay.webp',
-      PlayStoreType.apple => 'assets/desktop-pic-platform-appstore.webp'
+      PlayStoreType.google => QPPImages.desktop_pic_platform_googleplay,
+      PlayStoreType.apple => QPPImages.desktop_pic_platform_appstore
     };
   }
 
@@ -133,11 +134,11 @@ enum HomePageDescriptionType {
 
     switch (this) {
       case HomePageDescriptionType.phone:
-        return 'assets/${isDesktopStyle ? 'desktop-pic-area-02-01' : 'mobile-pic-area-02-01'}.webp';
+        return  isDesktopStyle ? QPPImages.desktop_pic_area_02_01 : QPPImages.mobile_pic_area_02_01;
       case HomePageDescriptionType.directory:
-        return 'assets/${isDesktopStyle ? 'desktop-pic-area-02-02' : 'mobile-pic-area-02-02'}.webp';
+        return isDesktopStyle ? QPPImages.desktop_pic_area_02_02 : QPPImages.mobile_pic_area_02_02;
       case HomePageDescriptionType.forum:
-        return 'assets/${isDesktopStyle ? 'desktop-pic-area-02-03' : 'mobile-pic-area-02-03'}.webp';
+        return isDesktopStyle ? QPPImages.desktop_pic_area_02_03 : QPPImages.mobile_pic_area_02_03;
     }
   }
 

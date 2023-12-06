@@ -41,8 +41,7 @@ class _FooterInfo extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 24),
       child: LayoutBuilder(builder: (context, constraints) {
         final bool isDesktopStyle = constraints.screenStyle.isDesktop;
-        print(constraints.maxWidth);
-
+        
         return Flex(
           direction: isDesktopStyle ? Axis.horizontal : Axis.vertical,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,7 +52,7 @@ class _FooterInfo extends StatelessWidget {
                 ? const _Info(ScreenStyle.desktop)
                 : const _Info(ScreenStyle.mobile),
             isDesktopStyle ? const Spacer() : const SizedBox(height: 50),
-            isDesktopStyle && constraints.maxWidth > 961
+            isDesktopStyle && constraints.maxWidth > 961 // 防止多語系跑版
                 ? const _Guide()
                 : const _MobileGuide(),
             isDesktopStyle
@@ -342,7 +341,7 @@ class _CompanyName extends StatelessWidget {
       color: QppColors.oxfordBlue,
       child: const Center(
         child: Text(
-          '©2019 HOLY BUSINESS CO., LTD',
+          '©2023 HOLY BUSINESS CO., LTD',
           style: QppTextStyles.web_12pt_caption_white_L,
         ),
       ),
