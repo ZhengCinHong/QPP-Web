@@ -25,7 +25,7 @@ jobs:
       - run: flutter upgrade
       - run: flutter config --enable-web
       # 构建 web 产物
-      - run: flutter build web
+      - run: flutter build web --no-tree-shake-icons
     # runs-on: ubuntu-latest
     # steps:
     #   - uses: actions/checkout@v1
