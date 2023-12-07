@@ -35,6 +35,7 @@ jobs:
           git config --global user.email cinhong.zheng@qpptec.com
           git config --global user.name ZhengCinHong
           git status
+          
           # change this remote url for examle your remote url is https://github.com/onatcipli/flutter_web.git then the following:
           git remote add origin https://${{secrets.commit_secret}}@github.com/ZhengCinHong/QPP-Web.git
           git checkout -b gh-pages
