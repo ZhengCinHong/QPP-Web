@@ -20,7 +20,7 @@ import 'package:qpp_example/model/enum/language.dart';
 import 'package:qpp_example/constants/qpp_contanst.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
-import 'package:qpp_example/utils/shared_Prefs.dart';
+import 'package:qpp_example/utils/shared_prefs_utils.dart';
 
 AppBar qppAppBar(ScreenStyle screenStyle) {
   return AppBar(

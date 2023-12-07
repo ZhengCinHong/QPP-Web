@@ -5,7 +5,7 @@ import 'package:qpp_example/api/core/api_response.dart';
 import 'package:qpp_example/api/local/api/local_api.dart';
 import 'package:qpp_example/api/local/response/check_login_token.dart';
 import 'package:qpp_example/api/local/response/get_login_token.dart';
-import 'package:qpp_example/utils/shared_prefs.dart';
+import 'package:qpp_example/utils/shared_prefs_utils.dart';
 
 /// 驗證服務(登入/登出)Provider
 final ChangeNotifierProvider<AuthServiceStateNotifier> authServiceProvider =

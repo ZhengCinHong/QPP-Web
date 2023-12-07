@@ -286,7 +286,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: e9e29bae5437003c07b28a77004f27ee7b508d82
+      resolved-ref: e8a7abf065ae1e1468de31830a5a032533c71c40
       url: "https://github.com/imacuser111/qpp_easy_localiztion_generator.git"
     source: git
     version: "0.3.2"
