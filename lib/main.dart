@@ -1,23 +1,12 @@
-// import 'package:easy_localization/easy_localization.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:qpp_example/api/core/http_service.dart';
-// import 'package:qpp_example/go_router/router.dart';
-// import 'package:flutter_web_plugins/url_strategy.dart';
-// import 'package:qpp_example/localization/qpp_locales.dart';
-// import 'package:easy_localization_loader/easy_localization_loader.dart';
-// import 'package:qpp_example/utils/shared_Prefs.dart';
-
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
-
-import 'api/core/http_service.dart';
-import 'go_router/router.dart';
-import 'localization/qpp_locales.dart';
-import 'utils/shared_prefs.dart';
+import 'package:qpp_example/api/core/http_service.dart';
+import 'package:qpp_example/go_router/router.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:qpp_example/localization/qpp_locales.dart';
+import 'package:easy_localization_loader/easy_localization_loader.dart';
+import 'package:qpp_example/utils/shared_prefs_utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

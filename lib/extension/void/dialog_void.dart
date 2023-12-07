@@ -9,7 +9,7 @@ import 'package:qpp_example/common_ui/qpp_dialog/open_qpp_dialog.dart';
 import 'package:qpp_example/common_ui/qpp_dialog/qrcode_dialog.dart';
 import 'package:qpp_example/common_view_model/auth_service/view_model/auth_service_view_model.dart';
 import 'package:qpp_example/extension/build_context.dart';
-import 'package:qpp_example/utils/shared_Prefs.dart';
+import 'package:qpp_example/utils/shared_prefs_utils.dart';
 
 /// 對話框擴充
 extension DialogVoid on void {

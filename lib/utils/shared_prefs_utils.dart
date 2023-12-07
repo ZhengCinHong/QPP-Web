@@ -1,6 +1,6 @@
 import 'dart:convert';
-import '/common_view_model/auth_service/model/login_info.dart';
-import '/extension/string/text.dart';
+import 'package:qpp_example/common_view_model/auth_service/model/login_info.dart';
+import 'package:qpp_example/extension/string/text.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefs {
