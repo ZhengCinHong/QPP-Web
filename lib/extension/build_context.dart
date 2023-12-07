@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qpp_example/utils/screen.dart';
+import '/utils/screen.dart';
 
 /// BuildContext 擴充
 extension BuildContextExtension on BuildContext {

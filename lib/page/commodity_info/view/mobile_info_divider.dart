@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qpp_example/utils/qpp_color.dart';
+import '/utils/qpp_color.dart';
 
 class MobileInfoDivider extends StatelessWidget {
   final bool isMobile;

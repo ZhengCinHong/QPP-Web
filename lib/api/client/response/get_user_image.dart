@@ -1,6 +1,6 @@
 // import 'package:easy_localization/easy_localization.dart';
-// import 'package:qpp_example/api/core/base_api.dart';
-// import 'package:qpp_example/utils/qpp_image_utils.dart';
+// import '/api/core/base_api.dart';
+// import '/utils/qpp_image_utils.dart';
 
 // /// 獲取用戶圖片時戳
 // class GetUserImageRequest extends BaseApi {

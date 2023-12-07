@@ -1,4 +1,4 @@
-import 'package:qpp_example/model/nft/qpp_nft.dart';
+import '/model/nft/qpp_nft.dart';
 
 /// NFT meta data 請求資訊
 // ignore_for_file: non_constant_identifier_names

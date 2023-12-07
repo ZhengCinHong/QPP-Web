@@ -2,14 +2,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:qpp_example/api/core/api_response.dart';
-import 'package:qpp_example/common_ui/qpp_text/info_row_link_read_more_text.dart';
-import 'package:qpp_example/localization/qpp_locales.dart';
-import 'package:qpp_example/model/nft/qpp_nft.dart';
-import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
-import 'package:qpp_example/page/commodity_info/view/info_row.dart';
-import 'package:qpp_example/page/commodity_info/view/item_nft_section/nft_section.dart';
-import 'package:qpp_example/utils/qpp_text_styles.dart';
+import '/api/core/api_response.dart';
+import '/common_ui/qpp_text/info_row_link_read_more_text.dart';
+import '/localization/qpp_locales.dart';
+import '/model/nft/qpp_nft.dart';
+import '/page/commodity_info/view/commodity_info_body.dart';
+import '/page/commodity_info/view/info_row.dart';
+import '/page/commodity_info/view/item_nft_section/nft_section.dart';
+import '/utils/qpp_text_styles.dart';
 import 'dart:ui' as ui;
 
 /// Description Section

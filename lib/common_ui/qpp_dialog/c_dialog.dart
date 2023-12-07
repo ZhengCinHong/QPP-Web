@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qpp_example/extension/build_context.dart';
-import 'package:qpp_example/utils/qpp_color.dart';
-import 'package:qpp_example/utils/qpp_text_styles.dart';
+import '/extension/build_context.dart';
+import '/utils/qpp_color.dart';
+import '/utils/qpp_text_styles.dart';
 
 /// 客製化對話框
 ///

@@ -1,7 +1,7 @@
-import 'package:qpp_example/model/enum/item/vote_show_type.dart';
-import 'package:qpp_example/model/enum/item/vote_type.dart';
-import 'package:qpp_example/model/qpp_item.dart';
-import 'package:qpp_example/model/vote/vote_data.dart';
+import '/model/enum/item/vote_show_type.dart';
+import '/model/enum/item/vote_type.dart';
+import '/model/qpp_item.dart';
+import '/model/vote/vote_data.dart';
 
 /// 票券資料
 class QppVote {

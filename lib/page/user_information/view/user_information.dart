@@ -1,18 +1,18 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:qpp_example/common_ui/qpp_button/open_qpp_button.dart';
-import 'package:qpp_example/common_ui/qpp_qrcode/universal_link_qrcode.dart';
-import 'package:qpp_example/common_ui/qpp_text/read_more_text.dart';
-import 'package:qpp_example/extension/build_context.dart';
-import 'package:qpp_example/extension/string/url.dart';
-import 'package:qpp_example/localization/qpp_locales.dart';
-import 'package:qpp_example/page/user_information/view_model/user_information_view_model.dart';
-import 'package:qpp_example/utils/qpp_color.dart';
-import 'package:qpp_example/constants/qpp_contanst.dart';
-import 'package:qpp_example/utils/qpp_image_utils.dart';
-import 'package:qpp_example/utils/qpp_text_styles.dart';
-import 'package:qpp_example/utils/screen.dart';
+import '/common_ui/qpp_button/open_qpp_button.dart';
+import '/common_ui/qpp_qrcode/universal_link_qrcode.dart';
+import '/common_ui/qpp_text/read_more_text.dart';
+import '/extension/build_context.dart';
+import '/extension/string/url.dart';
+import '/localization/qpp_locales.dart';
+import '/page/user_information/view_model/user_information_view_model.dart';
+import '/utils/qpp_color.dart';
+import '/constants/qpp_contanst.dart';
+import '/utils/qpp_image_utils.dart';
+import '/utils/qpp_text_styles.dart';
+import '/utils/screen.dart';
 
 /// 用戶資訊頁
 class UserInformationOuterFrame extends StatefulWidget {

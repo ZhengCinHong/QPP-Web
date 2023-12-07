@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:qpp_example/localization/qpp_locales.dart';
+import '/localization/qpp_locales.dart';
 
 enum ErrorPageType {
   /// 網址錯誤

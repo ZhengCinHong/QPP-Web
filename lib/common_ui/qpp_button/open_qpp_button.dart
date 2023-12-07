@@ -1,11 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:qpp_example/constants/server_const.dart';
-import 'package:qpp_example/extension/string/url.dart';
-import 'package:qpp_example/extension/throttle_debounce.dart';
-import 'package:qpp_example/localization/qpp_locales.dart';
-import 'package:qpp_example/utils/qpp_color.dart';
-import 'package:qpp_example/utils/qpp_text_styles.dart';
+import '/constants/server_const.dart';
+import '/extension/string/url.dart';
+import '/extension/throttle_debounce.dart';
+import '/localization/qpp_locales.dart';
+import '/utils/qpp_color.dart';
+import '/utils/qpp_text_styles.dart';
 
 /// 客製化按鈕樣式
 enum CButtonStyle {

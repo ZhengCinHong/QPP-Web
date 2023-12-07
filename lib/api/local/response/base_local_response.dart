@@ -1,5 +1,5 @@
-import 'package:qpp_example/model/qpp_item.dart';
-import 'package:qpp_example/model/vote/qpp_vote.dart';
+import '/model/qpp_item.dart';
+import '/model/vote/qpp_vote.dart';
 
 /// use for local api
 class BaseLocalResponse {

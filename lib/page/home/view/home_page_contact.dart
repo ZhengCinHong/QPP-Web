@@ -2,13 +2,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:qpp_example/constants/server_const.dart';
-import 'package:qpp_example/extension/list/list.dart';
-import 'package:qpp_example/extension/string/url.dart';
-import 'package:qpp_example/page/home/model/home_page_model.dart';
-import 'package:qpp_example/utils/qpp_color.dart';
-import 'package:qpp_example/utils/qpp_text_styles.dart';
-import 'package:qpp_example/utils/screen.dart';
+import '/constants/server_const.dart';
+import '/extension/list/list.dart';
+import '/extension/string/url.dart';
+import '/page/home/model/home_page_model.dart';
+import '/utils/qpp_color.dart';
+import '/utils/qpp_text_styles.dart';
+import '/utils/screen.dart';
 
 /// 首頁 - 聯絡我們
 class HomePageContact extends StatelessWidget {

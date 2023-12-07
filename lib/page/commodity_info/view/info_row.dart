@@ -2,18 +2,18 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:qpp_example/api/core/api_response.dart';
-import 'package:qpp_example/common_ui/qpp_text/info_row_link_read_more_text.dart';
-import 'package:qpp_example/constants/server_const.dart';
-import 'package:qpp_example/extension/string/url.dart';
-import 'package:qpp_example/localization/qpp_locales.dart';
-import 'package:qpp_example/model/item_multi_language_data.dart';
-import 'package:qpp_example/model/qpp_item.dart';
-import 'package:qpp_example/model/qpp_user.dart';
-import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
+import '/api/core/api_response.dart';
+import '/common_ui/qpp_text/info_row_link_read_more_text.dart';
+import '/constants/server_const.dart';
+import '/extension/string/url.dart';
+import '/localization/qpp_locales.dart';
+import '/model/item_multi_language_data.dart';
+import '/model/qpp_item.dart';
+import '/model/qpp_user.dart';
+import '/page/commodity_info/view/commodity_info_body.dart';
 import 'dart:ui' as ui;
 
-import 'package:qpp_example/utils/qpp_text_styles.dart';
+import '/utils/qpp_text_styles.dart';
 
 /// 資訊顯示抽象類
 /// 物品資訊 Row

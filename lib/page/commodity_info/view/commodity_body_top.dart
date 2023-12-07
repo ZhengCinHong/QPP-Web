@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:qpp_example/api/core/api_response.dart';
-import 'package:qpp_example/common_ui/qpp_image/item_image.dart';
-import 'package:qpp_example/model/nft/qpp_nft.dart';
-import 'package:qpp_example/model/qpp_item.dart';
-import 'package:qpp_example/model/vote/qpp_vote.dart';
-import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
-import 'package:qpp_example/utils/qpp_color.dart';
+import '/api/core/api_response.dart';
+import '/common_ui/qpp_image/item_image.dart';
+import '/model/nft/qpp_nft.dart';
+import '/model/qpp_item.dart';
+import '/model/vote/qpp_vote.dart';
+import '/page/commodity_info/view/commodity_info_body.dart';
+import '/utils/qpp_color.dart';
 
 /// 物品容器上半部區塊 (物品圖片, 名稱)
 class CommodityBodyTop extends StatelessWidget {

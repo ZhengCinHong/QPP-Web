@@ -1,5 +1,5 @@
-import 'package:qpp_example/model/enum/item/nft_section_type.dart';
-import 'package:qpp_example/model/nft/nft_trait.dart';
+import '/model/enum/item/nft_section_type.dart';
+import '/model/nft/nft_trait.dart';
 
 /// 存放要在前端顯示的資料
 class NFTAttributes {

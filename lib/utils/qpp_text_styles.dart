@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:qpp_example/utils/qpp_color.dart';
+import '/utils/qpp_color.dart';
 
 abstract class QppTextStyles {
   static const TextStyle web_44pt_Display_L_white_L = TextStyle(

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:qpp_example/api/client/api/client_api.dart';
-import 'package:qpp_example/api/core/api_response.dart';
-import 'package:qpp_example/api/client/response/user_select_info.dart';
-import 'package:qpp_example/model/qpp_user.dart';
-import 'package:qpp_example/utils/qpp_image_utils.dart';
+import '/api/client/api/client_api.dart';
+import '/api/core/api_response.dart';
+import '/api/client/response/user_select_info.dart';
+import '/model/qpp_user.dart';
+import '/utils/qpp_image_utils.dart';
 
 /// 用戶資訊Provider
 late ChangeNotifierProvider<UserInformationChangeNotifier>

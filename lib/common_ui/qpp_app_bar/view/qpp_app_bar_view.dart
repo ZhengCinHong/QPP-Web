@@ -6,20 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import '../../../common_ui/qpp_menu/c_menu_anchor.dart';
-import '../../../common_view_model/auth_service/view_model/auth_service_view_model.dart';
-import '../../../extension/void/dialog_void.dart';
-import '../../../extension/throttle_debounce.dart';
-import '../../../common_ui/qpp_app_bar/model/qpp_app_bar_model.dart';
-import '../../../common_ui/qpp_app_bar/view_model/qpp_app_bar_view_model.dart';
-import '../../../go_router/router.dart';
-import '../../../utils/display_url.dart';
-import '../../../utils/qpp_color.dart';
-import '../../../model/enum/language.dart';
-import '../../../constants/qpp_contanst.dart';
-import '../../../utils/qpp_text_styles.dart';
-import '../../../utils/screen.dart';
-import '../../../utils/shared_Prefs.dart';
+import '/common_ui/qpp_menu/c_menu_anchor.dart';
+import '/common_view_model/auth_service/view_model/auth_service_view_model.dart';
+import '/extension/void/dialog_void.dart';
+import '/extension/throttle_debounce.dart';
+import '/common_ui/qpp_app_bar/model/qpp_app_bar_model.dart';
+import '/common_ui/qpp_app_bar/view_model/qpp_app_bar_view_model.dart';
+import '/go_router/router.dart';
+import '/utils/display_url.dart';
+import '/utils/qpp_color.dart';
+import '/model/enum/language.dart';
+import '/constants/qpp_contanst.dart';
+import '/utils/qpp_text_styles.dart';
+import '/utils/screen.dart';
+import '/utils/shared_Prefs.dart';
 
 AppBar qppAppBar(ScreenStyle screenStyle) {
   return AppBar(

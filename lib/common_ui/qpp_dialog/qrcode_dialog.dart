@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:qpp_example/common_ui/qpp_dialog/c_dialog.dart';
-import 'package:qpp_example/common_ui/qpp_qrcode/universal_link_qrcode.dart';
-import 'package:qpp_example/common_ui/qpp_text/c_timer_text.dart';
-import 'package:qpp_example/utils/qpp_text_styles.dart';
+import '/common_ui/qpp_dialog/c_dialog.dart';
+import '/common_ui/qpp_qrcode/universal_link_qrcode.dart';
+import '/common_ui/qpp_text/c_timer_text.dart';
+import '/utils/qpp_text_styles.dart';
 
 /// QRCode對話框
 ///

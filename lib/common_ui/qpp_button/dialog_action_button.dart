@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:qpp_example/common_ui/qpp_button/open_qpp_button.dart';
-import 'package:qpp_example/extension/build_context.dart';
-import 'package:qpp_example/utils/qpp_color.dart';
-import 'package:qpp_example/utils/qpp_text_styles.dart';
+import '/common_ui/qpp_button/open_qpp_button.dart';
+import '/extension/build_context.dart';
+import '/utils/qpp_color.dart';
+import '/utils/qpp_text_styles.dart';
 
 /// 客製化對話框動作
 class CDialogAction {

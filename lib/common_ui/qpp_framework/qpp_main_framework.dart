@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:qpp_example/common_ui/qpp_app_bar/view/qpp_app_bar_view.dart';
-import 'package:qpp_example/localization/qpp_locales.dart';
-import 'package:qpp_example/utils/qpp_color.dart';
-import 'package:qpp_example/utils/screen.dart';
+import '/common_ui/qpp_app_bar/view/qpp_app_bar_view.dart';
+import '/localization/qpp_locales.dart';
+import '/utils/qpp_color.dart';
+import '/utils/screen.dart';
 
 /// 主框架
 class MainFramework extends StatelessWidget {

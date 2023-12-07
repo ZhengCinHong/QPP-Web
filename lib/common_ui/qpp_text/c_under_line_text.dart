@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qpp_example/extension/string/url.dart';
-import 'package:qpp_example/utils/qpp_text_styles.dart';
+import '/extension/string/url.dart';
+import '/utils/qpp_text_styles.dart';
 
 /// 客製化底線Text
 ///

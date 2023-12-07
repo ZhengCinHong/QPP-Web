@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:qpp_example/api/core/http_service.dart';
-import 'package:qpp_example/api/nft/nft_meta_data_response.dart';
-import 'package:qpp_example/constants/server_const.dart';
+import '/api/core/http_service.dart';
+import '/api/nft/nft_meta_data_response.dart';
+import '/constants/server_const.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'nft_meta_api.g.dart';

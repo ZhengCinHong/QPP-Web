@@ -1,6 +1,6 @@
-import 'package:qpp_example/api/client/response/user_select_info.dart';
-import 'package:qpp_example/localization/qpp_locales.dart';
-import 'package:qpp_example/model/enum/user/user_verification_type.dart';
+import '/api/client/response/user_select_info.dart';
+import '/localization/qpp_locales.dart';
+import '/model/enum/user/user_verification_type.dart';
 
 class QppUser {
   final int id;

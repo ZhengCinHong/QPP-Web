@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/widgets.dart';
-import 'package:qpp_example/common_ui/qpp_text/read_more_text.dart';
-import 'package:qpp_example/extension/string/url.dart';
-import 'package:qpp_example/utils/qpp_text_styles.dart';
+import '/common_ui/qpp_text/read_more_text.dart';
+import '/extension/string/url.dart';
+import '/utils/qpp_text_styles.dart';
 
 /// 連結及說明用, 顯示更多及開啟連結用 Text Widget
 class InfoRowLinkReadMoreText extends StatelessWidget {

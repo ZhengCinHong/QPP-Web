@@ -1,14 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:qpp_example/common_ui/qpp_qrcode/universal_link_qrcode.dart';
-import 'package:qpp_example/extension/build_context.dart';
-import 'package:qpp_example/localization/qpp_locales.dart';
-import 'package:qpp_example/page/error_page/model/error_page_model.dart';
-import 'package:qpp_example/utils/qpp_color.dart';
-import 'package:qpp_example/constants/qpp_contanst.dart';
-import 'package:qpp_example/utils/qpp_text_styles.dart';
-import 'package:qpp_example/utils/screen.dart';
+import '/common_ui/qpp_qrcode/universal_link_qrcode.dart';
+import '/extension/build_context.dart';
+import '/localization/qpp_locales.dart';
+import '/page/error_page/model/error_page_model.dart';
+import '/utils/qpp_color.dart';
+import '/constants/qpp_contanst.dart';
+import '/utils/qpp_text_styles.dart';
+import '/utils/screen.dart';
 
 // -----------------------------------------------------------------------------
 /// 錯誤頁/連動問題排除說明頁

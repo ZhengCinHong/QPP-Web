@@ -1,6 +1,6 @@
-import 'package:qpp_example/constants/server_const.dart';
-import 'package:qpp_example/localization/qpp_locales.dart';
-import 'package:qpp_example/utils/screen.dart';
+import '/constants/server_const.dart';
+import '/localization/qpp_locales.dart';
+import '/utils/screen.dart';
 
 /// 應用程式商店類型
 enum PlayStoreType {

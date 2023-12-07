@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:qpp_example/common_ui/qpp_button/btn_arrow_up_down.dart';
-import 'package:qpp_example/utils/qpp_color.dart';
-import 'package:qpp_example/utils/qpp_text_styles.dart';
+import '/common_ui/qpp_button/btn_arrow_up_down.dart';
+import '/utils/qpp_color.dart';
+import '/utils/qpp_text_styles.dart';
 
 /// NFTSection 抽象類
 abstract class NFTSection<T> extends StatefulWidget {

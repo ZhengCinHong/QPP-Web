@@ -2,10 +2,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:qpp_example/api/core/api_response.dart';
-import 'package:qpp_example/model/item_img_data.dart';
-import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
-import 'package:qpp_example/utils/qpp_color.dart';
+import '/api/core/api_response.dart';
+import '/model/item_img_data.dart';
+import '/page/commodity_info/view/commodity_info_body.dart';
+import '/utils/qpp_color.dart';
 
 /// 物品圖片
 class ItemImgPhoto extends ConsumerWidget {

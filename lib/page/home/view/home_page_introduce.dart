@@ -2,16 +2,16 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:qpp_example/common_ui/qpp_qrcode/universal_link_qrcode.dart';
-import 'package:qpp_example/constants/qpp_contanst.dart';
-import 'package:qpp_example/constants/server_const.dart';
-import 'package:qpp_example/extension/build_context.dart';
-import 'package:qpp_example/extension/string/url.dart';
-import 'package:qpp_example/localization/qpp_locales.dart';
-import 'package:qpp_example/page/home/model/home_page_model.dart';
-import 'package:qpp_example/page/home/view/home_page.dart';
-import 'package:qpp_example/utils/qpp_text_styles.dart';
-import 'package:qpp_example/utils/screen.dart';
+import '/common_ui/qpp_qrcode/universal_link_qrcode.dart';
+import '/constants/qpp_contanst.dart';
+import '/constants/server_const.dart';
+import '/extension/build_context.dart';
+import '/extension/string/url.dart';
+import '/localization/qpp_locales.dart';
+import '/page/home/model/home_page_model.dart';
+import '/page/home/view/home_page.dart';
+import '/utils/qpp_text_styles.dart';
+import '/utils/screen.dart';
 
 // -----------------------------------------------------------------------------
 /// 首頁 - 產品介紹

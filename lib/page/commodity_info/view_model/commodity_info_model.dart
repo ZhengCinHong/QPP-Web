@@ -1,24 +1,24 @@
 import 'package:flutter/foundation.dart';
-import 'package:qpp_example/api/core/api_response.dart';
-import 'package:qpp_example/api/client/api/client_api.dart';
-import 'package:qpp_example/api/client/response/item_select.dart';
-import 'package:qpp_example/api/client/response/multi_language_item_data.dart';
-import 'package:qpp_example/api/client/response/multi_language_item_description_select.dart';
-import 'package:qpp_example/api/client/response/multi_language_item_intro_link_select.dart';
-import 'package:qpp_example/api/client/response/user_select_info.dart';
-import 'package:qpp_example/api/local/api/local_api.dart';
-import 'package:qpp_example/api/local/response/base_local_response.dart';
-import 'package:qpp_example/api/local/response/get_vote_info.dart';
-import 'package:qpp_example/api/nft/nft_meta_api.dart';
-import 'package:qpp_example/extension/string/text.dart';
-import 'package:qpp_example/model/enum/item/item_category.dart';
-import 'package:qpp_example/model/item_img_data.dart';
-import 'package:qpp_example/model/item_multi_language_data.dart';
-import 'package:qpp_example/model/nft/qpp_nft.dart';
-import 'package:qpp_example/model/qpp_item.dart';
-import 'package:qpp_example/model/qpp_user.dart';
-import 'package:qpp_example/model/vote/qpp_vote.dart';
-import 'package:qpp_example/utils/qpp_image_utils.dart';
+import '/api/core/api_response.dart';
+import '/api/client/api/client_api.dart';
+import '/api/client/response/item_select.dart';
+import '/api/client/response/multi_language_item_data.dart';
+import '/api/client/response/multi_language_item_description_select.dart';
+import '/api/client/response/multi_language_item_intro_link_select.dart';
+import '/api/client/response/user_select_info.dart';
+import '/api/local/api/local_api.dart';
+import '/api/local/response/base_local_response.dart';
+import '/api/local/response/get_vote_info.dart';
+import '/api/nft/nft_meta_api.dart';
+import '/extension/string/text.dart';
+import '/model/enum/item/item_category.dart';
+import '/model/item_img_data.dart';
+import '/model/item_multi_language_data.dart';
+import '/model/nft/qpp_nft.dart';
+import '/model/qpp_item.dart';
+import '/model/qpp_user.dart';
+import '/model/vote/qpp_vote.dart';
+import '/utils/qpp_image_utils.dart';
 
 /// 物品資訊頁 model
 class CommodityInfoModel extends ChangeNotifier {

@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qpp_example/api/core/api_response.dart';
-import 'package:qpp_example/common_ui/qpp_button/open_qpp_button.dart';
-import 'package:qpp_example/common_ui/qpp_qrcode/universal_link_qrcode.dart';
-import 'package:qpp_example/constants/server_const.dart';
-import 'package:qpp_example/extension/build_context.dart';
-import 'package:qpp_example/model/nft/qpp_nft.dart';
-import 'package:qpp_example/model/qpp_item.dart';
-import 'package:qpp_example/model/vote/qpp_vote.dart';
-import 'package:qpp_example/page/commodity_info/view/commodity_empty.dart';
-import 'package:qpp_example/page/commodity_info/view/commodity_nft.dart';
-import 'package:qpp_example/page/commodity_info/view/commodity_normal.dart';
-import 'package:qpp_example/page/commodity_info/view/commodity_vote.dart';
-import 'package:qpp_example/page/commodity_info/view_model/commodity_info_model.dart';
-import 'package:qpp_example/universal_link/universal_link_data.dart';
-import 'package:qpp_example/utils/screen.dart';
-import 'package:qpp_example/utils/qpp_color.dart';
+import '/api/core/api_response.dart';
+import '/common_ui/qpp_button/open_qpp_button.dart';
+import '/common_ui/qpp_qrcode/universal_link_qrcode.dart';
+import '/constants/server_const.dart';
+import '/extension/build_context.dart';
+import '/model/nft/qpp_nft.dart';
+import '/model/qpp_item.dart';
+import '/model/vote/qpp_vote.dart';
+import '/page/commodity_info/view/commodity_empty.dart';
+import '/page/commodity_info/view/commodity_nft.dart';
+import '/page/commodity_info/view/commodity_normal.dart';
+import '/page/commodity_info/view/commodity_vote.dart';
+import '/page/commodity_info/view_model/commodity_info_model.dart';
+import '/universal_link/universal_link_data.dart';
+import '/utils/screen.dart';
+import '/utils/qpp_color.dart';
 
 /// 完整路徑, 產 QR Code 用
 String qrCodeUrl = '';

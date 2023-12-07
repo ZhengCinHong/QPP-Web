@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:qpp_example/localization/qpp_locales.dart';
-import 'package:qpp_example/utils/qpp_color.dart';
+import '/localization/qpp_locales.dart';
+import '/utils/qpp_color.dart';
 
 /// 無此物品
 class EmptyInfo extends StatelessWidget {

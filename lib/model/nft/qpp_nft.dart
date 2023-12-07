@@ -1,8 +1,8 @@
-import 'package:qpp_example/api/nft/nft_meta_data_response.dart';
-import 'package:qpp_example/model/nft/nft_attributes.dart';
-import 'package:qpp_example/model/nft/nft_exchange_data.dart';
-import 'package:qpp_example/model/nft/nft_link_data.dart';
-import 'package:qpp_example/utils/invitation_utils.dart';
+import '/api/nft/nft_meta_data_response.dart';
+import '/model/nft/nft_attributes.dart';
+import '/model/nft/nft_exchange_data.dart';
+import '/model/nft/nft_link_data.dart';
+import '/utils/invitation_utils.dart';
 
 class QppNFT {
   /// 發行者 邀請碼

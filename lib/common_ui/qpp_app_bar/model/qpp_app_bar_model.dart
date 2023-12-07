@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:qpp_example/common_ui/qpp_menu/c_menu_anchor.dart';
-import 'package:qpp_example/localization/qpp_locales.dart';
-import 'package:qpp_example/page/home/view/home_page.dart';
+import '/common_ui/qpp_menu/c_menu_anchor.dart';
+import '/localization/qpp_locales.dart';
+import '/page/home/view/home_page.dart';
 
 /// 主頁選單
 enum MainMenu {

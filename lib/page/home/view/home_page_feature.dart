@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:qpp_example/localization/qpp_locales.dart';
-import 'package:qpp_example/page/home/model/home_page_model.dart';
-import 'package:qpp_example/utils/qpp_text_styles.dart';
-import 'package:qpp_example/utils/screen.dart';
+import '/localization/qpp_locales.dart';
+import '/page/home/model/home_page_model.dart';
+import '/utils/qpp_text_styles.dart';
+import '/utils/screen.dart';
 
 /// 首頁 - 特色
 class HomePageFeature extends StatelessWidget {

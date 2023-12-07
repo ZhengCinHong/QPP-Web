@@ -1,14 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:qpp_example/common_ui/qpp_app_bar/model/qpp_app_bar_model.dart';
-import 'package:qpp_example/common_ui/qpp_app_bar/view/qpp_app_bar_view.dart';
-import 'package:qpp_example/common_ui/qpp_text/c_under_line_text.dart';
-import 'package:qpp_example/constants/server_const.dart';
-import 'package:qpp_example/localization/qpp_locales.dart';
-import 'package:qpp_example/utils/qpp_color.dart';
-import 'package:qpp_example/utils/qpp_text_styles.dart';
-import 'package:qpp_example/utils/screen.dart';
+import '/common_ui/qpp_app_bar/model/qpp_app_bar_model.dart';
+import '/common_ui/qpp_app_bar/view/qpp_app_bar_view.dart';
+import '/common_ui/qpp_text/c_under_line_text.dart';
+import '/constants/server_const.dart';
+import '/localization/qpp_locales.dart';
+import '/utils/qpp_color.dart';
+import '/utils/qpp_text_styles.dart';
+import '/utils/screen.dart';
 
 /// 首頁 - 頁尾
 class HomePageFooter extends StatelessWidget {

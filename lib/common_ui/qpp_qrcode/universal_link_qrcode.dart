@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
-import 'package:qpp_example/utils/qpp_text_styles.dart';
+import '/utils/qpp_text_styles.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 /// UniversalLink QRCode(物品資訊頁、個人資訊頁...等)

@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:qpp_example/page/commodity_info/view/commodity_body_top.dart';
+import '/page/commodity_info/view/commodity_body_top.dart';
 
 class VoteItemInfo extends StatelessWidget {
   const VoteItemInfo({super.key});

@@ -1,10 +1,10 @@
-import 'package:qpp_example/api/core/http_service.dart';
-import 'package:qpp_example/api/local/response/check_login_token.dart';
-import 'package:qpp_example/api/local/response/get_login_token.dart';
-import 'package:qpp_example/api/local/response/get_vote_info.dart';
-import 'package:qpp_example/api/local/response/get_vote_status.dart';
-import 'package:qpp_example/api/local/response/user_vote.dart';
-import 'package:qpp_example/constants/server_const.dart';
+import '/api/core/http_service.dart';
+import '/api/local/response/check_login_token.dart';
+import '/api/local/response/get_login_token.dart';
+import '/api/local/response/get_vote_info.dart';
+import '/api/local/response/get_vote_status.dart';
+import '/api/local/response/user_vote.dart';
+import '/constants/server_const.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart' hide Headers;
 

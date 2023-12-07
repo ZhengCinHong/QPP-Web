@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:qpp_example/api/local/response/base_local_response.dart';
+import '/api/local/response/base_local_response.dart';
 
 /// 取得投票狀態
 class GetVoteStatusRequest {

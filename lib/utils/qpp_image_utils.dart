@@ -1,5 +1,5 @@
-import 'package:qpp_example/constants/server_const.dart';
-import 'package:qpp_example/extension/string/crypto.dart';
+import '/constants/server_const.dart';
+import '/extension/string/crypto.dart';
 
 /// QPP圖片類型
 enum QppImageType { user, commodity, identification }

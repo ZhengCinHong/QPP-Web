@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:qpp_example/api/core/api_response.dart';
-import 'package:qpp_example/api/local/api/local_api.dart';
-import 'package:qpp_example/api/local/response/check_login_token.dart';
-import 'package:qpp_example/api/local/response/get_login_token.dart';
-import 'package:qpp_example/utils/shared_prefs.dart';
+import '/api/core/api_response.dart';
+import '/api/local/api/local_api.dart';
+import '/api/local/response/check_login_token.dart';
+import '/api/local/response/get_login_token.dart';
+import '/utils/shared_prefs.dart';
 
 /// 驗證服務(登入/登出)Provider
 final ChangeNotifierProvider<AuthServiceStateNotifier> authServiceProvider =

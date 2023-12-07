@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:qpp_example/page/commodity_info/view/info_row.dart';
-import 'package:qpp_example/page/commodity_info/view/commodity_body_top.dart';
-import 'package:qpp_example/page/commodity_info/view/mobile_info_divider.dart';
+import '/page/commodity_info/view/info_row.dart';
+import '/page/commodity_info/view/commodity_body_top.dart';
+import '/page/commodity_info/view/mobile_info_divider.dart';
 
 /// 一般物品資訊
 class NormalItemInfo extends StatelessWidget {

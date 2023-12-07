@@ -1,6 +1,6 @@
-import 'package:qpp_example/api/client/response/item_select.dart';
-import 'package:qpp_example/model/enum/item/item_category.dart';
-import 'package:qpp_example/model/enum/item/item_sub_category.dart';
+import '/api/client/response/item_select.dart';
+import '/model/enum/item/item_category.dart';
+import '/model/enum/item/item_sub_category.dart';
 
 class QppItem {
   late ItemCategory category;

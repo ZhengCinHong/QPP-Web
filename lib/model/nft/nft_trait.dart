@@ -1,5 +1,5 @@
-import 'package:qpp_example/extension/string/text.dart';
-import 'package:qpp_example/model/enum/item/nft_section_type.dart';
+import '/extension/string/text.dart';
+import '/model/enum/item/nft_section_type.dart';
 
 /// NFT 顯示區塊內的最小單位
 class NFTTrait {

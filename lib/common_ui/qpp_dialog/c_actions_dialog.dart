@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:qpp_example/common_ui/qpp_button/dialog_action_button.dart';
-import 'package:qpp_example/common_ui/qpp_dialog/c_dialog.dart';
-import 'package:qpp_example/extension/build_context.dart';
-import 'package:qpp_example/utils/qpp_color.dart';
-import 'package:qpp_example/utils/qpp_text_styles.dart';
+import '/common_ui/qpp_button/dialog_action_button.dart';
+import '/common_ui/qpp_dialog/c_dialog.dart';
+import '/extension/build_context.dart';
+import '/utils/qpp_color.dart';
+import '/utils/qpp_text_styles.dart';
 
 /// 客製化動作對話框
 ///

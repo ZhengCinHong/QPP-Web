@@ -1,4 +1,4 @@
-import 'package:qpp_example/model/vote/vote_option_item.dart';
+import '/model/vote/vote_option_item.dart';
 
 class VoteData {
   /// 題目

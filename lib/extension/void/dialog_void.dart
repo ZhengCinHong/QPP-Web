@@ -2,14 +2,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qpp_example/common_ui/qpp_button/dialog_action_button.dart';
-import 'package:qpp_example/common_ui/qpp_dialog/c_actions_dialog.dart';
-import 'package:qpp_example/common_ui/qpp_dialog/c_image_dialog.dart';
-import 'package:qpp_example/common_ui/qpp_dialog/open_qpp_dialog.dart';
-import 'package:qpp_example/common_ui/qpp_dialog/qrcode_dialog.dart';
-import 'package:qpp_example/common_view_model/auth_service/view_model/auth_service_view_model.dart';
-import 'package:qpp_example/extension/build_context.dart';
-import 'package:qpp_example/utils/shared_Prefs.dart';
+import '/common_ui/qpp_button/dialog_action_button.dart';
+import '/common_ui/qpp_dialog/c_actions_dialog.dart';
+import '/common_ui/qpp_dialog/c_image_dialog.dart';
+import '/common_ui/qpp_dialog/open_qpp_dialog.dart';
+import '/common_ui/qpp_dialog/qrcode_dialog.dart';
+import '/common_view_model/auth_service/view_model/auth_service_view_model.dart';
+import '/extension/build_context.dart';
+import '/utils/shared_Prefs.dart';
 
 /// 對話框擴充
 extension DialogVoid on void {
