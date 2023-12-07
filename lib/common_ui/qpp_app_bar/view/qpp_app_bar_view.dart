@@ -17,7 +17,6 @@ import 'package:qpp_example/utils/display_url.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/model/enum/language.dart';
 import 'package:qpp_example/constants/qpp_contanst.dart';
-import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
 import 'package:qpp_example/utils/shared_Prefs.dart';
@@ -124,8 +123,8 @@ class _Logo extends StatelessWidget {
     final bool isDesktopStyle = screenStyle.isDesktop;
 
     return IconButton(
-      icon: Image.asset(
-        QPPImages.desktop_pic_qpp_logo_03,
+      icon: SvgPicture.asset(
+        'assets/desktop-pic-qpp-logo-01.svg',
         width: isDesktopStyle ? 147.2 : 89,
         height: isDesktopStyle ? 44.4 : 27.4,
       ),
@@ -304,7 +303,7 @@ class _UserInfo extends StatelessWidget {
                   isDesktopStyle
                       ? Row(children: [
                           const SizedBox(width: 4),
-                          Image.asset(QPPImages.desktop_icon_arrowdown)
+                          SvgPicture.asset('assets/desktop-icon-arrowdown.svg')
                         ])
                       : const SizedBox.shrink(),
                 ],
@@ -359,7 +358,8 @@ class LanguageDropdownMenu extends StatelessWidget {
                 controller.isOpen ? controller.close() : controller.open(),
             icon: Row(
               children: [
-                Image.asset(QPPImages.mobile_icon_actionbar_language_normal),
+                SvgPicture.asset(
+                    'assets/mobile-icon-actionbar-language-normal.svg'),
                 isDesktopStyle
                     ? Row(children: [
                         const SizedBox(width: 4),
