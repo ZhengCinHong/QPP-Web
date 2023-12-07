@@ -25,16 +25,12 @@ jobs:
       - run: flutter upgrade
       - run: flutter config --enable-web
       # 构建 web 产物
-      - run: flutter build web --no-tree-shake-icons
+      - run: flutter build web
       - run: |
           cd build/web
           
-          # 讀取文件內容
-          $content = Get-Content -Path index.html
-          # 修改第 17 行的內容
-          $content[16] = $content[16] -replace '<base href="/" />', '<base href="/QPP-Web/" />'
-          # 寫回文件
-          Set-Content -Path index.html -Value $content
+          # 修改index.html第 17 行的內容
+          sed -i '17s/old_string/new_string/' index.html
 
           git init
           # type configurations: your user.email and user.name followed lines 
