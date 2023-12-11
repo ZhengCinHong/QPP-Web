@@ -8,6 +8,7 @@ import 'package:qpp_example/model/qpp_item.dart';
 import 'package:qpp_example/model/vote/qpp_vote.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 
 /// 物品容器上半部區塊 (物品圖片, 名稱)
 class CommodityBodyTop extends StatelessWidget {
@@ -72,8 +73,9 @@ class _ContainerDecoration extends BoxDecoration {
   DecorationImage? get image {
     return const DecorationImage(
         // 背景圖
-        image: AssetImage(
-            'assets/desktop-pic-commodity-largepic-sample-general.webp'),
+        // TODO: 換圖
+        image: AssetImage(QPPImages.pic_commodity_largepic_sample_07),
         fit: BoxFit.none);
+    // 'assets/desktop-pic-commodity-largepic-sample-general.webp'
   }
 }
