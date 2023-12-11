@@ -223,5 +223,6 @@ class QPPImages {
       "assets/mobile-icon-actionbar-list-logout-pressed.png";
   static const String desktop_pic_commodity_avatar_default =
       "assets/desktop-pic-commodity-avatar-default.png";
-      
+  static const String desktop_icon_display_scratch_card_qr_code =
+      "assets/desktop-icon-display-scratch-card-qr-code.png";
 }

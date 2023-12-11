@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qpp_example/api/core/api_response.dart';
 import 'package:qpp_example/common_ui/qpp_text/info_row_link_read_more_text.dart';
 import 'package:qpp_example/constants/server_const.dart';
@@ -11,7 +10,7 @@ import 'package:qpp_example/model/item_multi_language_data.dart';
 import 'package:qpp_example/model/qpp_item.dart';
 import 'package:qpp_example/model/qpp_user.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
-import 'dart:ui' as ui;
+import 'package:qpp_example/utils/qpp_image.dart';
 
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 
@@ -75,8 +74,8 @@ class InfoRowInfo extends InfoRow {
                 style: QppTextStyles.web_16pt_body_category_text_L,
               ),
             ),
-            SvgPicture.asset(
-              'assets/${data.categoryIconPath}',
+            Image.asset(
+              data.categoryIconPath,
               width: 20,
             ),
             // 間隔
@@ -149,8 +148,8 @@ class InfoRowCreator extends InfoRow {
                   data.isOfficial
                       ? Container(
                           padding: const EdgeInsets.only(right: 8),
-                          child: SvgPicture.asset(
-                            'assets/${data.officialIconPath}',
+                          child: Image.asset(
+                            data.officialIconPath,
                             width: 20,
                           ),
                         )
@@ -166,12 +165,10 @@ class InfoRowCreator extends InfoRow {
                     ),
                   ),
                   // 物件左右翻轉, 或用 RotatedBox
-                  Directionality(
-                      textDirection: ui.TextDirection.rtl,
-                      child: SvgPicture.asset(
-                        'assets/mobile-icon-actionbar-back-normal.svg',
-                        matchTextDirection: true,
-                      )),
+                  Image.asset(
+                    QPPImages.desktop_icon_selection_arrow_right_normal,
+                    matchTextDirection: true,
+                  ),
                 ],
               ),
             ),

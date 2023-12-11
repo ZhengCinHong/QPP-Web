@@ -1,3 +1,5 @@
+import 'package:qpp_example/utils/qpp_image.dart';
+
 enum ItemSubCategory {
   unKnow(-1),
   serial(1),
@@ -29,8 +31,8 @@ enum ItemSubCategory {
   /// 取得 icon 路徑
   String get iconPath {
     return switch (this) {
-      serial => "desktop-icon-display-scratch-card-serial-number.svg",
-      qrCodeOrSpecial => "desktop-icon-display-scratch-card-qr-code.svg",
+      serial => QPPImages.icon_display_scratch_card_serial_number,
+      qrCodeOrSpecial => QPPImages.desktop_icon_display_scratch_card_qr_code,
       _ => "unknown",
     };
   }
