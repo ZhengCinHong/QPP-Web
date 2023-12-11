@@ -30,7 +30,7 @@ jobs:
           cd build/web
           
           # 修改index.html第 17 行的內容
-          sed -i 's/<base href="/" />/<base href="/QPP-Web/" />/' index.html
+          sed -i "17c <base href="/QPP-Web/" />" index.html
 
           git init
           # type configurations: your user.email and user.name followed lines 
