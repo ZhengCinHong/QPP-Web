@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,15 +37,17 @@ class VoteItemState extends ConsumerWidget {
             child: Row(
               children: [
                 // 狀態
-                isDesktopStyle
-                    ? _VoteStateItem.desktop(
-                        type: VoteItemStateType.state,
-                        data: voteData,
-                      )
-                    : _VoteStateItem.mobile(
-                        type: VoteItemStateType.state,
-                        data: voteData,
-                      ),
+                Expanded(
+                  child: isDesktopStyle
+                      ? _VoteStateItem.desktop(
+                          type: VoteItemStateType.state,
+                          data: voteData,
+                        )
+                      : _VoteStateItem.mobile(
+                          type: VoteItemStateType.state,
+                          data: voteData,
+                        ),
+                ),
                 // 間距
                 isDesktopStyle
                     ? const SizedBox(width: 18)
@@ -54,15 +57,17 @@ class VoteItemState extends ConsumerWidget {
                         color: QppColors.ashGray,
                       ),
                 // 投票人數
-                isDesktopStyle
-                    ? _VoteStateItem.desktop(
-                        type: VoteItemStateType.voteCount,
-                        data: voteData,
-                      )
-                    : _VoteStateItem.mobile(
-                        type: VoteItemStateType.voteCount,
-                        data: voteData,
-                      ),
+                Expanded(
+                  child: isDesktopStyle
+                      ? _VoteStateItem.desktop(
+                          type: VoteItemStateType.voteCount,
+                          data: voteData,
+                        )
+                      : _VoteStateItem.mobile(
+                          type: VoteItemStateType.voteCount,
+                          data: voteData,
+                        ),
+                ),
               ],
             ),
           )
@@ -84,12 +89,16 @@ class _VoteStateItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDesktopStyle = screenStyle.isDesktop;
+    final isState = type == VoteItemStateType.state;
 
     return Container(
-      constraints: const BoxConstraints(maxWidth: 594),
-      margin: EdgeInsets.only(
+      constraints:
+          BoxConstraints(maxWidth: 594, minHeight: isDesktopStyle ? 124 : 72),
+      padding: EdgeInsets.only(
         top: isDesktopStyle ? 36 : 8,
         bottom: isDesktopStyle ? 29 : 9,
+        left: 24,
+        right: 24,
       ),
       color: QppColors.prussianBlue,
       child: Flex(
@@ -102,23 +111,37 @@ class _VoteStateItem extends StatelessWidget {
                 ? QppTextStyles.web_16pt_body_category_text_L
                 : QppTextStyles.mobile_12pt_body_category_text_L,
           ),
+          const SizedBox(width: 10),
           // 狀態
-          Padding(
-            padding: EdgeInsets.only(top: isDesktopStyle ? 0 : 4),
-            child: Text(
-              context.tr(data.voteType.text),
-              style: isDesktopStyle
-                  ? QppTextStyles.web_24pt_title_L_white_L
-                  : QppTextStyles.mobile_14pt_body_white_L,
+          Expanded(
+            flex: isDesktopStyle ? 1 : 0,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(top: isDesktopStyle ? 0 : isState ? 4 : 8),
+                  child: AutoSizeText(
+                    isState
+                        ? context.tr(data.voteType.text)
+                        : data.voteCount.toString(),
+                    style: isDesktopStyle
+                        ? QppTextStyles.web_24pt_title_L_white_L
+                        : QppTextStyles.mobile_14pt_body_white_L,
+                  ),
+                ),
+                isState
+                    ?
+                    // 截止
+                    Text(
+                        '(${context.tr(QppLocales.commodityInfoExpriy)}${data.expiryDate})',
+                        style: isDesktopStyle
+                            ? QppTextStyles.web_16pt_body_red_L
+                            : QppTextStyles.mobile_10pt_caption_red_L,
+                      )
+                    : const SizedBox.shrink(),
+              ],
             ),
           ),
-          // 截止
-          Text(
-            '${context.tr(QppLocales.commodityInfoExpriy)}${data.expiryDate}',
-            style: isDesktopStyle
-                ? QppTextStyles.web_16pt_body_red_L
-                : QppTextStyles.mobile_10pt_caption_red_L,
-          )
         ],
       ),
     );

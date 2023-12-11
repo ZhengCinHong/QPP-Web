@@ -63,45 +63,47 @@ class InfoRowInfo extends InfoRow {
   @override
   Widget getContent(data) {
     if (data is QppItem) {
-      return Builder(builder: (context) {
-        return Row(
-          children: [
-            Container(
-              constraints: BoxConstraints(maxWidth: _titleWidth),
-              width: double.infinity,
-              child: Text(
-                context.tr(QppLocales.commodityInfoCategory),
-                textAlign: TextAlign.start,
-                style: QppTextStyles.web_16pt_body_category_text_L,
+      return Builder(
+        builder: (context) {
+          return Row(
+            children: [
+              Container(
+                constraints: BoxConstraints(maxWidth: _titleWidth),
+                width: double.infinity,
+                child: Text(
+                  context.tr(QppLocales.commodityInfoCategory),
+                  textAlign: TextAlign.start,
+                  style: QppTextStyles.web_16pt_body_category_text_L,
+                ),
               ),
-            ),
-            SvgPicture.asset(
-              'assets/${data.categoryIconPath}',
-              width: 20,
-            ),
-            // 間隔
-            const SizedBox(
-              width: 8,
-            ),
-            // 類別名稱
-            Text(
-              data.categoryName,
-              textAlign: TextAlign.center,
-              style: QppTextStyles.web_16pt_body_platinum_L,
-            ),
-            // 間隔
-            const SizedBox(
-              width: 8,
-            ),
-            // 物品 ID
-            Text(
-              data.id.toString(),
-              textAlign: TextAlign.center,
-              style: QppTextStyles.web_16pt_body_ID_text_L,
-            ),
-          ],
-        );
-      });
+              SvgPicture.asset(
+                'assets/${data.categoryIconPath}',
+                width: 20,
+              ),
+              // 間隔
+              const SizedBox(
+                width: 8,
+              ),
+              // 類別名稱
+              Text(
+                data.categoryName,
+                textAlign: TextAlign.center,
+                style: QppTextStyles.web_16pt_body_platinum_L,
+              ),
+              // 間隔
+              const SizedBox(
+                width: 8,
+              ),
+              // 物品 ID
+              Text(
+                data.id.toString(),
+                textAlign: TextAlign.center,
+                style: QppTextStyles.web_16pt_body_ID_text_L,
+              ),
+            ],
+          );
+        },
+      );
     }
     return const SizedBox.shrink();
   }

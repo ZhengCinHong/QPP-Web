@@ -12,16 +12,20 @@ class VoteItemInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      // 資料區 上半部
-      const CommodityBodyTop(),
-      isDesktop ? const VoteItemState.desktop() : const VoteItemState.mobile(),
-      // 資料區下半部
-      Container(
+    return Column(
+      children: [
+        // 資料區 上半部
+        const CommodityBodyTop(),
+        // 資料區下半部
+        Container(
           constraints: const BoxConstraints(maxWidth: 1280),
           padding: EdgeInsets.only(bottom: 20, top: isDesktop ? 0 : 10),
           child: Column(
             children: [
+              // 狀態
+              isDesktop
+                  ? const VoteItemState.desktop()
+                  : const VoteItemState.mobile(),
               // 類別欄位
               isDesktop
                   ? const InfoRowInfo.desktop()
@@ -39,7 +43,9 @@ class VoteItemInfo extends StatelessWidget {
                   ? const InfoRowDescription.desktop()
                   : const InfoRowDescription.mobile(),
             ],
-          )),
-    ]);
+          ),
+        ),
+      ],
+    );
   }
 }
