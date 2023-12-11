@@ -22,7 +22,7 @@ jobs:
       # 按照下面的顺序执行打包命令
       - run: flutter pub get
       - run: flutter channel stable
-      - run: flutter upgrade
+      - run: flutter downgrade v3.13.0
       - run: flutter config --enable-web
       # 构建 web 产物
       - run: flutter build web
