@@ -4,10 +4,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qpp_example/common_ui/qpp_menu/c_menu_anchor.dart';
 import 'package:qpp_example/common_view_model/auth_service/view_model/auth_service_view_model.dart';
+import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/extension/void/dialog_void.dart';
 import 'package:qpp_example/extension/throttle_debounce.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/model/qpp_app_bar_model.dart';
@@ -17,6 +17,7 @@ import 'package:qpp_example/utils/display_url.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/model/enum/language.dart';
 import 'package:qpp_example/constants/qpp_contanst.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
 import 'package:qpp_example/utils/shared_prefs_utils.dart';
@@ -74,7 +75,9 @@ class _QppAppBarTitle extends ConsumerWidget {
                     : 527
                 : 210),
         // 選單按鈕
-        isDesktopStyle ? const _MenuBtns() : const SizedBox.shrink(),
+        isDesktopStyle
+            ? const MenuBtns.horizontal(padding: 30, fontSize: 18)
+            : const SizedBox.shrink(),
         isLogin
             ? Container(
                 constraints: const BoxConstraints(minWidth: 20, maxWidth: 64))
@@ -123,8 +126,8 @@ class _Logo extends StatelessWidget {
     final bool isDesktopStyle = screenStyle.isDesktop;
 
     return IconButton(
-      icon: SvgPicture.asset(
-        'assets/desktop-pic-qpp-logo-01.svg',
+      icon: Image.asset(
+        QPPImages.desktop_image_qpp_logo_01,
         width: isDesktopStyle ? 147.2 : 89,
         height: isDesktopStyle ? 44.4 : 27.4,
       ),
@@ -141,41 +144,80 @@ class _Logo extends StatelessWidget {
 /// 選單按鈕(Row)
 /// - Note: 產品介紹...等
 // -----------------------------------------------------------------------------
-class _MenuBtns extends StatelessWidget {
-  const _MenuBtns();
+class MenuBtns extends StatelessWidget {
+  /// 垂直
+  const MenuBtns.vertical({
+    super.key,
+    required this.padding,
+    required this.fontSize,
+  }) : _direction = Axis.vertical;
+
+  /// 水平
+  const MenuBtns.horizontal({
+    super.key,
+    required this.padding,
+    required this.fontSize,
+  }) : _direction = Axis.horizontal;
+
+  final Axis _direction;
+  final double padding;
+  final double fontSize;
 
   @override
   Widget build(BuildContext context) {
     // debugPrint(toString());
+    final bool isHorizontal = _direction == Axis.horizontal;
 
-    return Row(
+    return Flex(
+      crossAxisAlignment:
+          isHorizontal ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+      direction: _direction,
       children: MainMenu.values
           .map(
             (e) => Padding(
-              padding: EdgeInsets.only(right: e == MainMenu.contact ? 0 : 30),
+              padding: EdgeInsets.only(
+                right: e == MainMenu.contact ? 0 : (isHorizontal ? padding : 0),
+                bottom: isHorizontal ? 0 : padding,
+              ),
               child: MouseRegionCustomWidget(
                 builder: (event) => MouseRegion(
                   cursor: SystemMouseCursors.click, // 改鼠標樣式
                   child: GestureDetector(
                     onTap: () {
-                      BuildContext? currentContext = e.currentContext;
+                      bool isInHomePage =
+                          ModalRoute.of(context)?.isFirst ?? false;
 
-                      if (currentContext != null) {
-                        Scrollable.ensureVisible(currentContext,
-                            duration: const Duration(seconds: 1));
+                      if (isInHomePage) {
+                        Scrollable.ensureVisible(
+                          e.currentContext!,
+                          duration: const Duration(seconds: 1),
+                        );
+                      } else {
+                        context.pop();
+
+                        Future.delayed(
+                          const Duration(milliseconds: 300),
+                          () => Scrollable.ensureVisible(
+                            e.currentContext!,
+                            duration: const Duration(seconds: 1),
+                          ),
+                        );
                       }
                     }.throttleWithTimeout(timeout: 2000),
                     child: Container(
                       constraints: const BoxConstraints(maxWidth: 120),
-                      child: AutoSizeText(
-                        context.tr(e.text),
-                        style: TextStyle(
-                          color: event is PointerEnterEvent
-                              ? QppColors.canaryYellow
-                              : QppColors.white,
-                          fontSize: 18,
+                      child: SelectionContainer.disabled(
+                        child: AutoSizeText(
+                          key: e.key,
+                          context.tr(e.text),
+                          style: TextStyle(
+                            color: event is PointerEnterEvent
+                                ? QppColors.canaryYellow
+                                : QppColors.white,
+                            fontSize: fontSize,
+                          ),
+                          maxLines: 2,
                         ),
-                        maxLines: 2,
                       ),
                     ),
                   ),
@@ -203,7 +245,9 @@ class AnimationMenuBtn extends StatefulWidget {
 class _AnimationMenuBtn extends State<AnimationMenuBtn>
     with TickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
-      vsync: this, duration: const Duration(milliseconds: 500));
+    vsync: this,
+    duration: const Duration(milliseconds: 500),
+  );
 
   int _count = 0;
   final int _targetCount = 1;
@@ -244,8 +288,8 @@ class _AnimationMenuBtn extends State<AnimationMenuBtn>
               iconSize: 24,
               onPressed: () => notifier.toggle(),
               icon: widget.isClose || _count < _targetCount
-                  ? const Icon(Icons.close, color: Colors.white)
-                  : const Icon(Icons.menu, color: Colors.white),
+                  ? Image.asset('assets/mobile-icon-actionbar-close-normal.png')
+                  : Image.asset(QPPImages.mobile_icon_actionbar_list_normal),
             );
           }),
         );
@@ -285,7 +329,7 @@ class _UserInfo extends StatelessWidget {
             Future.microtask(
                 () => isOpen ? controller.open() : controller.close());
 
-            return MouseRegion(
+            return CMouseRegion(
               onEnter: (event) => isOpenNotifier.state = true,
               onExit: (event) => isOpenNotifier.state = false,
               child: Row(
@@ -303,7 +347,7 @@ class _UserInfo extends StatelessWidget {
                   isDesktopStyle
                       ? Row(children: [
                           const SizedBox(width: 4),
-                          SvgPicture.asset('assets/desktop-icon-arrowdown.svg')
+                          Image.asset(QPPImages.desktop_icon_arrowdown)
                         ])
                       : const SizedBox.shrink(),
                 ],
@@ -344,10 +388,13 @@ class LanguageDropdownMenu extends StatelessWidget {
             final isOpen = ref.watch(isOpenControllerProvider);
             final isOpenNotifier = ref.read(isOpenControllerProvider.notifier);
 
-            Future.microtask(
-                () => isOpen ? controller.open() : controller.close());
+            if (context.isDesktopPlatform) {
+              Future.microtask(
+                () => isOpen ? controller.open() : controller.close(),
+              );
+            }
 
-            return MouseRegion(
+            return CMouseRegion(
               onEnter: (event) => isOpenNotifier.state = true,
               onExit: (event) => isOpenNotifier.state = false,
               child: child,
@@ -358,12 +405,11 @@ class LanguageDropdownMenu extends StatelessWidget {
                 controller.isOpen ? controller.close() : controller.open(),
             icon: Row(
               children: [
-                SvgPicture.asset(
-                    'assets/mobile-icon-actionbar-language-normal.svg'),
+                Image.asset(QPPImages.mobile_icon_actionbar_language_normal),
                 isDesktopStyle
                     ? Row(children: [
                         const SizedBox(width: 4),
-                        SvgPicture.asset('assets/desktop-icon-arrowdown.svg')
+                        Image.asset(QPPImages.desktop_icon_arrowdown)
                       ])
                     : const SizedBox.shrink()
               ],
@@ -387,14 +433,21 @@ class LanguageDropdownMenu extends StatelessWidget {
 /// 判斷手勢是否在元件上
 // -----------------------------------------------------------------------------
 class MouseRegionCustomWidget extends ConsumerWidget {
-  MouseRegionCustomWidget(
-      {super.key, required this.builder, this.onEnter, this.onExit});
+  MouseRegionCustomWidget({
+    super.key,
+    required this.builder,
+    this.onEnter,
+    this.onExit,
+    this.onTap,
+  });
 
   final Widget Function(PointerEvent isHovered) builder;
 
   final void Function(PointerEnterEvent event)? onEnter;
 
   final void Function(PointerExitEvent event)? onExit;
+
+  final void Function()? onTap;
 
   /// 滑鼠狀態Provider
   final StateNotifierProvider<MouseRegionStateNotifier, PointerEvent>
@@ -409,7 +462,7 @@ class MouseRegionCustomWidget extends ConsumerWidget {
 
     final PointerEvent event = ref.watch(mouseRegionProvider);
 
-    return MouseRegion(
+    return CMouseRegion(
       onEnter: (event) {
         onEnter != null ? onEnter!(event) : ();
         notifier.onEnter();
@@ -421,13 +474,17 @@ class MouseRegionCustomWidget extends ConsumerWidget {
         onExit != null ? onExit!(event) : ();
         notifier.onExit();
       },
+      onTap: () {
+        onExit != null ? onTap!() : ();
+        notifier.onExit();
+      },
       child: builder(event),
     );
   }
 }
 
 // -----------------------------------------------------------------------------
-/// 全螢幕選單按鈕
+/// 全螢幕選單按鈕頁面
 // -----------------------------------------------------------------------------
 class FullScreenMenuBtnPage extends ConsumerWidget {
   const FullScreenMenuBtnPage({super.key});
@@ -501,5 +558,38 @@ class FullScreenMenuBtnPage extends ConsumerWidget {
             ),
           )
         : const SizedBox.shrink();
+  }
+}
+
+/// 客製化滑鼠區域
+///
+/// - Note: 將手機平台變成點擊手勢
+class CMouseRegion extends StatelessWidget {
+  const CMouseRegion({
+    super.key,
+    this.child,
+    this.onEnter,
+    this.onExit,
+    this.onHover,
+    this.onTap,
+  });
+
+  final Widget? child;
+  final void Function(PointerEnterEvent)? onEnter;
+  final void Function(PointerExitEvent)? onExit;
+  final void Function(PointerHoverEvent)? onHover;
+  final void Function()? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return context.isDesktopPlatform
+        ? MouseRegion(
+            onEnter: (event) => onEnter != null ? onEnter!(event) : null,
+            onExit: (event) => onExit != null ? onExit!(event) : null,
+            onHover: (event) => onHover != null ? onHover!(event) : null,
+            child: child,
+          )
+        : GestureDetector(
+            onTap: () => onTap != null ? onTap!() : null, child: child);
   }
 }

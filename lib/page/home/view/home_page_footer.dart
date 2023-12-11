@@ -6,11 +6,14 @@ import 'package:qpp_example/common_ui/qpp_app_bar/view/qpp_app_bar_view.dart';
 import 'package:qpp_example/common_ui/qpp_text/c_under_line_text.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
+import 'package:qpp_example/page/home/model/home_page_model.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
 
+// -----------------------------------------------------------------------------
 /// 首頁 - 頁尾
+// -----------------------------------------------------------------------------
 class HomePageFooter extends StatelessWidget {
   const HomePageFooter({super.key});
 
@@ -20,7 +23,9 @@ class HomePageFooter extends StatelessWidget {
   }
 }
 
+// -----------------------------------------------------------------------------
 /// 頁尾資訊
+// -----------------------------------------------------------------------------
 class _FooterInfo extends StatelessWidget {
   const _FooterInfo();
 
@@ -33,10 +38,10 @@ class _FooterInfo extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter),
       ),
-      padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 24),
       child: LayoutBuilder(builder: (context, constraints) {
         final bool isDesktopStyle = constraints.screenStyle.isDesktop;
-
+        
         return Flex(
           direction: isDesktopStyle ? Axis.horizontal : Axis.vertical,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,8 +52,16 @@ class _FooterInfo extends StatelessWidget {
                 ? const _Info(ScreenStyle.desktop)
                 : const _Info(ScreenStyle.mobile),
             isDesktopStyle ? const Spacer() : const SizedBox(height: 50),
-            const _Guide(),
-            isDesktopStyle ? const Spacer() : const SizedBox.shrink(),
+            isDesktopStyle && constraints.maxWidth > 961 // 防止多語系跑版
+                ? const _Guide()
+                : const _MobileGuide(),
+            isDesktopStyle
+                ? Flexible(
+                    child: Container(
+                      constraints: const BoxConstraints(maxWidth: 100),
+                    ),
+                  )
+                : const SizedBox.shrink(),
             isDesktopStyle
                 ? const LanguageDropdownMenu(ScreenStyle.desktop)
                 : const SizedBox.shrink(),
@@ -60,7 +73,9 @@ class _FooterInfo extends StatelessWidget {
   }
 }
 
+// -----------------------------------------------------------------------------
 /// 資訊
+// -----------------------------------------------------------------------------
 class _Info extends StatelessWidget {
   const _Info(this.screenStyle);
 
@@ -126,125 +141,196 @@ class _InfoMailLinkText extends StatelessWidget {
   }
 }
 
+// -----------------------------------------------------------------------------
 /// 導向
+// -----------------------------------------------------------------------------
 class _Guide extends StatelessWidget {
   const _Guide();
 
   @override
   Widget build(BuildContext context) {
-    const double paddingHeight = 23;
-    const double runSpacing = 10;
+    const double padding = 40;
 
-    return Container(
-      constraints: const BoxConstraints(maxWidth: 270),
-      child: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _MenuButton(runSpacing: runSpacing),
-          SizedBox(height: paddingHeight),
-          _TitleWrap(runSpacing: runSpacing),
-          SizedBox(height: paddingHeight),
-          _Links(runSpacing: runSpacing)
-        ],
+    return const Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _FirstGuide(),
+        SizedBox(width: padding),
+        _SecondGuide(),
+        SizedBox(width: padding),
+        _MenuButton(type: MainMenu.description),
+        SizedBox(width: padding),
+        _MenuButton(type: MainMenu.contact),
+      ],
+    );
+  }
+}
+
+class _MobileGuide extends StatelessWidget {
+  const _MobileGuide();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        MenuBtns.vertical(padding: 20, fontSize: 16),
+        SizedBox(width: 100),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _TermsColumn(padding: 8),
+            SizedBox(height: 20),
+            _DownloadColumn(padding: 8),
+          ],
+        )
+      ],
+    );
+  }
+}
+
+/// 桌面版第一列導向(功能介紹...)
+class _FirstGuide extends StatelessWidget {
+  const _FirstGuide();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _MenuButton(type: MainMenu.introduce),
+        SizedBox(height: 23),
+        _TermsColumn(),
+      ],
+    );
+  }
+}
+
+/// 桌面版第二列導向(產品特色...)
+class _SecondGuide extends StatelessWidget {
+  const _SecondGuide();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _MenuButton(type: MainMenu.feature),
+        SizedBox(height: 23),
+        _DownloadColumn()
+      ],
+    );
+  }
+}
+
+/// 條款Column
+class _TermsColumn extends StatelessWidget {
+  const _TermsColumn({this.padding = 19});
+
+  /// title <-> link 間距
+  final double padding;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const _Title(type: HomePageFooterTitleType.terms),
+        SizedBox(height: padding),
+        const _LinkText(type: HomePageFooterLinkType.privacyPolicy),
+        const SizedBox(height: 8),
+        const _LinkText(type: HomePageFooterLinkType.termsOfUse),
+      ],
+    );
+  }
+}
+
+/// 下載Column
+class _DownloadColumn extends StatelessWidget {
+  const _DownloadColumn({this.padding = 19});
+
+  /// title <-> link 間距
+  final double padding;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const _Title(type: HomePageFooterTitleType.download),
+        SizedBox(height: padding),
+        const _LinkText(type: HomePageFooterLinkType.appleStore),
+        const SizedBox(height: 8),
+        const _LinkText(type: HomePageFooterLinkType.googlePlay),
+      ],
+    );
+  }
+}
+
+/// 選單按鈕
+class _MenuButton extends StatelessWidget {
+  const _MenuButton({required this.type});
+
+  final MainMenu type;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegionCustomWidget(
+      builder: (event) => Container(
+        constraints: const BoxConstraints(maxWidth: 100),
+        child: CUnderlineText(
+          text: context.tr(type.text),
+          style: QppTextStyles.mobile_16pt_title_white_bold_L,
+          onTap: () {
+            BuildContext? currentContext = type.currentContext;
+
+            if (currentContext != null) {
+              Scrollable.ensureVisible(currentContext,
+                  duration: const Duration(seconds: 1));
+            }
+          },
+          maxLines: 2,
+        ),
       ),
     );
   }
 }
 
-/// 選單按鈕(Warp)
-class _MenuButton extends StatelessWidget {
-  const _MenuButton({required this.runSpacing});
-
-  final double runSpacing;
-
-  @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 130,
-      runSpacing: runSpacing,
-      children: MainMenu.values
-          .map(
-            (e) => MouseRegionCustomWidget(
-              builder: (event) => CUnderlineText(
-                text: context.tr(e.text),
-                style: QppTextStyles.mobile_16pt_title_white_bold_L,
-                onTap: () {
-                  BuildContext? currentContext = e.currentContext;
-
-                  if (currentContext != null) {
-                    Scrollable.ensureVisible(currentContext,
-                        duration: const Duration(seconds: 1));
-                  }
-                },
-              ),
-            ),
-          )
-          .toList(),
-    );
-  }
-}
-
 /// 標題(條款、下載)
-class _TitleWrap extends StatelessWidget {
-  const _TitleWrap({required this.runSpacing});
+class _Title extends StatelessWidget {
+  const _Title({required this.type});
 
-  final double runSpacing;
+  final HomePageFooterTitleType type;
 
   @override
   Widget build(BuildContext context) {
-    const textStyle = QppTextStyles.mobile_16pt_title_white_bold_L;
-
-    return Wrap(
-      spacing: 161,
-      runSpacing: runSpacing,
-      children: [
-        Text(context.tr(QppLocales.footerTerms), style: textStyle),
-        Text(context.tr(QppLocales.footerDownload), style: textStyle)
-      ],
+    return Text(
+      context.tr(QppLocales.footerTerms),
+      style: QppTextStyles.mobile_16pt_title_white_bold_L,
     );
   }
 }
 
-/// 連結
-class _Links extends StatelessWidget {
-  const _Links({required this.runSpacing});
+/// 連結文字(隱私權政策...)
+class _LinkText extends StatelessWidget {
+  const _LinkText({required this.type});
 
-  final double runSpacing;
+  final HomePageFooterLinkType type;
 
   @override
   Widget build(BuildContext context) {
-    const TextStyle style = QppTextStyles.web_12pt_caption_white_L;
-
-    return Wrap(
-      spacing: 135,
-      runSpacing: runSpacing,
-      children: [
-        CUnderlineText.link(
-            text: context.tr(QppLocales.footerPrivacyPolicy),
-            link: ServerConst.privacyPolicyUrl,
-            style: style,
-            isNewTab: true),
-        const CUnderlineText.link(
-            text: 'Apple Store',
-            link: ServerConst.appleStoreUrl,
-            style: style,
-            isNewTab: true),
-        CUnderlineText.link(
-            text: context.tr(QppLocales.footerTermsOfService),
-            link: ServerConst.termsOfUseUrl,
-            style: style,
-            isNewTab: true),
-        const CUnderlineText.link(
-            text: 'Google Play',
-            link: ServerConst.googlePlayStoreUrl,
-            style: style,
-            isNewTab: true),
-      ],
+    return CUnderlineText.link(
+      text: context.tr(type.text),
+      link: type.link,
+      style: QppTextStyles.web_12pt_caption_white_L,
+      isNewTab: true,
     );
   }
 }
 
+// -----------------------------------------------------------------------------
 /// 公司名稱
+// -----------------------------------------------------------------------------
 class _CompanyName extends StatelessWidget {
   const _CompanyName();
 
@@ -255,7 +341,7 @@ class _CompanyName extends StatelessWidget {
       color: QppColors.oxfordBlue,
       child: const Center(
         child: Text(
-          '©2019 HOLY BUSINESS CO., LTD',
+          '©2023 HOLY BUSINESS CO., LTD',
           style: QppTextStyles.web_12pt_caption_white_L,
         ),
       ),

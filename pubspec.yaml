@@ -57,7 +57,7 @@ dependencies:
   shared_preferences: ^2.2.2
   sprintf: ^7.0.0
   auto_size_text: ^3.0.0
-  flutter_html: ^3.0.0-beta.2
+  flutter_widget_from_html_core: ^0.14.9
   # easy_localization_generator: ^0.3.2
 
 # 解決有衝突的套件

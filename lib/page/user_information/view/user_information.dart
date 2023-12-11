@@ -10,6 +10,7 @@ import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/user_information/view_model/user_information_view_model.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/constants/qpp_contanst.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_image_utils.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
@@ -142,11 +143,12 @@ class _AvatarWidget extends ConsumerWidget {
                 fit: BoxFit.cover,
                 image: bgImageIsError
                     ? const AssetImage(
-                            'assets/desktop-pic-commodity-largepic-sample-general.webp')
-                        as ImageProvider
+                        QPPImages.pic_commodity_largepic_sample_07,
+                      ) as ImageProvider
                     : NetworkImage(userInformation.bgImage),
-                onError: (exception, stackTrace) => userInformation
-                    .setImageState(style: QppImageStyle.backgroundImage, isSuccess: false),
+                onError: (exception, stackTrace) =>
+                    userInformation.setImageState(
+                        style: QppImageStyle.backgroundImage, isSuccess: false),
               ),
             ),
             child: Stack(

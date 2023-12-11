@@ -48,12 +48,17 @@ class ErrorPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgPicture.asset('assets/desktop-pic-qpp-text.svg'),
+                          Image.asset(
+                            'assets/desktop-pic-qpp-text.png',
+                            width: isDesktopStyle ? 103 : 69,
+                            height: isDesktopStyle ? 36 : 24,
+                          ),
                           const SizedBox(width: 12),
                           Text(
                             context.tr(QppLocales.homeSection1Title),
-                            style:
-                                QppTextStyles.web_40pt_Display_m_bold_white_L,
+                            style: isDesktopStyle
+                                ? QppTextStyles.web_40pt_Display_m_bold_white_L
+                                : QppTextStyles.web_24pt_title_L_white_L,
                           )
                         ],
                       ),

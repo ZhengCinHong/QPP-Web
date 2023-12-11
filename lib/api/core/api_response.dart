@@ -12,14 +12,10 @@ class ApiResponse<T> {
   ApiResponse.error(this.message) : status = Status.error;
 
   @override
-  String toString() {
-    return "Status : $status \n Message : $message \n Data : $data";
-  }
+  String toString() => "Status : $status \n Message : $message \n Data : $data";
 
   /// 是否完成
-  bool get isCompleted {
-    return status == Status.completed;
-  }
+  bool get isCompleted => status == Status.completed;
 }
 
 enum Status { initial, loading, completed, error }

@@ -22,6 +22,7 @@ void main() async {
 
   HttpService service = HttpService.instance; // dio
   service.initDio();
+  
   runApp(
     EasyLocalization(
       // 支援的語系, 從 QppLocales 直接取出
@@ -35,6 +36,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(

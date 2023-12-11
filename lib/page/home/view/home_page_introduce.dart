@@ -1,15 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:qpp_example/common_ui/qpp_qrcode/universal_link_qrcode.dart';
 import 'package:qpp_example/constants/qpp_contanst.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/build_context.dart';
+import 'package:qpp_example/extension/color/color_to_string.dart';
 import 'package:qpp_example/extension/string/url.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/home/model/home_page_model.dart';
 import 'package:qpp_example/page/home/view/home_page.dart';
+import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
 
@@ -62,7 +64,7 @@ class _DesktopBody extends StatelessWidget {
         const SizedBox(width: 31),
         Expanded(
           flex: 2,
-          child: Image.asset('assets/desktop-pic-kv.webp', fit: BoxFit.cover),
+          child: Image.asset('assets/desktop-pic-kv.png', fit: BoxFit.cover),
         ),
         const Spacer(),
       ],
@@ -105,8 +107,8 @@ class _Info extends StatelessWidget {
                 ? MainAxisAlignment.start
                 : MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(
-                'assets/desktop-pic-qpp-text.svg',
+              Image.asset(
+                'assets/desktop-pic-qpp-text.png',
                 width: isDesktopStyle ? 103 : 69,
                 height: isDesktopStyle ? 36 : 24,
               ),
@@ -121,14 +123,15 @@ class _Info extends StatelessWidget {
           ),
           SizedBox(height: isDesktopStyle ? 15 : 24),
           Text(
-            context.tr(QppLocales.homeSection1P),
+            context.tr(QppLocales.homeSection1P).replaceAll('<br/>', '\n'),
+            textAlign: isDesktopStyle ? TextAlign.start : TextAlign.center,
             style: isDesktopStyle
                 ? QppTextStyles.web_16pt_body_white_L
                 : QppTextStyles.mobile_14pt_body_white_L,
           ),
           isDesktopStyle
               ? const SizedBox.shrink()
-              : Image.asset('assets/mobile-pic-kv.webp', fit: BoxFit.cover),
+              : Image.asset('assets/desktop-pic-kv.png', fit: BoxFit.cover),
           SizedBox(height: isDesktopStyle ? 61 : 56.4),
           isDesktopStyle ? const _Qrcode.desktop() : const _Qrcode.mobile(),
           SizedBox(height: isDesktopStyle ? 63 : 37),
@@ -143,8 +146,8 @@ class _Info extends StatelessWidget {
 
 // -----------------------------------------------------------------------------
 /// QRCode
-// -----------------------------------------------------------------------------
 /// Note: 跟slogan一起
+// -----------------------------------------------------------------------------
 class _Qrcode extends StatelessWidget {
   const _Qrcode.desktop() : screenStyle = ScreenStyle.desktop;
   const _Qrcode.mobile() : screenStyle = ScreenStyle.mobile;
@@ -216,30 +219,16 @@ class _Slogan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDesktopStyle = screenStyle.isDesktop;
-    final normalStyle = isDesktopStyle
-        ? QppTextStyles.web_24pt_title_L_bold_white_L
-        : QppTextStyles.mobile_14pt_body_white_L;
-    final spanStyle = isDesktopStyle
-        ? QppTextStyles.web_24pt_title_L_bold_canary_yellow_L
-        : QppTextStyles.mobile_14pt_body_canary_yellow_L;
 
-    return Html(
-      shrinkWrap: true,
-      data: context.tr(QppLocales.homeSection1Slogan),
-      style: {
-        'body': Style(
-          color: normalStyle.color,
-          fontSize: normalStyle.fontSize != null
-              ? FontSize(normalStyle.fontSize!)
-              : null,
-          fontWeight: normalStyle.fontWeight,
-        ),
-        'span': Style(
-          color: spanStyle.color,
-          fontSize:
-              spanStyle.fontSize != null ? FontSize(spanStyle.fontSize!) : null,
-          fontWeight: spanStyle.fontWeight,
-        )
+    return HtmlWidget(
+      context.tr(QppLocales.homeSection1Slogan),
+      textStyle: isDesktopStyle
+          ? QppTextStyles.web_24pt_title_L_bold_white_L
+          : QppTextStyles.mobile_14pt_body_white_L,
+      customStylesBuilder: (element) {
+        return element.localName == 'span'
+            ? {'color': QppColors.canaryYellow.toHexString()}
+            : null;
       },
     );
   }
