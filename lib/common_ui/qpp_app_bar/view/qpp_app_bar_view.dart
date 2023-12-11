@@ -4,7 +4,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qpp_example/common_ui/qpp_menu/c_menu_anchor.dart';
 import 'package:qpp_example/common_view_model/auth_service/view_model/auth_service_view_model.dart';
@@ -18,6 +17,7 @@ import 'package:qpp_example/utils/display_url.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/model/enum/language.dart';
 import 'package:qpp_example/constants/qpp_contanst.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
 import 'package:qpp_example/utils/shared_prefs_utils.dart';
@@ -127,7 +127,7 @@ class _Logo extends StatelessWidget {
 
     return IconButton(
       icon: Image.asset(
-        'assets/desktop-image-qpp-logo-01.png',
+        QPPImages.desktop_image_qpp_logo_01,
         width: isDesktopStyle ? 147.2 : 89,
         height: isDesktopStyle ? 44.4 : 27.4,
       ),
@@ -289,7 +289,7 @@ class _AnimationMenuBtn extends State<AnimationMenuBtn>
               onPressed: () => notifier.toggle(),
               icon: widget.isClose || _count < _targetCount
                   ? Image.asset('assets/mobile-icon-actionbar-close-normal.png')
-                  : Image.asset('assets/mobile-icon-actionbar-list-normal.png'),
+                  : Image.asset(QPPImages.mobile_icon_actionbar_list_normal),
             );
           }),
         );
@@ -347,7 +347,7 @@ class _UserInfo extends StatelessWidget {
                   isDesktopStyle
                       ? Row(children: [
                           const SizedBox(width: 4),
-                          SvgPicture.asset('assets/desktop-icon-arrowdown.svg')
+                          Image.asset(QPPImages.desktop_icon_arrowdown)
                         ])
                       : const SizedBox.shrink(),
                 ],
@@ -405,12 +405,11 @@ class LanguageDropdownMenu extends StatelessWidget {
                 controller.isOpen ? controller.close() : controller.open(),
             icon: Row(
               children: [
-                SvgPicture.asset(
-                    'assets/mobile-icon-actionbar-language-normal.svg'),
+                Image.asset(QPPImages.mobile_icon_actionbar_language_normal),
                 isDesktopStyle
                     ? Row(children: [
                         const SizedBox(width: 4),
-                        SvgPicture.asset('assets/desktop-icon-arrowdown.svg')
+                        Image.asset(QPPImages.desktop_icon_arrowdown)
                       ])
                     : const SizedBox.shrink()
               ],
@@ -590,6 +589,7 @@ class CMouseRegion extends StatelessWidget {
             onHover: (event) => onHover != null ? onHover!(event) : null,
             child: child,
           )
-        : GestureDetector(onTap: () => onTap != null ? onTap!() : null, child: child);
+        : GestureDetector(
+            onTap: () => onTap != null ? onTap!() : null, child: child);
   }
 }

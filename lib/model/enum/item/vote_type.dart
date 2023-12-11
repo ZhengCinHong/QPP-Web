@@ -1,3 +1,5 @@
+import 'package:qpp_example/localization/qpp_locales.dart';
+
 enum VoteType {
   // 錯誤 (server 沒有這個值, 自己加的)
   error(-1),
@@ -19,4 +21,11 @@ enum VoteType {
       _ => VoteType.error,
     };
   }
+
+  String get text => switch (this) {
+        VoteType.inProgress => QppLocales.commodityInfoVoteNow,
+        VoteType.end => QppLocales.commodityInfoVoteFinished,
+        VoteType.expired => QppLocales.commodityInfoVoteExpired,
+        _ => '',
+      };
 }
