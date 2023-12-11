@@ -28,8 +28,8 @@ class VoteItemInfo extends StatelessWidget {
                   : const VoteItemState.mobile(),
               // 類別欄位
               isDesktop
-                  ? const InfoRowInfo.desktop()
-                  : const InfoRowInfo.mobile(),
+                  ? const VoucherInfoRowInfo.desktop()
+                  : const VoucherInfoRowInfo.mobile(),
               // 創建者欄位
               isDesktop
                   ? const InfoRowCreator.desktop()

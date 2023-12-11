@@ -9,6 +9,7 @@ import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/model/item_multi_language_data.dart';
 import 'package:qpp_example/model/qpp_item.dart';
 import 'package:qpp_example/model/qpp_user.dart';
+import 'package:qpp_example/model/vote/qpp_vote.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
 
@@ -46,6 +47,30 @@ abstract class InfoRow extends ConsumerWidget {
 
   double get _titleWidth {
     return isDesktop ? 120 : 90;
+  }
+}
+
+/// 問券的類別欄位
+class VoucherInfoRowInfo extends InfoRowInfo {
+  const VoucherInfoRowInfo.desktop({super.key}) : super.desktop();
+  const VoucherInfoRowInfo.mobile({super.key}) : super.mobile();
+
+  @override
+  ApiResponse getResponse(WidgetRef ref) {
+    return ref.watch(itemSelectInfoProvider).voteDataState;
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    ApiResponse response = getResponse(ref);
+    QppVote data = response.data;
+
+    return response.isCompleted
+        ? Padding(
+            padding: _rowPadding(),
+            child: getContent(data.item),
+          )
+        : const SizedBox.shrink();
   }
 }
 

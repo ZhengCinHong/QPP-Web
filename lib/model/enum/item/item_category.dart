@@ -102,6 +102,7 @@ enum ItemCategory {
       case hiddenVoucher:
       // 需判斷為 QR Code/序號, 在 sub category 處理
       case questionnaire:
+        return QPPImages.icon_display_questionnaire;
       case commission:
       case authorize:
       default:
