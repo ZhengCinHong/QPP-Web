@@ -98,10 +98,11 @@ class CommodityInfoModel extends ChangeNotifier {
         if (item.category == ItemCategory.questionnaire) {
           // 取問券資料
           getQuestionnaire(item);
+        } else {
+          // 非問券的物品,通知成功
+          itemSelectInfoState = ApiResponse.completed(item);
         }
-        // 非問券的物品,通知成功
-        itemSelectInfoState = ApiResponse.completed(item);
-        
+
         // 取物品資訊成功後, 取得創建者資料
         int? creatorId = item.creatorId;
         getUserInfo(creatorId);
