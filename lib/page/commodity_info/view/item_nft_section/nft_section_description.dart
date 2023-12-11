@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qpp_example/api/core/api_response.dart';
 import 'package:qpp_example/common_ui/qpp_text/info_row_link_read_more_text.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
@@ -9,8 +8,8 @@ import 'package:qpp_example/model/nft/qpp_nft.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
 import 'package:qpp_example/page/commodity_info/view/info_row.dart';
 import 'package:qpp_example/page/commodity_info/view/item_nft_section/nft_section.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
-import 'dart:ui' as ui;
 
 /// Description Section
 class NFTSectionDescription<QppNFT> extends NFTSection {
@@ -30,7 +29,7 @@ class StateDescription extends StateSection {
 
   @override
   String get sectionTitleIconPath =>
-      'assets/desktop-icon-commodity-nft-describe.svg';
+      QPPImages.desktop_icon_commodity_nft_describe;
 }
 
 /// 發行者
@@ -91,8 +90,8 @@ class NFTInfoRowPublisher extends InfoRow {
                 data.isOfficial
                     ? Container(
                         padding: const EdgeInsets.only(right: 8),
-                        child: SvgPicture.asset(
-                          'assets/${data.officialIconPath}',
+                        child: Image.asset(
+                          data.officialIconPath,
                           width: 20,
                         ),
                       )
@@ -106,12 +105,10 @@ class NFTInfoRowPublisher extends InfoRow {
                   ),
                 ),
                 // 物件左右翻轉, 或用 RotatedBox
-                Directionality(
-                    textDirection: ui.TextDirection.rtl,
-                    child: SvgPicture.asset(
-                      'assets/mobile-icon-actionbar-back-normal.svg',
-                      matchTextDirection: true,
-                    )),
+                Image.asset(
+                  QPPImages.desktop_icon_selection_arrow_right_normal,
+                  matchTextDirection: true,
+                ),
               ],
             ),
           ),

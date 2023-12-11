@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qpp_example/common_ui/qpp_button/btn_arrow_up_down.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
@@ -56,7 +55,7 @@ abstract class StateSection extends State<NFTSection>
     return Column(children: [
       NFTInfoSectionItemTitle(
         arrowKey: arrowKey,
-        // section icon 圖片路徑 'assets/desktop-icon-commodity-nft-describe.svg'
+        // section icon 圖片路徑 
         iconPath: sectionTitleIconPath,
         // section title
         title: sectionTitle,
@@ -122,7 +121,7 @@ class NFTInfoSectionItemTitle extends StatelessWidget {
         decoration: const BoxDecoration(color: QppColors.stPatricksBlue),
         child: Row(
           children: [
-            SvgPicture.asset(
+            Image.asset(
               iconPath,
               width: 28.0,
               height: 28.0,

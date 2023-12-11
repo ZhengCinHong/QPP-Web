@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qpp_example/model/nft/nft_trait.dart';
 import 'package:qpp_example/page/commodity_info/view/item_nft_section/nft_section.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 
 class NFTSectionProperties<List> extends NFTSection {
@@ -20,7 +21,7 @@ class StateProperties extends StateSection {
 
   @override
   String get sectionTitleIconPath =>
-      'assets/desktop-icon-commodity-nft-properties.svg';
+      QPPImages.desktop_icon_commodity_nft_properties;
 }
 
 class PropertiesContent extends StatelessWidget {

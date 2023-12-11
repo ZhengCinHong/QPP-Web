@@ -101,8 +101,6 @@ enum ItemCategory {
         return "數位物品";
       case hiddenVoucher:
       // 需判斷為 QR Code/序號, 在 sub category 處理
-      // serial desktop-icon-display-scratch-card-serial-number.svg
-      // qr code desktop-icon-display-scratch-card-qr-code.svg
       case questionnaire:
       case commission:
       case authorize:
