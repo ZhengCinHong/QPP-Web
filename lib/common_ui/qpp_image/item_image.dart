@@ -1,11 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qpp_example/api/core/api_response.dart';
 import 'package:qpp_example/model/item_img_data.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 
 /// 物品圖片
 class ItemImgPhoto extends ConsumerWidget {
@@ -41,7 +41,7 @@ class ItemImgPhoto extends ConsumerWidget {
   Container _img(String path) {
     return Container(
       margin: const EdgeInsets.only(top: 83),
-      width: isMobile ? 88 : 110,
+      width: isMobile ? 88 : 100,
       clipBehavior: Clip.antiAlias,
       // decoration 負責切形狀
       decoration: _circleDecor(),
@@ -51,8 +51,8 @@ class ItemImgPhoto extends ConsumerWidget {
         path,
         // 圖片讀取錯誤處理
         errorBuilder: (context, error, stackTrace) {
-          return SvgPicture.asset(
-            'assets/desktop-pic-commodity-avatar-default.svg',
+          return Image.asset(
+            QPPImages.desktop_pic_commodity_avatar_default,
           );
         },
         filterQuality: FilterQuality.high,
@@ -135,8 +135,8 @@ class ExpandPhotoBtnWidget extends StatelessWidget {
     return MouseRegion(
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
-          child: SvgPicture.asset(
-            'assets/mobile-icon-image-magnifier.svg',
+          child: Image.asset(
+            QPPImages.desktop_icon_image_magnifier,
             width: 30,
             height: 30,
           ),
