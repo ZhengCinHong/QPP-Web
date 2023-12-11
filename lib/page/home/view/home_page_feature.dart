@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/view/qpp_app_bar_view.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/home/model/home_page_model.dart';
@@ -147,7 +146,7 @@ class _FeatureInfoItem extends StatelessWidget {
             child: Flex(
               direction: isDesktopStyle ? Axis.horizontal : Axis.vertical,
               children: [
-                SvgPicture.asset(
+                Image.asset(
                   isHighlight ? type.highlightImage : type.image,
                   width: 50,
                   height: 50,

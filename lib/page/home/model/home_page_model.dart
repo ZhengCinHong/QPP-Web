@@ -70,26 +70,26 @@ enum HomePageFeatureInfoType {
   String get image {
     switch (this) {
       case HomePageFeatureInfoType.virtual:
-        return 'assets/desktop-icon-area-01-01-normal.svg';
+        return QPPImages.desktop_icon_area_01_01_normal;
       case HomePageFeatureInfoType.identification:
-        return 'assets/desktop-icon-area-01-02-nomal.svg';
+        return QPPImages.desktop_icon_area_01_02_nomal;
       case HomePageFeatureInfoType.voucher:
-        return 'assets/desktop-icon-area-01-03-normal.svg';
+        return QPPImages.desktop_icon_area_01_03_normal;
       case HomePageFeatureInfoType.more:
-        return 'assets/desktop-icon-area-01-04-normal.svg';
+        return QPPImages.desktop_icon_area_01_04_normal;
     }
   }
 
   String get highlightImage {
     switch (this) {
       case HomePageFeatureInfoType.virtual:
-        return 'assets/desktop-icon-area-01-01-pressed.svg';
+        return QPPImages.desktop_icon_area_01_01_pressed;
       case HomePageFeatureInfoType.identification:
-        return 'assets/desktop-icon-area-01-02-pressed.svg';
+        return QPPImages.desktop_icon_area_01_02_pressed;
       case HomePageFeatureInfoType.voucher:
-        return 'assets/desktop-icon-area-01-03-pressed.svg';
+        return QPPImages.desktop_icon_area_01_03_pressed;
       case HomePageFeatureInfoType.more:
-        return 'assets/desktop-icon-area-01-04-pressed.svg';
+        return QPPImages.desktop_icon_area_01_04_pressed;
     }
   }
 }

@@ -1,10 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/home/model/home_page_model.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
 
@@ -85,9 +85,7 @@ class _PhoneDescriptionState extends State<_PhoneDescription> {
                       : MainAxisAlignment.center,
                   children: [
                     Flexible(
-                      child: SvgPicture.asset(
-                        'assets/desktop-pic-qpp-logo-02.svg',
-                      ),
+                      child: Image.asset(QPPImages.desktop_image_qpp_logo_01),
                     ),
                     const SizedBox(height: 16, width: 36),
                     Flexible(
