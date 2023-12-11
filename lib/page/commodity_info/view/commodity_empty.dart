@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 
 /// 無此物品
 class EmptyInfo extends StatelessWidget {
@@ -54,8 +54,8 @@ class EmptyInfo extends StatelessWidget {
   }
 
   _emptyImg() {
-    return SvgPicture.asset(
-      'assets/pic-empty-default.svg',
+    return Image.asset(
+      QPPImages.pic_empty_default,
       width: isDesktop ? 202 : 165,
       height: isDesktop ? 146 : 119,
     );
