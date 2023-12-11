@@ -1,12 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/list/list.dart';
 import 'package:qpp_example/extension/string/url.dart';
 import 'package:qpp_example/page/home/model/home_page_model.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
 
@@ -31,8 +31,8 @@ class HomePageContact extends StatelessWidget {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: maxWidth.determineScreenStyle().isDesktop // 換背景用一般的螢幕樣式去判斷
-                  ? const AssetImage('assets/desktop-bg-area-03.png')
-                  : const AssetImage('assets/mobile-bg-area-03.png'),
+                  ? const AssetImage(QPPImages.desktop_bg_area_03)
+                  : const AssetImage(QPPImages.mobile_bg_area_03),
               fit: BoxFit.cover,
             ),
           ),
@@ -99,8 +99,8 @@ class _TitleContent extends StatelessWidget {
                   top: isDesktopStyle ? 30 : 50,
                   bottom: isDesktopStyle ? 0 : 11,
                 ),
-                child: SvgPicture.asset(
-                  'assets/desktop-icon-area-04-official.svg',
+                child: Image.asset(
+                  QPPImages.desktop_icon_area_04_official,
                   width: isDesktopStyle ? 180 : 140,
                   height: isDesktopStyle ? 185 : 144,
                 ),
@@ -303,9 +303,7 @@ class _BenefitItem extends StatelessWidget {
     return Stack(alignment: Alignment.center, children: [
       Container(
         constraints: BoxConstraints(maxHeight: isDesktopStyle ? 307 : 230),
-        child: SizedBox(
-          child: SvgPicture.asset('assets/desktop_bg_area03_box.svg'),
-        ),
+        child: SizedBox(child: Image.asset(QPPImages.desktop_bg_area_03_box)),
       ),
       Container(
         constraints: BoxConstraints(maxWidth: isDesktopStyle ? 280 : 235),

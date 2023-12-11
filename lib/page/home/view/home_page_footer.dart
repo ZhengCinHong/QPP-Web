@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/model/qpp_app_bar_model.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/view/qpp_app_bar_view.dart';
 import 'package:qpp_example/common_ui/qpp_text/c_under_line_text.dart';
@@ -8,6 +7,7 @@ import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/home/model/home_page_model.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
 
@@ -41,7 +41,7 @@ class _FooterInfo extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 24),
       child: LayoutBuilder(builder: (context, constraints) {
         final bool isDesktopStyle = constraints.screenStyle.isDesktop;
-        
+
         return Flex(
           direction: isDesktopStyle ? Axis.horizontal : Axis.vertical,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,7 +89,7 @@ class _Info extends StatelessWidget {
       direction: isDesktopStyle ? Axis.horizontal : Axis.vertical,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SvgPicture.asset('assets/desktop-pic-qpp-logo-03.svg'),
+        Image.asset(QPPImages.desktop_pic_qpp_logo_03),
         const SizedBox(height: 30, width: 30),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:qpp_example/common_ui/qpp_qrcode/universal_link_qrcode.dart';
 import 'package:qpp_example/constants/qpp_contanst.dart';
@@ -12,6 +11,7 @@ import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/home/model/home_page_model.dart';
 import 'package:qpp_example/page/home/view/home_page.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
 
@@ -64,7 +64,7 @@ class _DesktopBody extends StatelessWidget {
         const SizedBox(width: 31),
         Expanded(
           flex: 2,
-          child: Image.asset('assets/desktop-pic-kv.png', fit: BoxFit.cover),
+          child: Image.asset(QPPImages.desktop_pic_kv, fit: BoxFit.cover),
         ),
         const Spacer(),
       ],
@@ -108,7 +108,7 @@ class _Info extends StatelessWidget {
                 : MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/desktop-pic-qpp-text.png',
+                QPPImages.desktop_image_qpp_text,
                 width: isDesktopStyle ? 103 : 69,
                 height: isDesktopStyle ? 36 : 24,
               ),
@@ -131,7 +131,7 @@ class _Info extends StatelessWidget {
           ),
           isDesktopStyle
               ? const SizedBox.shrink()
-              : Image.asset('assets/desktop-pic-kv.png', fit: BoxFit.cover),
+              : Image.asset(QPPImages.desktop_pic_kv, fit: BoxFit.cover),
           SizedBox(height: isDesktopStyle ? 61 : 56.4),
           isDesktopStyle ? const _Qrcode.desktop() : const _Qrcode.mobile(),
           SizedBox(height: isDesktopStyle ? 63 : 37),
@@ -188,8 +188,8 @@ class _Qrcode extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(
-                'assets/desktop-icon-kv-registered.svg',
+              Image.asset(
+                QPPImages.desktop_icon_kv_registered,
                 width: isDesktopStyle ? 36 : 28,
                 height: isDesktopStyle ? 36 : 28,
               ),
@@ -385,9 +385,8 @@ class _MoreAboutQPPButtonState extends State<MoreAboutQPPButton>
                   builder: (context, child) {
                     return Transform.translate(
                       offset: _offsetTween.evaluate(_controller),
-                      child: SvgPicture.asset(
-                        'assets/desktop-icon-arrowdown-double.svg',
-                      ),
+                      child:
+                          Image.asset(QPPImages.desktop_icon_arrowdown_double),
                     );
                   },
                 )
