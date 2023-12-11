@@ -50,4 +50,11 @@ class QppVote {
   String get itemName {
     return item.name;
   }
+
+  /// 投票人數
+  int get voteCount {
+    return voteData
+        .map((e) => e.totalVoteNumber)
+        .reduce((sum, value) => sum + value);
+  }
 }

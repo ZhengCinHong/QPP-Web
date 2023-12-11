@@ -7,7 +7,7 @@ import 'package:qpp_example/model/nft/qpp_nft.dart';
 import 'package:qpp_example/model/qpp_item.dart';
 import 'package:qpp_example/model/vote/qpp_vote.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
-import 'package:qpp_example/utils/qpp_color.dart';
+import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
 
 /// 物品容器上半部區塊 (物品圖片, 名稱)
@@ -40,28 +40,28 @@ class CommodityBodyTop extends StatelessWidget {
             ApiResponse<QppNFT> nftMetaState =
                 ref.watch(itemSelectInfoProvider).nftMetaDataState;
 
-            if (itemInfoState.isCompleted || voteItemInfoState.isCompleted) {
-              return Container(
-                padding: const EdgeInsets.only(left: 16, right: 16),
-                child: Text(
-                  itemInfoState.data?.name ?? voteItemInfoState.data!.itemName,
-                  style: const TextStyle(fontSize: 20, color: QppColors.white),
-                ),
-              );
+            if (itemInfoState.isCompleted) {
+              return content(itemInfoState.data?.name ?? "");
+            } else if (voteItemInfoState.isCompleted) {
+              return content(voteItemInfoState.data?.itemName ?? "");
             } else if (nftMetaState.isCompleted) {
-              return Container(
-                padding: const EdgeInsets.only(left: 16, right: 16),
-                child: Text(
-                  nftMetaState.data!.name,
-                  style: const TextStyle(fontSize: 20, color: QppColors.white),
-                ),
-              );
+              return content(nftMetaState.data?.name ?? "");
             } else {
               return const SizedBox();
             }
           }),
         )),
       ]),
+    );
+  }
+
+  Widget content(String name) {
+    return Container(
+      padding: const EdgeInsets.only(left: 16, right: 16),
+      child: Text(
+        name,
+        style: QppTextStyles.web_20pt_title_m_white_C,
+      ),
     );
   }
 }
