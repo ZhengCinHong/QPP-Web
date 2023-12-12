@@ -17,7 +17,7 @@ class StateStats extends StateSection {
   Widget get sectionContent => StatsContent(stats: widget.data);
 
   @override
-  String get sectionTitle => 'Stats';
+  String get sectionTitle => 'Status';
 
   @override
   String get sectionTitleIconPath => QPPImages.desktop_icon_commodity_nft_stats;
