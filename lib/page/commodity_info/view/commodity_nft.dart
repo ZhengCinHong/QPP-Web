@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_body_top.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
 import 'package:qpp_example/page/commodity_info/view/item_nft_section/nft_section_properties.dart';
+import 'package:qpp_example/page/commodity_info/view/item_nft_section/nft_section_stats.dart';
 import 'package:qpp_example/page/commodity_info/view/mobile_info_divider.dart';
 import 'package:qpp_example/page/commodity_info/view/item_nft_section/nft_section_description.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
@@ -26,6 +27,7 @@ class NFTItemInfo extends StatelessWidget {
       Consumer(
         builder: (BuildContext context, WidgetRef ref, Widget? child) {
           var nft = ref.watch(itemSelectInfoProvider).nftMetaDataState.data;
+          var attr = nft!.attributes;
 
           return Container(
               color: QppColors.oxfordBlue,
@@ -36,10 +38,12 @@ class NFTItemInfo extends StatelessWidget {
                 children: [
                   // description
                   NFTSectionDescription(
-                    data: nft!,
+                    data: nft,
                   ),
                   // properties
-                  NFTSectionProperties(data: nft.attributes.propertiesSection)
+                  NFTSectionProperties(data: attr.propertiesSection),
+                  // stats
+                  NFTSectionStats(data: attr.statsSection),
                 ],
               ));
         },

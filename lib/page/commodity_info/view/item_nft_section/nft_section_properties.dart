@@ -31,9 +31,7 @@ class PropertiesContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return properties.isNotEmpty
-        ? PropertiesGrid(properties: properties)
-        : const SizedBox.shrink();
+    return PropertiesGrid(properties: properties);
   }
 }
 
