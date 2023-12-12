@@ -96,7 +96,11 @@ class ItemImgPhoto extends ConsumerWidget {
 
 /// 切圓形
 BoxDecoration _circleDecor() {
-  return const BoxDecoration(shape: BoxShape.circle);
+  return const BoxDecoration(
+    shape: BoxShape.circle,
+    // 一般物品底色, 有可能有透明圖片物品
+    color: QppColors.lightStPatricksBlue,
+  );
 }
 
 /// 切圓框線
