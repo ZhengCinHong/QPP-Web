@@ -5,6 +5,7 @@ import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 
+/// properties section
 class NFTSectionProperties<List> extends NFTSection {
   const NFTSectionProperties({super.key, required super.data});
 
@@ -30,10 +31,40 @@ class PropertiesContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ItemProperty(
-      property: properties[0],
+    return properties.isNotEmpty
+        ? PropertiesGrid(properties: properties)
+        : const SizedBox.shrink();
+  }
+}
+
+class PropertiesGrid extends StatelessWidget {
+  final List<NFTTrait> properties;
+  const PropertiesGrid({super.key, required this.properties});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(60, 20, 60, 20),
+      child: GridView.builder(
+          // 方向
+          scrollDirection: Axis.vertical,
+          // 是否根據 child 組件調整大小, 參考 https://juejin.cn/s/flutter%20gridview%20shrinkwrap
+          shrinkWrap: true,
+          itemCount: properties.length,
+          // grid 實現的規則
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              // child 間距
+              crossAxisSpacing: 12,
+              // child 間距
+              mainAxisSpacing: 12,
+              // child 高寬比
+              childAspectRatio: 1.85,
+              // child 最大寬度
+              maxCrossAxisExtent: 215),
+          itemBuilder: (context, count) {
+            return ItemProperty(property: properties[count]);
+          }),
     );
-    // return const SizedBox.shrink();
   }
 }
 
@@ -45,11 +76,8 @@ class ItemProperty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
-      constraints: const BoxConstraints(maxWidth: 223, maxHeight: 88),
-      width: double.infinity,
-      height: double.infinity,
-      margin: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+      alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
         color: QppColors.stPatricksBlue,
         border: Border.all(
@@ -59,6 +87,7 @@ class ItemProperty extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
