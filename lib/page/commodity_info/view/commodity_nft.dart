@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_body_top.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
+import 'package:qpp_example/page/commodity_info/view/item_nft_section/nft_section_levels.dart';
 import 'package:qpp_example/page/commodity_info/view/item_nft_section/nft_section_properties.dart';
 import 'package:qpp_example/page/commodity_info/view/item_nft_section/nft_section_stats.dart';
 import 'package:qpp_example/page/commodity_info/view/mobile_info_divider.dart';
@@ -44,6 +45,8 @@ class NFTItemInfo extends StatelessWidget {
                   NFTSectionProperties(data: attr.propertiesSection),
                   // stats
                   NFTSectionStats(data: attr.statsSection),
+                  // levels
+                  NFTSectionLevels(data: attr.levelsSection),
                 ],
               ));
         },
