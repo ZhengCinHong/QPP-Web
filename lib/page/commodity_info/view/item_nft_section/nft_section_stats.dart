@@ -63,6 +63,9 @@ class ItemStats extends StatelessWidget {
 
   // 組合顯示字串
   String get displayValue {
-    return '${trait.traitType} ${trait.value} of ${trait.maxValue}';
+    if (trait.maxValue.isNotEmpty) {
+      return '${trait.traitType} ${trait.value} of ${trait.maxValue}';
+    }
+    return '${trait.traitType} ${trait.value}';
   }
 }
