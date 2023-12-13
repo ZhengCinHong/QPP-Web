@@ -27,6 +27,7 @@ class StateProperties extends StateSection {
   String get sectionTitleIconPath =>
       QPPImages.desktop_icon_commodity_nft_properties;
 }
+
 class PropertiesGrid extends StatelessWidget {
   final List<NFTTrait> properties;
   const PropertiesGrid({super.key, required this.properties});
@@ -34,6 +35,8 @@ class PropertiesGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
+        // 關掉 over scroll 效果
+        physics: const BouncingScrollPhysics(),
         // 方向
         scrollDirection: Axis.vertical,
         // 是否根據 child 組件調整大小, 參考 https://juejin.cn/s/flutter%20gridview%20shrinkwrap

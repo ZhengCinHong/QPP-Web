@@ -35,6 +35,8 @@ class BoostContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+        // 關掉 over scroll 效果
+        physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         itemCount: boosts.length,

@@ -33,6 +33,8 @@ class StatsContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      // 關掉 over scroll 效果
+      physics: const BouncingScrollPhysics(),
       itemCount: stats.length,
       itemBuilder: (context, index) {
         return ItemStats(
