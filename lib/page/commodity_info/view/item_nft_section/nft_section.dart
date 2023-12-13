@@ -82,7 +82,7 @@ abstract class StateSection extends State<NFTSection>
         sizeFactor: _animation,
         axis: Axis.vertical,
         //
-        child: sectionContent,
+        child: Container(padding: contentPadding, child: sectionContent),
       ),
     ]);
   }
@@ -98,6 +98,12 @@ abstract class StateSection extends State<NFTSection>
 
   bool get isDesktop {
     return widget.isDesktop;
+  }
+
+  EdgeInsets get contentPadding {
+    return widget.isDesktop
+        ? const EdgeInsets.fromLTRB(60, 20, 60, 20)
+        : const EdgeInsets.fromLTRB(12, 15, 12, 15);
   }
 }
 

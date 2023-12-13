@@ -34,16 +34,13 @@ class BoostContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(60, 20, 60, 20),
-      child: ListView.builder(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: boosts.length,
-          itemBuilder: (context, index) {
-            return ItemBoost(boost: boosts[index]);
-          }),
-    );
+    return ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: boosts.length,
+        itemBuilder: (context, index) {
+          return ItemBoost(boost: boosts[index]);
+        });
   }
 }
 

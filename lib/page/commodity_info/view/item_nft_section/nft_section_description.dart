@@ -78,6 +78,13 @@ class NFTInfoRowPublisher extends InfoRow {
   }
 
   @override
+  rowPadding() {
+    return isDesktop
+        ? const EdgeInsets.fromLTRB(0, 14, 0, 14)
+        : const EdgeInsets.fromLTRB(0, 10, 0, 10);
+  }
+
+  @override
   Widget getContent(data) {
     return Builder(builder: (context) {
       // disable SelectionArea 游標
@@ -150,8 +157,8 @@ abstract class NFTInfoRow extends StatelessWidget {
 
   EdgeInsets get _padding {
     return isDesktop
-        ? const EdgeInsets.fromLTRB(60, 14, 60, 14)
-        : const EdgeInsets.fromLTRB(14, 10, 14, 10);
+        ? const EdgeInsets.fromLTRB(0, 14, 0, 14)
+        : const EdgeInsets.fromLTRB(0, 10, 0, 10);
   }
 
   double get titleWidth {

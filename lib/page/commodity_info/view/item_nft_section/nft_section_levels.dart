@@ -36,14 +36,11 @@ class LevelsContent extends StatelessWidget {
   Widget build(BuildContext context) {
     var level = getLevel();
     var upgrade = getUpgrade();
-    return Container(
-      padding: const EdgeInsets.fromLTRB(60, 20, 60, 20),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        ItemLevelsText(level: level),
-        ItemLevelsIndicator(level: level),
-        ItemLevelsUpgrade(upgrade: upgrade),
-      ]),
-    );
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      ItemLevelsText(level: level),
+      ItemLevelsIndicator(level: level),
+      ItemLevelsUpgrade(upgrade: upgrade),
+    ]);
   }
 
   // 取得顯示 level 的 trait

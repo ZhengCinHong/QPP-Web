@@ -32,19 +32,16 @@ class StatsContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(60, 20, 60, 20),
-      child: ListView.builder(
-        itemCount: stats.length,
-        itemBuilder: (context, index) {
-          return ItemStats(
-            trait: stats[index],
-          );
-        },
-        // 是否根據 child 組件調整大小
-        shrinkWrap: true,
-        scrollDirection: Axis.vertical,
-      ),
+    return ListView.builder(
+      itemCount: stats.length,
+      itemBuilder: (context, index) {
+        return ItemStats(
+          trait: stats[index],
+        );
+      },
+      // 是否根據 child 組件調整大小
+      shrinkWrap: true,
+      scrollDirection: Axis.vertical,
     );
   }
 }

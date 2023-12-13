@@ -32,16 +32,13 @@ class DateContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(60, 20, 60, 20),
-      child: ListView.builder(
-          itemCount: dates.length,
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          itemBuilder: (context, index) {
-            return ItemDate(date: dates[index]);
-          }),
-    );
+    return ListView.builder(
+        itemCount: dates.length,
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        itemBuilder: (context, index) {
+          return ItemDate(date: dates[index]);
+        });
   }
 }
 
@@ -52,7 +49,7 @@ class ItemDate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 12),
+      margin: const EdgeInsets.only(top: 6, bottom: 6),
       child: Text(
         displayDate,
         style: QppTextStyles.web_16pt_body_platinum_L,

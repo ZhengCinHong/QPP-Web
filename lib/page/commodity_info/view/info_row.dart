@@ -29,7 +29,7 @@ abstract class InfoRow extends ConsumerWidget {
 
     return response.isCompleted
         ? Padding(
-            padding: _rowPadding(),
+            padding: rowPadding(),
             child: getContent(data),
           )
         : const SizedBox.shrink();
@@ -39,7 +39,7 @@ abstract class InfoRow extends ConsumerWidget {
 
   Widget getContent(dynamic data);
 
-  _rowPadding() {
+  rowPadding() {
     return isDesktop
         ? const EdgeInsets.fromLTRB(60, 14, 60, 14)
         : const EdgeInsets.fromLTRB(14, 10, 14, 10);
@@ -67,7 +67,7 @@ class VoucherInfoRowInfo extends InfoRowInfo {
 
     return response.isCompleted
         ? Padding(
-            padding: _rowPadding(),
+            padding: rowPadding(),
             child: getContent(data.item),
           )
         : const SizedBox.shrink();
