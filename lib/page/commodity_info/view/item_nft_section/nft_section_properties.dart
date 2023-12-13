@@ -7,7 +7,8 @@ import 'package:qpp_example/utils/qpp_text_styles.dart';
 
 /// properties section
 class NFTSectionProperties<List> extends NFTSection {
-  const NFTSectionProperties({super.key, required super.data});
+  const NFTSectionProperties.desktop({super.key, required super.data}):super.desktop();
+  const NFTSectionProperties.mobile({super.key, required super.data}):super.mobile();
 
   @override
   State<StatefulWidget> createState() => StateProperties();

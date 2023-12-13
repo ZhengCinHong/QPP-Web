@@ -7,7 +7,10 @@ import 'package:qpp_example/utils/qpp_text_styles.dart';
 
 /// level section
 class NFTSectionLevels<List> extends NFTSection {
-  const NFTSectionLevels({super.key, required super.data});
+  const NFTSectionLevels.desktop({super.key, required super.data})
+      : super.desktop();
+  const NFTSectionLevels.mobile({super.key, required super.data})
+      : super.mobile();
 
   @override
   State<StatefulWidget> createState() => StateLevels();

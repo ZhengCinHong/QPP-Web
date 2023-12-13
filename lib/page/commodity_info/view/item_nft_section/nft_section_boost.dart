@@ -7,7 +7,10 @@ import 'package:qpp_example/utils/qpp_text_styles.dart';
 
 /// boost section
 class NFTSectionBoost extends NFTSection {
-  const NFTSectionBoost({super.key, required super.data});
+  const NFTSectionBoost.desktop({super.key, required super.data})
+      : super.desktop();
+  const NFTSectionBoost.mobile({super.key, required super.data})
+      : super.mobile();
 
   @override
   State<StatefulWidget> createState() => StateBoost();

@@ -40,19 +40,35 @@ class NFTItemInfo extends StatelessWidget {
               child: Column(
                 children: [
                   // description
-                  NFTSectionDescription(
-                    data: nft,
-                  ),
+                  isDesktop
+                      ? NFTSectionDescription.desktop(
+                          data: nft,
+                        )
+                      : NFTSectionDescription.mobile(
+                          data: nft,
+                        ),
                   // properties
-                  NFTSectionProperties(data: attr.propertiesSection),
+                  isDesktop
+                      ? NFTSectionProperties.desktop(
+                          data: attr.propertiesSection)
+                      : NFTSectionProperties.mobile(
+                          data: attr.propertiesSection),
                   // stats
-                  NFTSectionStats(data: attr.statsSection),
+                  isDesktop
+                      ? NFTSectionStats.desktop(data: attr.statsSection)
+                      : NFTSectionStats.mobile(data: attr.statsSection),
                   // levels
-                  NFTSectionLevels(data: attr.levelsSection),
+                  isDesktop
+                      ? NFTSectionLevels.desktop(data: attr.levelsSection)
+                      : NFTSectionLevels.mobile(data: attr.levelsSection),
                   // boosts
-                  NFTSectionBoost(data: attr.boostSection),
+                  isDesktop
+                      ? NFTSectionBoost.desktop(data: attr.boostSection)
+                      : NFTSectionBoost.mobile(data: attr.boostSection),
                   // date
-                  NFTSectionDate(data: attr.dateSection),
+                  isDesktop
+                      ? NFTSectionDate.desktop(data: attr.dateSection)
+                      : NFTSectionDate.mobile(data: attr.dateSection),
                 ],
               ));
         },

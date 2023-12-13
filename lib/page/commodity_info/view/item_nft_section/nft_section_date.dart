@@ -6,7 +6,10 @@ import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 
 class NFTSectionDate extends NFTSection {
-  const NFTSectionDate({super.key, required super.data});
+  const NFTSectionDate.desktop({super.key, required super.data})
+      : super.desktop();
+  const NFTSectionDate.mobile({super.key, required super.data})
+      : super.mobile();
 
   @override
   State<StatefulWidget> createState() => StateDate();

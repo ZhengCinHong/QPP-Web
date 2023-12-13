@@ -13,8 +13,10 @@ import 'package:qpp_example/utils/qpp_text_styles.dart';
 
 /// Description Section
 class NFTSectionDescription<QppNFT> extends NFTSection {
-  const NFTSectionDescription({Key? key, required super.data})
-      : super(key: key);
+  const NFTSectionDescription.desktop({super.key, required super.data})
+      : super.desktop();
+  const NFTSectionDescription.mobile({super.key, required super.data})
+      : super.mobile();
 
   @override
   StateDescription createState() => StateDescription();
@@ -22,7 +24,10 @@ class NFTSectionDescription<QppNFT> extends NFTSection {
 
 class StateDescription extends StateSection {
   @override
-  Widget get sectionContent => DescriptionContent(nft: widget.data);
+  Widget get sectionContent => DescriptionContent(
+        nft: widget.data,
+        isDesktop: isDesktop,
+      );
 
   @override
   String get sectionTitle => 'Description';
@@ -35,18 +40,25 @@ class StateDescription extends StateSection {
 /// 發行者
 class DescriptionContent extends StatelessWidget {
   final QppNFT nft;
+  final bool isDesktop;
 
-  const DescriptionContent({super.key, required this.nft});
+  const DescriptionContent(
+      {super.key, required this.nft, this.isDesktop = true});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const NFTInfoRowPublisher(),
+        isDesktop
+            ? const NFTInfoRowPublisher.desktop()
+            : const NFTInfoRowPublisher.mobile(),
         // 連結
-        NFTInfoRowIntroLink(data: nft.externalUrl),
+        NFTInfoRowIntroLink(data: nft.externalUrl, isDesktop: isDesktop),
         // 說明
-        NFTInfoRowDescription(data: nft.description)
+        NFTInfoRowDescription(
+          data: nft.description,
+          isDesktop: isDesktop,
+        )
       ],
     );
   }
@@ -57,7 +69,8 @@ class DescriptionContent extends StatelessWidget {
 /// 發行者資訊
 class NFTInfoRowPublisher extends InfoRow {
   /// 顯示發行者
-  const NFTInfoRowPublisher({super.key}) : super.desktop();
+  const NFTInfoRowPublisher.desktop({super.key}) : super.desktop();
+  const NFTInfoRowPublisher.mobile({super.key}) : super.mobile();
 
   @override
   ApiResponse getResponse(WidgetRef ref) {
@@ -79,7 +92,7 @@ class NFTInfoRowPublisher extends InfoRow {
             child: Row(
               children: [
                 SizedBox(
-                  width: 120,
+                  width: titleWidth,
                   child: Text(
                     context.tr(QppLocales.commodityInfoPublisher),
                     textAlign: TextAlign.start,
@@ -122,22 +135,33 @@ class NFTInfoRowPublisher extends InfoRow {
 /// 物品資訊 Row
 abstract class NFTInfoRow extends StatelessWidget {
   final String data;
-  const NFTInfoRow({super.key, required this.data});
+  final bool isDesktop;
+  const NFTInfoRow({super.key, required this.data, this.isDesktop = true});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(60, 14, 60, 14),
+      padding: _padding,
       child: getContent(data),
     );
   }
 
   Widget getContent(String data);
+
+  EdgeInsets get _padding {
+    return isDesktop
+        ? const EdgeInsets.fromLTRB(60, 14, 60, 14)
+        : const EdgeInsets.fromLTRB(14, 10, 14, 10);
+  }
+
+  double get titleWidth {
+    return isDesktop ? 120 : 90;
+  }
 }
 
 /// NFT 物品連結資訊
 class NFTInfoRowIntroLink extends NFTInfoRow {
-  const NFTInfoRowIntroLink({super.key, required super.data});
+  const NFTInfoRowIntroLink({super.key, required super.data, super.isDesktop});
 
   @override
   Widget getContent(data) {
@@ -148,7 +172,7 @@ class NFTInfoRowIntroLink extends NFTInfoRow {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 120,
+            width: titleWidth,
             child: Text(
               context.tr(QppLocales.commodityInfoTitle),
               textAlign: TextAlign.start,
@@ -168,7 +192,8 @@ class NFTInfoRowIntroLink extends NFTInfoRow {
 
 /// NFT 物品連結資訊
 class NFTInfoRowDescription extends NFTInfoRow {
-  const NFTInfoRowDescription({super.key, required super.data});
+  const NFTInfoRowDescription(
+      {super.key, required super.data, super.isDesktop});
 
   @override
   Widget getContent(data) {
@@ -179,7 +204,7 @@ class NFTInfoRowDescription extends NFTInfoRow {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 120,
+            width: titleWidth,
             child: Text(
               context.tr(QppLocales.commodityInfoInfo),
               textAlign: TextAlign.start,

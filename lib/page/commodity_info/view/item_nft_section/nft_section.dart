@@ -6,8 +6,14 @@ import 'package:qpp_example/utils/qpp_text_styles.dart';
 /// NFTSection 抽象類
 abstract class NFTSection<T> extends StatefulWidget {
   final T data;
+  final bool isDesktop;
 
-  const NFTSection({Key? key, required this.data}) : super(key: key);
+  const NFTSection.desktop({Key? key, required this.data})
+      : isDesktop = true,
+        super(key: key);
+  const NFTSection.mobile({Key? key, required this.data})
+      : isDesktop = false,
+        super(key: key);
 }
 
 /// NFTStateSection 抽象類
@@ -55,10 +61,11 @@ abstract class StateSection extends State<NFTSection>
     return Column(children: [
       NFTInfoSectionItemTitle(
         arrowKey: arrowKey,
-        // section icon 圖片路徑 
+        // section icon 圖片路徑
         iconPath: sectionTitleIconPath,
         // section title
         title: sectionTitle,
+        isDesktop: widget.isDesktop,
         onTap: () {
           arrowKey.currentState?.rotate();
           setState(() {
@@ -88,6 +95,10 @@ abstract class StateSection extends State<NFTSection>
 
   /// 內容 widget
   Widget get sectionContent;
+
+  bool get isDesktop {
+    return widget.isDesktop;
+  }
 }
 
 /// NFT Section title 元件
@@ -99,6 +110,8 @@ class NFTInfoSectionItemTitle extends StatelessWidget {
 
   final GlobalKey arrowKey;
 
+  final bool isDesktop;
+
   final Function()? onTap;
 
   const NFTInfoSectionItemTitle(
@@ -106,6 +119,7 @@ class NFTInfoSectionItemTitle extends StatelessWidget {
       required this.arrowKey,
       required this.iconPath,
       required this.title,
+      required this.isDesktop,
       this.onTap})
       : super(key: key);
 
@@ -117,7 +131,7 @@ class NFTInfoSectionItemTitle extends StatelessWidget {
       },
       child: Container(
         height: 44.0,
-        padding: const EdgeInsets.only(left: 60.0, right: 60.0),
+        padding: _padding,
         decoration: const BoxDecoration(color: QppColors.stPatricksBlue),
         child: Row(
           children: [
@@ -135,10 +149,20 @@ class NFTInfoSectionItemTitle extends StatelessWidget {
             ),
             const Expanded(child: SizedBox()),
             // 上/下箭頭
-            BtnArrowUpDown(key: arrowKey, size: 20),
+            BtnArrowUpDown(key: arrowKey, size: _arrowSize),
           ],
         ),
       ),
     );
+  }
+
+  EdgeInsets get _padding {
+    return isDesktop
+        ? const EdgeInsets.only(left: 60.0, right: 60.0)
+        : const EdgeInsets.only(left: 12.0, right: 12.0);
+  }
+
+  double get _arrowSize {
+    return isDesktop ? 20 : 16;
   }
 }
