@@ -2,8 +2,9 @@ import 'package:flutter/foundation.dart';
 
 // server 常數放置
 class ServerConst {
-  ///
-  static const routerHost = "https://qpptec.com";
+  /// TODO: 先改成目前站點
+  // static const routerHost = "https://qpptec.com";
+  static const routerHost = "https://webside-dev.qpptec.com/";
 
   /// 依照裝置跳轉Google Play Store or Apple App Store
   static const appStoreUrl = 'https://qpptec.com/app/go';
