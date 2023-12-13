@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qpp_example/api/core/api_response.dart';
+import 'package:qpp_example/extension/string/text.dart';
 import 'package:qpp_example/model/item_img_data.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
@@ -28,41 +29,32 @@ class ItemImgPhoto extends ConsumerWidget {
       ItemImgData imgData = itemPhotoState.data!;
       // 確認是否為 NFT 圖片
       if (imgData.isNFT) {
-        return _imgNFT(imgData.path, imgData.bgColor);
+        return NFTItemImg(
+            isMobile: isMobile,
+            path: imgData.path,
+            background: imgData.bgColor);
       }
-      return _img(itemPhotoState.data!.path);
+      return NormalItemImg(isMobile: isMobile, path: itemPhotoState.data!.path);
+    } else if (itemPhotoState.status == Status.error) {
+      return NormalItemImg(isMobile: isMobile);
     }
-    return const SizedBox(
-      height: 0,
-    );
+    return const SizedBox.shrink();
   }
+}
 
-  /// desktop 一般物品, size 100 or 88, 圓形
-  Container _img(String path) {
-    return Container(
-      margin: const EdgeInsets.only(top: 83),
-      width: isMobile ? 88 : 100,
-      clipBehavior: Clip.antiAlias,
-      // decoration 負責切形狀
-      decoration: _circleDecor(),
-      // foregroundDecoration 畫框線用
-      foregroundDecoration: _circleDecorBorder(),
-      child: Image.network(
-        path,
-        // 圖片讀取錯誤處理
-        errorBuilder: (context, error, stackTrace) {
-          return Image.asset(
-            QPPImages.desktop_pic_commodity_avatar_default,
-          );
-        },
-        filterQuality: FilterQuality.high,
-        fit: BoxFit.fitWidth,
-      ),
-    );
-  }
+/// desktop NFT 物品, size 180 or 144, radius 8
+class NFTItemImg extends StatelessWidget {
+  final bool isMobile;
+  final String path;
+  final Color background;
+  const NFTItemImg(
+      {super.key,
+      required this.isMobile,
+      required this.path,
+      required this.background});
 
-  /// desktop NFT 物品, size 180 or 144, radius 8
-  Container _imgNFT(String path, Color background) {
+  @override
+  Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 48),
       width: isMobile ? 144 : 180,
@@ -94,6 +86,45 @@ class ItemImgPhoto extends ConsumerWidget {
   }
 }
 
+/// 一般物品圖片
+class NormalItemImg extends StatelessWidget {
+  // 是否為 mobile layout
+  final bool isMobile;
+  // 圖片位址, 若為 null 顯示預設
+  final String? path;
+  const NormalItemImg({super.key, required this.isMobile, this.path});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(top: 83),
+      width: isMobile ? 88 : 100,
+      clipBehavior: Clip.antiAlias,
+      // decoration 負責切形狀
+      decoration: _circleDecor(),
+      // foregroundDecoration 畫框線用
+      foregroundDecoration: _circleDecorBorder(),
+      child: _img,
+    );
+  }
+
+  Widget get _img {
+    if (path.isNullOrEmpty) {
+      return Image.asset(
+        QPPImages.desktop_pic_commodity_avatar_default,
+        filterQuality: FilterQuality.high,
+        fit: BoxFit.fitWidth,
+      );
+    }
+    // 錯誤處理在 model 做完了
+    return Image.network(
+      path!,
+      filterQuality: FilterQuality.high,
+      fit: BoxFit.fitWidth,
+    );
+  }
+}
+
 /// 切圓形
 BoxDecoration _circleDecor() {
   return const BoxDecoration(
@@ -107,7 +138,6 @@ BoxDecoration _circleDecor() {
 BoxDecoration _circleDecorBorder() {
   return BoxDecoration(
     shape: BoxShape.circle,
-    // TODO: 確認框線顏色
     border: Border.all(color: QppColors.lapisLazuli, width: 1.5),
   );
 }
@@ -124,8 +154,7 @@ BoxDecoration _rectDecor({required Color background}) {
 BoxDecoration _rectDecorBorder() {
   return BoxDecoration(
       shape: BoxShape.rectangle,
-      // TODO: 確認框線顏色
-      border: Border.all(color: QppColors.oxfordBlue, width: 1.0),
+      border: Border.all(color: QppColors.midnightBlue, width: 1.0),
       borderRadius: const BorderRadius.all(Radius.circular(8.0)));
 }
 

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:qpp_example/api/core/api_response.dart';
 import 'package:qpp_example/api/client/api/client_api.dart';
@@ -6,6 +7,7 @@ import 'package:qpp_example/api/client/response/multi_language_item_data.dart';
 import 'package:qpp_example/api/client/response/multi_language_item_description_select.dart';
 import 'package:qpp_example/api/client/response/multi_language_item_intro_link_select.dart';
 import 'package:qpp_example/api/client/response/user_select_info.dart';
+import 'package:qpp_example/api/core/http_service.dart';
 import 'package:qpp_example/api/local/api/local_api.dart';
 import 'package:qpp_example/api/local/response/base_local_response.dart';
 import 'package:qpp_example/api/local/response/get_vote_info.dart';
@@ -204,12 +206,21 @@ class CommodityInfoModel extends ChangeNotifier {
   }
 
   /// 取得物品圖片
-  getItemImage(int itemId, int creatorID) {
+  getItemImage(int itemId, int creatorID) async {
     var timeUTC = DateTime.now().millisecondsSinceEpoch;
     String itemPhotoUrl =
         QppImageUtils.getItemImageURL(creatorID, itemId, timeStamp: timeUTC);
-
-    itemPhotoState = ApiResponse.completed(ItemImgData(itemPhotoUrl));
+    // 確認是否有圖片, 有圖的要顯示框線, 沒圖或拿不到顯示預設圖不顯示框線
+    try {
+      // 成功表示有圖
+      await HttpService.instance.dio.get(itemPhotoUrl,
+          options: Options(responseType: ResponseType.bytes));
+      itemPhotoState = ApiResponse.completed(ItemImgData(itemPhotoUrl));
+    } on DioException catch (exception) {
+      // 無圖或取得圖片錯誤
+      itemPhotoState = ApiResponse.error(exception.message);
+      debugPrint(exception.message);
+    }
     notifyListeners();
   }
 
