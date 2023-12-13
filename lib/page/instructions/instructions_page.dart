@@ -1,14 +1,22 @@
+import 'dart:convert';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:qpp_example/common_ui/qpp_framework/qpp_main_framework.dart';
+import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/string/text.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
+import 'package:qpp_example/page/instructions/copy_text_menu.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
+import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
 
 /// 說明首頁
 class InstructionsPage extends StatelessWidget {
+  static String privacyJsonTextName = "text";
+  static String privacyJsonTipTextName = "tipText";
+
   final InstructionsType type;
 
   /// 使用者條款
@@ -27,80 +35,104 @@ class InstructionsPage extends StatelessWidget {
     final isDesktop = size.width.determineScreenStyle().isDesktop;
 
     const olTagLineHeight = 25;
-    const double fontSize = 16;
 
-    const textStyle = TextStyle(
-        color: QppColors.white,
-        fontSize: fontSize,
-        decoration: TextDecoration.none,
-        decorationStyle: TextDecorationStyle.solid);
+    const srcTextStyle = QppTextStyles.mobile_16pt_title_white_L;
+    final fontSize = srcTextStyle.fontSize ?? 16;
 
-    double paddingHorizontal = width * 0.16;
+    // 內文樣式
+    final textStyle = TextStyle(
+      color: srcTextStyle.color,
+      fontSize: fontSize,
+      decoration: TextDecoration.none,
+      decorationStyle: TextDecorationStyle.solid,
+    );
+
+    // 標題樣式
+    const titleTextStyle = TextStyle(
+      color: QppColors.mayaBlue,
+      fontSize: 44,
+      decoration: TextDecoration.none,
+    );
+
+    // 子標題樣式
+    const subTitleTextStyle = TextStyle(
+      color: QppColors.mayaBlue,
+      fontSize: 24,
+      decoration: TextDecoration.none,
+    );
+
+    // 有序項目樣式
+    final olTextStyle = TextStyle(
+      height:
+          olTagLineHeight / fontSize, // 25(line-height)/16(fontSize) = 1.5625
+      color: textStyle.color,
+      fontSize: fontSize,
+      decoration: TextDecoration.none,
+      decorationStyle: TextDecorationStyle.solid,
+    );
+
+    // 顯示寬度處理
+    final paddingHorizontal = width * 0.16;
+    final listWidth = size.width - (paddingHorizontal * 2);
+
+    // 滾輪處理
+    final scrollController = ScrollController();
 
     return SelectionArea(
-      // ignore: sized_box_for_whitespace
-      child: Container(
-        height: double.infinity,
-        child: ListView.builder(
-          padding: isDesktop
-              ? EdgeInsets.only(
-                  left: paddingHorizontal,
-                  top: height * 0.1,
-                  right: paddingHorizontal)
-              : EdgeInsets.only(
-                  left: paddingHorizontal,
-                  top: height * 0.1,
-                  right: paddingHorizontal),
-          itemCount: texts.length,
-          shrinkWrap: true,
-          itemBuilder: (BuildContext context, int index) {
-            return HtmlWidget(
-              texts[index],
-              customStylesBuilder: customStylesBuilder(olTagLineHeight),
-              customWidgetBuilder: listCustomWidgetBuilder(
-                size: size,
-                fontSize: fontSize,
-                olTagLineHeight: olTagLineHeight,
+      child: Scaffold(
+        // ignore: sized_box_for_whitespace
+        body: Container(
+          height: double.infinity,
+          child: ListView.builder(
+            controller: scrollController,
+            padding: isDesktop
+                ? EdgeInsets.only(
+                    left: paddingHorizontal,
+                    top: height * 0.1,
+                    right: paddingHorizontal,
+                    bottom: height * 0.1,
+                  )
+                : EdgeInsets.only(
+                    left: paddingHorizontal,
+                    top: height * 0.1,
+                    right: paddingHorizontal,
+                    bottom: height * 0.1,
+                  ),
+            itemCount: texts.length,
+            shrinkWrap: true,
+            itemBuilder: (BuildContext context, int index) {
+              return HtmlWidget(
+                texts[index],
+                customStylesBuilder: customStylesBuilder(olTagLineHeight),
+                customWidgetBuilder: listCustomWidgetBuilder(
+                  listWidth: listWidth,
+                  olTagLineHeight: olTagLineHeight,
+                  textStyle: textStyle,
+                  titleTextStyle: titleTextStyle,
+                  subTitleTextStyle: subTitleTextStyle,
+                  olTextStyle: olTextStyle,
+                  scrollController: scrollController,
+                ),
+                renderMode: RenderMode.column,
                 textStyle: textStyle,
-              ),
-              renderMode: RenderMode.column,
-              textStyle: textStyle,
-            );
-          },
-        ),
-      ).addDesktopBgKvBackgroundImage(),
+              );
+            },
+          ),
+        ).addDesktopBgKvBackgroundImage(),
+      ),
     );
   }
 
   /// 清單客製化渲染處理
-  CustomWidgetBuilder listCustomWidgetBuilder(
-      {required Size size,
-      required double fontSize,
-      required int olTagLineHeight,
-      required TextStyle textStyle}) {
-    final width = size.width;
-
-    const titleTextStyle = TextStyle(
-        color: QppColors.mayaBlue,
-        fontSize: 44,
-        decoration: TextDecoration.none);
-
-    const subTitleTextStyle = TextStyle(
-        color: QppColors.mayaBlue,
-        fontSize: 24,
-        decoration: TextDecoration.none);
-
-    final olTextStyle = TextStyle(
-        height:
-            olTagLineHeight / fontSize, // 25(line-height)/16(fontSize) = 1.5625
-        color: QppColors.white,
-        fontSize: fontSize,
-        decoration: TextDecoration.none,
-        decorationStyle: TextDecorationStyle.solid);
-
-    double paddingHorizontal = width * 0.16;
-    double listWidth = width - (paddingHorizontal * 2);
-
+  CustomWidgetBuilder listCustomWidgetBuilder({
+    required double listWidth,
+    required int olTagLineHeight,
+    required TextStyle textStyle,
+    required TextStyle titleTextStyle,
+    required TextStyle subTitleTextStyle,
+    required TextStyle olTextStyle,
+    required ScrollController scrollController,
+  }) {
     return (element) {
       if (element.className == InstructionsHtmlClass.sectionTitle.name) {
         final size = element.innerHtml.size(titleTextStyle);
@@ -147,6 +179,47 @@ class InstructionsPage extends StatelessWidget {
             const SizedBox(height: 48)
           ],
         );
+      } else if (element.className ==
+          InstructionsHtmlClass.privacySendEmail.name) {
+        List<Widget> result = [];
+
+        final childrens = element.children;
+        for (var children in childrens) {
+          // 假如是超連結
+          if (children.localName == "a") {
+            // 取得連結
+            String href = "";
+            if (children.attributes.containsKey('href')) {
+              final srcHref = children.attributes['href'];
+
+              if (srcHref != null) {
+                href = srcHref;
+              }
+            }
+
+            final text = json.decode(children.innerHtml);
+
+            // 生成按鈕
+            final copyTextMenu = CopyTextMenu.create(
+              text: text[InstructionsPage.privacyJsonTextName],
+              textStyle: textStyle,
+              tipText: text[InstructionsPage.privacyJsonTipTextName],
+              tipTextStyle: QppTextStyles.web_16pt_body_canary_yellow_C,
+              scrollController: scrollController,
+              onTap: () async {
+                await Clipboard.setData(ClipboardData(text: href));
+              },
+            );
+
+            result.add(const SizedBox(width: 4));
+            result.add(copyTextMenu);
+            result.add(const SizedBox(width: 4));
+          } else {
+            result.add(Text(children.innerHtml, style: textStyle));
+          }
+        }
+
+        return Wrap(children: result);
       }
 
       return null;
@@ -194,6 +267,7 @@ class InstructionsPage extends StatelessWidget {
           );
         }
       }
+
       return null;
     };
   }
@@ -217,7 +291,10 @@ enum InstructionsHtmlClass {
   subSectionTitle,
 
   /// 段落結束
-  subSectionEnd
+  subSectionEnd,
+
+  /// 隱私權寄信
+  privacySendEmail
 }
 
 /// html 元素屬性
@@ -342,15 +419,26 @@ extension InstructionsTypeExtension on InstructionsType {
         result.addPrivacyString(content, QppLocales.privacyParagraph8P);
         result.addPrivacyString(content, QppLocales.privacyParagraph9Title);
 
-        result.add(InstructionsHtmlTag.paragraph.create([
-          content.tr(QppLocales.privacyParagraph9P1),
-          "<a class="
-              "text-yellow-100"
-              "  href="
-              "mailto:contact@fooish.com"
-              ">${content.tr(QppLocales.privacyParagraph9SendMail)}</a>",
-          content.tr(QppLocales.privacyParagraph9P2),
-        ].join("")));
+        final paragraph9P1Text =
+            "<h1>${content.tr(QppLocales.privacyParagraph9P1)}</h1>";
+
+        final sendEmailText = '''{
+          "${InstructionsPage.privacyJsonTextName}":"${content.tr(QppLocales.privacyParagraph9SendMail)}",
+          "${InstructionsPage.privacyJsonTipTextName}":"${content.tr(QppLocales.privacyParagraph9Copy)}"
+        }''';
+
+        final privacySendEmail = "<a href="
+            "${ServerConst.mailStr}"
+            ">$sendEmailText</a>";
+
+        final paragraph9P2Text =
+            "<h1>${content.tr(QppLocales.privacyParagraph9P2)}</h1>";
+
+        result.add(
+          "<div class="
+          "${InstructionsHtmlClass.privacySendEmail.name}"
+          ">$paragraph9P1Text$privacySendEmail$paragraph9P2Text</div>",
+        );
 
       case InstructionsType.term:
         result.addTermString(content, QppLocales.termTitle);
