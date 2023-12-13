@@ -7,7 +7,6 @@ import 'package:qpp_example/page/commodity_info/view/item_nft_section/nft_sectio
 import 'package:qpp_example/page/commodity_info/view/item_nft_section/nft_section_levels.dart';
 import 'package:qpp_example/page/commodity_info/view/item_nft_section/nft_section_properties.dart';
 import 'package:qpp_example/page/commodity_info/view/item_nft_section/nft_section_stats.dart';
-import 'package:qpp_example/page/commodity_info/view/mobile_info_divider.dart';
 import 'package:qpp_example/page/commodity_info/view/item_nft_section/nft_section_description.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 
@@ -22,10 +21,6 @@ class NFTItemInfo extends StatelessWidget {
     return Column(children: [
       // 資料區 上半部
       const CommodityBodyTop(),
-      // 若為 Mobile 版面, 要顯示黑色分隔線
-      MobileInfoDivider(
-        isMobile: !isDesktop,
-      ),
       // 資料區下半部
       Consumer(
         builder: (BuildContext context, WidgetRef ref, Widget? child) {
