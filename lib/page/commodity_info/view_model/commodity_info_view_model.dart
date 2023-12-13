@@ -44,6 +44,12 @@ class CommodityInfoModel extends ChangeNotifier {
   /// 物品圖片狀態
   ApiResponse<ItemImgData> itemPhotoState = ApiResponse.initial();
 
+  /// 自己的投票陣列
+  List<int>? voteArrayData;
+
+  /// 是否確認選項
+  bool isCheck = false;
+
   final client = ClientApi.client;
 
   /// 開始取得物品資訊
@@ -223,6 +229,7 @@ class CommodityInfoModel extends ChangeNotifier {
         // 取資料成功
         QppVote vote = getVoteInfoResponse.getVoteData(item);
         voteDataState = ApiResponse.completed(vote);
+        voteArrayData = vote.voteArrayData;
       } else {
         // 取資料失敗
         voteDataState =
@@ -234,5 +241,19 @@ class CommodityInfoModel extends ChangeNotifier {
       voteDataState = ApiResponse.error(onError.toString());
       notifyListeners();
     });
+  }
+
+  /// 選擇選項
+  selectedOption(int index, int option) {
+    // 創建一個新的 List<int> 對象，否則直接更改riverpod會以為沒有改變
+    voteArrayData = List<int>.from(voteArrayData ?? []);
+    voteArrayData?[index] = option;
+    notifyListeners();
+  }
+
+  /// 確認選項
+  checkOptions(bool isCheck) {
+    this.isCheck = isCheck;
+    notifyListeners();
   }
 }

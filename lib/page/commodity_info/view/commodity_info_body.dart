@@ -13,7 +13,7 @@ import 'package:qpp_example/page/commodity_info/view/commodity_empty.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_nft.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_normal.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_vote.dart';
-import 'package:qpp_example/page/commodity_info/view_model/commodity_info_model.dart';
+import 'package:qpp_example/page/commodity_info/view_model/commodity_info_view_model.dart';
 import 'package:qpp_example/universal_link/universal_link_data.dart';
 import 'package:qpp_example/utils/screen.dart';
 import 'package:qpp_example/utils/qpp_color.dart';

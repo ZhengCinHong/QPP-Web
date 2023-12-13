@@ -9,6 +9,8 @@ import 'package:qpp_example/common_ui/qpp_dialog/open_qpp_dialog.dart';
 import 'package:qpp_example/common_ui/qpp_dialog/qrcode_dialog.dart';
 import 'package:qpp_example/common_view_model/auth_service/view_model/auth_service_view_model.dart';
 import 'package:qpp_example/extension/build_context.dart';
+import 'package:qpp_example/localization/qpp_locales.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/shared_prefs_utils.dart';
 
 /// 對話框擴充
@@ -18,14 +20,14 @@ extension DialogVoid on void {
     showDialog(
       context: context,
       builder: (context) {
-        final text = context.tr('commodity_info_vote_login');
-        final subText = context.tr('commodity_info_vote_login_p');
+        final text = context.tr(QppLocales.commodityInfoVoteLogin);
+        final subText = context.tr(QppLocales.commodityInfoVoteLoginP);
         final timerText =
-            '${context.tr('commodity_info_countdown')}%s${context.tr('commodity_info_seconds')}';
+            '${context.tr(QppLocales.commodityInfoCountdown)}%s${context.tr(QppLocales.commodityInfoSeconds)}';
 
         // showDialog要加上center不然他不知道位置，會導致設定的寬高的失效
         return Center(
-          child: !context.isDesktopPlatform
+          child: context.isDesktopPlatform
               ? QRCodeDialog(
                   text: text,
                   subText: subText,
@@ -54,9 +56,9 @@ extension DialogVoid on void {
           child: CImageDialog(
             height: isDesktopPlatform ? 403 : 379,
             width: isDesktopPlatform ? 780 : 327,
-            image: 'pic-successful.svg',
-            text: context.tr('commodity_info_vote_success'),
-            subText: context.tr('commodity_info_vote_success_p'),
+            image: QPPImages.pic_successful,
+            text: context.tr(QppLocales.commodityInfoVoteSuccess),
+            subText: context.tr(QppLocales.commodityInfoVoteSuccessP),
           ),
         );
       },
@@ -75,8 +77,8 @@ extension DialogVoid on void {
           child: CImageDialog(
             height: isDesktopPlatform ? 403 : 379,
             width: isDesktopPlatform ? 780 : 327,
-            image: 'pic-fail.svg',
-            text: context.tr('commodity_info_vote_fault'),
+            image: QPPImages.pic_fail,
+            text: context.tr(QppLocales.commodityInfoVoteFault),
             subText: 'subText',
           ),
         );
@@ -91,14 +93,14 @@ extension DialogVoid on void {
       builder: (context) {
         final isDesktopPlatform = context.isDesktopPlatform;
 
-        // showDialog要加上center不然他不知道位置，會導致設定的寬高的失效
         return Consumer(builder: (context, ref, child) {
+          // showDialog要加上center不然他不知道位置，會導致設定的寬高的失效
           return Center(
             child: CActionsDialog(
               height: isDesktopPlatform ? 217 : 210,
               width: isDesktopPlatform ? 540 : 327,
-              text: context.tr('alert_logout'),
-              subText: context.tr('alert_logoutTip'),
+              text: context.tr(QppLocales.alertLogout),
+              subText: context.tr(QppLocales.alertLogoutTip),
               actions: [
                 CDialogAction(
                   style: CDialogActionStyle.cancel,

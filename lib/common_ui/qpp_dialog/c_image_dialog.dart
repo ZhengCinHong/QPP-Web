@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qpp_example/common_ui/qpp_button/dialog_action_button.dart';
 import 'package:qpp_example/extension/build_context.dart';
@@ -49,7 +48,7 @@ class CImageDialog extends StatelessWidget {
             direction: isDesktopPlatform ? Axis.horizontal : Axis.vertical,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(image, height: 119, width: 180),
+              Image.asset(image, height: 119, width: 180),
               const SizedBox(height: 36, width: 16),
               Text(
                 text,
