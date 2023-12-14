@@ -6,44 +6,40 @@ import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 
 /// boost section
-class NFTSectionBoost extends NFTSection {
-  const NFTSectionBoost.desktop({super.key, required super.data})
-      : super.desktop();
-  const NFTSectionBoost.mobile({super.key, required super.data})
-      : super.mobile();
+class BoostExpand extends NFTExpand<List> {
+  const BoostExpand.desktop({super.key, required super.data}) : super.desktop();
+  const BoostExpand.mobile({super.key, required super.data}) : super.mobile();
+  @override
+  Widget? get title => const BoostTitle();
 
   @override
-  State<StatefulWidget> createState() => StateBoost();
+  Widget? get content => BoostContent(isDesktop: isDesktop, data: data);
 }
 
-class StateBoost extends StateSection {
-  @override
-  Widget get sectionContent => BoostContent(boosts: widget.data);
+class BoostTitle extends NFTSectionInfoTitle {
+  const BoostTitle({super.key});
 
   @override
-  String get sectionTitle => 'Boosts';
+  String get title => 'Boosts';
 
   @override
-  String get sectionTitleIconPath =>
-      QPPImages.desktop_icon_commodity_nft_boosts;
+  String get iconPath => QPPImages.desktop_icon_commodity_nft_boosts;
 }
 
-class BoostContent extends StatelessWidget {
-  final List<NFTTrait> boosts;
-  const BoostContent({super.key, required this.boosts});
+class BoostContent extends NFTSectionInfoContent<List> {
+  const BoostContent(
+      {super.key, required super.isDesktop, required super.data});
 
   @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-        // 關掉 over scroll 效果
-        physics: const BouncingScrollPhysics(),
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: boosts.length,
-        itemBuilder: (context, index) {
-          return ItemBoost(boost: boosts[index]);
-        });
-  }
+  Widget get child => ListView.builder(
+      // 關掉 over scroll 效果
+      physics: const BouncingScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: data.length,
+      itemBuilder: (context, index) {
+        return ItemBoost(boost: data[index]);
+      });
 }
 
 class ItemBoost extends StatelessWidget {

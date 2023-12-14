@@ -5,43 +5,41 @@ import 'package:qpp_example/page/commodity_info/view/item_nft_section/nft_sectio
 import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 
-class NFTSectionDate extends NFTSection {
-  const NFTSectionDate.desktop({super.key, required super.data})
-      : super.desktop();
-  const NFTSectionDate.mobile({super.key, required super.data})
-      : super.mobile();
+class DateExpand extends NFTExpand<List> {
+  // final List<NFTTrait> data;
+  const DateExpand.desktop({super.key, required super.data}) : super.desktop();
+  const DateExpand.mobile({super.key, required super.data}) : super.mobile();
 
   @override
-  State<StatefulWidget> createState() => StateDate();
+  Widget? get title => const DateTitle();
+
+  @override
+  Widget? get content => DateContent(isDesktop: isDesktop, data: data);
 }
 
-class StateDate extends StateSection {
-  @override
-  Widget get sectionContent => DateContent(dates: widget.data);
+class DateTitle extends NFTSectionInfoTitle {
+  const DateTitle({super.key});
 
   @override
-  String get sectionTitle => 'Date';
+  String get title => 'Date';
 
   @override
-  String get sectionTitleIconPath => QPPImages.desktop_icon_commodity_nft_date;
+  String get iconPath => QPPImages.desktop_icon_commodity_nft_date;
 }
 
-class DateContent extends StatelessWidget {
-  final List<NFTTrait> dates;
-  const DateContent({super.key, required this.dates});
+class DateContent extends NFTSectionInfoContent<List> {
+  const DateContent({super.key, required super.isDesktop, required super.data});
 
   @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-        // 關掉 over scroll 效果
-        physics: const BouncingScrollPhysics(),
-        itemCount: dates.length,
-        shrinkWrap: true,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (context, index) {
-          return ItemDate(date: dates[index]);
-        });
-  }
+  Widget get child => ListView.builder(
+      // 關掉 over scroll 效果
+      physics: const BouncingScrollPhysics(),
+      itemCount: data.length,
+      shrinkWrap: true,
+      scrollDirection: Axis.vertical,
+      itemBuilder: (context, index) {
+        return ItemDate(date: data[index]);
+      });
 }
 
 class ItemDate extends StatelessWidget {
