@@ -119,7 +119,12 @@ class _VoteStateItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: isDesktopStyle ? 0 : isState ? 4 : 8),
+                  padding: EdgeInsets.only(
+                      top: isDesktopStyle
+                          ? 0
+                          : isState
+                              ? 4
+                              : 8),
                   child: AutoSizeText(
                     isState
                         ? context.tr(data.voteType.text)
@@ -137,6 +142,7 @@ class _VoteStateItem extends StatelessWidget {
                         style: isDesktopStyle
                             ? QppTextStyles.web_16pt_body_red_L
                             : QppTextStyles.mobile_10pt_caption_red_L,
+                        textAlign: TextAlign.center,
                       )
                     : const SizedBox.shrink(),
               ],

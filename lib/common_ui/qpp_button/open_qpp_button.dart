@@ -40,18 +40,26 @@ class CButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(style.radius),
-        border: border,
-      ),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: onTap,
-        child: Center(
-          child: Text(text, style: textStyle),
+        child: Container(
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(style.radius),
+            border: border,
+          ),
+          child: Center(
+            child: SelectionContainer.disabled(
+              child: Text(
+                text,
+                style: textStyle,
+              ),
+            ),
+          ),
         ),
       ),
     );
