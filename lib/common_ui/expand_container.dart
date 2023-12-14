@@ -15,11 +15,22 @@ class ExpandContainer extends StatefulWidget {
   /// 上方元件背景顏色
   final Color? titleBackground;
 
+  /// title 元件的 padding
+  final EdgeInsets? titlePadding;
+
   const ExpandContainer.desktop(
-      {super.key, this.title, this.content, this.titleBackground})
+      {super.key,
+      this.title,
+      this.content,
+      this.titleBackground,
+      this.titlePadding})
       : isDesktop = true;
   const ExpandContainer.mobile(
-      {super.key, this.title, this.content, this.titleBackground})
+      {super.key,
+      this.title,
+      this.content,
+      this.titleBackground,
+      this.titlePadding})
       : isDesktop = false;
 
   @override
@@ -61,6 +72,8 @@ class StateExpand extends State<ExpandContainer> with TickerProviderStateMixin {
         arrowKey: arrowKey,
         isDesktop: widget.isDesktop,
         title: _itemTitle,
+        padding: widget.titlePadding,
+        backgroundColor: widget.titleBackground,
         onTap: () {
           arrowKey.currentState?.rotate();
           setState(() {
@@ -101,6 +114,8 @@ class ExpandTitle extends StatelessWidget {
   final GlobalKey arrowKey;
   final bool isDesktop;
   final Widget? title;
+  final EdgeInsets? padding;
+  final Color? backgroundColor;
   final Function()? onTap;
 
   const ExpandTitle(
@@ -108,6 +123,8 @@ class ExpandTitle extends StatelessWidget {
       required this.arrowKey,
       required this.isDesktop,
       this.title,
+      this.padding,
+      this.backgroundColor,
       this.onTap});
 
   @override
@@ -118,10 +135,10 @@ class ExpandTitle extends StatelessWidget {
       },
       child: Container(
         padding: _padding,
-        decoration: const BoxDecoration(color: QppColors.stPatricksBlue),
+        decoration: BoxDecoration(color: _backgroundColor),
         child: Row(
           children: [
-            _itemTitle,
+            itemTitle,
             const Expanded(child: SizedBox()),
             // 上/下箭頭
             BtnArrowUpDown(key: arrowKey, size: _arrowSize),
@@ -131,7 +148,7 @@ class ExpandTitle extends StatelessWidget {
     );
   }
 
-  Widget get _itemTitle {
+  Widget get itemTitle {
     if (title != null) {
       return title!;
     }
@@ -140,6 +157,9 @@ class ExpandTitle extends StatelessWidget {
 
   // title 部位的 padding
   EdgeInsets get _padding {
+    if (padding != null) {
+      return padding!;
+    }
     return isDesktop
         ? const EdgeInsets.only(left: 60.0, right: 60.0)
         : const EdgeInsets.only(left: 12.0, right: 12.0);
@@ -148,5 +168,12 @@ class ExpandTitle extends StatelessWidget {
   // 上下箭頭尺寸
   double get _arrowSize {
     return isDesktop ? 20 : 16;
+  }
+
+  Color get _backgroundColor {
+    if (backgroundColor != null) {
+      return backgroundColor!;
+    }
+    return QppColors.stPatricksBlue;
   }
 }
