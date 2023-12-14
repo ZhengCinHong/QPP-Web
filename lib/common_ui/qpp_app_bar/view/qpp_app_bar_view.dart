@@ -131,11 +131,9 @@ class _Logo extends StatelessWidget {
         width: isDesktopStyle ? 147.2 : 89,
         height: isDesktopStyle ? 44.4 : 27.4,
       ),
-      onPressed: () =>
-          // showLogoutDialog(context)
-          context.canPop()
-              ? context.goNamed(QppGoRouter.app)
-              : context.goNamed(QppGoRouter.home), // 要在修改，現在只有error畫面會跳到home
+      onPressed: () => context.canPop()
+          ? context.goNamed(QppGoRouter.app)
+          : context.goNamed(QppGoRouter.home), // 要在修改，現在只有error畫面會跳到home
     );
   }
 }
@@ -357,7 +355,8 @@ class _UserInfo extends StatelessWidget {
         );
       },
       isOpenControllerProvider: isOpenControllerProvider,
-      onTap: (BuildContext context, _) => showLogoutDialog(context),
+      onTap: (BuildContext context, _) =>
+          showLogoutDialog(context, screenStyle: screenStyle),
     );
   }
 }
@@ -466,9 +465,6 @@ class MouseRegionCustomWidget extends ConsumerWidget {
       onEnter: (event) {
         onEnter != null ? onEnter!(event) : ();
         notifier.onEnter();
-
-        // TODO: 測試登入用記得砍掉
-        // ref.watch(authServiceProvider.notifier).getLoginToken('');
       },
       onExit: (event) {
         onExit != null ? onExit!(event) : ();
