@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 
-const String _arrowUp = 'desktop-icon-list-selection-arrow-up';
-const String _arrowDown = 'desktop-icon-list-selection-arrow-down';
+const String _arrowUp = QPPImages.desktop_icon_list_selection_arrow_up;
+const String _arrowDown = QPPImages.desktop_icon_list_selection_arrow_down;
 
 /// 點擊變換上下箭頭元件
 /// 預設為向上, 若要預設向下請使用 [ClickArrow.defaultDown]
@@ -25,7 +25,7 @@ class BtnArrowUpDown extends StatefulWidget {
       {Key? key, required this.size, this.callback, this.onTap})
       : showUp = false,
         super(key: key);
-
+  // 取得箭頭 path
   String get _arrowPath {
     return showUp ? _arrowUp : _arrowDown;
   }
@@ -67,8 +67,8 @@ class StateClickArrow extends State<BtnArrowUpDown>
       onTap: widget.onTap ?? _onTap,
       child: RotationTransition(
         turns: _animation,
-        child: SvgPicture.asset(
-          'assets/${widget._arrowPath}.svg',
+        child: Image.asset(
+          widget._arrowPath,
           width: widget.size,
           height: widget.size,
         ),

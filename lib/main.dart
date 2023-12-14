@@ -6,13 +6,9 @@ import 'package:qpp_example/go_router/router.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
-import 'package:qpp_example/utils/shared_Prefs.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // 本地資料庫
-  await SharedPrefs.init();
 
   // 多語系套件
   await EasyLocalization.ensureInitialized();
@@ -22,6 +18,7 @@ void main() async {
 
   HttpService service = HttpService.instance; // dio
   service.initDio();
+
   runApp(
     EasyLocalization(
       // 支援的語系, 從 QppLocales 直接取出
@@ -35,6 +32,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(

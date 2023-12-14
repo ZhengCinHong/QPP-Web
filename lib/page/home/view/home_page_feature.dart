@@ -1,8 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:qpp_example/common_ui/qpp_app_bar/view/qpp_app_bar_view.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/home/model/home_page_model.dart';
+import 'package:qpp_example/page/home/view_model/home_page_view_model.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
 
@@ -31,7 +34,9 @@ class HomePageFeature extends StatelessWidget {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
-                'assets/${isDesktopStyle ? 'desktop-bg-area-01' : 'mobile-bg-area-01'}.webp',
+                isDesktopStyle
+                    ? QPPImages.desktop_bg_area_01
+                    : QPPImages.mobile_bg_area_01,
               ),
               fit: BoxFit.cover,
             ),
@@ -79,7 +84,7 @@ class _Left extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         isDesktopStyle
-            ? Image.asset('assets/desktop-pic-area-01.webp')
+            ? Image.asset(QPPImages.desktop_pic_area_01)
             : const SizedBox(),
       ],
     );
@@ -107,88 +112,86 @@ class _FeatureInfo extends StatelessWidget {
 }
 
 // 特色資訊Item
-class _FeatureInfoItem extends StatefulWidget {
+class _FeatureInfoItem extends StatelessWidget {
   const _FeatureInfoItem(this.screenStyle, {required this.type});
 
   final HomePageFeatureInfoType type;
   final ScreenStyle screenStyle;
 
   @override
-  State<_FeatureInfoItem> createState() => _FeatureInfoItemState();
-}
-
-class _FeatureInfoItemState extends State<_FeatureInfoItem> {
-  bool isHover = false;
-
-  updateHover(bool value) {
-    setState(() {
-      isHover = value;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     // debugPrint(toString());
 
-    final isDesktopStyle = widget.screenStyle.isDesktop;
+    final isDesktopStyle = screenStyle.isDesktop;
     final flex = isDesktopStyle ? 1 : 0;
 
-    return MouseRegion(
-      onEnter: (event) => updateHover(true),
-      onExit: (event) => updateHover(false),
-      child: Padding(
-        padding: EdgeInsets.only(
-            bottom: widget.type == HomePageFeatureInfoType.more
-                ? 0
-                : isDesktopStyle
-                    ? 50
-                    : 44),
-        child: Flex(
-          direction: isDesktopStyle ? Axis.horizontal : Axis.vertical,
-          children: [
-            SvgPicture.asset(
-              isHover ? widget.type.highlightImage : widget.type.image,
-              width: 50,
-              height: 50,
+    return Consumer(
+      builder: (context, ref, child) {
+        final tapFeatureType = ref.watch(highlightFeatureTypeProvider);
+        final tapFeatureTypeNotifier =
+            ref.read(highlightFeatureTypeProvider.notifier);
+
+        final isHighlight = tapFeatureType == type;
+        return CMouseRegion(
+          onEnter: (event) => tapFeatureTypeNotifier.state = type,
+          onExit: (event) => tapFeatureTypeNotifier.state = null,
+          onTap: () => tapFeatureTypeNotifier.state = type,
+          child: Padding(
+            padding: EdgeInsets.only(
+                bottom: type == HomePageFeatureInfoType.more
+                    ? 0
+                    : isDesktopStyle
+                        ? 50
+                        : 44),
+            child: Flex(
+              direction: isDesktopStyle ? Axis.horizontal : Axis.vertical,
+              children: [
+                Image.asset(
+                  isHighlight ? type.highlightImage : type.image,
+                  width: 50,
+                  height: 50,
+                ),
+                const SizedBox(height: 16, width: 27),
+                Expanded(
+                  flex: flex,
+                  child: Column(
+                    crossAxisAlignment: isDesktopStyle
+                        ? CrossAxisAlignment.start
+                        : CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        context.tr(type.title),
+                        style: isHighlight
+                            ? isDesktopStyle
+                                ? QppTextStyles.web_24pt_title_L_skyblue_L
+                                : QppTextStyles
+                                    .mobile_18pt_title_m_bold_sky_blue_C
+                            : isDesktopStyle
+                                ? QppTextStyles.web_24pt_title_L_ash_gray_L
+                                : QppTextStyles
+                                    .mobile_18pt_title_m_ash_gray_medium_C,
+                      ),
+                      SizedBox(height: isDesktopStyle ? 12 : 16),
+                      Text(
+                        context.tr(type.directions),
+                        textAlign:
+                            isDesktopStyle ? TextAlign.start : TextAlign.center,
+                        style: isHighlight
+                            ? isDesktopStyle
+                                ? QppTextStyles.web_16pt_body_black_L
+                                : QppTextStyles.mobile_14pt_body_ash_black_C
+                            : isDesktopStyle
+                                ? QppTextStyles.web_16pt_body_ash_gray_L
+                                : QppTextStyles.mobile_14pt_body_ash_gray_C,
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
-            const SizedBox(height: 16, width: 27),
-            Expanded(
-              flex: flex,
-              child: Column(
-                crossAxisAlignment: isDesktopStyle
-                    ? CrossAxisAlignment.start
-                    : CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    context.tr(widget.type.title),
-                    style: isHover
-                        ? isDesktopStyle
-                            ? QppTextStyles.web_24pt_title_L_skyblue_L
-                            : QppTextStyles.mobile_18pt_title_m_bold_sky_blue_C
-                        : isDesktopStyle
-                            ? QppTextStyles.web_24pt_title_L_ash_gray_L
-                            : QppTextStyles
-                                .mobile_18pt_title_m_ash_gray_medium_C,
-                  ),
-                  SizedBox(height: isDesktopStyle ? 12 : 16),
-                  Text(
-                    context.tr(widget.type.directions),
-                    textAlign:
-                        isDesktopStyle ? TextAlign.start : TextAlign.center,
-                    style: isHover
-                        ? isDesktopStyle
-                            ? QppTextStyles.web_16pt_body_black_L
-                            : QppTextStyles.mobile_14pt_body_ash_black_C
-                        : isDesktopStyle
-                            ? QppTextStyles.web_16pt_body_ash_gray_L
-                            : QppTextStyles.mobile_14pt_body_ash_gray_C,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

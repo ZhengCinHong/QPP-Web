@@ -51,7 +51,7 @@ class _MainScaffold extends StatelessWidget {
               image: AssetImage(
                 screenStyle.isDesktop
                     ? 'assets/desktop_bg_kv.png'
-                    : 'assets/mobile-bg-kv.webp',
+                    : 'assets/mobile-bg-kv.png',
               ),
               fit: BoxFit.cover,
             ),

@@ -2,8 +2,12 @@ import 'package:flutter/foundation.dart';
 
 // server 常數放置
 class ServerConst {
-  ///
-  static const routerHost = "https://qpptec.com";
+  /// TODO: 先改成目前站點
+  // static const routerHost = "https://qpptec.com";
+  static const routerHost = "https://webside-dev.qpptec.com/";
+
+  // 過度用，先放著。
+  static const testRouterHost = "http://localhost:52197/";
 
   /// 依照裝置跳轉Google Play Store or Apple App Store
   static const appStoreUrl = 'https://qpptec.com/app/go';
@@ -16,10 +20,10 @@ class ServerConst {
   static const appleStoreUrl = 'https://apps.apple.com/tw/app/qpp/id1501319938';
 
   /// 隱私權網址
-  static const privacyPolicyUrl = "https://www.qpptec.com/privacy?lang=%s";
+  static const privacyPolicyUrl = "${testRouterHost}privacy?lang=%s";
 
   /// 使用條款網址
-  static const termsOfUseUrl = "https://www.qpptec.com/term?lang=%s";
+  static const termsOfUseUrl = "${routerHost}term?lang=%s";
 
   /// 信箱顯示字串
   static const mailStr = 'info@qpptec.com';

@@ -1,16 +1,19 @@
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/screen.dart';
 
+// -----------------------------------------------------------------------------
 /// 應用程式商店類型
+// -----------------------------------------------------------------------------
 enum PlayStoreType {
   google,
   apple;
 
   String get image {
     return switch (this) {
-      PlayStoreType.google => 'assets/desktop-pic-platform-googleplay.webp',
-      PlayStoreType.apple => 'assets/desktop-pic-platform-appstore.webp'
+      PlayStoreType.google => QPPImages.desktop_pic_platform_googleplay,
+      PlayStoreType.apple => QPPImages.desktop_pic_platform_appstore
     };
   }
 
@@ -22,7 +25,9 @@ enum PlayStoreType {
   }
 }
 
+// -----------------------------------------------------------------------------
 /// 特色資訊類型
+// -----------------------------------------------------------------------------
 enum HomePageFeatureInfoType {
   /// 虛寶
   virtual,
@@ -65,31 +70,33 @@ enum HomePageFeatureInfoType {
   String get image {
     switch (this) {
       case HomePageFeatureInfoType.virtual:
-        return 'assets/desktop-icon-area-01-01-normal.svg';
+        return QPPImages.desktop_icon_area_01_01_normal;
       case HomePageFeatureInfoType.identification:
-        return 'assets/desktop-icon-area-01-02-nomal.svg';
+        return QPPImages.desktop_icon_area_01_02_nomal;
       case HomePageFeatureInfoType.voucher:
-        return 'assets/desktop-icon-area-01-03-normal.svg';
+        return QPPImages.desktop_icon_area_01_03_normal;
       case HomePageFeatureInfoType.more:
-        return 'assets/desktop-icon-area-01-04-normal.svg';
+        return QPPImages.desktop_icon_area_01_04_normal;
     }
   }
 
   String get highlightImage {
     switch (this) {
       case HomePageFeatureInfoType.virtual:
-        return 'assets/desktop-icon-area-01-01-pressed.svg';
+        return QPPImages.desktop_icon_area_01_01_pressed;
       case HomePageFeatureInfoType.identification:
-        return 'assets/desktop-icon-area-01-02-pressed.svg';
+        return QPPImages.desktop_icon_area_01_02_pressed;
       case HomePageFeatureInfoType.voucher:
-        return 'assets/desktop-icon-area-01-03-pressed.svg';
+        return QPPImages.desktop_icon_area_01_03_pressed;
       case HomePageFeatureInfoType.more:
-        return 'assets/desktop-icon-area-01-04-pressed.svg';
+        return QPPImages.desktop_icon_area_01_04_pressed;
     }
   }
 }
 
+// -----------------------------------------------------------------------------
 /// 使用說明類型
+// -----------------------------------------------------------------------------
 enum HomePageDescriptionType {
   /// 手機
   phone,
@@ -127,11 +134,11 @@ enum HomePageDescriptionType {
 
     switch (this) {
       case HomePageDescriptionType.phone:
-        return 'assets/${isDesktopStyle ? 'desktop-pic-area-02-01' : 'mobile-pic-area-02-01'}.webp';
+        return  isDesktopStyle ? QPPImages.desktop_pic_area_02_01 : QPPImages.mobile_pic_area_02_01;
       case HomePageDescriptionType.directory:
-        return 'assets/${isDesktopStyle ? 'desktop-pic-area-02-02' : 'mobile-pic-area-02-02'}.webp';
+        return isDesktopStyle ? QPPImages.desktop_pic_area_02_02 : QPPImages.mobile_pic_area_02_02;
       case HomePageDescriptionType.forum:
-        return 'assets/${isDesktopStyle ? 'desktop-pic-area-02-03' : 'mobile-pic-area-02-03'}.webp';
+        return isDesktopStyle ? QPPImages.desktop_pic_area_02_03 : QPPImages.mobile_pic_area_02_03;
     }
   }
 
@@ -146,7 +153,9 @@ enum HomePageDescriptionType {
   }
 }
 
+// -----------------------------------------------------------------------------
 /// 聯絡我們類型
+// -----------------------------------------------------------------------------
 enum HomePageContactType {
   first,
   second,
@@ -183,4 +192,49 @@ enum HomePageContactType {
         return false;
     }
   }
+}
+
+// -----------------------------------------------------------------------------
+/// 頁尾
+// -----------------------------------------------------------------------------
+
+/// 頁尾標題類型
+enum HomePageFooterTitleType {
+  /// 條款
+  terms,
+
+  /// 下載
+  download;
+
+  String get text => switch (this) {
+        HomePageFooterTitleType.terms => QppLocales.footerTerms,
+        HomePageFooterTitleType.download => QppLocales.footerDownload,
+      };
+}
+
+// /// 頁尾連結類型
+enum HomePageFooterLinkType {
+  /// 隱私權政策
+  privacyPolicy,
+
+  /// 使用者條款
+  termsOfUse,
+
+  appleStore,
+
+  googlePlay;
+
+  String get text => switch (this) {
+        HomePageFooterLinkType.privacyPolicy => QppLocales.footerPrivacyPolicy,
+        HomePageFooterLinkType.termsOfUse => QppLocales.footerTermsOfService,
+        HomePageFooterLinkType.appleStore => 'Apple Store',
+        HomePageFooterLinkType.googlePlay => 'Google Play',
+      };
+
+  String get link => switch (this) {
+        HomePageFooterLinkType.privacyPolicy => ServerConst.privacyPolicyUrl,
+        HomePageFooterLinkType.termsOfUse => ServerConst.termsOfUseUrl,
+        HomePageFooterLinkType.appleStore => ServerConst.appleStoreUrl,
+        HomePageFooterLinkType.googlePlay => ServerConst.googlePlayStoreUrl,
+      };
 }

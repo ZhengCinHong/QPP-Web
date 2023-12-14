@@ -1,0 +1,49 @@
+name: QPP-Web
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    name: Build Web
+    env:
+      my_secret: ${{secrets.commit_secret}}
+      # 表示运行在 ubuntu 最新版本的机器上
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@master
+
+      - name: build
+        # 表示使用 flutter-action 这个脚本来构建
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '3.13.0'
+          channel: 'stable'
+      # 按照下面的顺序执行打包命令
+      - run: flutter pub get
+      - run: flutter channel stable
+      # - run: flutter downgrade v3.13.0
+      - run: flutter config --enable-web
+      # 构建 web 产物
+      - run: flutter build web
+      - run: |
+          cd build/web
+          
+          # 修改index.html第 17 行的內容
+          sed -i "17c <base href="/QPP-Web/" />" index.html
+
+          git init
+          # type configurations: your user.email and user.name followed lines 
+          # git config --global user.email your_email 
+          # git config --global user.name your_name 
+          git config --global user.email cinhong.zheng@qpptec.com
+          git config --global user.name ZhengCinHong
+          git status
+          
+          # change this remote url for examle your remote url is https://github.com/onatcipli/flutter_web.git then the following:
+          git remote add origin https://${{secrets.commit_secret}}@github.com/ZhengCinHong/QPP-Web.git
+          git checkout -b gh-pages
+          git add --all
+          git commit -m "update"
+          git push origin gh-pages -f

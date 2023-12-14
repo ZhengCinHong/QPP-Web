@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qpp_example/api/core/api_response.dart';
 import 'package:qpp_example/common_ui/qpp_text/info_row_link_read_more_text.dart';
 import 'package:qpp_example/constants/server_const.dart';
@@ -10,8 +9,9 @@ import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/model/item_multi_language_data.dart';
 import 'package:qpp_example/model/qpp_item.dart';
 import 'package:qpp_example/model/qpp_user.dart';
+import 'package:qpp_example/model/vote/qpp_vote.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
-import 'dart:ui' as ui;
+import 'package:qpp_example/utils/qpp_image.dart';
 
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 
@@ -29,7 +29,7 @@ abstract class InfoRow extends ConsumerWidget {
 
     return response.isCompleted
         ? Padding(
-            padding: _rowPadding(),
+            padding: rowPadding(),
             child: getContent(data),
           )
         : const SizedBox.shrink();
@@ -39,14 +39,38 @@ abstract class InfoRow extends ConsumerWidget {
 
   Widget getContent(dynamic data);
 
-  _rowPadding() {
+  rowPadding() {
     return isDesktop
         ? const EdgeInsets.fromLTRB(60, 14, 60, 14)
         : const EdgeInsets.fromLTRB(14, 10, 14, 10);
   }
 
-  double get _titleWidth {
+  double get titleWidth {
     return isDesktop ? 120 : 90;
+  }
+}
+
+/// 問券的類別欄位
+class VoucherInfoRowInfo extends InfoRowInfo {
+  const VoucherInfoRowInfo.desktop({super.key}) : super.desktop();
+  const VoucherInfoRowInfo.mobile({super.key}) : super.mobile();
+
+  @override
+  ApiResponse getResponse(WidgetRef ref) {
+    return ref.watch(itemSelectInfoProvider).voteDataState;
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    ApiResponse response = getResponse(ref);
+    QppVote data = response.data;
+
+    return response.isCompleted
+        ? Padding(
+            padding: rowPadding(),
+            child: getContent(data.item),
+          )
+        : const SizedBox.shrink();
   }
 }
 
@@ -67,7 +91,7 @@ class InfoRowInfo extends InfoRow {
         return Row(
           children: [
             Container(
-              constraints: BoxConstraints(maxWidth: _titleWidth),
+              constraints: BoxConstraints(maxWidth: titleWidth),
               width: double.infinity,
               child: Text(
                 context.tr(QppLocales.commodityInfoCategory),
@@ -75,8 +99,8 @@ class InfoRowInfo extends InfoRow {
                 style: QppTextStyles.web_16pt_body_category_text_L,
               ),
             ),
-            SvgPicture.asset(
-              'assets/${data.categoryIconPath}',
+            Image.asset(
+              data.categoryIconPath,
               width: 20,
             ),
             // 間隔
@@ -138,7 +162,7 @@ class InfoRowCreator extends InfoRow {
               child: Row(
                 children: [
                   SizedBox(
-                    width: _titleWidth,
+                    width: titleWidth,
                     child: Text(
                       context.tr(QppLocales.commodityInfoCreator),
                       textAlign: TextAlign.start,
@@ -149,8 +173,8 @@ class InfoRowCreator extends InfoRow {
                   data.isOfficial
                       ? Container(
                           padding: const EdgeInsets.only(right: 8),
-                          child: SvgPicture.asset(
-                            'assets/${data.officialIconPath}',
+                          child: Image.asset(
+                            data.officialIconPath,
                             width: 20,
                           ),
                         )
@@ -166,12 +190,10 @@ class InfoRowCreator extends InfoRow {
                     ),
                   ),
                   // 物件左右翻轉, 或用 RotatedBox
-                  Directionality(
-                      textDirection: ui.TextDirection.rtl,
-                      child: SvgPicture.asset(
-                        'assets/mobile-icon-actionbar-back-normal.svg',
-                        matchTextDirection: true,
-                      )),
+                  Image.asset(
+                    QPPImages.desktop_icon_selection_arrow_right_normal,
+                    matchTextDirection: true,
+                  ),
                 ],
               ),
             ),
@@ -205,7 +227,7 @@ class InfoRowIntroLink extends InfoRow {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                width: _titleWidth,
+                width: titleWidth,
                 child: Text(
                   context.tr(QppLocales.commodityInfoTitle),
                   textAlign: TextAlign.start,
@@ -249,7 +271,7 @@ class InfoRowDescription extends InfoRow {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                width: _titleWidth,
+                width: titleWidth,
                 child: Text(
                   context.tr(QppLocales.commodityInfoInfo),
                   textAlign: TextAlign.start,

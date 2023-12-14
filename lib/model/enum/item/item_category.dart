@@ -1,5 +1,7 @@
 // Flutter 3.0 後, 列舉可使用方式
 // https://blog.logrocket.com/deep-dive-enhanced-enums-flutter-3-0/
+import 'package:qpp_example/utils/qpp_image.dart';
+
 /// 物品類別列舉
 enum ItemCategory {
   unKnow(-1),
@@ -85,22 +87,21 @@ enum ItemCategory {
     switch (this) {
       case systemCoin:
       case virtualCoin:
-        return "desktop-icon-display-coin.svg";
+        return QPPImages.icon_display_coin;
       case virtualTreasure:
       case virtualTreasureWithTag:
-        return "desktop-icon-display-treasure.svg";
+        return QPPImages.icon_display_treasure;
       case physicalVoucher:
       case digitVoucher:
-        return "desktop-icon-display-ticket.svg";
+        return QPPImages.icon_display_ticket;
       case idCard:
-        return "desktop-icon-display-idcard.svg";
+        return QPPImages.icon_display_idcard;
       case digitItem:
-        return "數位物品";
+        return QPPImages.icon_display_digital_object;
       case hiddenVoucher:
       // 需判斷為 QR Code/序號, 在 sub category 處理
-      // serial desktop-icon-display-scratch-card-serial-number.svg
-      // qr code desktop-icon-display-scratch-card-qr-code.svg
       case questionnaire:
+        return QPPImages.icon_display_questionnaire;
       case commission:
       case authorize:
       default:

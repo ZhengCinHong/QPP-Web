@@ -1,6 +1,7 @@
 import 'package:qpp_example/api/client/response/user_select_info.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/model/enum/user/user_verification_type.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 
 class QppUser {
   final int id;
@@ -26,7 +27,7 @@ class QppUser {
 
   /// 取得官方帳號 icon path
   String get officialIconPath =>
-      isOfficial ? 'desktop-icon-newsfeed-official-large.svg' : '';
+      isOfficial ? QPPImages.desktop_icon_newsfeed_official_large : '';
 
   /// 取得 ID
   String get displayID => id.toString();
