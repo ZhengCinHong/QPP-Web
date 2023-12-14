@@ -73,9 +73,8 @@ class _ContainerDecoration extends BoxDecoration {
   DecorationImage? get image {
     return const DecorationImage(
         // 背景圖
-        // TODO: 換圖
-        image: AssetImage(QPPImages.pic_commodity_largepic_sample_07),
+        image:
+            AssetImage(QPPImages.desktop_pic_commodity_largepic_sample_general),
         fit: BoxFit.none);
-    // 'assets/desktop-pic-commodity-largepic-sample-general.webp'
   }
 }

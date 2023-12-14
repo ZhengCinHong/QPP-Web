@@ -29,7 +29,7 @@ abstract class InfoRow extends ConsumerWidget {
 
     return response.isCompleted
         ? Padding(
-            padding: _rowPadding(),
+            padding: rowPadding(),
             child: getContent(data),
           )
         : const SizedBox.shrink();
@@ -39,13 +39,13 @@ abstract class InfoRow extends ConsumerWidget {
 
   Widget getContent(dynamic data);
 
-  _rowPadding() {
+  rowPadding() {
     return isDesktop
         ? const EdgeInsets.fromLTRB(60, 14, 60, 14)
         : const EdgeInsets.fromLTRB(14, 10, 14, 10);
   }
 
-  double get _titleWidth {
+  double get titleWidth {
     return isDesktop ? 120 : 90;
   }
 }
@@ -67,7 +67,7 @@ class VoucherInfoRowInfo extends InfoRowInfo {
 
     return response.isCompleted
         ? Padding(
-            padding: _rowPadding(),
+            padding: rowPadding(),
             child: getContent(data.item),
           )
         : const SizedBox.shrink();
@@ -91,7 +91,7 @@ class InfoRowInfo extends InfoRow {
         return Row(
           children: [
             Container(
-              constraints: BoxConstraints(maxWidth: _titleWidth),
+              constraints: BoxConstraints(maxWidth: titleWidth),
               width: double.infinity,
               child: Text(
                 context.tr(QppLocales.commodityInfoCategory),
@@ -162,7 +162,7 @@ class InfoRowCreator extends InfoRow {
               child: Row(
                 children: [
                   SizedBox(
-                    width: _titleWidth,
+                    width: titleWidth,
                     child: Text(
                       context.tr(QppLocales.commodityInfoCreator),
                       textAlign: TextAlign.start,
@@ -227,7 +227,7 @@ class InfoRowIntroLink extends InfoRow {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                width: _titleWidth,
+                width: titleWidth,
                 child: Text(
                   context.tr(QppLocales.commodityInfoTitle),
                   textAlign: TextAlign.start,
@@ -271,7 +271,7 @@ class InfoRowDescription extends InfoRow {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                width: _titleWidth,
+                width: titleWidth,
                 child: Text(
                   context.tr(QppLocales.commodityInfoInfo),
                   textAlign: TextAlign.start,

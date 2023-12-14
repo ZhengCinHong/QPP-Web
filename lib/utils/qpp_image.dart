@@ -225,4 +225,8 @@ class QPPImages {
       "assets/desktop-pic-commodity-avatar-default.png";
   static const String desktop_icon_display_scratch_card_qr_code =
       "assets/desktop-icon-display-scratch-card-qr-code.png";
+  static const String desktop_pic_commodity_largepic_sample_general =
+      "assets/desktop-pic-commodity-largepic-sample-general.png";
+  static const String icon_display_digital_object =
+      "assets/icon-display-digital-object.png";
 }

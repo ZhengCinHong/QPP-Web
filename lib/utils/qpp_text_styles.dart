@@ -31,6 +31,8 @@ abstract class QppTextStyles {
     fontSize: 40,
   );
   static const TextStyle web_40pt_Display_m_linktext_L = TextStyle(
+    decoration: TextDecoration.underline,
+    decorationColor: QppColors.mayaBlue,
     color: QppColors.mayaBlue,
     fontSize: 40,
   );
@@ -91,6 +93,8 @@ abstract class QppTextStyles {
     fontSize: 24,
   );
   static const TextStyle web_24pt_title_L_link_text_C = TextStyle(
+    decoration: TextDecoration.underline,
+    decorationColor: QppColors.mayaBlue,
     color: QppColors.mayaBlue,
     fontSize: 24,
   );
@@ -270,6 +274,8 @@ abstract class QppTextStyles {
     fontSize: 16,
   );
   static const TextStyle web_16pt_body_linktext_L = TextStyle(
+    decoration: TextDecoration.underline,
+    decorationColor: QppColors.mayaBlue,
     color: QppColors.mayaBlue,
     fontSize: 16,
   );
@@ -379,6 +385,8 @@ abstract class QppTextStyles {
     fontSize: 14,
   );
   static const TextStyle mobile_14pt_body_linktext_L = TextStyle(
+    decoration: TextDecoration.underline,
+    decorationColor: QppColors.mayaBlue,
     color: QppColors.mayaBlue,
     fontSize: 14,
   );

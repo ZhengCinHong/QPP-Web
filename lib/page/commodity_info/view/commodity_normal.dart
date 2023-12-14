@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qpp_example/page/commodity_info/view/info_row.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_body_top.dart';
-import 'package:qpp_example/page/commodity_info/view/mobile_info_divider.dart';
 
 /// 一般物品資訊
 class NormalItemInfo extends StatelessWidget {
@@ -13,10 +12,6 @@ class NormalItemInfo extends StatelessWidget {
     return Column(children: [
       // 資料區 上半部
       const CommodityBodyTop(),
-      // 若為 Mobile 版面, 要顯示黑色分隔線
-      MobileInfoDivider(
-        isMobile: !isDesktop,
-      ),
       // 資料區下半部
       Container(
           constraints: const BoxConstraints(maxWidth: 1280),

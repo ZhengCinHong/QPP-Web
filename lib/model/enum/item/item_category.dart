@@ -97,8 +97,7 @@ enum ItemCategory {
       case idCard:
         return QPPImages.icon_display_idcard;
       case digitItem:
-        // TODO: 缺圖
-        return "數位物品";
+        return QPPImages.icon_display_digital_object;
       case hiddenVoucher:
       // 需判斷為 QR Code/序號, 在 sub category 處理
       case questionnaire:
