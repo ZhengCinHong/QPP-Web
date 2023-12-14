@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qpp_example/common_ui/qpp_button/dialog_action_button.dart';
-import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
+import 'package:qpp_example/utils/screen.dart';
 
 /// 圖片對話框
 ///
@@ -18,8 +18,10 @@ class CImageDialog extends StatelessWidget {
     this.style = CDialogActionStyle.confirm,
     required this.height,
     required this.width,
+    required this.screenStyle,
   });
 
+  final ScreenStyle screenStyle;
   final String image;
   final String text;
   final String subText;
@@ -29,14 +31,14 @@ class CImageDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDesktopPlatform = context.isDesktopPlatform;
+    final bool isDesktopStyle = screenStyle.isDesktop;
 
     return Container(
       padding: EdgeInsets.only(
-          top: isDesktopPlatform ? 56 : 32,
-          bottom: isDesktopPlatform ? 56 : 24,
-          left: isDesktopPlatform ? 130 : 16,
-          right: isDesktopPlatform ? 130 : 16),
+          top: isDesktopStyle ? 56 : 32,
+          bottom: isDesktopStyle ? 56 : 24,
+          left: isDesktopStyle ? 130 : 16,
+          right: isDesktopStyle ? 130 : 16),
       constraints: BoxConstraints(maxHeight: height, maxWidth: width),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
@@ -45,33 +47,35 @@ class CImageDialog extends StatelessWidget {
       child: Column(
         children: [
           Flex(
-            direction: isDesktopPlatform ? Axis.horizontal : Axis.vertical,
+            direction: isDesktopStyle ? Axis.horizontal : Axis.vertical,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(image, height: 119, width: 180),
-              const SizedBox(height: 36, width: 16),
+              isDesktopStyle
+                  ? const SizedBox(width: 16)
+                  : const SizedBox(height: 36),
               Text(
                 text,
-                style: isDesktopPlatform
+                style: isDesktopStyle
                     ? QppTextStyles.web_36pt_Display_s_maya_blue_C
                     : QppTextStyles.mobile_20pt_title_L_maya_blue_L,
               ),
             ],
           ),
-          SizedBox(height: isDesktopPlatform ? 32 : 17),
+          Flexible(child: SizedBox(height: isDesktopStyle ? 32 : 17)),
           Text(
             subText,
-            style: isDesktopPlatform
+            style: isDesktopStyle
                 ? QppTextStyles.web_20pt_title_m_white_C
                 : QppTextStyles.mobile_14pt_body_pastel_blue_L,
             textAlign: TextAlign.center,
             maxLines: 2, // 沒有設定這行就不會自動換行，待研究
           ),
-          SizedBox(height: isDesktopPlatform ? 48 : 39),
+          Flexible(child: SizedBox(height: isDesktopStyle ? 48 : 39)),
           DialogActionButton(
             style: style,
-            height: isDesktopPlatform ? 64 : 44,
-            width: isDesktopPlatform ? 480 : 295,
+            height: isDesktopStyle ? 64 : 44,
+            width: isDesktopStyle ? 480 : 295,
             onTap: () => context.pop(),
           ),
         ],

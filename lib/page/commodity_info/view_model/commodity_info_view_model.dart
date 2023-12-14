@@ -50,6 +50,9 @@ class CommodityInfoModel extends ChangeNotifier {
   /// 是否確認選項
   bool isCheck = false;
 
+  ///  是否為第一次登入(自動發送投票使用)
+  bool isFirstLogin = true;
+
   final client = ClientApi.client;
 
   /// 開始取得物品資訊

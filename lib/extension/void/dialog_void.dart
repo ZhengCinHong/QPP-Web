@@ -11,12 +11,23 @@ import 'package:qpp_example/common_view_model/auth_service/view_model/auth_servi
 import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
+import 'package:qpp_example/utils/screen.dart';
 import 'package:qpp_example/utils/shared_prefs_utils.dart';
+
+extension DialogContext on BuildContext {
+  /// 目前對話框是否正在顯示
+  bool get isThereCurrentDialogShowing =>
+      ModalRoute.of(this)?.isCurrent != true;
+}
 
 /// 對話框擴充
 extension DialogVoid on void {
   /// 顯示登入投票對話框
-  void showloginVoteDialog(BuildContext context, {String url = ""}) {
+  void showloginVoteDialog(
+    BuildContext context, {
+    required ScreenStyle screenStyle,
+    required String url,
+  }) {
     showDialog(
       context: context,
       builder: (context) {
@@ -45,17 +56,23 @@ extension DialogVoid on void {
   }
 
   /// 顯示投票成功對話框
-  void showVoteSuccessDialog(BuildContext context) {
+  void showVoteSuccessDialog(
+    BuildContext context, {
+    required ScreenStyle screenStyle,
+  }) {
     showDialog(
       context: context,
       builder: (context) {
-        final isDesktopPlatform = context.isDesktopPlatform;
+        final isDesktopStyle = screenStyle.isDesktop;
+
+        print({screenStyle, 121313});
 
         // showDialog要加上center不然他不知道位置，會導致設定的寬高的失效
         return Center(
           child: CImageDialog(
-            height: isDesktopPlatform ? 403 : 379,
-            width: isDesktopPlatform ? 780 : 327,
+            screenStyle: screenStyle,
+            height: isDesktopStyle ? 403 : 379,
+            width: isDesktopStyle ? 780 : 327,
             image: QPPImages.pic_successful,
             text: context.tr(QppLocales.commodityInfoVoteSuccess),
             subText: context.tr(QppLocales.commodityInfoVoteSuccessP),
@@ -66,17 +83,21 @@ extension DialogVoid on void {
   }
 
   /// 顯示投票失敗對話框
-  void showVoteFailureDialog(BuildContext context) {
+  void showVoteFailureDialog(
+    BuildContext context, {
+    required ScreenStyle screenStyle,
+  }) {
     showDialog(
       context: context,
       builder: (context) {
-        final isDesktopPlatform = context.isDesktopPlatform;
+        final isDesktopStyle = screenStyle.isDesktop;
 
         // showDialog要加上center不然他不知道位置，會導致設定的寬高的失效
         return Center(
           child: CImageDialog(
-            height: isDesktopPlatform ? 403 : 379,
-            width: isDesktopPlatform ? 780 : 327,
+            screenStyle: screenStyle,
+            height: isDesktopStyle ? 403 : 379,
+            width: isDesktopStyle ? 780 : 327,
             image: QPPImages.pic_fail,
             text: context.tr(QppLocales.commodityInfoVoteFault),
             subText: 'subText',
@@ -87,18 +108,21 @@ extension DialogVoid on void {
   }
 
   /// 顯示登出對話框
-  void showLogoutDialog(BuildContext context) {
+  void showLogoutDialog(
+    BuildContext context, {
+    required ScreenStyle screenStyle,
+  }) {
     showDialog(
       context: context,
       builder: (context) {
-        final isDesktopPlatform = context.isDesktopPlatform;
+        final isDesktopStyle = screenStyle.isDesktop;
 
         return Consumer(builder: (context, ref, child) {
           // showDialog要加上center不然他不知道位置，會導致設定的寬高的失效
           return Center(
             child: CActionsDialog(
-              height: isDesktopPlatform ? 217 : 210,
-              width: isDesktopPlatform ? 540 : 327,
+              height: isDesktopStyle ? 217 : 210,
+              width: isDesktopStyle ? 540 : 327,
               text: context.tr(QppLocales.alertLogout),
               subText: context.tr(QppLocales.alertLogoutTip),
               actions: [

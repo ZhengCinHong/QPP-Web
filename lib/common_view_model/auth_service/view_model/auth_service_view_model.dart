@@ -104,7 +104,6 @@ class AuthServiceStateNotifier extends ChangeNotifier {
       SharedPrefs.removeLoginInfo();
 
       logoutState = ApiResponse.completed(());
-      print(1231311);
       notifyListeners();
     }).catchError((error) {
       logoutState = ApiResponse.error(error);

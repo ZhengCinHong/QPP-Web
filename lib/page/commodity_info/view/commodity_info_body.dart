@@ -105,61 +105,70 @@ class InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Card(
-          // 切子元件超出範圍
-          clipBehavior: Clip.hardEdge,
-          semanticContainer: false,
-          // 容器與四周間距
-          margin: isDesktop
-              ? const EdgeInsets.fromLTRB(60, 100, 60, 40)
-              : const EdgeInsets.fromLTRB(24, 24, 24, 24),
-          color: QppColors.oxfordBlue,
-          shape: RoundedRectangleBorder(
-            // 圓角參數
-            borderRadius: BorderRadius.circular(8),
-          ),
-          // Card 陰影
-          elevation: 0,
-          child: Consumer(
-            builder: (context, ref, child) {
-              // 一般物品資料狀態通知
-              ApiResponse<QppItem> itemInfoState =
-                  ref.watch(itemSelectInfoProvider).itemSelectInfoState;
-              // NFT 物品資料狀態通知
-              ApiResponse<QppNFT> nftMetaState =
-                  ref.watch(itemSelectInfoProvider).nftMetaDataState;
-              // 問券 物品資料狀態通知
-              ApiResponse<QppVote> voteDataState =
-                  ref.watch(itemSelectInfoProvider).voteDataState;
+    return Consumer(
+      builder: (context, ref, child) {
+        // 一般物品資料狀態通知
+        ApiResponse<QppItem> itemInfoState =
+            ref.watch(itemSelectInfoProvider).itemSelectInfoState;
+        // NFT 物品資料狀態通知
+        ApiResponse<QppNFT> nftMetaState =
+            ref.watch(itemSelectInfoProvider).nftMetaDataState;
+        // 問券 物品資料狀態通知
+        ApiResponse<QppVote> voteDataState =
+            ref.watch(itemSelectInfoProvider).voteDataState;
 
-              if (itemInfoState.isCompleted) {
-                // 有取得物品資料
-                return isDesktop
-                    ? const NormalItemInfo.desktop()
-                    : const NormalItemInfo.mobile();
-              } else if (nftMetaState.isCompleted) {
-                // 有取得 NFT Meta
-                return isDesktop
-                    ? const NFTItemInfo.desktop()
-                    : const NFTItemInfo.mobile();
-              } else if (voteDataState.isCompleted) {
-                // 取得票券資料
-                return isDesktop
-                    ? const VoteItemInfo.desktop()
-                    : const VoteItemInfo.mobile();
-              } else {
-                // 沒有取得物品資料
-                return isDesktop
-                    ? const EmptyInfo.desktop()
-                    : const EmptyInfo.mobile();
-              }
-            },
-          ),
-        ),
-      ],
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Card(
+              // 切子元件超出範圍
+              clipBehavior: Clip.hardEdge,
+              semanticContainer: false,
+              // 容器與四周間距
+              margin: isDesktop
+                  ? const EdgeInsets.fromLTRB(60, 100, 60, 40)
+                  : const EdgeInsets.fromLTRB(24, 24, 24, 24),
+              color: QppColors.oxfordBlue,
+              shape: RoundedRectangleBorder(
+                // 圓角參數
+                borderRadius: BorderRadius.circular(8),
+              ),
+              // Card 陰影
+              elevation: 0,
+              child: () {
+                if (itemInfoState.isCompleted) {
+                  // 有取得物品資料
+                  return isDesktop
+                      ? const NormalItemInfo.desktop()
+                      : const NormalItemInfo.mobile();
+                } else if (nftMetaState.isCompleted) {
+                  // 有取得 NFT Meta
+                  return isDesktop
+                      ? const NFTItemInfo.desktop()
+                      : const NFTItemInfo.mobile();
+                } else if (voteDataState.isCompleted) {
+                  // 取得票券資料
+                  return isDesktop
+                      ? const VoteItemInfo.desktop()
+                      : const VoteItemInfo.mobile();
+                } else {
+                  // 沒有取得物品資料
+                  return isDesktop
+                      ? const EmptyInfo.desktop()
+                      : const EmptyInfo.mobile();
+                }
+              }(),
+            ),
+            voteDataState.isCompleted
+                ? context.isDesktopPlatform
+                    ? const SizedBox.shrink()
+                    : isDesktop
+                        ? const SendVoteButton.desktop()
+                        : const SendVoteButton.mobile()
+                : const SizedBox.shrink()
+          ],
+        );
+      },
     );
   }
 }
