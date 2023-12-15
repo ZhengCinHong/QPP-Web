@@ -229,4 +229,52 @@ class QPPImages {
       "assets/desktop-pic-commodity-largepic-sample-general.png";
   static const String icon_display_digital_object =
       "assets/icon-display-digital-object.png";
+  static const String desktop_pic_nft_instruction_01 =
+      "assets/desktop-pic-nft-instruction-01.png";
+  static const String desktop_pic_nft_instruction_02 =
+      "assets/desktop-pic-nft-instruction-02.png";
+  static const String desktop_pic_nft_instruction_03 =
+      "assets/desktop-pic-nft-instruction-03.png";
+  static const String desktop_pic_nft_instruction_04 =
+      "assets/desktop-pic-nft-instruction-04.png";
+  static const String desktop_pic_nft_instruction_05 =
+      "assets/desktop-pic-nft-instruction-05.png";
+  static const String desktop_pic_nft_instruction_06 =
+      "assets/desktop-pic-nft-instruction-06.png";
+  static const String desktop_pic_nft_instruction_07 =
+      "assets/desktop-pic-nft-instruction-07.png";
+  static const String desktop_pic_nft_instruction_08 =
+      "assets/desktop-pic-nft-instruction-08.png";
+  static const String desktop_pic_nft_instruction_09 =
+      "assets/desktop-pic-nft-instruction-09.png";
+  static const String desktop_pic_nft_instruction_10 =
+      "assets/desktop-pic-nft-instruction-10.png";
+  static const String desktop_pic_nft_instruction_11 =
+      "assets/desktop-pic-nft-instruction-11.png";
+  static const String desktop_pic_nft_instruction_12 =
+      "assets/desktop-pic-nft-instruction-12.png";
+  static const String desktop_pic_nft_instruction_13 =
+      "assets/desktop-pic-nft-instruction-13.png";
+  static const String desktop_pic_nft_instruction_14 =
+      "assets/desktop-pic-nft-instruction-14.png";
+  static const String desktop_pic_nft_instruction_15 =
+      "assets/desktop-pic-nft-instruction-15.png";
+  static const String desktop_pic_nft_instruction_16 =
+      "assets/desktop-pic-nft-instruction-16.png";
+  static const String desktop_pic_nft_instruction_17 =
+      "assets/desktop-pic-nft-instruction-17.png";
+  static const String desktop_pic_nft_instruction_18 =
+      "assets/desktop-pic-nft-instruction-18.png";
+  static const String desktop_pic_nft_instruction_19 =
+      "assets/desktop-pic-nft-instruction-19.png";
+  static const String desktop_pic_nft_instruction_20 =
+      "assets/desktop-pic-nft-instruction-20.png";
+  static const String desktop_pic_nft_instruction_21 =
+      "assets/desktop-pic-nft-instruction-21.png";
+  static const String desktop_pic_nft_instruction_22 =
+      "assets/desktop-pic-nft-instruction-22.png";
+  static const String desktop_pic_nft_instruction_23 =
+      "assets/desktop-pic-nft-instruction-23.png";
+  static const String desktop_pic_nft_instruction_24 =
+      "assets/desktop-pic-nft-instruction-24.png";
 }
