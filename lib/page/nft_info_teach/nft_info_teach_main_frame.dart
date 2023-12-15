@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_1.dart';
+import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_2.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
@@ -50,12 +51,16 @@ class NFTInfoTeachScaffold extends StatelessWidget {
           child: Container(
             // 容器與四周間距
             margin: screenStyle.isDesktop
-                ? const EdgeInsets.fromLTRB(60, 80, 60, 40)
+                ? const EdgeInsets.fromLTRB(60, 0, 60, 0)
                 : const EdgeInsets.fromLTRB(24, 24, 24, 24),
             constraints: const BoxConstraints(maxWidth: 1280),
             width: double.infinity,
             child: ListView(
               children: [
+                // top margin
+                const SizedBox(
+                  height: 80,
+                ),
                 // title
                 Text(
                   context.tr(QppLocales.nftInfoTeachTitle),
@@ -72,10 +77,19 @@ class NFTInfoTeachScaffold extends StatelessWidget {
                 NFTTeachInfoZone1(
                   isDesktop: screenStyle.isDesktop,
                 ),
+                const SizedBox(
+                  height: 64,
+                ),
                 // zone 2
-                const SizedBox.shrink(),
+                NFTTeachInfoZone2(
+                  isDesktop: screenStyle.isDesktop,
+                ),
                 // zone 3
                 const SizedBox.shrink(),
+                // bottom margin
+                const SizedBox(
+                  height: 40,
+                ),
               ],
             ),
           ),
