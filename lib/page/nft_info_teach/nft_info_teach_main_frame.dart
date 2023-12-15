@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_1.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_2.dart';
+import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_3.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
@@ -84,8 +85,11 @@ class NFTInfoTeachScaffold extends StatelessWidget {
                 NFTTeachInfoZone2(
                   isDesktop: screenStyle.isDesktop,
                 ),
+                const SizedBox(
+                  height: 64,
+                ),
                 // zone 3
-                const SizedBox.shrink(),
+                NFTTeachInfoZone3(isDesktop: screenStyle.isDesktop),
                 // bottom margin
                 const SizedBox(
                   height: 40,
