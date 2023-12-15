@@ -47,7 +47,7 @@ abstract class NFTTeachInfoExpand extends StatelessWidget {
 
   EdgeInsets get padding {
     if (isDesktop) {
-      return const EdgeInsets.fromLTRB(37, 28, 37, 37);
+      return const EdgeInsets.fromLTRB(30, 28, 30, 30);
     }
     return const EdgeInsets.fromLTRB(37, 28, 58, 39);
   }
