@@ -63,9 +63,21 @@ class Info2 extends NFTTeachInfoExpand {
   Widget get content => Container(
         margin: const EdgeInsets.only(top: 20),
         child: Builder(builder: (context) {
-          return Text(
-            context.tr(QppLocales.nftInfoTeachSubtitle1ContentA2),
-            style: QppTextStyles.web_16pt_body_platinum_L,
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                context.tr(QppLocales.nftInfoTeachSubtitle1ContentA2),
+                style: QppTextStyles.web_16pt_body_platinum_L,
+              ),
+              const SizedBox(
+                height: 11,
+              ),
+              Text(
+                context.tr(QppLocales.nftInfoTeachSubtitle1ContentA2Tip),
+                style: QppTextStyles.web_16pt_body_pastel_yellow_L,
+              ),
+            ],
           );
         }),
       );
