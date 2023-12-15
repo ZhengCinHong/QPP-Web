@@ -145,7 +145,7 @@ class QppGoRouter {
       name: privacy,
       pageBuilder: (BuildContext context, GoRouterState state) =>
           QPPTransitionPage(
-        child: const InstructionsPage.privacy(),
+        child: InstructionsPage.privacy(),
       ),
     ),
     // 使用者條款頁(只有home有)
@@ -154,7 +154,7 @@ class QppGoRouter {
       name: term,
       pageBuilder: (BuildContext context, GoRouterState state) =>
           QPPTransitionPage(
-        child: const InstructionsPage.term(),
+        child: InstructionsPage.term(),
       ),
     ),
     // nft教學頁(只有home有)

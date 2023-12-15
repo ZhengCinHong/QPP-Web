@@ -4,7 +4,6 @@ import 'package:qpp_example/common_ui/qpp_app_bar/model/qpp_app_bar_model.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/view/qpp_app_bar_view.dart';
 import 'package:qpp_example/common_ui/qpp_text/c_under_line_text.dart';
 import 'package:qpp_example/constants/server_const.dart';
-import 'package:qpp_example/go_router/router.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/home/model/home_page_model.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
@@ -320,58 +319,12 @@ class _LinkText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // switch (type) {
-    // case HomePageFooterLinkType.privacyPolicy:
-    //   return Text("");
-    // case HomePageFooterLinkType.termsOfUse:
-    //   return Text("");
-    // }
-
-// <<<<<<< HEAD
-//     const TextStyle style = QppTextStyles.web_12pt_caption_white_L;
-
-//     var termText = CUnderlineText(
-//         text: '使用者條款',
-//         style: style,
-//         onTap: () {
-//           QppGoRouterJumpPage.goPage(
-//               goRoutePath: QppGoRouter.term, context: context, isNewTab: true);
-//         });
-
-//     var privacyText = CUnderlineText(
-//         text: '隱私權政策',
-//         style: style,
-//         onTap: () {
-//           QppGoRouterJumpPage.goPage(
-//               goRoutePath: QppGoRouter.privacy,
-//               context: context,
-//               isNewTab: true);
-//         });
-
-//     return Wrap(
-//       spacing: 135,
-//       runSpacing: runSpacing,
-//       children: [
-//         privacyText,
-//         const CUnderlineText.link(
-//             text: 'Apple Store',
-//             link: ServerConst.appleStoreUrl,
-//             style: style,
-//             isNewTab: true),
-//         termText,
-//         const CUnderlineText.link(
-//             text: 'Google Play',
-//             link: ServerConst.googlePlayStoreUrl,
-//             style: style,
-//             isNewTab: true),
-//       ],
-// =======
     return CUnderlineText.link(
       text: context.tr(type.text),
       link: type.link,
       style: QppTextStyles.web_12pt_caption_white_L,
-      isNewTab: true,
-// >>>>>>> main
+      // isNewTab: true,
+      isNewTab: false,
     );
   }
 }

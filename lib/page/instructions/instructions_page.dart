@@ -6,6 +6,7 @@ import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart
 import 'package:qpp_example/common_ui/qpp_framework/qpp_main_framework.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/string/text.dart';
+import 'package:qpp_example/extension/string/url.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/instructions/copy_text_menu.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
@@ -17,66 +18,63 @@ class InstructionsPage extends StatelessWidget {
   static String privacyJsonTextName = "text";
   static String privacyJsonTipTextName = "tipText";
 
+  // 滾輪控制器
+  final _scrollController = ScrollController();
+
   final InstructionsType type;
 
   /// 使用者條款
-  const InstructionsPage.term({super.key}) : type = InstructionsType.term;
+  InstructionsPage.term({super.key}) : type = InstructionsType.term;
 
   /// 隱私權政策
-  const InstructionsPage.privacy({super.key}) : type = InstructionsType.privacy;
+  InstructionsPage.privacy({super.key}) : type = InstructionsType.privacy;
 
   @override
   Widget build(BuildContext context) {
     List<String> texts = type.create(context);
 
     final size = MediaQuery.of(context).size;
-    final height = size.height;
     final width = size.width;
-    final isDesktop = size.width.determineScreenStyle().isDesktop;
+    final isDesktop = width.determineScreenStyle().isDesktop;
 
-    const olTagLineHeight = 25;
+    const olLineHeightRatio = 1.5625; // 25(line-height)/16(fontSize) = 1.5625
 
-    const srcTextStyle = QppTextStyles.mobile_16pt_title_white_L;
-    final fontSize = srcTextStyle.fontSize ?? 16;
+    final textStyle = isDesktop
+        ? QppTextStyles.mobile_16pt_title_white_L
+        : QppTextStyles.mobile_14pt_body_platinum_L;
 
-    // 內文樣式
-    final textStyle = TextStyle(
-      color: srcTextStyle.color,
-      fontSize: fontSize,
-      decoration: TextDecoration.none,
-      decorationStyle: TextDecorationStyle.solid,
-    );
+    final fontSize = textStyle.fontSize ?? 16;
+    final olTagLineHeight = (fontSize * olLineHeightRatio).round();
 
     // 標題樣式
-    const titleTextStyle = TextStyle(
-      color: QppColors.mayaBlue,
-      fontSize: 44,
-      decoration: TextDecoration.none,
-    );
+    final titleTextStyle = isDesktop
+        ? QppTextStyles.web_44pt_Display_L_Maya_blue_L
+        : QppTextStyles.mobile_28pt_Display_s_maya_blue_C;
 
     // 子標題樣式
-    const subTitleTextStyle = TextStyle(
-      color: QppColors.mayaBlue,
-      fontSize: 24,
-      decoration: TextDecoration.none,
-    );
+    final subTitleTextStyle = isDesktop
+        ? QppTextStyles.web_24pt_title_L_maya_blue_C
+        : QppTextStyles.mobile_20pt_title_L_maya_blue_L;
 
     // 有序項目樣式
     final olTextStyle = TextStyle(
-      height:
-          olTagLineHeight / fontSize, // 25(line-height)/16(fontSize) = 1.5625
+      height: olLineHeightRatio,
       color: textStyle.color,
       fontSize: fontSize,
-      decoration: TextDecoration.none,
-      decorationStyle: TextDecorationStyle.solid,
     );
 
     // 顯示寬度處理
-    final paddingHorizontal = width * 0.16;
+    final paddingHorizontal = width * (isDesktop ? 0.16 : 0.088);
     final listWidth = size.width - (paddingHorizontal * 2);
-
-    // 滾輪處理
-    final scrollController = ScrollController();
+    final top =
+        isDesktop ? (paddingHorizontal * 0.5) : (paddingHorizontal * 1.75);
+    final bottom = top;
+    final padding = EdgeInsets.only(
+      left: paddingHorizontal,
+      top: top,
+      right: paddingHorizontal,
+      bottom: bottom,
+    );
 
     return SelectionArea(
       child: Scaffold(
@@ -84,20 +82,8 @@ class InstructionsPage extends StatelessWidget {
         body: Container(
           height: double.infinity,
           child: ListView.builder(
-            controller: scrollController,
-            padding: isDesktop
-                ? EdgeInsets.only(
-                    left: paddingHorizontal,
-                    top: height * 0.1,
-                    right: paddingHorizontal,
-                    bottom: height * 0.1,
-                  )
-                : EdgeInsets.only(
-                    left: paddingHorizontal,
-                    top: height * 0.1,
-                    right: paddingHorizontal,
-                    bottom: height * 0.1,
-                  ),
+            controller: _scrollController,
+            padding: padding,
             itemCount: texts.length,
             shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {
@@ -105,14 +91,19 @@ class InstructionsPage extends StatelessWidget {
                 texts[index],
                 customStylesBuilder: customStylesBuilder(olTagLineHeight),
                 customWidgetBuilder: listCustomWidgetBuilder(
+                  isDesktop: isDesktop,
                   listWidth: listWidth,
                   olTagLineHeight: olTagLineHeight,
                   textStyle: textStyle,
                   titleTextStyle: titleTextStyle,
                   subTitleTextStyle: subTitleTextStyle,
                   olTextStyle: olTextStyle,
-                  scrollController: scrollController,
+                  scrollController: _scrollController,
                 ),
+                onTapUrl: (url) async {
+                  url.launchURL();
+                  return true;
+                },
                 renderMode: RenderMode.column,
                 textStyle: textStyle,
               );
@@ -125,6 +116,7 @@ class InstructionsPage extends StatelessWidget {
 
   /// 清單客製化渲染處理
   CustomWidgetBuilder listCustomWidgetBuilder({
+    required bool isDesktop,
     required double listWidth,
     required int olTagLineHeight,
     required TextStyle textStyle,
@@ -134,37 +126,46 @@ class InstructionsPage extends StatelessWidget {
     required ScrollController scrollController,
   }) {
     return (element) {
-      if (element.className == InstructionsHtmlClass.sectionTitle.name) {
+      if (element.className == InstructionsHtmlClass.title.name ||
+          element.className == InstructionsHtmlClass.firstTitle.name) {
         final size = element.innerHtml.size(titleTextStyle);
-        // 空格 + 標題 + 空格 + 分割線 + 空格
-        return Column(
-          children: [
-            const SizedBox(height: 92),
-            SizedBox(
-              width: listWidth,
-              height: size.height,
-              child: FittedBox(
-                fit: BoxFit.none,
-                child: Text(element.innerHtml, style: titleTextStyle),
-              ),
+        // optional(空格(92)) + 標題 + 空格(23) + 分割線 + 空格(48)
+
+        List<Widget> children = [];
+
+        // 是否要加入上方空白
+        if (element.className == InstructionsHtmlClass.title.name) {
+          children.add(SizedBox(height: isDesktop ? 92 : 56));
+        }
+
+        // 加入標題
+        children.addAll([
+          SizedBox(
+            width: listWidth,
+            height: size.height,
+            child: FittedBox(
+              fit: BoxFit.none,
+              child: Text(element.innerHtml, style: titleTextStyle),
             ),
-            const SizedBox(height: 23),
-            const Divider(height: 1, color: QppColors.lapisLazuli),
-            const SizedBox(height: 48)
-          ],
+          ),
+          SizedBox(height: isDesktop ? 23 : 15),
+          const Divider(height: 1, color: QppColors.lapisLazuli),
+          SizedBox(height: isDesktop ? 48 : 27.5)
+        ]);
+
+        return Column(
+          children: children,
         );
-      } else if (element.className ==
-          InstructionsHtmlClass.subSectionTitle.name) {
-        // 標題 + 空格
+      } else if (element.className == InstructionsHtmlClass.sectionTitle.name) {
+        // 標題 + 空格(24)
         return Column(
           children: [
             Text(element.innerHtml, style: subTitleTextStyle),
             SizedBox(width: listWidth, height: 24)
           ],
         );
-      } else if (element.className ==
-          InstructionsHtmlClass.subSectionEnd.name) {
-        // 內容 + 空格 + 分割線 + 空格
+      } else if (element.className == InstructionsHtmlClass.sectionEnd.name) {
+        // 內容 + 空格(48) + 分割線 + 空格(48)
         return Column(
           children: [
             HtmlWidget(
@@ -174,40 +175,71 @@ class InstructionsPage extends StatelessWidget {
               customWidgetBuilder:
                   textCustomWidgetBuilder(olTagLineHeight, olTextStyle),
             ),
-            SizedBox(width: listWidth, height: 48),
+            SizedBox(width: listWidth, height: isDesktop ? 48 : 27.5),
             const Divider(height: 1, color: QppColors.lapisLazuli),
-            const SizedBox(height: 48)
+            SizedBox(height: isDesktop ? 48 : 27.5)
+          ],
+        );
+      } else if (element.className ==
+          InstructionsHtmlClass.nftSectionEnd.name) {
+        // 內容 + 空格(24)
+        return Column(
+          children: [
+            HtmlWidget(
+              element.innerHtml,
+              textStyle: textStyle,
+              customStylesBuilder: customStylesBuilder(olTagLineHeight),
+              customWidgetBuilder:
+                  textCustomWidgetBuilder(olTagLineHeight, olTextStyle),
+            ),
+            const SizedBox(width: 1, height: 24),
           ],
         );
       } else if (element.className ==
           InstructionsHtmlClass.privacySendEmail.name) {
         List<Widget> result = [];
-
+        // 專門處理隱私權點擊提示彈窗
         final childrens = element.children;
+        // for (var children in childrens) {
+        //   // 假如是超連結
+        //   if (children.localName == "a") {
+        //     // 取得連結
+        //     String? href;
+        //     if (children.attributes.containsKey('href')) {
+        //       href = children.attributes['href'];
+        //     }
+        //     final text = json.decode(children.innerHtml);
+
+        //     result.add(const SizedBox(width: 4));
+        //     // result.add(copyTextMenu);
+        //     result.add(const SizedBox(width: 4));
+        //   } else {
+        //     result.add(Text(children.innerHtml, style: textStyle));
+        //   }
+        // }
+
         for (var children in childrens) {
           // 假如是超連結
           if (children.localName == "a") {
             // 取得連結
-            String href = "";
+            String? href;
             if (children.attributes.containsKey('href')) {
-              final srcHref = children.attributes['href'];
-
-              if (srcHref != null) {
-                href = srcHref;
-              }
+              href = children.attributes['href'];
             }
 
             final text = json.decode(children.innerHtml);
 
             // 生成按鈕
-            final copyTextMenu = CopyTextMenu.create(
+            final copyTextMenu = CopyTextMenu(
               text: text[InstructionsPage.privacyJsonTextName],
-              textStyle: textStyle,
+              textStyle: isDesktop
+                  ? QppTextStyles.web_16pt_body_canary_yellow_C
+                  : QppTextStyles.mobile_14pt_body_canary_yellow_L,
               tipText: text[InstructionsPage.privacyJsonTipTextName],
               tipTextStyle: QppTextStyles.web_16pt_body_canary_yellow_C,
               scrollController: scrollController,
               onTap: () async {
-                await Clipboard.setData(ClipboardData(text: href));
+                await Clipboard.setData(ClipboardData(text: href ?? ""));
               },
             );
 
@@ -227,18 +259,28 @@ class InstructionsPage extends StatelessWidget {
   }
 
   /// 文字風格處理
-  CustomStylesBuilder customStylesBuilder(int lineHeight) {
+  CustomStylesBuilder customStylesBuilder(int olTagLineHeight) {
     return (element) {
       // css 相關處理
       if (element.localName == 'ol') {
         return {
-          'line-height': '${lineHeight}px',
+          'line-height': '${olTagLineHeight}px',
+          'padding-left': '1.5em', // 修正顯示文字元件沒有準確靠左問題
+        };
+      }
+      if (element.localName == 'ul') {
+        return {
           'padding-left': '1.5em' // 修正顯示文字元件沒有準確靠左問題
         };
       }
       if (element.className == 'text-yellow-100') {
         return {
           'color': QppColors.canaryYellow.toHexString(),
+        };
+      }
+      if (element.localName == 'u') {
+        return {
+          'border-bottom': "1px solid",
         };
       }
       return null;
@@ -284,17 +326,26 @@ enum InstructionsType {
 
 /// 說明的子類型
 enum InstructionsHtmlClass {
-  /// 段落標題
-  sectionTitle,
+  /// 標題
+  title,
+
+  /// 第一個標題 (移除 top padding)
+  firstTitle,
+
+  /// (標題＋section)區塊結束
+  titleAreaEnd,
 
   /// 段落開始
-  subSectionTitle,
+  sectionTitle,
 
   /// 段落結束
-  subSectionEnd,
+  sectionEnd,
+
+  /// 數位收藏品段落結束
+  nftSectionEnd,
 
   /// 隱私權寄信
-  privacySendEmail
+  privacySendEmail;
 }
 
 /// html 元素屬性
@@ -423,9 +474,9 @@ extension InstructionsTypeExtension on InstructionsType {
             "<h1>${content.tr(QppLocales.privacyParagraph9P1)}</h1>";
 
         final sendEmailText = '''{
-          "${InstructionsPage.privacyJsonTextName}":"${content.tr(QppLocales.privacyParagraph9SendMail)}",
-          "${InstructionsPage.privacyJsonTipTextName}":"${content.tr(QppLocales.privacyParagraph9Copy)}"
-        }''';
+        "${InstructionsPage.privacyJsonTextName}":"${content.tr(QppLocales.privacyParagraph9SendMail)}",
+        "${InstructionsPage.privacyJsonTipTextName}":"${content.tr(QppLocales.privacyParagraph9Copy)}"
+      }''';
 
         final privacySendEmail = "<a href="
             "${ServerConst.mailStr}"
@@ -476,12 +527,23 @@ extension InstructionsTypeExtension on InstructionsType {
         result.addTermString(content, QppLocales.nftTermsSummary);
         result.addTermString(content, QppLocales.nftTermsSubtitle1);
         result.addTermString(content, QppLocales.nftTermsText1);
-        result.addTermString(content, QppLocales.nftTermsSubtitle2);
+        result.addTermString(content, QppLocales.nftTermsSubtitle2,
+            subSectionEnd: InstructionsHtmlClass.nftSectionEnd);
         result.addTermString(content, QppLocales.nftTermsText2);
-        result.addTermString(content, QppLocales.nftTermsSubtitle3);
+        result.addTermString(content, QppLocales.nftTermsSubtitle3,
+            subSectionEnd: InstructionsHtmlClass.nftSectionEnd);
         result.addTermString(content, QppLocales.nftTermsText3);
-        result.addTermString(content, QppLocales.nftTermsSubtitle4);
+        result.addTermString(content, QppLocales.nftTermsSubtitle4,
+            subSectionEnd: InstructionsHtmlClass.nftSectionEnd);
         result.addTermString(content, QppLocales.nftTermsText4);
+
+        result.addTermString(content, QppLocales.forumTitle);
+        result.addTermString(content, QppLocales.forumSummary);
+        result.addTermString(content, QppLocales.forumSubtitle1);
+        result.addTermString(content, QppLocales.forumText1);
+        result.addTermString(content, QppLocales.forumSubtitle2);
+        result.addTermString(content, QppLocales.forumText2);
+        result.addTermString(content, QppLocales.forumLastText);
     }
 
     return result;
@@ -492,25 +554,26 @@ extension InstructionsTypeExtension on InstructionsType {
 extension _InstructionsList on List {
   void addPrivacyString(BuildContext content, String key) {
     var result = content.tr(key);
-
     InstructionsHtmlClass? className;
 
     if (key.contains("paragraph") && key.contains("title")) {
       // 子標題
-      className = InstructionsHtmlClass.subSectionTitle;
+      className = InstructionsHtmlClass.sectionTitle;
 
       // 補上方分割線
       if (length > 0) {
         final index = length - 1;
         final old = removeAt(index);
         addDivClassString(
-          className: InstructionsHtmlClass.subSectionEnd.name,
+          className: InstructionsHtmlClass.sectionEnd.name,
           innerHtml: old,
         );
       }
     } else if (key.contains("title")) {
       // 主標題
-      className = InstructionsHtmlClass.sectionTitle;
+      className = (length == 0)
+          ? InstructionsHtmlClass.firstTitle
+          : InstructionsHtmlClass.title;
     }
 
     if (className != null) {
@@ -520,26 +583,30 @@ extension _InstructionsList on List {
     add(result);
   }
 
-  void addTermString(BuildContext content, String key) {
+  void addTermString(BuildContext content, String key,
+      {InstructionsHtmlClass subSectionEnd =
+          InstructionsHtmlClass.sectionEnd}) {
     String result = content.tr(key);
-
     InstructionsHtmlClass? className;
 
     if (key.contains("subtitle")) {
       // 子標題
-      className = InstructionsHtmlClass.subSectionTitle;
+      className = InstructionsHtmlClass.sectionTitle;
 
       // 補上方分割線
       if (length > 0) {
         final index = length - 1;
         final old = removeAt(index);
         addDivClassString(
-            className: InstructionsHtmlClass.subSectionEnd.name,
-            innerHtml: old);
+          className: subSectionEnd.name,
+          innerHtml: old,
+        );
       }
     } else if (key.contains("title")) {
       // 主標題
-      className = InstructionsHtmlClass.sectionTitle;
+      className = (length == 0)
+          ? InstructionsHtmlClass.firstTitle
+          : InstructionsHtmlClass.title;
     }
 
     if (className != null) {

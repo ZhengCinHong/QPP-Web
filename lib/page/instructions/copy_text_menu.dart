@@ -22,44 +22,12 @@ class CopyTextMenu extends StatefulWidget {
     required this.textStyle,
     required this.tipText,
     required this.tipTextStyle,
-    required this.tipBackgroundImage,
     required this.scrollController,
     required this.onTap,
-  });
-
-  factory CopyTextMenu.create({
-    required String text,
-    required TextStyle textStyle,
-    required String tipText,
-    required TextStyle tipTextStyle,
-    required ScrollController scrollController,
-    required VoidCallback onTap,
-  }) {
-    // 背景圖片
-    const decorationImage = DecorationImage(
-      image: AssetImage('assets/bg-dialog.png'),
-      fit: BoxFit.fill,
-    );
-
-    // 移除分割線
-    final toTipTextStyle = TextStyle(
-      color: tipTextStyle.color,
-      fontSize: tipTextStyle.fontSize,
-      fontWeight: tipTextStyle.fontWeight,
-      decoration: TextDecoration.none,
-      decorationStyle: TextDecorationStyle.solid,
-    );
-
-    return CopyTextMenu(
-      text: text,
-      textStyle: textStyle,
-      tipText: tipText,
-      tipTextStyle: toTipTextStyle,
-      tipBackgroundImage: decorationImage,
-      scrollController: scrollController,
-      onTap: onTap,
-    );
-  }
+  }) : tipBackgroundImage = const DecorationImage(
+          image: AssetImage('assets/bg-dialog.png'),
+          fit: BoxFit.fill,
+        );
 
   @override
   // ignore: library_private_types_in_public_api
@@ -74,7 +42,6 @@ class _CopyTextMenuState extends State<CopyTextMenu>
   late Size buttonSize;
   late OverlayEntry _overlayEntry;
   late Point tipPoint;
-  late double tapTipScrollOffest;
   Timer? _timer;
 
   @override
@@ -87,9 +54,7 @@ class _CopyTextMenuState extends State<CopyTextMenu>
         return;
       }
       Overlay.of(context).setState(() {
-        tipPoint = Point(tipPoint.x,
-            tipPoint.y + (tapTipScrollOffest - widget.scrollController.offset));
-        tapTipScrollOffest = widget.scrollController.offset;
+        // 強制更新 OverlayEntry 狀態
       });
     });
 
@@ -110,7 +75,7 @@ class _CopyTextMenuState extends State<CopyTextMenu>
       child: InkWell(
         child: Text(
           widget.text,
-          style: widget.tipTextStyle,
+          style: widget.textStyle,
         ),
         onTap: () {
           if (!isMenuOpen) {
@@ -154,7 +119,6 @@ extension _CopyTextMenuStatePrivateFunctions on _CopyTextMenuState {
   }
 
   void _openMenu() async {
-    _findButton();
     _overlayEntry = _overlayEntryBuilder();
     Overlay.of(context).insert(_overlayEntry);
     isMenuOpen = !isMenuOpen;
@@ -169,46 +133,59 @@ extension _CopyTextMenuStatePrivateFunctions on _CopyTextMenuState {
     final textHieght =
         size.height + textPadding.bottom + textPadding.top + arrowSize.height;
 
-    final top = buttonPosition.dy - textHieght;
-    final left = buttonPosition.dx -
-        ((size.width / 2) + textPadding.left) +
-        (buttonSize.width / 2);
-
     // 寬與高
     final width = size.width + textPadding.left + textPadding.right;
     final height = size.height + textPadding.top + textPadding.bottom;
 
-    // 計算彈出視窗是否被左右遮擋
-    final screenSize = MediaQuery.of(context).size;
-    double offset = 0;
-    if ((left + width) > screenSize.width) {
-      offset = (left + width + 5) - screenSize.width; // 5 為 padding
-    }
-    if (left < 0) {
-      offset = left - 5; // 5 為 padding
-    }
-
-    // 記錄目前點擊資訊
-    tipPoint = Point(left - offset, top);
-    tapTipScrollOffest = widget.scrollController.offset;
-
     return OverlayEntry(
       builder: (context) {
-        return Positioned(
-          top: tipPoint.y.toDouble(),
-          left: tipPoint.x.toDouble(),
-          child: Container(
-            width: width,
-            height: height,
-            padding: textPadding,
-            decoration: BoxDecoration(
-              image: widget.tipBackgroundImage,
-            ),
-            child: Text(
-              widget.tipText,
-              style: widget.tipTextStyle,
-            ),
-          ),
+        return LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            _findButton();
+
+            final top = buttonPosition.dy - textHieght;
+            final left = buttonPosition.dx -
+                ((size.width / 2) + textPadding.left) +
+                (buttonSize.width / 2);
+
+            // 計算彈出視窗是否被左右遮擋
+            double offset = 0;
+            if ((left + width) > constraints.biggest.width) {
+              offset =
+                  (left + width + 5) - constraints.biggest.width; // 5 為 padding
+            }
+            if (left < 0) {
+              offset = left - 5; // 5 為 padding
+            }
+
+            // 記錄目前點擊資訊
+            tipPoint = Point(left - offset, top);
+
+            return Container(
+              alignment: Alignment.topLeft,
+              child: Material(
+                color: Colors.white.withOpacity(0),
+                child: Container(
+                  margin: EdgeInsets.only(
+                    top: tipPoint.y.toDouble(),
+                    left: tipPoint.x.toDouble(),
+                  ),
+                  child: Container(
+                    width: width,
+                    height: height,
+                    padding: textPadding,
+                    decoration: BoxDecoration(
+                      image: widget.tipBackgroundImage,
+                    ),
+                    child: Text(
+                      widget.tipText,
+                      style: widget.tipTextStyle,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
         );
       },
     );
