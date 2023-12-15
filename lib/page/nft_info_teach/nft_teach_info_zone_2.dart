@@ -42,93 +42,54 @@ class Info1 extends NFTTeachInfoExpand {
   @override
   Widget get content => Container(
         margin: const EdgeInsets.only(top: 20),
-        child: Builder(builder: (context) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                context.tr(
-                    QppLocales.nftInfoTeachSubtitle2ContentTeach1ContentStep1),
-                style: QppTextStyles.web_16pt_body_platinum_L,
-              ),
-              const SizedBox(
-                height: 28,
-              ),
-              // Wrap 流式佈局 https://blog.csdn.net/yuzhiqiang_1993/article/details/88378021
-              Wrap(
-                runSpacing: 16,
-                spacing: 16,
-                children: [
-                  Image.asset(QPPImages.desktop_pic_nft_instruction_02),
-                  Image.asset(QPPImages.desktop_pic_nft_instruction_03),
-                ],
-              ),
-              const SizedBox(
-                height: 64,
-              ),
-              Text(
-                context.tr(
-                    QppLocales.nftInfoTeachSubtitle2ContentTeach1ContentStep2),
-                style: QppTextStyles.web_16pt_body_platinum_L,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              Wrap(
-                runSpacing: 16,
-                spacing: 16,
-                children: [
-                  Image.asset(QPPImages.desktop_pic_nft_instruction_04),
-                  Image.asset(QPPImages.desktop_pic_nft_instruction_05),
-                ],
-              ),
-              const SizedBox(
-                height: 64,
-              ),
-              Text(
-                context.tr(
-                    QppLocales.nftInfoTeachSubtitle2ContentTeach1ContentStep3),
-                style: QppTextStyles.web_16pt_body_platinum_L,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              Image.asset(QPPImages.desktop_pic_nft_instruction_06),
-              const SizedBox(
-                height: 64,
-              ),
-              Text(
-                context.tr(
-                    QppLocales.nftInfoTeachSubtitle2ContentTeach1ContentStep4),
-                style: QppTextStyles.web_16pt_body_platinum_L,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              Image.asset(QPPImages.desktop_pic_nft_instruction_07),
-              const SizedBox(
-                height: 64,
-              ),
-              Text(
-                context.tr(
-                    QppLocales.nftInfoTeachSubtitle2ContentTeach1ContentStep5),
-                style: QppTextStyles.web_16pt_body_platinum_L,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              Wrap(
-                spacing: 16,
-                runSpacing: 16,
-                children: [
-                  Image.asset(QPPImages.desktop_pic_nft_instruction_08),
-                  Image.asset(QPPImages.desktop_pic_nft_instruction_09),
-                  Image.asset(QPPImages.desktop_pic_nft_instruction_10),
-                ],
-              ),
-            ],
-          );
-        }),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ItemTeachInfo(
+              contentKey:
+                  QppLocales.nftInfoTeachSubtitle2ContentTeach1ContentStep1,
+              displayImg: [
+                Image.asset(QPPImages.desktop_pic_nft_instruction_02),
+                Image.asset(QPPImages.desktop_pic_nft_instruction_03),
+              ],
+            ),
+            ItemTeachInfo(
+              margin: const EdgeInsets.only(top: 64),
+              contentKey:
+                  QppLocales.nftInfoTeachSubtitle2ContentTeach1ContentStep2,
+              displayImg: [
+                Image.asset(QPPImages.desktop_pic_nft_instruction_04),
+                Image.asset(QPPImages.desktop_pic_nft_instruction_05),
+              ],
+            ),
+            ItemTeachInfo(
+              margin: const EdgeInsets.only(top: 64),
+              contentKey:
+                  QppLocales.nftInfoTeachSubtitle2ContentTeach1ContentStep3,
+              displayImg: [
+                Image.asset(QPPImages.desktop_pic_nft_instruction_06),
+              ],
+            ),
+            ItemTeachInfo(
+              margin: const EdgeInsets.only(top: 64),
+              contentKey:
+                  QppLocales.nftInfoTeachSubtitle2ContentTeach1ContentStep4,
+              displayImg: [
+                Image.asset(QPPImages.desktop_pic_nft_instruction_07),
+              ],
+            ),
+            ItemTeachInfo(
+              margin: const EdgeInsets.only(top: 64),
+              contentKey:
+                  QppLocales.nftInfoTeachSubtitle2ContentTeach1ContentStep5,
+              displayImg: [
+                Image.asset(QPPImages.desktop_pic_nft_instruction_08),
+                Image.asset(QPPImages.desktop_pic_nft_instruction_09),
+                Image.asset(QPPImages.desktop_pic_nft_instruction_10),
+              ],
+            )
+          ],
+        ),
       );
 }
 
@@ -144,90 +105,59 @@ class Info2 extends NFTTeachInfoExpand {
   @override
   Widget get content => Container(
         margin: const EdgeInsets.only(top: 20),
-        child: Builder(builder: (context) {
-          return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  context.tr(QppLocales
-                      .nftInfoTeachSubtitle2ContentTeach2ContentStep1),
-                  style: QppTextStyles.web_16pt_body_platinum_L,
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                Image.asset(QPPImages.desktop_pic_nft_instruction_11),
-                const SizedBox(
-                  height: 64,
-                ),
-                Text(
-                  context.tr(QppLocales
-                      .nftInfoTeachSubtitle2ContentTeach2ContentStep2),
-                  style: QppTextStyles.web_16pt_body_platinum_L,
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                Wrap(
-                  runSpacing: 16,
-                  spacing: 16,
-                  children: [
-                    Image.asset(
-                      QPPImages.desktop_pic_nft_instruction_12,
-                    ),
-                    Image.asset(QPPImages.desktop_pic_nft_instruction_13),
-                  ],
-                ),
-                const SizedBox(
-                  height: 64,
-                ),
-                Text(
-                  context.tr(QppLocales
-                      .nftInfoTeachSubtitle2ContentTeach2ContentStep3),
-                  style: QppTextStyles.web_16pt_body_platinum_L,
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                Image.asset(
-                  QPPImages.desktop_pic_nft_instruction_14,
-                ),
-                const SizedBox(
-                  height: 64,
-                ),
-                Text(
-                  context.tr(QppLocales
-                      .nftInfoTeachSubtitle2ContentTeach2ContentStep4),
-                  style: QppTextStyles.web_16pt_body_platinum_L,
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                Image.asset(
-                  QPPImages.desktop_pic_nft_instruction_15,
-                ),
-                const SizedBox(
-                  height: 64,
-                ),
-                Text(
-                  context.tr(QppLocales
-                      .nftInfoTeachSubtitle2ContentTeach2ContentStep5),
-                  style: QppTextStyles.web_16pt_body_platinum_L,
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                Image.asset(
-                  QPPImages.desktop_pic_nft_instruction_16,
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                Image.asset(
-                  QPPImages.desktop_pic_nft_instruction_17,
-                ),
-              ]);
-        }),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          ItemTeachInfo(
+            contentKey:
+                QppLocales.nftInfoTeachSubtitle2ContentTeach2ContentStep1,
+            displayImg: [
+              Image.asset(QPPImages.desktop_pic_nft_instruction_11),
+            ],
+          ),
+          ItemTeachInfo(
+            margin: const EdgeInsets.only(top: 64),
+            contentKey:
+                QppLocales.nftInfoTeachSubtitle2ContentTeach2ContentStep2,
+            displayImg: [
+              Image.asset(
+                QPPImages.desktop_pic_nft_instruction_12,
+              ),
+              Image.asset(QPPImages.desktop_pic_nft_instruction_13),
+            ],
+          ),
+          ItemTeachInfo(
+            margin: const EdgeInsets.only(top: 64),
+            contentKey:
+                QppLocales.nftInfoTeachSubtitle2ContentTeach2ContentStep3,
+            displayImg: [
+              Image.asset(
+                QPPImages.desktop_pic_nft_instruction_14,
+              ),
+            ],
+          ),
+          ItemTeachInfo(
+            margin: const EdgeInsets.only(top: 64),
+            contentKey:
+                QppLocales.nftInfoTeachSubtitle2ContentTeach2ContentStep4,
+            displayImg: [
+              Image.asset(
+                QPPImages.desktop_pic_nft_instruction_15,
+              ),
+            ],
+          ),
+          ItemTeachInfo(
+            margin: const EdgeInsets.only(top: 64),
+            contentKey:
+                QppLocales.nftInfoTeachSubtitle2ContentTeach2ContentStep5,
+            displayImg: [
+              Image.asset(
+                QPPImages.desktop_pic_nft_instruction_16,
+              ),
+              Image.asset(
+                QPPImages.desktop_pic_nft_instruction_17,
+              ),
+            ],
+          ),
+        ]),
       );
 }
 
@@ -243,57 +173,41 @@ class Info3 extends NFTTeachInfoExpand {
   @override
   Widget get content => Container(
         margin: const EdgeInsets.only(top: 20),
-        child: Builder(builder: (context) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                context.tr(
-                    QppLocales.nftInfoTeachSubtitle2ContentTeach3ContentStep1),
-                style: QppTextStyles.web_16pt_body_platinum_L,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              Image.asset(QPPImages.desktop_pic_nft_instruction_18),
-              const SizedBox(
-                height: 64,
-              ),
-              Text(
-                context.tr(
-                    QppLocales.nftInfoTeachSubtitle2ContentTeach3ContentStep2),
-                style: QppTextStyles.web_16pt_body_platinum_L,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              Image.asset(QPPImages.desktop_pic_nft_instruction_19),
-              const SizedBox(
-                height: 64,
-              ),
-              Text(
-                context.tr(
-                    QppLocales.nftInfoTeachSubtitle2ContentTeach3ContentStep3),
-                style: QppTextStyles.web_16pt_body_platinum_L,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              Image.asset(QPPImages.desktop_pic_nft_instruction_20),
-              const SizedBox(
-                height: 64,
-              ),
-              Text(
-                context.tr(
-                    QppLocales.nftInfoTeachSubtitle2ContentTeach3ContentStep4),
-                style: QppTextStyles.web_16pt_body_platinum_L,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              Image.asset(QPPImages.desktop_pic_nft_instruction_21),
-            ],
-          );
-        }),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ItemTeachInfo(
+              contentKey:
+                  QppLocales.nftInfoTeachSubtitle2ContentTeach3ContentStep1,
+              displayImg: [
+                Image.asset(QPPImages.desktop_pic_nft_instruction_18),
+              ],
+            ),
+            ItemTeachInfo(
+              margin: const EdgeInsets.only(top: 64),
+              contentKey:
+                  QppLocales.nftInfoTeachSubtitle2ContentTeach3ContentStep2,
+              displayImg: [
+                Image.asset(QPPImages.desktop_pic_nft_instruction_19),
+              ],
+            ),
+            ItemTeachInfo(
+              margin: const EdgeInsets.only(top: 64),
+              contentKey:
+                  QppLocales.nftInfoTeachSubtitle2ContentTeach3ContentStep3,
+              displayImg: [
+                Image.asset(QPPImages.desktop_pic_nft_instruction_20),
+              ],
+            ),
+            ItemTeachInfo(
+              margin: const EdgeInsets.only(top: 64),
+              contentKey:
+                  QppLocales.nftInfoTeachSubtitle2ContentTeach3ContentStep4,
+              displayImg: [
+                Image.asset(QPPImages.desktop_pic_nft_instruction_21),
+              ],
+            ),
+          ],
+        ),
       );
 }

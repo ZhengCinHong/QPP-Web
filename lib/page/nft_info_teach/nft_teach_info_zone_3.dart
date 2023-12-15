@@ -39,19 +39,9 @@ class Info1 extends NFTTeachInfoExpand {
       );
 
   @override
-  Widget get content => Container(
-        margin: const EdgeInsets.only(top: 20),
-        child: Builder(builder: (context) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                context.tr(QppLocales.nftInfoTeachSubtitle3ContentA1),
-                style: QppTextStyles.web_16pt_body_platinum_L,
-              ),
-            ],
-          );
-        }),
+  Widget get content => const ItemTeachInfo(
+        margin: EdgeInsets.only(top: 20),
+        contentKey: QppLocales.nftInfoTeachSubtitle3ContentA1,
       );
 }
 
@@ -67,53 +57,35 @@ class Info2 extends NFTTeachInfoExpand {
   @override
   Widget get content => Container(
         margin: const EdgeInsets.only(top: 20),
-        child: Builder(builder: (context) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                context.tr(
-                    QppLocales.nftInfoTeachSubtitle3ContentTeach2ContentStep1),
-                style: QppTextStyles.web_16pt_body_platinum_L,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              Image.asset(QPPImages.desktop_pic_nft_instruction_22),
-              const SizedBox(
-                height: 64,
-              ),
-              Text(
-                context.tr(
-                    QppLocales.nftInfoTeachSubtitle3ContentTeach2ContentStep2),
-                style: QppTextStyles.web_16pt_body_platinum_L,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              Image.asset(QPPImages.desktop_pic_nft_instruction_23),
-              const SizedBox(
-                height: 64,
-              ),
-              Text(
-                context.tr(
-                    QppLocales.nftInfoTeachSubtitle3ContentTeach2ContentStep3),
-                style: QppTextStyles.web_16pt_body_platinum_L,
-              ),
-              const SizedBox(
-                height: 6,
-              ),
-              Text(
-                context.tr(QppLocales
-                    .nftInfoTeachSubtitle3ContentTeach2ContentStep3Tip),
-                style: QppTextStyles.web_16pt_body_pastel_yellow_L,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              Image.asset(QPPImages.desktop_pic_nft_instruction_24),
-            ],
-          );
-        }),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ItemTeachInfo(
+              contentKey:
+                  QppLocales.nftInfoTeachSubtitle3ContentTeach2ContentStep1,
+              displayImg: [
+                Image.asset(QPPImages.desktop_pic_nft_instruction_22),
+              ],
+            ),
+            ItemTeachInfo(
+              margin: const EdgeInsets.only(top: 64),
+              contentKey:
+                  QppLocales.nftInfoTeachSubtitle3ContentTeach2ContentStep2,
+              displayImg: [
+                Image.asset(QPPImages.desktop_pic_nft_instruction_23),
+              ],
+            ),
+            ItemTeachInfo(
+              margin: const EdgeInsets.only(top: 64),
+              contentKey:
+                  QppLocales.nftInfoTeachSubtitle3ContentTeach2ContentStep3,
+              tipKey:
+                  QppLocales.nftInfoTeachSubtitle3ContentTeach2ContentStep3Tip,
+              displayImg: [
+                Image.asset(QPPImages.desktop_pic_nft_instruction_24),
+              ],
+            ),
+          ],
+        ),
       );
 }

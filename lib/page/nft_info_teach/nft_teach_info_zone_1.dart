@@ -41,14 +41,9 @@ class Info1 extends NFTTeachInfoExpand {
       );
 
   @override
-  Widget get content => Container(
-        margin: const EdgeInsets.only(top: 20),
-        child: Builder(builder: (context) {
-          return Text(
-            context.tr(QppLocales.nftInfoTeachSubtitle1ContentA1),
-            style: QppTextStyles.web_16pt_body_platinum_L,
-          );
-        }),
+  Widget get content => const ItemTeachInfo(
+        margin: EdgeInsets.only(top: 20),
+        contentKey: QppLocales.nftInfoTeachSubtitle1ContentA1,
       );
 }
 
@@ -62,30 +57,13 @@ class Info2 extends NFTTeachInfoExpand {
       );
 
   @override
-  Widget get content => Container(
+  Widget get content => ItemTeachInfo(
         margin: const EdgeInsets.only(top: 20),
-        child: Builder(builder: (context) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                context.tr(QppLocales.nftInfoTeachSubtitle1ContentA2),
-                style: QppTextStyles.web_16pt_body_platinum_L,
-              ),
-              const SizedBox(
-                height: 11,
-              ),
-              Text(
-                context.tr(QppLocales.nftInfoTeachSubtitle1ContentA2Tip),
-                style: QppTextStyles.web_16pt_body_pastel_yellow_L,
-              ),
-              const SizedBox(
-                height: 39,
-              ),
-              Image.asset(QPPImages.desktop_pic_nft_instruction_01)
-            ],
-          );
-        }),
+        contentKey: QppLocales.nftInfoTeachSubtitle1ContentA2,
+        tipKey: QppLocales.nftInfoTeachSubtitle1ContentA2Tip,
+        displayImg: [
+          Image.asset(QPPImages.desktop_pic_nft_instruction_01),
+        ],
       );
 }
 
@@ -97,16 +75,10 @@ class Info3 extends NFTTeachInfoExpand {
   Widget get title => const NFTTeachSectionInfoTitle(
         titleKey: QppLocales.nftInfoTeachSubtitle1ContentQ3,
       );
-
   @override
-  Widget get content => Container(
-        margin: const EdgeInsets.only(top: 20),
-        child: Builder(builder: (context) {
-          return Text(
-            context.tr(QppLocales.nftInfoTeachSubtitle1ContentA3),
-            style: QppTextStyles.web_16pt_body_platinum_L,
-          );
-        }),
+  Widget get content => const ItemTeachInfo(
+        margin: EdgeInsets.only(top: 20),
+        contentKey: QppLocales.nftInfoTeachSubtitle1ContentA3,
       );
 }
 
@@ -120,14 +92,9 @@ class Info4 extends NFTTeachInfoExpand {
       );
 
   @override
-  Widget get content => Container(
-        margin: const EdgeInsets.only(top: 20),
-        child: Builder(builder: (context) {
-          return Text(
-            context.tr(QppLocales.nftInfoTeachSubtitle1ContentA4),
-            style: QppTextStyles.web_16pt_body_platinum_L,
-          );
-        }),
+  Widget get content => const ItemTeachInfo(
+        margin: EdgeInsets.only(top: 20),
+        contentKey: QppLocales.nftInfoTeachSubtitle1ContentA4,
       );
 }
 
@@ -141,13 +108,8 @@ class Info5 extends NFTTeachInfoExpand {
       );
 
   @override
-  Widget get content => Container(
-        margin: const EdgeInsets.only(top: 20),
-        child: Builder(builder: (context) {
-          return Text(
-            context.tr(QppLocales.nftInfoTeachSubtitle1ContentA5),
-            style: QppTextStyles.web_16pt_body_platinum_L,
-          );
-        }),
+  Widget get content => const ItemTeachInfo(
+        margin: EdgeInsets.only(top: 20),
+        contentKey: QppLocales.nftInfoTeachSubtitle1ContentA5,
       );
 }

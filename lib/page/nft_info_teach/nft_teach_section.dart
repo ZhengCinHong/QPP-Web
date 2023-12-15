@@ -95,3 +95,73 @@ abstract class NFTTeachSectionInfoContent<T> extends StatelessWidget {
         : const EdgeInsets.fromLTRB(12, 15, 12, 15);
   }
 }
+
+/// NFT TeachInfo 最小容器
+class ItemTeachInfo extends StatelessWidget {
+  final EdgeInsets? margin;
+  final String? contentKey;
+  final String? tipKey;
+  final List<Widget>? displayImg;
+
+  const ItemTeachInfo(
+      {super.key, this.contentKey, this.tipKey, this.displayImg, this.margin});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: margin,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          content,
+          tip,
+          img,
+        ],
+      ),
+    );
+  }
+
+  /// 內容
+  Widget get content {
+    if (contentKey != null) {
+      return Builder(builder: (context) {
+        return Text(
+          context.tr(contentKey!),
+          style: QppTextStyles.web_16pt_body_platinum_L,
+        );
+      });
+    }
+    return const SizedBox.shrink();
+  }
+
+  /// 提示
+  Widget get tip {
+    if (tipKey != null) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 6),
+        child: Builder(builder: (context) {
+          return Text(
+            context.tr(tipKey!),
+            style: QppTextStyles.web_16pt_body_pastel_yellow_L,
+          );
+        }),
+      );
+    }
+    return const SizedBox.shrink();
+  }
+
+  /// 圖片
+  Widget get img {
+    if (displayImg != null) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 25),
+        child: Wrap(
+          spacing: 16,
+          runSpacing: 16,
+          children: displayImg!,
+        ),
+      );
+    }
+    return const SizedBox.shrink();
+  }
+}
