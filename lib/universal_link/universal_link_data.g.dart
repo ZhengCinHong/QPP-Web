@@ -14,6 +14,7 @@ UniversalLinkParamData _$UniversalLinkParamDataFromJson(
       json['commodityID'] as String?,
       json['lang'] as String?,
       json['metadataID'] as String?,
+      json['anchor'] as String?,
     )
       ..vendorID = json['vendorID'] as String?
       ..vendorToken = json['vendorToken'] as String?
@@ -32,4 +33,5 @@ Map<String, dynamic> _$UniversalLinkParamDataToJson(
       'serial': instance.serial,
       'openExternalBrowser': instance.openExternalBrowser,
       'metadataID': instance.metadataID,
+      'anchor': instance.anchor,
     };

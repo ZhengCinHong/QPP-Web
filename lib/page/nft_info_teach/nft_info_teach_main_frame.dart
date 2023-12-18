@@ -1,16 +1,31 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
+import 'package:qpp_example/model/enum/item/nft_info_teach_anchor.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_1.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_2.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_3.dart';
+import 'package:qpp_example/universal_link/universal_link_data.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
 
+/// NFT 教學頁
 class NFTInfoTeachPageMainFrame extends StatelessWidget {
-  const NFTInfoTeachPageMainFrame({super.key});
+  final GoRouterState routerState;
+  const NFTInfoTeachPageMainFrame({super.key, required this.routerState});
+
+  NFTInfoTeachAnchor findAnchor() {
+    // link 參數資料
+    UniversalLinkParamData universalLinkParamData =
+        UniversalLinkParamData.fromJson(routerState.uri.queryParameters);
+    if (universalLinkParamData.anchor != null) {
+      return NFTInfoTeachAnchor.findTypeByValue(universalLinkParamData.anchor!);
+    }
+    return NFTInfoTeachAnchor.none;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +33,16 @@ class NFTInfoTeachPageMainFrame extends StatelessWidget {
     return Title(
         title: context.tr(QppLocales.homeWebtitle),
         color: QppColors.platinum,
-        child: const NFTInfoTeachScaffold());
+        child: NFTInfoTeachScaffold(
+          anchor: findAnchor(),
+        ));
   }
 }
 
 class NFTInfoTeachScaffold extends StatefulWidget {
-  const NFTInfoTeachScaffold({super.key});
+  // 錨點
+  final NFTInfoTeachAnchor anchor;
+  const NFTInfoTeachScaffold({super.key, required this.anchor});
 
   @override
   StateNFTInfoTeach createState() => StateNFTInfoTeach();
@@ -32,23 +51,36 @@ class NFTInfoTeachScaffold extends StatefulWidget {
 /// NFT 教學頁 骨架
 class StateNFTInfoTeach extends State<NFTInfoTeachScaffold>
     with WidgetsBindingObserver {
+  // 滾動的錨點判斷
   final GlobalKey k1 = GlobalKey();
   final GlobalKey k2 = GlobalKey();
   final GlobalKey k3 = GlobalKey();
 
-  // test
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Future.delayed(const Duration(seconds: 1), () {
-        Scrollable.ensureVisible(k2.currentContext!,
-            duration: const Duration(seconds: 1));
+    if (widget.anchor != NFTInfoTeachAnchor.none) {
+      // 有帶 anchor
+      WidgetsBinding.instance.addObserver(this);
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        Future.delayed(const Duration(seconds: 1), () {
+          // 延遲 1 秒後開始移動到指定位置
+          Scrollable.ensureVisible(anchorKey(widget.anchor).currentContext!,
+              duration: Duration(milliseconds: widget.anchor.scrollDuration));
+        });
       });
-    });
+    }
   }
-  // end test
+
+  GlobalKey anchorKey(NFTInfoTeachAnchor anchor) {
+    if (anchor == NFTInfoTeachAnchor.importFee) {
+      return k2;
+    } else if (anchor == NFTInfoTeachAnchor.entry) {
+      return k3;
+    }
+    // 其他直接回第一個
+    return k1;
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -31,12 +31,18 @@ class UniversalLinkParamData {
   /// nft id
   String? metadataID;
 
+  /// nft info teach anchor
+  String? anchor;
+
+  // TODO: 增加 parameters 時, 記得要重新跑 builder!
+
   UniversalLinkParamData(
     this.phoneNumber,
     this.userID,
     this.commodityID,
     this.lang,
     this.metadataID,
+    this.anchor,
   );
 
   factory UniversalLinkParamData.fromJson(Map<String, dynamic> json) =>
