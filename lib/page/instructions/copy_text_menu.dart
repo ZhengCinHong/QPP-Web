@@ -4,26 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:qpp_example/extension/string/text.dart';
 
 class CopyTextMenu extends StatefulWidget {
-  final String text;
-  final TextStyle textStyle;
-
   final String tipText;
   final TextStyle tipTextStyle;
-
   final DecorationImage tipBackgroundImage;
-
   final ScrollController scrollController;
-
-  final VoidCallback onTap;
 
   const CopyTextMenu({
     super.key,
-    required this.text,
-    required this.textStyle,
     required this.tipText,
     required this.tipTextStyle,
     required this.scrollController,
-    required this.onTap,
   }) : tipBackgroundImage = const DecorationImage(
           image: AssetImage('assets/bg-dialog.png'),
           fit: BoxFit.fill,
@@ -31,26 +21,35 @@ class CopyTextMenu extends StatefulWidget {
 
   @override
   // ignore: library_private_types_in_public_api
-  _CopyTextMenuState createState() => _CopyTextMenuState();
+  CopyTextMenuState createState() => CopyTextMenuState();
 }
 
-class _CopyTextMenuState extends State<CopyTextMenu>
+class CopyTextMenuState extends State<CopyTextMenu>
     with SingleTickerProviderStateMixin {
   late GlobalKey _key;
-  bool isMenuOpen = false;
-  late Offset buttonPosition;
-  late Size buttonSize;
+  late Offset _buttonPosition;
+  late Size _buttonSize;
   late OverlayEntry _overlayEntry;
-  late Point tipPoint;
+  late Point _tipPoint;
+
+  bool _isMenuOpen = false;
   Timer? _timer;
+
+  /// 顯示提示
+  void showTip(GlobalKey key) {
+    _key = key;
+
+    if (!_isMenuOpen) {
+      _openMenu();
+      _startTimer();
+    }
+  }
 
   @override
   void initState() {
-    _key = LabeledGlobalKey("copy_text_button");
-
     // 滾動時位移彈出視窗
     widget.scrollController.addListener(() {
-      if (isMenuOpen == false) {
+      if (_isMenuOpen == false) {
         return;
       }
       Overlay.of(context).setState(() {
@@ -70,27 +69,12 @@ class _CopyTextMenuState extends State<CopyTextMenu>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      key: _key,
-      child: InkWell(
-        child: Text(
-          widget.text,
-          style: widget.textStyle,
-        ),
-        onTap: () {
-          if (!isMenuOpen) {
-            widget.onTap();
-            _openMenu();
-            _startTimer();
-          }
-        },
-      ),
-    );
+    return const SizedBox.shrink();
   }
 }
 
 /// 其他私有方法
-extension _CopyTextMenuStatePrivateFunctions on _CopyTextMenuState {
+extension _CopyTextMenuStatePrivateFunctions on CopyTextMenuState {
   // 啟動 Timer
   void _startTimer() {
     const duration = Duration(seconds: 2);
@@ -106,32 +90,30 @@ extension _CopyTextMenuStatePrivateFunctions on _CopyTextMenuState {
     final renderObject = _key.currentContext?.findRenderObject();
     if (renderObject != null) {
       RenderBox renderBox = renderObject as RenderBox;
-      buttonSize = renderBox.size;
-      buttonPosition = renderBox.localToGlobal(Offset.zero);
+      _buttonSize = renderBox.size;
+      _buttonPosition = renderBox.localToGlobal(Offset.zero);
     }
   }
 
   void _closeMenu() {
-    if (isMenuOpen == true) {
+    if (_isMenuOpen == true) {
       _overlayEntry.remove();
     }
-    isMenuOpen = !isMenuOpen;
+    _isMenuOpen = !_isMenuOpen;
   }
 
   void _openMenu() async {
     _overlayEntry = _overlayEntryBuilder();
     Overlay.of(context).insert(_overlayEntry);
-    isMenuOpen = !isMenuOpen;
+    _isMenuOpen = !_isMenuOpen;
   }
 
   // 創建彈窗
   OverlayEntry _overlayEntryBuilder() {
-    const arrowSize = Size(17, 17 / 2);
     const textPadding = EdgeInsets.fromLTRB(32, 8, 32, 14);
 
     final size = widget.tipText.size(widget.tipTextStyle);
-    final textHieght =
-        size.height + textPadding.bottom + textPadding.top + arrowSize.height;
+    final textHieght = size.height + textPadding.bottom + textPadding.top;
 
     // 寬與高
     final width = size.width + textPadding.left + textPadding.right;
@@ -143,10 +125,10 @@ extension _CopyTextMenuStatePrivateFunctions on _CopyTextMenuState {
           builder: (BuildContext context, BoxConstraints constraints) {
             _findButton();
 
-            final top = buttonPosition.dy - textHieght;
-            final left = buttonPosition.dx -
+            final top = _buttonPosition.dy - textHieght;
+            final left = _buttonPosition.dx -
                 ((size.width / 2) + textPadding.left) +
-                (buttonSize.width / 2);
+                (_buttonSize.width / 2);
 
             // 計算彈出視窗是否被左右遮擋
             double offset = 0;
@@ -159,7 +141,7 @@ extension _CopyTextMenuStatePrivateFunctions on _CopyTextMenuState {
             }
 
             // 記錄目前點擊資訊
-            tipPoint = Point(left - offset, top);
+            _tipPoint = Point(left - offset, top);
 
             return Container(
               alignment: Alignment.topLeft,
@@ -167,8 +149,8 @@ extension _CopyTextMenuStatePrivateFunctions on _CopyTextMenuState {
                 color: Colors.white.withOpacity(0),
                 child: Container(
                   margin: EdgeInsets.only(
-                    top: tipPoint.y.toDouble(),
-                    left: tipPoint.x.toDouble(),
+                    top: _tipPoint.y.toDouble(),
+                    left: _tipPoint.x.toDouble(),
                   ),
                   child: Container(
                     width: width,

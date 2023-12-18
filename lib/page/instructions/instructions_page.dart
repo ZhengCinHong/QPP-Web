@@ -1,12 +1,11 @@
 import 'dart:convert';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization/easy_localization.dart' as localized;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:qpp_example/common_ui/qpp_framework/qpp_main_framework.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/string/text.dart';
-import 'package:qpp_example/extension/string/url.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/instructions/copy_text_menu.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
@@ -22,6 +21,12 @@ class InstructionsPage extends StatelessWidget {
   final _scrollController = ScrollController();
 
   final InstructionsType type;
+
+  /// 記錄彈窗狀態的 key
+  final GlobalKey<CopyTextMenuState> _copyTextMenuStateKey = GlobalKey();
+
+  /// 紀錄顯示文字的 key
+  final GlobalKey _copyTextMenuDisplayTextKey = GlobalKey();
 
   /// 使用者條款
   InstructionsPage.term({super.key}) : type = InstructionsType.term;
@@ -99,11 +104,9 @@ class InstructionsPage extends StatelessWidget {
                   subTitleTextStyle: subTitleTextStyle,
                   olTextStyle: olTextStyle,
                   scrollController: _scrollController,
+                  copyTextMenuStateKey: _copyTextMenuStateKey,
+                  copyTextMenuDisplayTextKey: _copyTextMenuDisplayTextKey,
                 ),
-                onTapUrl: (url) async {
-                  url.launchURL();
-                  return true;
-                },
                 renderMode: RenderMode.column,
                 textStyle: textStyle,
               );
@@ -124,6 +127,8 @@ class InstructionsPage extends StatelessWidget {
     required TextStyle subTitleTextStyle,
     required TextStyle olTextStyle,
     required ScrollController scrollController,
+    required GlobalKey<CopyTextMenuState> copyTextMenuStateKey,
+    required GlobalKey copyTextMenuDisplayTextKey,
   }) {
     return (element) {
       if (element.className == InstructionsHtmlClass.title.name ||
@@ -197,27 +202,10 @@ class InstructionsPage extends StatelessWidget {
         );
       } else if (element.className ==
           InstructionsHtmlClass.privacySendEmail.name) {
-        List<Widget> result = [];
+        List<InlineSpan> result = [];
+
         // 專門處理隱私權點擊提示彈窗
         final childrens = element.children;
-        // for (var children in childrens) {
-        //   // 假如是超連結
-        //   if (children.localName == "a") {
-        //     // 取得連結
-        //     String? href;
-        //     if (children.attributes.containsKey('href')) {
-        //       href = children.attributes['href'];
-        //     }
-        //     final text = json.decode(children.innerHtml);
-
-        //     result.add(const SizedBox(width: 4));
-        //     // result.add(copyTextMenu);
-        //     result.add(const SizedBox(width: 4));
-        //   } else {
-        //     result.add(Text(children.innerHtml, style: textStyle));
-        //   }
-        // }
-
         for (var children in childrens) {
           // 假如是超連結
           if (children.localName == "a") {
@@ -231,27 +219,61 @@ class InstructionsPage extends StatelessWidget {
 
             // 生成按鈕
             final copyTextMenu = CopyTextMenu(
-              text: text[InstructionsPage.privacyJsonTextName],
-              textStyle: isDesktop
-                  ? QppTextStyles.web_16pt_body_canary_yellow_C
-                  : QppTextStyles.mobile_14pt_body_canary_yellow_L,
+              key: copyTextMenuStateKey,
               tipText: text[InstructionsPage.privacyJsonTipTextName],
-              tipTextStyle: QppTextStyles.web_16pt_body_canary_yellow_C,
+              tipTextStyle: QppTextStyles.web_16pt_body_white_L,
               scrollController: scrollController,
-              onTap: () async {
-                await Clipboard.setData(ClipboardData(text: href ?? ""));
-              },
             );
 
-            result.add(const SizedBox(width: 4));
-            result.add(copyTextMenu);
-            result.add(const SizedBox(width: 4));
+            // 顯示 "電子郵件" 文案
+            result.add(
+              WidgetSpan(
+                  child: Wrap(
+                children: [
+                  const SizedBox(
+                    width: 4,
+                  ),
+                  InkWell(
+                    child: Text(
+                      text[InstructionsPage.privacyJsonTextName],
+                      key: copyTextMenuDisplayTextKey,
+                      style: isDesktop
+                          ? QppTextStyles.web_16pt_body_canary_yellow_C
+                          : QppTextStyles.mobile_14pt_body_canary_yellow_L,
+                    ),
+                    onTap: () async {
+                      copyTextMenuStateKey.currentState
+                          ?.showTip(copyTextMenuDisplayTextKey);
+                      await Clipboard.setData(ClipboardData(text: href ?? ""));
+                    },
+                  ),
+                  const SizedBox(
+                    width: 4,
+                  ),
+                ],
+              )),
+            );
+
+            // 彈窗預設不顯示，點擊後顯示，放在介面上方便給 listview 做回收。
+            result.add(
+              WidgetSpan(
+                child: copyTextMenu,
+              ),
+            );
           } else {
-            result.add(Text(children.innerHtml, style: textStyle));
+            result.add(TextSpan(text: children.innerHtml, style: textStyle));
           }
         }
 
-        return Wrap(children: result);
+        return Wrap(
+          children: [
+            RichText(
+              text: TextSpan(
+                children: result,
+              ),
+            ),
+          ],
+        );
       }
 
       return null;
@@ -536,14 +558,6 @@ extension InstructionsTypeExtension on InstructionsType {
         result.addTermString(content, QppLocales.nftTermsSubtitle4,
             subSectionEnd: InstructionsHtmlClass.nftSectionEnd);
         result.addTermString(content, QppLocales.nftTermsText4);
-
-        result.addTermString(content, QppLocales.forumTitle);
-        result.addTermString(content, QppLocales.forumSummary);
-        result.addTermString(content, QppLocales.forumSubtitle1);
-        result.addTermString(content, QppLocales.forumText1);
-        result.addTermString(content, QppLocales.forumSubtitle2);
-        result.addTermString(content, QppLocales.forumText2);
-        result.addTermString(content, QppLocales.forumLastText);
     }
 
     return result;
