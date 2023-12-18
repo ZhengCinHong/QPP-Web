@@ -18,7 +18,7 @@ class NFTInfoTeachPageMainFrame extends StatelessWidget {
   const NFTInfoTeachPageMainFrame({super.key, required this.routerState});
 
   NFTInfoTeachAnchor findAnchor() {
-    // link 參數資料
+    // 取得 link 參數資料
     UniversalLinkParamData universalLinkParamData =
         UniversalLinkParamData.fromJson(routerState.uri.queryParameters);
     if (universalLinkParamData.anchor != null) {
@@ -63,6 +63,7 @@ class StateNFTInfoTeach extends State<NFTInfoTeachScaffold>
       // 有帶 anchor
       WidgetsBinding.instance.addObserver(this);
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        // 這裡會在 build 之後呼叫
         Future.delayed(const Duration(seconds: 1), () {
           // 延遲 1 秒後開始移動到指定位置
           Scrollable.ensureVisible(anchorKey(widget.anchor).currentContext!,
@@ -109,9 +110,10 @@ class StateNFTInfoTeach extends State<NFTInfoTeachScaffold>
             // 容器與四周間距
             margin: screenStyle.isDesktop
                 ? const EdgeInsets.fromLTRB(60, 0, 60, 0)
-                : const EdgeInsets.fromLTRB(24, 24, 24, 24),
+                : const EdgeInsets.fromLTRB(20, 0, 20, 0),
             constraints: const BoxConstraints(maxWidth: 1280),
             width: double.infinity,
+            // SingleChildScrollView 生成時會把內容都做出來
             child: SingleChildScrollView(
               child: Column(
                 children: [

@@ -19,12 +19,12 @@ class NFTTeachInfoZone2 extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 12),
           child: Text(
             context.tr(QppLocales.nftInfoTeachSubtitle2),
-            style: QppTextStyles.web_24pt_title_L_maya_blue_C,
+            style: isDesktop?QppTextStyles.web_24pt_title_L_maya_blue_C: QppTextStyles.mobile_20pt_title_L_maya_blue_L,
           ),
         ),
-        const Info1.desktop(),
-        const Info2.desktop(),
-        const Info3.desktop(),
+       isDesktop? const Info1.desktop():const Info1.mobile(),
+        isDesktop?const Info2.desktop():const Info2.mobile(),
+        isDesktop?const Info3.desktop():const Info3.mobile(),
       ],
     );
   }
@@ -35,8 +35,8 @@ class Info1 extends NFTTeachInfoExpand {
   const Info1.mobile({super.key}) : super.mobile();
 
   @override
-  Widget get title => const NFTTeachSectionInfoTitle(
-        titleKey: QppLocales.nftInfoTeachSubtitle2ContentTeach1,
+  Widget get title =>  NFTTeachSectionInfoTitle(
+        titleKey: QppLocales.nftInfoTeachSubtitle2ContentTeach1,isDesktop: isDesktop,
       );
 
   @override
@@ -52,6 +52,7 @@ class Info1 extends NFTTeachInfoExpand {
                 Image.asset(QPPImages.desktop_pic_nft_instruction_02),
                 Image.asset(QPPImages.desktop_pic_nft_instruction_03),
               ],
+              isDesktop: isDesktop,
             ),
             ItemTeachInfo(
               margin: const EdgeInsets.only(top: 64),
@@ -61,6 +62,7 @@ class Info1 extends NFTTeachInfoExpand {
                 Image.asset(QPPImages.desktop_pic_nft_instruction_04),
                 Image.asset(QPPImages.desktop_pic_nft_instruction_05),
               ],
+              isDesktop: isDesktop,
             ),
             ItemTeachInfo(
               margin: const EdgeInsets.only(top: 64),
@@ -69,6 +71,7 @@ class Info1 extends NFTTeachInfoExpand {
               displayImg: [
                 Image.asset(QPPImages.desktop_pic_nft_instruction_06),
               ],
+              isDesktop: isDesktop,
             ),
             ItemTeachInfo(
               margin: const EdgeInsets.only(top: 64),
@@ -77,6 +80,7 @@ class Info1 extends NFTTeachInfoExpand {
               displayImg: [
                 Image.asset(QPPImages.desktop_pic_nft_instruction_07),
               ],
+              isDesktop: isDesktop,
             ),
             ItemTeachInfo(
               margin: const EdgeInsets.only(top: 64),
@@ -87,6 +91,7 @@ class Info1 extends NFTTeachInfoExpand {
                 Image.asset(QPPImages.desktop_pic_nft_instruction_09),
                 Image.asset(QPPImages.desktop_pic_nft_instruction_10),
               ],
+              isDesktop: isDesktop,
             )
           ],
         ),
@@ -98,8 +103,8 @@ class Info2 extends NFTTeachInfoExpand {
   const Info2.mobile({super.key}) : super.mobile();
 
   @override
-  Widget get title => const NFTTeachSectionInfoTitle(
-        titleKey: QppLocales.nftInfoTeachSubtitle2ContentTeach2,
+  Widget get title =>  NFTTeachSectionInfoTitle(
+        titleKey: QppLocales.nftInfoTeachSubtitle2ContentTeach2,isDesktop: isDesktop,
       );
 
   @override
@@ -112,6 +117,7 @@ class Info2 extends NFTTeachInfoExpand {
             displayImg: [
               Image.asset(QPPImages.desktop_pic_nft_instruction_11),
             ],
+            isDesktop: isDesktop,
           ),
           ItemTeachInfo(
             margin: const EdgeInsets.only(top: 64),
@@ -123,6 +129,7 @@ class Info2 extends NFTTeachInfoExpand {
               ),
               Image.asset(QPPImages.desktop_pic_nft_instruction_13),
             ],
+            isDesktop: isDesktop,
           ),
           ItemTeachInfo(
             margin: const EdgeInsets.only(top: 64),
@@ -133,6 +140,7 @@ class Info2 extends NFTTeachInfoExpand {
                 QPPImages.desktop_pic_nft_instruction_14,
               ),
             ],
+            isDesktop: isDesktop,
           ),
           ItemTeachInfo(
             margin: const EdgeInsets.only(top: 64),
@@ -143,6 +151,7 @@ class Info2 extends NFTTeachInfoExpand {
                 QPPImages.desktop_pic_nft_instruction_15,
               ),
             ],
+            isDesktop: isDesktop,
           ),
           ItemTeachInfo(
             margin: const EdgeInsets.only(top: 64),
@@ -156,6 +165,7 @@ class Info2 extends NFTTeachInfoExpand {
                 QPPImages.desktop_pic_nft_instruction_17,
               ),
             ],
+            isDesktop: isDesktop,
           ),
         ]),
       );
@@ -166,8 +176,8 @@ class Info3 extends NFTTeachInfoExpand {
   const Info3.mobile({super.key}) : super.mobile();
 
   @override
-  Widget get title => const NFTTeachSectionInfoTitle(
-        titleKey: QppLocales.nftInfoTeachSubtitle2ContentTeach3,
+  Widget get title =>  NFTTeachSectionInfoTitle(
+        titleKey: QppLocales.nftInfoTeachSubtitle2ContentTeach3,isDesktop: isDesktop,
       );
 
   @override
@@ -182,6 +192,7 @@ class Info3 extends NFTTeachInfoExpand {
               displayImg: [
                 Image.asset(QPPImages.desktop_pic_nft_instruction_18),
               ],
+              isDesktop: isDesktop,
             ),
             ItemTeachInfo(
               margin: const EdgeInsets.only(top: 64),
@@ -190,6 +201,7 @@ class Info3 extends NFTTeachInfoExpand {
               displayImg: [
                 Image.asset(QPPImages.desktop_pic_nft_instruction_19),
               ],
+              isDesktop: isDesktop,
             ),
             ItemTeachInfo(
               margin: const EdgeInsets.only(top: 64),
@@ -198,6 +210,7 @@ class Info3 extends NFTTeachInfoExpand {
               displayImg: [
                 Image.asset(QPPImages.desktop_pic_nft_instruction_20),
               ],
+              isDesktop: isDesktop,
             ),
             ItemTeachInfo(
               margin: const EdgeInsets.only(top: 64),
@@ -206,6 +219,7 @@ class Info3 extends NFTTeachInfoExpand {
               displayImg: [
                 Image.asset(QPPImages.desktop_pic_nft_instruction_21),
               ],
+              isDesktop: isDesktop,
             ),
           ],
         ),

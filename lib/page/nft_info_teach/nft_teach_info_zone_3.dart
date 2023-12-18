@@ -19,11 +19,13 @@ class NFTTeachInfoZone3 extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 12),
           child: Text(
             context.tr(QppLocales.nftInfoTeachSubtitle3),
-            style: QppTextStyles.web_24pt_title_L_maya_blue_C,
+            style: isDesktop
+                ? QppTextStyles.web_24pt_title_L_maya_blue_C
+                : QppTextStyles.mobile_20pt_title_L_maya_blue_L,
           ),
         ),
-        const Info1.desktop(),
-        const Info2.desktop(),
+        isDesktop ? const Info1.desktop() : const Info1.mobile(),
+        isDesktop ? const Info2.desktop() : const Info2.mobile(),
       ],
     );
   }
@@ -34,14 +36,16 @@ class Info1 extends NFTTeachInfoExpand {
   const Info1.mobile({super.key}) : super.mobile();
 
   @override
-  Widget get title => const NFTTeachSectionInfoTitle(
+  Widget get title => NFTTeachSectionInfoTitle(
         titleKey: QppLocales.nftInfoTeachSubtitle3ContentQ1,
+        isDesktop: isDesktop,
       );
 
   @override
-  Widget get content => const ItemTeachInfo(
-        margin: EdgeInsets.only(top: 20),
+  Widget get content => ItemTeachInfo(
+        margin: const EdgeInsets.only(top: 20),
         contentKey: QppLocales.nftInfoTeachSubtitle3ContentA1,
+        isDesktop: isDesktop,
       );
 }
 
@@ -50,8 +54,9 @@ class Info2 extends NFTTeachInfoExpand {
   const Info2.mobile({super.key}) : super.mobile();
 
   @override
-  Widget get title => const NFTTeachSectionInfoTitle(
+  Widget get title => NFTTeachSectionInfoTitle(
         titleKey: QppLocales.nftInfoTeachSubtitle3ContentTeach2,
+        isDesktop: isDesktop,
       );
 
   @override
@@ -66,6 +71,7 @@ class Info2 extends NFTTeachInfoExpand {
               displayImg: [
                 Image.asset(QPPImages.desktop_pic_nft_instruction_22),
               ],
+              isDesktop: isDesktop,
             ),
             ItemTeachInfo(
               margin: const EdgeInsets.only(top: 64),
@@ -74,6 +80,7 @@ class Info2 extends NFTTeachInfoExpand {
               displayImg: [
                 Image.asset(QPPImages.desktop_pic_nft_instruction_23),
               ],
+              isDesktop: isDesktop,
             ),
             ItemTeachInfo(
               margin: const EdgeInsets.only(top: 64),
@@ -84,6 +91,7 @@ class Info2 extends NFTTeachInfoExpand {
               displayImg: [
                 Image.asset(QPPImages.desktop_pic_nft_instruction_24),
               ],
+              isDesktop: isDesktop,
             ),
           ],
         ),
