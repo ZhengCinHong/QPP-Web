@@ -22,9 +22,33 @@ class NFTInfoTeachPageMainFrame extends StatelessWidget {
   }
 }
 
-/// NFT 教學頁 骨架
-class NFTInfoTeachScaffold extends StatelessWidget {
+class NFTInfoTeachScaffold extends StatefulWidget {
   const NFTInfoTeachScaffold({super.key});
+
+  @override
+  StateNFTInfoTeach createState() => StateNFTInfoTeach();
+}
+
+/// NFT 教學頁 骨架
+class StateNFTInfoTeach extends State<NFTInfoTeachScaffold>
+    with WidgetsBindingObserver {
+  final GlobalKey k1 = GlobalKey();
+  final GlobalKey k2 = GlobalKey();
+  final GlobalKey k3 = GlobalKey();
+
+  // test
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Future.delayed(const Duration(seconds: 1), () {
+        Scrollable.ensureVisible(k2.currentContext!,
+            duration: const Duration(seconds: 1));
+      });
+    });
+  }
+  // end test
 
   @override
   Widget build(BuildContext context) {
@@ -56,45 +80,49 @@ class NFTInfoTeachScaffold extends StatelessWidget {
                 : const EdgeInsets.fromLTRB(24, 24, 24, 24),
             constraints: const BoxConstraints(maxWidth: 1280),
             width: double.infinity,
-            child: ListView(
-              children: [
-                // top margin
-                const SizedBox(
-                  height: 80,
-                ),
-                // title
-                Text(
-                  context.tr(QppLocales.nftInfoTeachTitle),
-                  textAlign: TextAlign.center,
-                  style: QppTextStyles.web_44pt_Display_L_Maya_blue_L,
-                ),
-                // divider
-                Container(
-                  margin: const EdgeInsets.only(top: 23, bottom: 40),
-                  height: 1,
-                  color: QppColors.midnightBlue,
-                ),
-                // zone 1
-                NFTTeachInfoZone1(
-                  isDesktop: screenStyle.isDesktop,
-                ),
-                const SizedBox(
-                  height: 64,
-                ),
-                // zone 2
-                NFTTeachInfoZone2(
-                  isDesktop: screenStyle.isDesktop,
-                ),
-                const SizedBox(
-                  height: 64,
-                ),
-                // zone 3
-                NFTTeachInfoZone3(isDesktop: screenStyle.isDesktop),
-                // bottom margin
-                const SizedBox(
-                  height: 40,
-                ),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  // top margin
+                  const SizedBox(
+                    height: 80,
+                  ),
+                  // title
+                  Text(
+                    context.tr(QppLocales.nftInfoTeachTitle),
+                    textAlign: TextAlign.center,
+                    style: QppTextStyles.web_44pt_Display_L_Maya_blue_L,
+                  ),
+                  // divider
+                  Container(
+                    margin: const EdgeInsets.only(top: 23, bottom: 40),
+                    height: 1,
+                    color: QppColors.midnightBlue,
+                  ),
+                  // zone 1
+                  NFTTeachInfoZone1(
+                    key: k1,
+                    isDesktop: screenStyle.isDesktop,
+                  ),
+                  const SizedBox(
+                    height: 64,
+                  ),
+                  // zone 2
+                  NFTTeachInfoZone2(
+                    key: k2,
+                    isDesktop: screenStyle.isDesktop,
+                  ),
+                  const SizedBox(
+                    height: 64,
+                  ),
+                  // zone 3
+                  NFTTeachInfoZone3(key: k3, isDesktop: screenStyle.isDesktop),
+                  // bottom margin
+                  const SizedBox(
+                    height: 40,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
