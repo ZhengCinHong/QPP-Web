@@ -11,57 +11,52 @@ import 'package:qpp_example/page/commodity_info/view/item_nft_section/nft_sectio
 import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 
-/// Description Section
-class NFTSectionDescription<QppNFT> extends NFTSection {
-  const NFTSectionDescription.desktop({super.key, required super.data})
+class DescriptionExpand extends NFTExpand<QppNFT> {
+
+  const DescriptionExpand.desktop({super.key, required super.data})
       : super.desktop();
-  const NFTSectionDescription.mobile({super.key, required super.data})
+  const DescriptionExpand.mobile({super.key, required super.data})
       : super.mobile();
 
   @override
-  StateDescription createState() => StateDescription();
-}
-
-class StateDescription extends StateSection {
+  Widget? get title => const DescriptionTitle();
   @override
-  Widget get sectionContent => DescriptionContent(
-        nft: widget.data,
+  Widget? get content => DescriptionContent(
+        data: data,
         isDesktop: isDesktop,
       );
+}
+
+class DescriptionTitle extends NFTSectionInfoTitle {
+  const DescriptionTitle({super.key});
 
   @override
-  String get sectionTitle => 'Description';
+  String get iconPath => QPPImages.desktop_icon_commodity_nft_describe;
 
   @override
-  String get sectionTitleIconPath =>
-      QPPImages.desktop_icon_commodity_nft_describe;
+  String get title => 'Description';
 }
 
 /// 發行者
-class DescriptionContent extends StatelessWidget {
-  final QppNFT nft;
-  final bool isDesktop;
-
+class DescriptionContent extends NFTSectionInfoContent<QppNFT> {
   const DescriptionContent(
-      {super.key, required this.nft, this.isDesktop = true});
+      {super.key, required super.isDesktop, required super.data});
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        isDesktop
-            ? const NFTInfoRowPublisher.desktop()
-            : const NFTInfoRowPublisher.mobile(),
-        // 連結
-        NFTInfoRowIntroLink(data: nft.externalUrl, isDesktop: isDesktop),
-        // 說明
-        NFTInfoRowDescription(
-          data: nft.description,
-          isDesktop: isDesktop,
-        )
-      ],
-    );
-  }
+  Widget get child => Column(
+        children: [
+          isDesktop
+              ? const NFTInfoRowPublisher.desktop()
+              : const NFTInfoRowPublisher.mobile(),
+          // 連結
+          NFTInfoRowIntroLink(data: data.externalUrl, isDesktop: isDesktop),
+          // 說明
+          NFTInfoRowDescription(
+            data: data.description,
+            isDesktop: isDesktop,
+          )
+        ],
+      );
 }
 
 /// NFT Info Row -----------------

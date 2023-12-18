@@ -11,11 +11,10 @@ import 'package:qpp_example/page/error_page/model/error_page_model.dart';
 import 'package:qpp_example/page/error_page/view/error_page.dart';
 import 'package:qpp_example/page/home/view/home_page.dart';
 import 'package:qpp_example/page/instructions/instructions_page.dart';
+import 'package:qpp_example/page/nft_info_teach/nft_info_teach_main_frame.dart';
 import 'package:qpp_example/page/user_information/view/user_information.dart';
 import 'package:qpp_example/universal_link/universal_link_data.dart';
 import 'package:qpp_example/utils/display_url.dart';
-// ignore: avoid_web_libraries_in_flutter
-import 'dart:html' as html;
 
 /// QPP路由
 class QppGoRouter {
@@ -163,7 +162,8 @@ class QppGoRouter {
       name: nftInfoTeach,
       pageBuilder: (BuildContext context, GoRouterState state) =>
           QPPTransitionPage(
-        child: const MainFramework(child: Center(child: Text('nft教學頁'))),
+        child: const NFTInfoTeachPageMainFrame(),
+        // child: const MainFramework(child: Center(child: Text('nft教學頁'))),
       ),
     ),
   ];

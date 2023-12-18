@@ -36,34 +36,32 @@ class NFTItemInfo extends StatelessWidget {
                 children: [
                   // description
                   isDesktop
-                      ? NFTSectionDescription.desktop(
+                      ? DescriptionExpand.desktop(
                           data: nft,
                         )
-                      : NFTSectionDescription.mobile(
+                      : DescriptionExpand.mobile(
                           data: nft,
                         ),
                   // properties
                   isDesktop
-                      ? NFTSectionProperties.desktop(
-                          data: attr.propertiesSection)
-                      : NFTSectionProperties.mobile(
-                          data: attr.propertiesSection),
+                      ? PropertiesExpand.desktop(data: attr.propertiesSection)
+                      : PropertiesExpand.mobile(data: attr.propertiesSection),
                   // stats
                   isDesktop
-                      ? NFTSectionStats.desktop(data: attr.statsSection)
-                      : NFTSectionStats.mobile(data: attr.statsSection),
+                      ? StatsExpand.desktop(data: attr.statsSection)
+                      : StatsExpand.mobile(data: attr.statsSection),
                   // levels
                   isDesktop
-                      ? NFTSectionLevels.desktop(data: attr.levelsSection)
-                      : NFTSectionLevels.mobile(data: attr.levelsSection),
+                      ? LevelsExpand.desktop(data: attr.levelsSection)
+                      : LevelsExpand.mobile(data: attr.levelsSection),
                   // boosts
                   isDesktop
-                      ? NFTSectionBoost.desktop(data: attr.boostSection)
-                      : NFTSectionBoost.mobile(data: attr.boostSection),
+                      ? BoostExpand.desktop(data: attr.boostSection)
+                      : BoostExpand.mobile(data: attr.boostSection),
                   // date
                   isDesktop
-                      ? NFTSectionDate.desktop(data: attr.dateSection)
-                      : NFTSectionDate.mobile(data: attr.dateSection),
+                      ? DateExpand.desktop(data: attr.dateSection)
+                      : DateExpand.mobile(data: attr.dateSection),
                 ],
               ));
         },
