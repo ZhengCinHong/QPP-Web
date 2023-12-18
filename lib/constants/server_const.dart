@@ -6,6 +6,9 @@ class ServerConst {
   // static const routerHost = "https://qpptec.com";
   static const routerHost = "https://webside-dev.qpptec.com/";
 
+  /// 測試用連結
+  static final testRouterHost = "${Uri.base.origin}/";
+
   /// 依照裝置跳轉Google Play Store or Apple App Store
   static const appStoreUrl = 'https://qpptec.com/app/go';
 
@@ -17,10 +20,11 @@ class ServerConst {
   static const appleStoreUrl = 'https://apps.apple.com/tw/app/qpp/id1501319938';
 
   /// 隱私權網址
-  static const privacyPolicyUrl = "https://www.qpptec.com/privacy?lang=%s";
+  static final privacyPolicyUrl = "${testRouterHost}privacy?lang=%s";
 
   /// 使用條款網址
-  static const termsOfUseUrl = "https://www.qpptec.com/term?lang=%s";
+  static final termsOfUseUrl =
+      "${testRouterHost}term?lang=%s"; // "${routerHost}term?lang=%s";
 
   /// 信箱顯示字串
   static const mailStr = 'info@qpptec.com';

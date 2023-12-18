@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -38,7 +39,7 @@ class QPPQRCode extends StatelessWidget {
   Widget build(BuildContext context) {
     return QrImageView(
       data: data,
-      embeddedImage: const Svg('assets/pic-qrcode.svg'),
+      embeddedImage: const AssetImage(QPPImages.pic_qrcode),
       size: size,
       padding: const EdgeInsets.all(11),
     );

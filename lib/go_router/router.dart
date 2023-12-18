@@ -10,6 +10,7 @@ import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
 import 'package:qpp_example/page/error_page/model/error_page_model.dart';
 import 'package:qpp_example/page/error_page/view/error_page.dart';
 import 'package:qpp_example/page/home/view/home_page.dart';
+import 'package:qpp_example/page/instructions/instructions_page.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_info_teach_main_frame.dart';
 import 'package:qpp_example/page/user_information/view/user_information.dart';
 import 'package:qpp_example/universal_link/universal_link_data.dart';
@@ -143,7 +144,7 @@ class QppGoRouter {
       name: privacy,
       pageBuilder: (BuildContext context, GoRouterState state) =>
           QPPTransitionPage(
-        child: const MainFramework(child: Center(child: Text('隱私權政策頁'))),
+        child: InstructionsPage.privacy(),
       ),
     ),
     // 使用者條款頁(只有home有)
@@ -152,7 +153,7 @@ class QppGoRouter {
       name: term,
       pageBuilder: (BuildContext context, GoRouterState state) =>
           QPPTransitionPage(
-        child: const MainFramework(child: Center(child: Text('使用者條款頁'))),
+        child: InstructionsPage.term(),
       ),
     ),
     // nft教學頁(只有home有)
