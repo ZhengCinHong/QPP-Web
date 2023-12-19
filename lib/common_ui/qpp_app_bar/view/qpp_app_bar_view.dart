@@ -12,6 +12,7 @@ import 'package:qpp_example/extension/void/dialog_void.dart';
 import 'package:qpp_example/extension/throttle_debounce.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/model/qpp_app_bar_model.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/view_model/qpp_app_bar_view_model.dart';
+import 'package:qpp_example/extension/widget/disable_selection_container.dart';
 import 'package:qpp_example/go_router/router.dart';
 import 'package:qpp_example/utils/display_url.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
@@ -204,19 +205,17 @@ class MenuBtns extends StatelessWidget {
                     }.throttleWithTimeout(timeout: 2000),
                     child: Container(
                       constraints: const BoxConstraints(maxWidth: 120),
-                      child: SelectionContainer.disabled(
-                        child: AutoSizeText(
-                          key: e.key,
-                          context.tr(e.text),
-                          style: TextStyle(
-                            color: event is PointerEnterEvent
-                                ? QppColors.canaryYellow
-                                : QppColors.white,
-                            fontSize: fontSize,
-                          ),
-                          maxLines: 2,
+                      child: AutoSizeText(
+                        key: e.key,
+                        context.tr(e.text),
+                        style: TextStyle(
+                          color: event is PointerEnterEvent
+                              ? QppColors.canaryYellow
+                              : QppColors.white,
+                          fontSize: fontSize,
                         ),
-                      ),
+                        maxLines: 2,
+                      ).disabledSelectionContainer,
                     ),
                   ),
                 ),

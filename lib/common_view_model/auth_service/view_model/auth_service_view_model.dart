@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qpp_example/api/core/api_response.dart';
 import 'package:qpp_example/api/local/api/local_api.dart';
 import 'package:qpp_example/api/local/response/check_login_token.dart';
 import 'package:qpp_example/api/local/response/get_login_token.dart';
+import 'package:qpp_example/common_view_model/auth_service/model/login_info.dart';
 import 'package:qpp_example/utils/shared_prefs_utils.dart';
 
 /// 驗證服務(登入/登出)Provider
@@ -27,6 +29,9 @@ class AuthServiceStateNotifier extends ChangeNotifier {
   /// 登出狀態
   ApiResponse<()> logoutState = ApiResponse.initial();
 
+  /// 投票token
+  String? voteToken;
+
   /// 計時器
   Timer? timer;
 
@@ -43,8 +48,8 @@ class AuthServiceStateNotifier extends ChangeNotifier {
           checkLoginToken(getLoginTokenResponse.data.vendorToken ?? "");
           getLoginTokenState = ApiResponse.completed(getLoginTokenResponse);
         } else {
-          getLoginTokenState =
-              ApiResponse.error(getLoginTokenResponse.errorInfo.errorMessage);
+          getLoginTokenState = ApiResponse.error(
+              getLoginTokenResponse.qppReturnError?.errorMessage);
         }
         notifyListeners();
       }).catchError((error) {
@@ -72,13 +77,22 @@ class AuthServiceStateNotifier extends ChangeNotifier {
           timer.cancel();
           checkLoginTokenState = ApiResponse.completed(checkLoginTokenResponse);
 
-          final loginInfoJS =
-              "{\"uid\":\"${checkLoginTokenResponse.uid}\",\"vendorToken\":\"$vendorToken\",\"uidImage\":\"${checkLoginTokenResponse.uidImage}\"}";
+          voteToken = checkLoginTokenResponse.voteToken;
 
-          SharedPrefs.setLoginInfo(loginInfoJS);
+          final loginInfoMap = LoginInfo(
+                  expiredTimestamp: null,
+                  refreshTimestamp: DateTime.timestamp().millisecondsSinceEpoch,
+                  voteToken: voteToken ?? '',
+                  uid: checkLoginTokenResponse.uid,
+                  uidImage: checkLoginTokenResponse.uidImage)
+              .toMap;
+
+          final loginInfoJson = json.encode(loginInfoMap);
+
+          SharedPrefs.setLoginInfo(loginInfoJson);
         } else {
-          checkLoginTokenState =
-              ApiResponse.error(checkLoginTokenResponse.errorInfo.errorMessage);
+          checkLoginTokenState = ApiResponse.error(
+              checkLoginTokenResponse.qppReturnError?.errorMessage ?? '');
         }
         notifyListeners();
       }).catchError((error) {
@@ -100,10 +114,12 @@ class AuthServiceStateNotifier extends ChangeNotifier {
     notifyListeners();
 
     LocalApi.client.getLogout(vendorToken).then((_) {
+      getLoginTokenState = ApiResponse.initial();
       checkLoginTokenState = ApiResponse.initial();
       SharedPrefs.removeLoginInfo();
-
       logoutState = ApiResponse.completed(());
+      voteToken = null;
+
       notifyListeners();
     }).catchError((error) {
       logoutState = ApiResponse.error(error);

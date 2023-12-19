@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qpp_example/api/core/api_response.dart';
 import 'package:qpp_example/common_ui/qpp_text/info_row_link_read_more_text.dart';
+import 'package:qpp_example/extension/widget/disable_selection_container.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/model/nft/qpp_nft.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
@@ -87,53 +88,50 @@ class NFTInfoRowPublisher extends InfoRow {
   @override
   Widget getContent(data) {
     return Builder(builder: (context) {
-      // disable SelectionArea 游標
-      return SelectionContainer.disabled(
-        child: MouseRegion(
-          // 滑鼠移進來時會改變游標圖案
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: () {
-              // TODO: 點擊前往發行者頁面
-            },
-            child: Row(
-              children: [
-                SizedBox(
-                  width: titleWidth,
-                  child: Text(
-                    context.tr(QppLocales.commodityInfoPublisher),
-                    textAlign: TextAlign.start,
-                    style: QppTextStyles.web_16pt_body_category_text_L,
-                  ),
+      return MouseRegion(
+        // 滑鼠移進來時會改變游標圖案
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: () {
+            // TODO: 點擊前往發行者頁面
+          },
+          child: Row(
+            children: [
+              SizedBox(
+                width: titleWidth,
+                child: Text(
+                  context.tr(QppLocales.commodityInfoPublisher),
+                  textAlign: TextAlign.start,
+                  style: QppTextStyles.web_16pt_body_category_text_L,
                 ),
-                // 若為官方帳號, 顯示 icon
-                data.isOfficial
-                    ? Container(
-                        padding: const EdgeInsets.only(right: 8),
-                        child: Image.asset(
-                          data.officialIconPath,
-                          width: 20,
-                        ),
-                      )
-                    : const SizedBox.shrink(),
-                // id + name
-                Expanded(
-                  child: Text(
-                    "${data.displayID}  ${data.displayName}",
-                    textAlign: TextAlign.start,
-                    style: QppTextStyles.web_16pt_body_Indian_yellow_L,
-                  ),
+              ),
+              // 若為官方帳號, 顯示 icon
+              data.isOfficial
+                  ? Container(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: Image.asset(
+                        data.officialIconPath,
+                        width: 20,
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+              // id + name
+              Expanded(
+                child: Text(
+                  "${data.displayID}  ${data.displayName}",
+                  textAlign: TextAlign.start,
+                  style: QppTextStyles.web_16pt_body_Indian_yellow_L,
                 ),
-                // 物件左右翻轉, 或用 RotatedBox
-                Image.asset(
-                  QPPImages.desktop_icon_selection_arrow_right_normal,
-                  matchTextDirection: true,
-                ),
-              ],
-            ),
+              ),
+              // 物件左右翻轉, 或用 RotatedBox
+              Image.asset(
+                QPPImages.desktop_icon_selection_arrow_right_normal,
+                matchTextDirection: true,
+              ),
+            ],
           ),
         ),
-      );
+      ).disabledSelectionContainer;
     });
   }
 }

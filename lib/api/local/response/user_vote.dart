@@ -3,7 +3,11 @@ import 'package:qpp_example/api/local/response/base_local_response.dart';
 
 /// 送出投票
 class UserVoteRequest {
-  String createBody(String itemId, List<int> myVote, String voteToken) {
+  String createBody({
+    required String itemId,
+    required List<int> myVote,
+    required String voteToken,
+  }) {
     return json.encode(
         {'ItemId': itemId, 'VoteArrayData': myVote, 'VoteToken': voteToken});
   }

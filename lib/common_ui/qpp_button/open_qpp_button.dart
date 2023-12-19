@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/string/url.dart';
 import 'package:qpp_example/extension/throttle_debounce.dart';
+import 'package:qpp_example/extension/widget/disable_selection_container.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
@@ -53,12 +54,10 @@ class CButton extends StatelessWidget {
             border: border,
           ),
           child: Center(
-            child: SelectionContainer.disabled(
-              child: Text(
-                text,
-                style: textStyle,
-              ),
-            ),
+            child: Text(
+              text,
+              style: textStyle,
+            ).disabledSelectionContainer,
           ),
         ),
       ),
