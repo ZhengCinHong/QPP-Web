@@ -1,9 +1,11 @@
+import 'dart:html' as html;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qpp_example/api/core/api_response.dart';
 import 'package:qpp_example/common_ui/qpp_button/open_qpp_button.dart';
 import 'package:qpp_example/common_ui/qpp_qrcode/universal_link_qrcode.dart';
+import 'package:qpp_example/common_view_model/auth_service/view_model/auth_service_view_model.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/model/nft/qpp_nft.dart';
@@ -13,6 +15,7 @@ import 'package:qpp_example/page/commodity_info/view/commodity_empty.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_nft.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_normal.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_vote.dart';
+import 'package:qpp_example/page/commodity_info/view/commodity_vote/send_vote_button.dart';
 import 'package:qpp_example/page/commodity_info/view_model/commodity_info_view_model.dart';
 import 'package:qpp_example/universal_link/universal_link_data.dart';
 import 'package:qpp_example/utils/screen.dart';
@@ -116,6 +119,28 @@ class InfoCard extends StatelessWidget {
         // 問券 物品資料狀態通知
         ApiResponse<QppVote> voteDataState =
             ref.watch(itemSelectInfoProvider).voteDataState;
+
+        /// 登出狀態
+        ApiResponse<()> logoutState =
+            ref.watch(authServiceProvider.select((value) => value.logoutState));
+
+        Future.microtask(() {
+          print({logoutState.status, voteDataState.status, 12333131});
+          // 登出，刷新頁面
+          if (logoutState.isCompleted && voteDataState.isCompleted) {
+            html.window.location.reload();
+          }
+
+          // GCP 錯誤
+          // if (itemInfoState.isError ||
+          //     nftMetaState.isError ||
+          //     voteDataState.isError) {
+          //   // 如果彈窗已存在，先關閉彈窗
+          //   if (context.isThereCurrentDialogShowing) {
+          //     context.pop();
+          //   }
+          // }
+        });
 
         return Column(
           mainAxisSize: MainAxisSize.min,

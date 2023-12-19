@@ -28,11 +28,12 @@ class QppVote {
       VoteData vData = VoteData.create(vote);
       voteData.add(vData);
     }
-    voteArrayData = json['voteArrayData'] ?? _setDefaultVoteArray();
+
+    voteArrayData =
+        List<int>.from(json['voteArrayData'] ?? _setDefaultVoteArray());
   }
   // 沒投票資料, 都先塞 -1 進去
   _setDefaultVoteArray() {
-    // voteArrayData = [];
     List<int> array = [];
     for (var i = 0; i < voteData.length; i++) {
       array.add(-1);
@@ -52,9 +53,8 @@ class QppVote {
   }
 
   /// 投票人數
-  int get voteCount {
-    return voteData
-        .map((e) => e.totalVoteNumber)
-        .reduce((sum, value) => sum + value);
-  }
+  int get voteCount => voteData.first.totalVoteNumber;
+
+  /// 選項有錯誤(目前是尚未投票代表錯誤)
+  bool get haveOptionError => voteArrayData.contains(-1);
 }

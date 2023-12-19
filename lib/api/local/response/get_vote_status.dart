@@ -3,7 +3,7 @@ import 'package:qpp_example/api/local/response/base_local_response.dart';
 
 /// 取得投票狀態
 class GetVoteStatusRequest {
-  String createBody(String itemId, String voteToken) {
+  String createBody({required String itemId, required String voteToken}) {
     return json.encode({'ItemId': itemId, 'VoteToken': voteToken});
   }
 }

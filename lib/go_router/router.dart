@@ -162,8 +162,7 @@ class QppGoRouter {
       name: nftInfoTeach,
       pageBuilder: (BuildContext context, GoRouterState state) =>
           QPPTransitionPage(
-        child: const NFTInfoTeachPageMainFrame(),
-        // child: const MainFramework(child: Center(child: Text('nft教學頁'))),
+        child:  NFTInfoTeachPageMainFrame(routerState: state,),
       ),
     ),
   ];

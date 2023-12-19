@@ -11,6 +11,8 @@ import 'package:qpp_example/api/core/http_service.dart';
 import 'package:qpp_example/api/local/api/local_api.dart';
 import 'package:qpp_example/api/local/response/base_local_response.dart';
 import 'package:qpp_example/api/local/response/get_vote_info.dart';
+import 'package:qpp_example/api/local/response/get_vote_status.dart';
+import 'package:qpp_example/api/local/response/user_vote.dart';
 import 'package:qpp_example/api/nft/nft_meta_api.dart';
 import 'package:qpp_example/extension/string/text.dart';
 import 'package:qpp_example/model/enum/item/item_category.dart';
@@ -20,7 +22,9 @@ import 'package:qpp_example/model/nft/qpp_nft.dart';
 import 'package:qpp_example/model/qpp_item.dart';
 import 'package:qpp_example/model/qpp_user.dart';
 import 'package:qpp_example/model/vote/qpp_vote.dart';
+import 'package:qpp_example/page/commodity_info/model/vote_model.dart';
 import 'package:qpp_example/utils/qpp_image_utils.dart';
+import 'package:qpp_example/utils/shared_prefs_utils.dart';
 
 /// 物品資訊頁 model
 class CommodityInfoModel extends ChangeNotifier {
@@ -46,11 +50,11 @@ class CommodityInfoModel extends ChangeNotifier {
   /// 物品圖片狀態
   ApiResponse<ItemImgData> itemPhotoState = ApiResponse.initial();
 
-  /// 自己的投票陣列
-  List<int>? voteArrayData;
+  /// 是否為錯誤選項陣列
+  List<bool> isOptionErrorArray = [];
 
-  /// 是否確認選項
-  bool isCheck = false;
+  /// 投票狀態(是否已投票，已投票狀態)
+  (bool, VotedState) votedState = (false, VotedState.none);
 
   ///  是否為第一次登入(自動發送投票使用)
   bool isFirstLogin = true;
@@ -107,8 +111,15 @@ class CommodityInfoModel extends ChangeNotifier {
         QppItem item = QppItem.create(itemData);
 
         if (item.category == ItemCategory.questionnaire) {
-          // 取問券資料
-          getQuestionnaire(item);
+          final loginInfo = SharedPrefs.getLoginInfo();
+
+          if (loginInfo?.isLogin == true) {
+            // 取使用者問券資料
+            _getVoteStatus(item, loginInfo?.voteToken ?? '');
+          } else {
+            // 取問券資料
+            getQuestionnaire(item);
+          }
         } else {
           // 非問券的物品,通知成功
           itemSelectInfoState = ApiResponse.completed(item);
@@ -234,20 +245,20 @@ class CommodityInfoModel extends ChangeNotifier {
   }
 
   /// 取得投票資訊
-  getQuestionnaire(QppItem item) {
+  void getQuestionnaire(QppItem item) {
     voteDataState = ApiResponse.loading();
     notifyListeners();
     final request = GetVoteInfoRequest().createBody(item.id.toString());
     LocalApi.client.postGetVoteInfo(request).then((getVoteInfoResponse) {
       if (getVoteInfoResponse.isSuccess) {
         // 取資料成功
-        QppVote vote = getVoteInfoResponse.getVoteData(item);
+        QppVote? vote = getVoteInfoResponse.getVoteData(item);
         voteDataState = ApiResponse.completed(vote);
-        voteArrayData = vote.voteArrayData;
+        isOptionErrorArray = vote?.voteData.map((e) => false).toList() ?? [];
       } else {
         // 取資料失敗
         voteDataState =
-            ApiResponse.error(getVoteInfoResponse.errorInfo.errorMessage);
+            ApiResponse.error(getVoteInfoResponse.qppReturnError?.errorMessage);
       }
       notifyListeners();
     }).catchError((onError) {
@@ -258,16 +269,101 @@ class CommodityInfoModel extends ChangeNotifier {
   }
 
   /// 選擇選項
-  selectedOption(int index, int option) {
-    // 創建一個新的 List<int> 對象，否則直接更改riverpod會以為沒有改變
-    voteArrayData = List<int>.from(voteArrayData ?? []);
-    voteArrayData?[index] = option;
+  void selectedOption(int index, int option) {
+    voteDataState.data?.voteArrayData[index] = option;
+    voteDataState = ApiResponse.completed(voteDataState.data);
     notifyListeners();
   }
 
-  /// 確認選項
-  checkOptions(bool isCheck) {
-    this.isCheck = isCheck;
+  /// 設定錯誤選項
+  void setupErrorOptions() {
+    // 創一個新的，不然riverpod會判斷不出有更新
+    isOptionErrorArray = List<bool>.from(isOptionErrorArray);
+    voteDataState.data?.voteArrayData.asMap().forEach((i, e) {
+      isOptionErrorArray[i] = e == -1; // 代表未選擇
+    });
     notifyListeners();
+  }
+
+  /// 更新錯誤選項
+  void updateErrorOptions(int index, bool isError) {
+    // 創一個新的，不然riverpod會判斷不出有更新
+    isOptionErrorArray = List<bool>.from(isOptionErrorArray);
+    isOptionErrorArray[index] = isError;
+    notifyListeners();
+  }
+
+  /// 送出用戶投票
+  void sendUserVote(QppItem item, String voteToken) {
+    final request = UserVoteRequest().createBody(
+      itemId: item.id.toString(),
+      myVote: voteDataState.data?.voteArrayData ?? [],
+      voteToken: voteToken,
+    );
+
+    voteDataState = ApiResponse.loading();
+    notifyListeners();
+
+    LocalApi.client.postUserVote(request).then((userVoteResponse) {
+      if (userVoteResponse.isSuccess) {
+        // 投票成功
+        QppVote? vote = userVoteResponse.getVoteData(item);
+        voteDataState = ApiResponse.completed(vote);
+
+        // 更新成已投票狀態
+        votedState = (
+          true,
+          VotedState.findTypeByCode(
+              userVoteResponse.qppReturnError?.errorMessage ?? '')
+        );
+      } else {
+        // 更新成未投票狀態
+        votedState = (false, VotedState.unkown);
+      }
+      notifyListeners();
+    }).catchError((onError) {
+      print('sendUserVote Error: ${onError.toString()}');
+      // 投票失敗
+      voteDataState = ApiResponse.error(onError.toString());
+      notifyListeners();
+    });
+  }
+
+  /// 拿取投票狀態(登入後)
+  void _getVoteStatus(QppItem item, String voteToken) {
+    voteDataState = ApiResponse.loading();
+    notifyListeners();
+
+    final request = GetVoteStatusRequest().createBody(
+      itemId: item.id.toString(),
+      voteToken: voteToken,
+    );
+
+    LocalApi.client.postGetVoteStatus(request).then((getVoteStatusResponse) {
+      if (getVoteStatusResponse.isSuccess) {
+        // 取資料成功
+        QppVote? vote = getVoteStatusResponse.getVoteData(item);
+        voteDataState = ApiResponse.completed(vote);
+        isOptionErrorArray = vote?.voteData.map((e) => false).toList() ?? [];
+
+        // 更新投票狀態
+        // 選項沒有錯誤或是創建者，就代表已經投票過
+        votedState = (
+          vote?.haveOptionError == false ||
+              item.creatorId == userInfoState.data?.id,
+          VotedState.none
+        );
+      } else {
+        // 取資料失敗
+        voteDataState = ApiResponse.error(
+            getVoteStatusResponse.qppReturnError?.errorMessage);
+      }
+      notifyListeners();
+    }).catchError((onError) {
+      print('_getVoteStatus Error: ${onError.toString()}');
+      // 取資料失敗
+      voteDataState = ApiResponse.error(onError.toString());
+      notifyListeners();
+    });
   }
 }

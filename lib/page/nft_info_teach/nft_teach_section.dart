@@ -49,7 +49,7 @@ abstract class NFTTeachInfoExpand extends StatelessWidget {
     if (isDesktop) {
       return const EdgeInsets.fromLTRB(30, 28, 30, 30);
     }
-    return const EdgeInsets.fromLTRB(37, 28, 58, 39);
+    return const EdgeInsets.fromLTRB(20, 28, 20, 28);
   }
 }
 
@@ -57,7 +57,9 @@ abstract class NFTTeachInfoExpand extends StatelessWidget {
 class NFTTeachSectionInfoTitle extends StatelessWidget {
   /// title
   final String titleKey;
-  const NFTTeachSectionInfoTitle({super.key, required this.titleKey});
+  final bool isDesktop;
+  const NFTTeachSectionInfoTitle(
+      {super.key, required this.titleKey, required this.isDesktop});
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +68,9 @@ class NFTTeachSectionInfoTitle extends StatelessWidget {
       child: Text(
         context.tr(titleKey),
         textAlign: TextAlign.center,
-        style: QppTextStyles.web_20pt_title_bold_m_white_C,
+        style: isDesktop
+            ? QppTextStyles.web_20pt_title_bold_m_white_C
+            : QppTextStyles.mobile_16pt_title_white_bold_L,
       ),
     );
   }
@@ -101,10 +105,16 @@ class ItemTeachInfo extends StatelessWidget {
   final EdgeInsets? margin;
   final String? contentKey;
   final String? tipKey;
+  final bool? isDesktop;
   final List<Widget>? displayImg;
 
   const ItemTeachInfo(
-      {super.key, this.contentKey, this.tipKey, this.displayImg, this.margin});
+      {super.key,
+      this.contentKey,
+      this.tipKey,
+      this.displayImg,
+      this.margin,
+      this.isDesktop = true});
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +137,9 @@ class ItemTeachInfo extends StatelessWidget {
       return Builder(builder: (context) {
         return Text(
           context.tr(contentKey!),
-          style: QppTextStyles.web_16pt_body_platinum_L,
+          style: isDesktop!
+              ? QppTextStyles.web_16pt_body_platinum_L
+              : QppTextStyles.mobile_14pt_body_platinum_L,
         );
       });
     }
@@ -142,7 +154,9 @@ class ItemTeachInfo extends StatelessWidget {
         child: Builder(builder: (context) {
           return Text(
             context.tr(tipKey!),
-            style: QppTextStyles.web_16pt_body_pastel_yellow_L,
+            style: isDesktop!
+                ? QppTextStyles.web_16pt_body_pastel_yellow_L
+                : QppTextStyles.mobile_14pt_body_pastel_yellow_L,
           );
         }),
       );

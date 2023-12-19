@@ -8,7 +8,6 @@ import 'package:qpp_example/utils/qpp_text_styles.dart';
 class NFTTeachInfoZone1 extends StatelessWidget {
   final bool isDesktop;
   const NFTTeachInfoZone1({super.key, required this.isDesktop});
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -18,14 +17,16 @@ class NFTTeachInfoZone1 extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 12),
           child: Text(
             context.tr(QppLocales.nftInfoTeachSubtitle1),
-            style: QppTextStyles.web_24pt_title_L_maya_blue_C,
+            style: isDesktop
+                ? QppTextStyles.web_24pt_title_L_maya_blue_C
+                : QppTextStyles.mobile_20pt_title_L_maya_blue_L,
           ),
         ),
-        const Info1.desktop(),
-        const Info2.desktop(),
-        const Info3.desktop(),
-        const Info4.desktop(),
-        const Info5.desktop(),
+        isDesktop ? const Info1.desktop() : const Info1.mobile(),
+        isDesktop ? const Info2.desktop() : const Info2.mobile(),
+        isDesktop ? const Info3.desktop() : const Info3.mobile(),
+        isDesktop ? const Info4.desktop() : const Info4.mobile(),
+        isDesktop ? const Info5.desktop() : const Info5.mobile(),
       ],
     );
   }
@@ -36,14 +37,16 @@ class Info1 extends NFTTeachInfoExpand {
   const Info1.mobile({super.key}) : super.mobile();
 
   @override
-  Widget get title => const NFTTeachSectionInfoTitle(
+  Widget get title => NFTTeachSectionInfoTitle(
         titleKey: QppLocales.nftInfoTeachSubtitle1ContentQ1,
+        isDesktop: isDesktop,
       );
 
   @override
-  Widget get content => const ItemTeachInfo(
-        margin: EdgeInsets.only(top: 20),
+  Widget get content =>  ItemTeachInfo(
+        margin: const EdgeInsets.only(top: 20),
         contentKey: QppLocales.nftInfoTeachSubtitle1ContentA1,
+        isDesktop: isDesktop,
       );
 }
 
@@ -52,8 +55,9 @@ class Info2 extends NFTTeachInfoExpand {
   const Info2.mobile({super.key}) : super.mobile();
 
   @override
-  Widget get title => const NFTTeachSectionInfoTitle(
+  Widget get title => NFTTeachSectionInfoTitle(
         titleKey: QppLocales.nftInfoTeachSubtitle1ContentQ2,
+        isDesktop: isDesktop,
       );
 
   @override
@@ -64,6 +68,7 @@ class Info2 extends NFTTeachInfoExpand {
         displayImg: [
           Image.asset(QPPImages.desktop_pic_nft_instruction_01),
         ],
+        isDesktop: isDesktop,
       );
 }
 
@@ -72,13 +77,15 @@ class Info3 extends NFTTeachInfoExpand {
   const Info3.mobile({super.key}) : super.mobile();
 
   @override
-  Widget get title => const NFTTeachSectionInfoTitle(
+  Widget get title => NFTTeachSectionInfoTitle(
         titleKey: QppLocales.nftInfoTeachSubtitle1ContentQ3,
+        isDesktop: isDesktop,
       );
   @override
-  Widget get content => const ItemTeachInfo(
-        margin: EdgeInsets.only(top: 20),
+  Widget get content =>  ItemTeachInfo(
+        margin: const EdgeInsets.only(top: 20),
         contentKey: QppLocales.nftInfoTeachSubtitle1ContentA3,
+        isDesktop: isDesktop,
       );
 }
 
@@ -87,14 +94,16 @@ class Info4 extends NFTTeachInfoExpand {
   const Info4.mobile({super.key}) : super.mobile();
 
   @override
-  Widget get title => const NFTTeachSectionInfoTitle(
+  Widget get title => NFTTeachSectionInfoTitle(
         titleKey: QppLocales.nftInfoTeachSubtitle1ContentQ4,
+        isDesktop: isDesktop,
       );
 
   @override
-  Widget get content => const ItemTeachInfo(
-        margin: EdgeInsets.only(top: 20),
+  Widget get content =>  ItemTeachInfo(
+        margin: const EdgeInsets.only(top: 20),
         contentKey: QppLocales.nftInfoTeachSubtitle1ContentA4,
+        isDesktop: isDesktop,
       );
 }
 
@@ -103,13 +112,15 @@ class Info5 extends NFTTeachInfoExpand {
   const Info5.mobile({super.key}) : super.mobile();
 
   @override
-  Widget get title => const NFTTeachSectionInfoTitle(
+  Widget get title => NFTTeachSectionInfoTitle(
         titleKey: QppLocales.nftInfoTeachSubtitle1ContentQ5,
+        isDesktop: isDesktop,
       );
 
   @override
-  Widget get content => const ItemTeachInfo(
-        margin: EdgeInsets.only(top: 20),
+  Widget get content =>  ItemTeachInfo(
+        margin: const EdgeInsets.only(top: 20),
         contentKey: QppLocales.nftInfoTeachSubtitle1ContentA5,
+        isDesktop: isDesktop,
       );
 }

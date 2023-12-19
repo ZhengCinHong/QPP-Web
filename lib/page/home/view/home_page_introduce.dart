@@ -7,6 +7,7 @@ import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/extension/color/color_to_string.dart';
 import 'package:qpp_example/extension/string/url.dart';
+import 'package:qpp_example/extension/widget/disable_selection_container.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/home/model/home_page_model.dart';
 import 'package:qpp_example/page/home/view/home_page.dart';
@@ -372,26 +373,23 @@ class _MoreAboutQPPButtonState extends State<MoreAboutQPPButton>
                   duration: const Duration(seconds: 1));
             }
           },
-          child: SelectionContainer.disabled(
-            child: Column(
-              children: [
-                const Text(
-                  'More About QPP',
-                  style: QppTextStyles.mobile_14pt_body_white_L,
-                ),
-                const SizedBox(height: 5),
-                AnimatedBuilder(
-                  animation: _controller,
-                  builder: (context, child) {
-                    return Transform.translate(
-                      offset: _offsetTween.evaluate(_controller),
-                      child:
-                          Image.asset(QPPImages.desktop_icon_arrowdown_double),
-                    );
-                  },
-                )
-              ],
-            ),
+          child: Column(
+            children: [
+              const Text(
+                'More About QPP',
+                style: QppTextStyles.mobile_14pt_body_white_L,
+              ).disabledSelectionContainer,
+              const SizedBox(height: 5),
+              AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) {
+                  return Transform.translate(
+                    offset: _offsetTween.evaluate(_controller),
+                    child: Image.asset(QPPImages.desktop_icon_arrowdown_double),
+                  );
+                },
+              )
+            ],
           ),
         ),
       ],
