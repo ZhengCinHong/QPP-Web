@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 
 /// 客製化對話框
@@ -99,8 +99,8 @@ class CDialogTitle extends StatelessWidget {
               isShowCloseButton
                   ? GestureDetector(
                       onTap: () => context.pop(),
-                      child: SvgPicture.asset(
-                        'assets/desktop-icon-dialog-delete-normal.svg',
+                      child: Image.asset(
+                        QPPImages.desktop_icon_dialog_delete_normal,
                         width: isDesktopPlatform ? 40 : 24,
                         height: isDesktopPlatform ? 40 : 24,
                       ),
