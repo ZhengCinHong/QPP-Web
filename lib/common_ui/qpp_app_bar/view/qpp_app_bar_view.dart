@@ -61,7 +61,7 @@ class _QppAppBarTitle extends ConsumerWidget {
     return Row(
       children: [
         // 最左邊間距
-        Spacer(flex: isDesktopStyle ? 320 : 28),
+        isDesktopStyle ? const Spacer(flex: 320) : const SizedBox(width: 29),
         isOpenAppBarMenuBtnPage
             ? const SizedBox.shrink()
             : isDesktopStyle
@@ -99,15 +99,13 @@ class _QppAppBarTitle extends ConsumerWidget {
             ? const LanguageDropdownMenu(ScreenStyle.desktop)
             : const LanguageDropdownMenu(ScreenStyle.mobile),
         // 三條 or 最右邊間距
-        isOpenAppBarMenuBtnPage
-            ? const SizedBox(width: 30)
-            : isDesktopStyle
-                ? const Flexible(child: SizedBox.shrink())
-                : const Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: AnimationMenuBtn(isClose: false),
-                  ),
-        Spacer(flex: isDesktopStyle ? 319 : 24),
+        isDesktopStyle
+            ? const Flexible(child: SizedBox.shrink())
+            : const Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: AnimationMenuBtn(isClose: false),
+              ),
+        isDesktopStyle ? const Spacer(flex: 319) : const SizedBox(width: 24)
       ],
     );
   }
@@ -325,7 +323,8 @@ class _UserInfo extends StatelessWidget {
             final loginInfo = SharedPrefs.getLoginInfo();
 
             Future.microtask(
-                () => isOpen ? controller.open() : controller.close());
+              () => isOpen ? controller.open() : controller.close(),
+            );
 
             return CMouseRegion(
               onEnter: (event) => isOpenNotifier.state = true,
@@ -388,9 +387,14 @@ class LanguageDropdownMenu extends StatelessWidget {
             final isOpenNotifier = ref.read(isOpenControllerProvider.notifier);
 
             if (context.isDesktopPlatform) {
-              Future.microtask(
-                () => isOpen ? controller.open() : controller.close(),
-              );
+              Future.microtask(() {
+                // 避免被銷毀時，強制設定會直接死機。
+                if (!context.mounted) {
+                  return;
+                }
+
+                isOpen ? controller.open() : controller.close();
+              });
             }
 
             return CMouseRegion(
@@ -480,7 +484,7 @@ class MouseRegionCustomWidget extends ConsumerWidget {
 }
 
 // -----------------------------------------------------------------------------
-/// 全螢幕選單按鈕頁面
+/// 全螢幕選單按鈕頁面 (手機樣式才會出現)
 // -----------------------------------------------------------------------------
 class FullScreenMenuBtnPage extends ConsumerWidget {
   const FullScreenMenuBtnPage({super.key});

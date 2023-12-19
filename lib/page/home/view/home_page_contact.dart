@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/list/list.dart';
 import 'package:qpp_example/extension/string/url.dart';
+import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/home/model/home_page_model.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
@@ -82,7 +83,7 @@ class _TitleContent extends StatelessWidget {
     return Column(
       children: [
         Text(
-          context.tr('home_digibag_title'),
+          context.tr(QppLocales.homeDigibagTitle),
           style: isDesktopStyle
               ? QppTextStyles.web_40pt_Display_m_bold_white_L
               : QppTextStyles.web_24pt_title_M_bold_white_C,
@@ -114,7 +115,7 @@ class _TitleContent extends StatelessWidget {
                     : CrossAxisAlignment.center,
                 children: [
                   _ShadowText(
-                    context.tr('home_digibag_text'),
+                    context.tr(QppLocales.homeDigibagText),
                     style: isDesktopStyle
                         ? QppTextStyles.web_40pt_Display_m_bold_canary_yellow_L
                         : QppTextStyles.web_24pt_title_L_canary_yellow_C,
@@ -303,25 +304,38 @@ class _BenefitItem extends StatelessWidget {
     return Stack(alignment: Alignment.center, children: [
       Container(
         constraints: BoxConstraints(maxHeight: isDesktopStyle ? 307 : 230),
-        child: SizedBox(child: Image.asset(QPPImages.desktop_bg_area_03_box)),
-      ),
-      Container(
-        constraints: BoxConstraints(maxWidth: isDesktopStyle ? 280 : 235),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          AutoSizeText(
-            context.tr(type.title),
-            style: isDesktopStyle
-                ? QppTextStyles.web_24pt_title_L_bold_canary_yellow_L
-                : QppTextStyles.web_20pt_title_m_canary_yellow_L,
-          ),
-          const SizedBox(height: 16),
-          AutoSizeText(
-            context.tr(type.directions),
-            style: isDesktopStyle
-                ? QppTextStyles.web_18pt_title_s_white_L
-                : QppTextStyles.web_16pt_body_white_L,
-          ),
-        ]),
+        child: Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            SizedBox(child: Image.asset(QPPImages.desktop_bg_area_03_box)),
+            Container(
+              constraints: BoxConstraints(maxWidth: isDesktopStyle ? 280 : 235),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Spacer(
+                      flex: 1,
+                    ),
+                    AutoSizeText(
+                      context.tr(type.title),
+                      style: isDesktopStyle
+                          ? QppTextStyles.web_24pt_title_L_bold_canary_yellow_L
+                          : QppTextStyles.web_20pt_title_m_canary_yellow_L,
+                    ),
+                    const SizedBox(height: 16),
+                    AutoSizeText(
+                      context.tr(type.directions),
+                      style: isDesktopStyle
+                          ? QppTextStyles.web_18pt_title_s_white_L
+                          : QppTextStyles.web_16pt_body_white_L,
+                    ),
+                    const Spacer(
+                      flex: 2,
+                    ),
+                  ]),
+            ),
+          ],
+        ),
       ),
     ]);
   }
