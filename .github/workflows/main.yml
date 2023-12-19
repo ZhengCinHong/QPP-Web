@@ -33,6 +33,9 @@ jobs:
           # 修改index.html第 17 行的內容
           sed -i "17c <base href="/QPP-Web/" />" index.html
 
+          # 复制index.html并将其命名为404.html
+          cp index.html 404.html
+
           git init
           # type configurations: your user.email and user.name followed lines 
           # git config --global user.email your_email 
