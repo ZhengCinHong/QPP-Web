@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 
 /// QPP過場畫面
 class QPPTransitionView extends StatefulWidget {
@@ -64,8 +64,8 @@ class _QPPTransitionViewState extends State<QPPTransitionView>
                         left: Tween<double>(begin: originY, end: centerY - 62)
                             .animate(_controller)
                             .value,
-                        child: SvgPicture.asset(
-                          'assets/pic-animation-icon.svg',
+                        child: Image.asset(
+                          QPPImages.pic_animation_icon_2,
                           width: 62,
                         ),
                       ),
@@ -73,8 +73,8 @@ class _QPPTransitionViewState extends State<QPPTransitionView>
                         right: Tween<double>(begin: originY, end: centerY - 83)
                             .animate(_controller)
                             .value,
-                        child: SvgPicture.asset(
-                          'assets/pic-animation-qpp.svg',
+                        child: Image.asset(
+                          QPPImages.pic_animation_qpp,
                           width: 83,
                         ),
                       ),

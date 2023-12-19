@@ -323,7 +323,8 @@ class _LinkText extends StatelessWidget {
       text: context.tr(type.text),
       link: type.link,
       style: QppTextStyles.web_12pt_caption_white_L,
-      isNewTab: true,
+      // isNewTab: true,
+      isNewTab: false,
     );
   }
 }

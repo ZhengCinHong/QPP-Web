@@ -5,35 +5,37 @@ import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 
-/// level section
-class NFTSectionLevels<List> extends NFTSection {
-  const NFTSectionLevels.desktop({super.key, required super.data})
+class LevelsExpand extends NFTExpand<List> {
+  const LevelsExpand.desktop({super.key, required super.data})
       : super.desktop();
-  const NFTSectionLevels.mobile({super.key, required super.data})
-      : super.mobile();
+  const LevelsExpand.mobile({super.key, required super.data}) : super.mobile();
 
   @override
-  State<StatefulWidget> createState() => StateLevels();
+  Widget? get title => const LevelsTitle();
+
+  @override
+  Widget? get content => LevelsContent(
+        data: data,
+        isDesktop: isDesktop,
+      );
 }
 
-class StateLevels extends StateSection {
-  @override
-  Widget get sectionContent => LevelsContent(levels: widget.data);
+class LevelsTitle extends NFTSectionInfoTitle {
+  const LevelsTitle({super.key});
 
   @override
-  String get sectionTitle => 'Levels';
+  String get iconPath => QPPImages.desktop_icon_commodity_nft_levels;
 
   @override
-  String get sectionTitleIconPath =>
-      QPPImages.desktop_icon_commodity_nft_levels;
+  String get title => 'Levels';
 }
 
-class LevelsContent extends StatelessWidget {
-  final List<NFTTrait> levels;
-  const LevelsContent({super.key, required this.levels});
+class LevelsContent extends NFTSectionInfoContent<List> {
+  const LevelsContent(
+      {super.key, required super.isDesktop, required super.data});
 
   @override
-  Widget build(BuildContext context) {
+  Widget get child {
     var level = getLevel();
     var upgrade = getUpgrade();
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -45,7 +47,7 @@ class LevelsContent extends StatelessWidget {
 
   // 取得顯示 level 的 trait
   NFTTrait? getLevel() {
-    for (NFTTrait trait in levels) {
+    for (NFTTrait trait in data) {
       if (trait.traitType == 'LV') {
         return trait;
       }
@@ -54,7 +56,7 @@ class LevelsContent extends StatelessWidget {
   }
 
   NFTTrait? getUpgrade() {
-    for (NFTTrait trait in levels) {
+    for (NFTTrait trait in data) {
       if (trait.traitType == '突破次數') {
         return trait;
       }

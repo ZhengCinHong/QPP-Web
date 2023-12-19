@@ -5,57 +5,58 @@ import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 
-/// properties section
-class NFTSectionProperties<List> extends NFTSection {
-  const NFTSectionProperties.desktop({super.key, required super.data})
+class PropertiesExpand extends NFTExpand<List> {
+  const PropertiesExpand.desktop({super.key, required super.data})
       : super.desktop();
-  const NFTSectionProperties.mobile({super.key, required super.data})
+  const PropertiesExpand.mobile({super.key, required super.data})
       : super.mobile();
 
   @override
-  State<StatefulWidget> createState() => StateProperties();
+  Widget? get title => const PropertiesTitle();
+
+  @override
+  Widget? get content => PropertiesContent(
+        data: data,
+        isDesktop: isDesktop,
+      );
 }
 
-class StateProperties extends StateSection {
-  @override
-  Widget get sectionContent => PropertiesGrid(properties: widget.data);
+class PropertiesTitle extends NFTSectionInfoTitle {
+  const PropertiesTitle({super.key});
 
   @override
-  String get sectionTitle => 'Properties';
+  String get iconPath => QPPImages.desktop_icon_commodity_nft_properties;
 
   @override
-  String get sectionTitleIconPath =>
-      QPPImages.desktop_icon_commodity_nft_properties;
+  String get title => 'Properties';
 }
 
-class PropertiesGrid extends StatelessWidget {
-  final List<NFTTrait> properties;
-  const PropertiesGrid({super.key, required this.properties});
+class PropertiesContent extends NFTSectionInfoContent<List> {
+  const PropertiesContent(
+      {super.key, required super.isDesktop, required super.data});
 
   @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-        // 關掉 over scroll 效果
-        physics: const BouncingScrollPhysics(),
-        // 方向
-        scrollDirection: Axis.vertical,
-        // 是否根據 child 組件調整大小, 參考 https://juejin.cn/s/flutter%20gridview%20shrinkwrap
-        shrinkWrap: true,
-        itemCount: properties.length,
-        // grid 實現的規則
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            // child 間距
-            crossAxisSpacing: 12,
-            // child 間距
-            mainAxisSpacing: 12,
-            // child 高寬比
-            childAspectRatio: 1.85,
-            // child 最大寬度
-            maxCrossAxisExtent: 215),
-        itemBuilder: (context, count) {
-          return ItemProperty(property: properties[count]);
-        });
-  }
+  Widget get child => GridView.builder(
+      // 關掉 over scroll 效果
+      physics: const BouncingScrollPhysics(),
+      // 方向
+      scrollDirection: Axis.vertical,
+      // 是否根據 child 組件調整大小, 參考 https://juejin.cn/s/flutter%20gridview%20shrinkwrap
+      shrinkWrap: true,
+      itemCount: data.length,
+      // grid 實現的規則
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          // child 間距
+          crossAxisSpacing: 12,
+          // child 間距
+          mainAxisSpacing: 12,
+          // child 高寬比
+          childAspectRatio: 1.85,
+          // child 最大寬度
+          maxCrossAxisExtent: 215),
+      itemBuilder: (context, count) {
+        return ItemProperty(property: data[count]);
+      });
 }
 
 /// property 元件

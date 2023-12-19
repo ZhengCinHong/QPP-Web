@@ -6,13 +6,9 @@ import 'package:qpp_example/go_router/router.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
-import 'package:qpp_example/utils/shared_prefs_utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // 本地資料庫
-  await SharedPrefs.init();
 
   // 多語系套件
   await EasyLocalization.ensureInitialized();

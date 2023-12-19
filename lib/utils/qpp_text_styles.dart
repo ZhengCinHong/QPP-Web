@@ -265,6 +265,10 @@ abstract class QppTextStyles {
     color: QppColors.pastelYellow,
     fontSize: 16,
   );
+  static const TextStyle mobile_14pt_body_pastel_yellow_L = TextStyle(
+    color: QppColors.pastelYellow,
+    fontSize: 14,
+  );
   static const TextStyle web_16pt_body_pastel_blue_R = TextStyle(
     color: QppColors.pastelBlue,
     fontSize: 16,

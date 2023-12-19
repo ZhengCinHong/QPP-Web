@@ -1,174 +1,90 @@
 import 'package:flutter/widgets.dart';
-import 'package:qpp_example/common_ui/qpp_button/btn_arrow_up_down.dart';
-import 'package:qpp_example/utils/qpp_color.dart';
+import 'package:qpp_example/common_ui/expand_container.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 
-/// NFTSection 抽象類
-abstract class NFTSection<T> extends StatefulWidget {
+abstract class NFTExpand<T> extends ExpandContainer {
   final T data;
-  final bool isDesktop;
+  const NFTExpand.desktop({super.key, required this.data}) : super.desktop();
+  const NFTExpand.mobile({super.key, required this.data}) : super.mobile();
 
-  const NFTSection.desktop({Key? key, required this.data})
-      : isDesktop = true,
-        super(key: key);
-  const NFTSection.mobile({Key? key, required this.data})
-      : isDesktop = false,
-        super(key: key);
+  @override
+  StateNFTExpand createState() => StateNFTExpand();
 }
 
-/// NFTStateSection 抽象類
-abstract class StateSection extends State<NFTSection>
-    with TickerProviderStateMixin {
-  // 控制 Section Title 右邊的上下箭頭(指向正確的那個箭頭)
-  final arrowKey = GlobalKey<StateClickArrow>();
-  late bool expanded;
-  late final Animation<double> _animation;
-  late final Animation<double> _curve;
-  late final AnimationController _scaleAnimationController;
-
-  @override
-  void initState() {
-    super.initState();
-    // 是否展開
-    expanded = true;
-
-    // 動畫控制器
-    _scaleAnimationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 300),
-    );
-    // 設定動畫
-    _curve = CurvedAnimation(
-        parent: _scaleAnimationController,
-        curve: Curves.easeInOut,
-        reverseCurve: Curves.easeInOut);
-    // 動畫變化範圍
-    _animation = Tween(begin: 1.0, end: 0.0).animate(_curve);
-  }
-
+class StateNFTExpand extends StateExpand {
   @override
   Widget build(BuildContext context) {
-    // 無資料
-    if (widget.data == null) {
-      return const SizedBox.shrink();
-    }
-    // QPP Trait List 為空陣列
-    if (widget.data is List) {
-      if ((widget.data as List).isEmpty) {
+    // 判斷無資料就不顯示
+    if (widget is NFTExpand) {
+      var wid = widget as NFTExpand;
+      if (wid.data is List) {
+        var listData = wid.data as List;
+        if (listData.isEmpty) {
+          return const SizedBox.shrink();
+        }
+      } else if (wid.data == null) {
         return const SizedBox.shrink();
       }
+      return super.build(context);
     }
-    return Column(children: [
-      NFTInfoSectionItemTitle(
-        arrowKey: arrowKey,
-        // section icon 圖片路徑
-        iconPath: sectionTitleIconPath,
-        // section title
-        title: sectionTitle,
-        isDesktop: widget.isDesktop,
-        onTap: () {
-          arrowKey.currentState?.rotate();
-          setState(() {
-            // forward 啟動動畫, reverse 動畫倒轉
-            expanded
-                ? _scaleAnimationController.forward()
-                : _scaleAnimationController.reverse();
-            expanded = !expanded;
-          });
-        },
-      ),
-      // size 動畫, 參考 https://github.com/YYFlutter/flutter-article/blob/master/article/animation%26motion/Flutter动画SizeTransition详解.md
-      SizeTransition(
-        sizeFactor: _animation,
-        axis: Axis.vertical,
-        //
-        child: Container(padding: contentPadding, child: sectionContent),
-      ),
-    ]);
-  }
-
-  /// 上方 section icon 路徑
-  String get sectionTitleIconPath;
-
-  /// 上方 section title
-  String get sectionTitle;
-
-  /// 內容 widget
-  Widget get sectionContent;
-
-  bool get isDesktop {
-    return widget.isDesktop;
-  }
-
-  EdgeInsets get contentPadding {
-    return widget.isDesktop
-        ? const EdgeInsets.fromLTRB(60, 20, 60, 20)
-        : const EdgeInsets.fromLTRB(12, 15, 12, 15);
+    return super.build(context);
   }
 }
 
-/// NFT Section title 元件
-class NFTInfoSectionItemTitle extends StatelessWidget {
-  // icon 路徑
-  final String iconPath;
-  // title
-  final String title;
-
-  final GlobalKey arrowKey;
-
-  final bool isDesktop;
-
-  final Function()? onTap;
-
-  const NFTInfoSectionItemTitle(
-      {Key? key,
-      required this.arrowKey,
-      required this.iconPath,
-      required this.title,
-      required this.isDesktop,
-      this.onTap})
-      : super(key: key);
+abstract class NFTSectionInfoTitle extends StatelessWidget {
+  const NFTSectionInfoTitle({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        onTap?.call();
-      },
-      child: Container(
-        height: 44.0,
-        padding: _padding,
-        decoration: const BoxDecoration(color: QppColors.stPatricksBlue),
-        child: Row(
-          children: [
-            Image.asset(
-              iconPath,
-              width: 28.0,
-              height: 28.0,
-            ),
-            const SizedBox(
-              width: 16,
-            ),
-            Text(
-              title,
-              style: QppTextStyles.web_18pt_title_s_pastel_blue_L,
-            ),
-            const Expanded(child: SizedBox()),
-            // 上/下箭頭
-            BtnArrowUpDown(key: arrowKey, size: _arrowSize),
-          ],
-        ),
+    return SizedBox(
+      height: 44,
+      child: Row(
+        children: [
+          Image.asset(
+            iconPath,
+            width: 28.0,
+            height: 28.0,
+          ),
+          const SizedBox(
+            width: 16,
+          ),
+          Text(
+            title,
+            style: QppTextStyles.web_18pt_title_s_pastel_blue_L,
+          ),
+        ],
       ),
     );
   }
 
-  EdgeInsets get _padding {
-    return isDesktop
-        ? const EdgeInsets.only(left: 60.0, right: 60.0)
-        : const EdgeInsets.only(left: 12.0, right: 12.0);
+  /// icon 路徑
+  String get iconPath;
+
+  /// title
+  String get title;
+}
+
+abstract class NFTSectionInfoContent<T> extends StatelessWidget {
+  final bool isDesktop;
+  final T data;
+  const NFTSectionInfoContent(
+      {super.key, required this.isDesktop, required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: contentPadding,
+      child: child,
+    );
   }
 
-  double get _arrowSize {
-    return isDesktop ? 20 : 16;
+  Widget get child;
+
+  EdgeInsets get contentPadding {
+    return isDesktop
+        ? const EdgeInsets.fromLTRB(60, 20, 60, 20)
+        : const EdgeInsets.fromLTRB(12, 15, 12, 15);
   }
 }

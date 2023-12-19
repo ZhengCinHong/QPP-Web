@@ -5,47 +5,44 @@ import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 
 /// stats section
-class NFTSectionStats<List> extends NFTSection {
-  const NFTSectionStats.desktop({super.key, required super.data})
-      : super.desktop();
-  const NFTSectionStats.mobile({super.key, required super.data})
-      : super.mobile();
+class StatsExpand extends NFTExpand<List> {
+  const StatsExpand.desktop({super.key, required super.data}) : super.desktop();
+  const StatsExpand.mobile({super.key, required super.data}) : super.mobile();
+  @override
+  Widget? get title => const StatsTitle();
 
   @override
-  State<StatefulWidget> createState() => StateStats();
+  Widget? get content => StatsContent(isDesktop: isDesktop, data: data);
 }
 
-class StateStats extends StateSection {
-  @override
-  Widget get sectionContent => StatsContent(stats: widget.data);
+class StatsTitle extends NFTSectionInfoTitle {
+  const StatsTitle({super.key});
 
   @override
-  String get sectionTitle => 'Status';
+  String get title => 'Status';
 
   @override
-  String get sectionTitleIconPath => QPPImages.desktop_icon_commodity_nft_stats;
+  String get iconPath => QPPImages.desktop_icon_commodity_nft_stats;
 }
 
-class StatsContent extends StatelessWidget {
-  final List<NFTTrait> stats;
-  const StatsContent({super.key, required this.stats});
+class StatsContent extends NFTSectionInfoContent<List> {
+  const StatsContent(
+      {super.key, required super.isDesktop, required super.data});
 
   @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      // 關掉 over scroll 效果
-      physics: const BouncingScrollPhysics(),
-      itemCount: stats.length,
-      itemBuilder: (context, index) {
-        return ItemStats(
-          trait: stats[index],
-        );
-      },
-      // 是否根據 child 組件調整大小
-      shrinkWrap: true,
-      scrollDirection: Axis.vertical,
-    );
-  }
+  Widget get child => ListView.builder(
+        // 關掉 over scroll 效果
+        physics: const BouncingScrollPhysics(),
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          return ItemStats(
+            trait: data[index],
+          );
+        },
+        // 是否根據 child 組件調整大小
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+      );
 }
 
 class ItemStats extends StatelessWidget {
