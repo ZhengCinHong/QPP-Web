@@ -103,7 +103,7 @@ class _UserInformationOuterFrameState extends State<UserInformationOuterFrame> {
                         style: QppTextStyles.web_16pt_body_platinum_L,
                       ),
                       const SizedBox(height: 24),
-                      const OpenQppButton(),
+                      OpenQppButton(url: widget.url),
                     ],
                   ),
           ),
