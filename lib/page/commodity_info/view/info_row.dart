@@ -5,6 +5,7 @@ import 'package:qpp_example/api/core/api_response.dart';
 import 'package:qpp_example/common_ui/qpp_text/info_row_link_read_more_text.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/string/url.dart';
+import 'package:qpp_example/extension/widget/disable_selection_container.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/model/item_multi_language_data.dart';
 import 'package:qpp_example/model/qpp_item.dart';
@@ -63,12 +64,12 @@ class VoucherInfoRowInfo extends InfoRowInfo {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ApiResponse response = getResponse(ref);
-    QppVote data = response.data;
+    QppVote? data = response.data;
 
     return response.isCompleted
         ? Padding(
             padding: rowPadding(),
-            child: getContent(data.item),
+            child: getContent(data?.item),
           )
         : const SizedBox.shrink();
   }
@@ -148,57 +149,54 @@ class InfoRowCreator extends InfoRow {
   Widget getContent(data) {
     if (data is QppUser) {
       return Builder(builder: (context) {
-        // 關掉 SelectionArea 游標功能
-        return SelectionContainer.disabled(
-          child: MouseRegion(
-            // 滑鼠移進來時會改變游標圖案
-            cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-              onTap: () {
-                // TODO: host, isTesting, language....
-                '${ServerConst.routerHost}/app/information?phoneNumber=${data.displayID}&testing=true'
-                    .launchURL(isNewTab: false);
-              },
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: titleWidth,
-                    child: Text(
-                      context.tr(QppLocales.commodityInfoCreator),
-                      textAlign: TextAlign.start,
-                      style: QppTextStyles.web_16pt_body_category_text_L,
-                    ),
+        return MouseRegion(
+          // 滑鼠移進來時會改變游標圖案
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: () {
+              // TODO: host, isTesting, language....
+              '${ServerConst.routerHost}/app/information?phoneNumber=${data.displayID}&testing=true'
+                  .launchURL(isNewTab: false);
+            },
+            child: Row(
+              children: [
+                SizedBox(
+                  width: titleWidth,
+                  child: Text(
+                    context.tr(QppLocales.commodityInfoCreator),
+                    textAlign: TextAlign.start,
+                    style: QppTextStyles.web_16pt_body_category_text_L,
                   ),
-                  // 若為官方帳號, 顯示 icon
-                  data.isOfficial
-                      ? Container(
-                          padding: const EdgeInsets.only(right: 8),
-                          child: Image.asset(
-                            data.officialIconPath,
-                            width: 20,
-                          ),
-                        )
-                      : const SizedBox.shrink(),
-                  // id + name
-                  Expanded(
-                    child: Text(
-                      "${data.displayID}  ${data.displayName}",
-                      maxLines: 1,
-                      textAlign: TextAlign.start,
-                      overflow: TextOverflow.ellipsis,
-                      style: QppTextStyles.web_16pt_body_Indian_yellow_L,
-                    ),
+                ),
+                // 若為官方帳號, 顯示 icon
+                data.isOfficial
+                    ? Container(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: Image.asset(
+                          data.officialIconPath,
+                          width: 20,
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+                // id + name
+                Expanded(
+                  child: Text(
+                    "${data.displayID}  ${data.displayName}",
+                    maxLines: 1,
+                    textAlign: TextAlign.start,
+                    overflow: TextOverflow.ellipsis,
+                    style: QppTextStyles.web_16pt_body_Indian_yellow_L,
                   ),
-                  // 物件左右翻轉, 或用 RotatedBox
-                  Image.asset(
-                    QPPImages.desktop_icon_selection_arrow_right_normal,
-                    matchTextDirection: true,
-                  ),
-                ],
-              ),
+                ),
+                // 物件左右翻轉, 或用 RotatedBox
+                Image.asset(
+                  QPPImages.desktop_icon_selection_arrow_right_normal,
+                  matchTextDirection: true,
+                ),
+              ],
             ),
           ),
-        );
+        ).disabledSelectionContainer;
       });
     }
     return const SizedBox.shrink();

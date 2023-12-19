@@ -7,8 +7,8 @@ part 'login_info.g.dart';
 class LoginInfo {
   const LoginInfo({
     required this.expiredTimestamp,
-    required this.refreshTokenTimestamp,
-    required this.vendorToken,
+    required this.refreshTimestamp,
+    required this.voteToken,
     required this.uid,
     required this.uidImage,
   });
@@ -17,13 +17,13 @@ class LoginInfo {
   final String? expiredTimestamp;
 
   /// 是否登入
-  bool get isLogin => vendorToken.isNotEmpty;
+  bool get isLogin => voteToken.isNotEmpty;
 
   /// 刷新Token日期
-  final DateTime? refreshTokenTimestamp;
+  final int refreshTimestamp;
 
-  /// 廠商token
-  final String vendorToken;
+  /// 投票token
+  final String voteToken;
 
   /// 用戶id
   final String uid;
@@ -33,4 +33,6 @@ class LoginInfo {
 
   factory LoginInfo.fromJson(Map<String, dynamic> json) =>
       _$LoginInfoFromJson(json);
+
+  Map<String, dynamic> get toMap => _$LoginInfoToJson(this);
 }

@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
+import 'package:qpp_example/model/enum/item/vote_show_type.dart';
 import 'package:qpp_example/model/vote/qpp_vote.dart';
 import 'package:qpp_example/page/commodity_info/model/vote_model.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
@@ -104,7 +105,7 @@ class _VoteStateItem extends StatelessWidget {
       child: Flex(
         direction: isDesktopStyle ? Axis.horizontal : Axis.vertical,
         children: [
-          // 狀態標題
+          // 標題
           Text(
             context.tr(type.title),
             style: isDesktopStyle
@@ -112,7 +113,7 @@ class _VoteStateItem extends StatelessWidget {
                 : QppTextStyles.mobile_12pt_body_category_text_L,
           ),
           const SizedBox(width: 10),
-          // 狀態
+          // 內容
           Expanded(
             flex: isDesktopStyle ? 1 : 0,
             child: Column(
@@ -128,7 +129,9 @@ class _VoteStateItem extends StatelessWidget {
                   child: AutoSizeText(
                     isState
                         ? context.tr(data.voteType.text)
-                        : data.voteCount.toString(),
+                        : data.voteShowType == VoteShowType.show
+                            ? data.voteCount.toString()
+                            : '-',
                     style: isDesktopStyle
                         ? QppTextStyles.web_24pt_title_L_white_L
                         : QppTextStyles.mobile_14pt_body_white_L,
@@ -136,7 +139,7 @@ class _VoteStateItem extends StatelessWidget {
                 ),
                 isState
                     ?
-                    // 截止
+                    // 截止Text(for 狀態)
                     Text(
                         '(${context.tr(QppLocales.commodityInfoExpriy)}${data.expiryDate})',
                         style: isDesktopStyle

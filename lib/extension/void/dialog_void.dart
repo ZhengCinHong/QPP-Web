@@ -27,6 +27,7 @@ extension DialogVoid on void {
     BuildContext context, {
     required ScreenStyle screenStyle,
     required String url,
+    required Function? closeCallBack,
   }) {
     showDialog(
       context: context,
@@ -52,7 +53,11 @@ extension DialogVoid on void {
                 ),
         );
       },
-    );
+    ).then((value) {
+      if (closeCallBack != null) {
+        closeCallBack();
+      }
+    });
   }
 
   /// 顯示投票成功對話框
@@ -64,8 +69,6 @@ extension DialogVoid on void {
       context: context,
       builder: (context) {
         final isDesktopStyle = screenStyle.isDesktop;
-
-        print({screenStyle, 121313});
 
         // showDialog要加上center不然他不知道位置，會導致設定的寬高的失效
         return Center(
@@ -86,6 +89,7 @@ extension DialogVoid on void {
   void showVoteFailureDialog(
     BuildContext context, {
     required ScreenStyle screenStyle,
+    required String subText,
   }) {
     showDialog(
       context: context,
@@ -100,7 +104,7 @@ extension DialogVoid on void {
             width: isDesktopStyle ? 780 : 327,
             image: QPPImages.pic_fail,
             text: context.tr(QppLocales.commodityInfoVoteFault),
-            subText: 'subText',
+            subText: context.tr(subText),
           ),
         );
       },
@@ -135,7 +139,7 @@ extension DialogVoid on void {
                   callback: () {
                     ref
                         .read(authServiceProvider.notifier)
-                        .logout(SharedPrefs.getLoginInfo()?.vendorToken ?? "");
+                        .logout(SharedPrefs.getLoginInfo()?.voteToken ?? "");
                     context.pop();
                   },
                 )
