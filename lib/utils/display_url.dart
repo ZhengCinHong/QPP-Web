@@ -19,10 +19,21 @@ class DisplayUrl {
         // 沒有 lang parameter
         params += '&lang=$value';
       }
-      window.history.pushState({}, '', '${Uri.base.path}?$params');
+      window.history
+          .pushState({}, '', nftTypeCheck('${Uri.base.path}?$params'));
     } else {
       // 沒有 query, 加上去
-      window.history.pushState({}, '', '${Uri.base.path}?lang=$value');
+      window.history
+          .pushState({}, '', nftTypeCheck('${Uri.base.path}?lang=$value'));
     }
+  }
+
+  /// 檢查 nft 的 url 參數, 強制將 nft 資訊的 type 轉回 nft_info
+  static String nftTypeCheck(String url) {
+    // 類型是一般物品 但是 帶的參數是 metadataID
+    if (url.contains('metadataID') && url.contains('commodity_info')) {
+      return url.replaceAll('commodity_info', 'nft_info');
+    }
+    return url;
   }
 }

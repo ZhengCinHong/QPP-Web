@@ -1,6 +1,9 @@
 /// 網址工具
 class UrlGenerator {
+  /// QR Code 及按鈕 網址處理
   static String getQRCodeUrl(String url) {
+    // 先檢查參數
+    // var result = nftTypeCheck(url);
     if (url.contains('action=')) {
       return url;
     }
