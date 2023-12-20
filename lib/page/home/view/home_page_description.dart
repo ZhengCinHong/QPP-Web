@@ -166,15 +166,16 @@ class _ContentState extends State<_Content> {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-        onEnter: (event) => setState(() {
-              _isHovered = true;
-            }),
-        onExit: (event) => setState(() {
-              _isHovered = false;
-            }),
-        child: widget.screenStyle.isDesktop
-            ? _DesktopStyleContent(widget.type, isHovered: _isHovered)
-            : _MobileStyleContent(widget.type, isHovered: _isHovered));
+      onEnter: (event) => setState(() {
+        _isHovered = true;
+      }),
+      onExit: (event) => setState(() {
+        _isHovered = false;
+      }),
+      child: widget.screenStyle.isDesktop
+          ? _DesktopStyleContent(widget.type, isHovered: _isHovered)
+          : _MobileStyleContent(widget.type, isHovered: _isHovered),
+    );
   }
 }
 
@@ -192,28 +193,34 @@ class _DesktopStyleContent extends StatelessWidget {
     return Row(children: [
       type.conetntOfRight ? bg : const SizedBox.shrink(),
       Expanded(
-        child: Container(
-          color: QppColors.oxfordBlue,
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Flexible(
-                child: AutoSizeText(
-                  context.tr(type.title),
-                  style: QppTextStyles.web_24pt_title_L_bold_white_L,
-                ),
+        child: LayoutBuilder(
+          builder: (context, BoxConstraints constraints) {
+            final horizontal = constraints.maxWidth * 0.163;
+
+            return Container(
+              color: QppColors.oxfordBlue,
+              padding: EdgeInsets.symmetric(horizontal: horizontal),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Flexible(
+                    child: AutoSizeText(
+                      context.tr(type.title),
+                      style: QppTextStyles.web_24pt_title_L_bold_white_L,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Flexible(
+                    child: AutoSizeText(
+                      context.tr(type.directions),
+                      style: QppTextStyles.web_16pt_body_white_L,
+                    ),
+                  )
+                ],
               ),
-              const SizedBox(height: 16),
-              Flexible(
-                child: AutoSizeText(
-                  context.tr(type.directions),
-                  style: QppTextStyles.web_16pt_body_white_L,
-                ),
-              )
-            ],
-          ),
+            );
+          },
         ),
       ),
       type.conetntOfRight ? const SizedBox.shrink() : bg,
