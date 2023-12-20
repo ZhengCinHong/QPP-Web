@@ -27,10 +27,11 @@ class HomePageFeature extends StatelessWidget {
         return Container(
           width: constraints.maxWidth,
           padding: EdgeInsets.only(
-              top: topAndBottomSpacing,
-              bottom: topAndBottomSpacing,
-              left: leftAndRightSpacing,
-              right: leftAndRightSpacing),
+            top: topAndBottomSpacing,
+            bottom: topAndBottomSpacing,
+            left: leftAndRightSpacing,
+            right: leftAndRightSpacing,
+          ),
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
@@ -43,6 +44,9 @@ class HomePageFeature extends StatelessWidget {
           ),
           child: Flex(
             direction: isDesktopStyle ? Axis.horizontal : Axis.vertical,
+            crossAxisAlignment: isDesktopStyle
+                ? CrossAxisAlignment.start
+                : CrossAxisAlignment.center,
             children: [
               Expanded(
                   flex: flex,

@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 class ServerConst {
   /// TODO: 先改成目前站點
   // static const routerHost = "https://qpptec.com";
-  static const routerHost = "https://webside-dev.qpptec.com/";
+  static const routerHost = "https://webside-dev.qpptec.com";
 
   /// 測試用連結
   static final testRouterHost = "${Uri.base.origin}/";

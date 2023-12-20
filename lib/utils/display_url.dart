@@ -1,3 +1,4 @@
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
 
 /// 顯示的網址
@@ -8,6 +9,7 @@ class DisplayUrl {
     if (Uri.base.queryParameters.isNotEmpty) {
       // params 字串
       String params = Uri.base.toString().split('?')[1];
+
       // 有 query, 檢查是否有 lang parameter
       if (Uri.base.queryParameters.containsKey(key)) {
         // 有 lang parameter

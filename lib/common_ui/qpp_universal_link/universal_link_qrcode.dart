@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
+import 'package:qpp_example/utils/url_generator.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 /// UniversalLink QRCode(物品資訊頁、個人資訊頁...等)
@@ -20,7 +21,7 @@ class UniversalLinkQRCode extends StatelessWidget {
             decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(6))),
-            child: QPPQRCode(data: url, size: size)),
+            child: QPPQRCode(data: UrlGenerator.getQRCodeUrl(url), size: size)),
         const SizedBox(height: 16),
         Text(
           context.tr(QppLocales.commodityInfoScanViaQPP),
