@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -21,8 +22,10 @@ class UniversalLinkQRCode extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(6))),
             child: QPPQRCode(data: url, size: size)),
         const SizedBox(height: 16),
-        Text(context.tr('vendor_login_scan_via_qpp'),
-            style: QppTextStyles.web_16pt_body_canary_yellow_C),
+        Text(
+          context.tr(QppLocales.commodityInfoScanViaQPP),
+          style: QppTextStyles.web_16pt_body_canary_yellow_C,
+        ),
       ],
     );
   }

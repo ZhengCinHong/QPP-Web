@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
-import 'package:qpp_example/common_ui/qpp_qrcode/universal_link_qrcode.dart';
+import 'package:qpp_example/common_ui/qpp_universal_link/universal_link_qrcode.dart';
 import 'package:qpp_example/constants/qpp_contanst.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/build_context.dart';

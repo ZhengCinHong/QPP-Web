@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qpp_example/common_ui/qpp_button/open_qpp_button.dart';
+import 'package:qpp_example/common_ui/qpp_button/c_button.dart';
 import 'package:qpp_example/common_view_model/auth_service/view_model/auth_service_view_model.dart';
 import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/extension/throttle_debounce.dart';

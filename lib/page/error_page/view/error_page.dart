@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:qpp_example/common_ui/qpp_qrcode/universal_link_qrcode.dart';
+import 'package:qpp_example/common_ui/qpp_universal_link/universal_link_widget.dart';
 import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/error_page/model/error_page_model.dart';
@@ -49,7 +49,7 @@ class ErrorPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
-                            'assets/desktop-pic-qpp-text.png',
+                            QPPImages.desktop_image_qpp_text,
                             width: isDesktopStyle ? 103 : 69,
                             height: isDesktopStyle ? 36 : 24,
                           ),
@@ -69,7 +69,7 @@ class ErrorPage extends StatelessWidget {
                           : _Content.mobile(
                               type.getContentTr(context, isDesktopPlatform)),
                       const SizedBox(height: 48),
-                      UniversalLinkQRCode(url: url)
+                      UniversalLinkWidget(url: url, mobileText: type.mobileText)
                     ],
                   ),
                 ),

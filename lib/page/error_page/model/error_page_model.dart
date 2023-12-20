@@ -9,10 +9,12 @@ enum ErrorPageType {
   /// 故障(連動問題)排除說明
   troubleshootingInstructions;
 
-  String get title {
+  /// 手機平台按鈕上方字串
+  String get mobileText {
     return switch (this) {
-      ErrorPageType.urlIsWrong => QppLocales.homeWebtitle,
-      ErrorPageType.troubleshootingInstructions => QppLocales.homeWebtitle,
+      ErrorPageType.urlIsWrong => QppLocales.errorPageOpenDownloadQpp,
+      ErrorPageType.troubleshootingInstructions =>
+        QppLocales.vendorLoginOpenDownloadQpp,
     };
   }
 

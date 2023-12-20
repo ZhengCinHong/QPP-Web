@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/view/qpp_app_bar_view.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/screen.dart';
 
 /// 主框架
@@ -39,6 +40,7 @@ class _MainScaffold extends StatelessWidget {
 
     final Size screenSize = MediaQuery.of(context).size;
     final ScreenStyle screenStyle = screenSize.width.determineScreenStyle();
+    final isDesktopStyle = screenStyle.isDesktop;
 
     return SelectionArea(
       child: Scaffold(
@@ -49,9 +51,9 @@ class _MainScaffold extends StatelessWidget {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
-                screenStyle.isDesktop
-                    ? 'assets/desktop_bg_kv.png'
-                    : 'assets/mobile-bg-kv.png',
+                isDesktopStyle
+                    ? QPPImages.desktop_bg_kv
+                    : QPPImages.mobile_bg_kv,
               ),
               fit: BoxFit.cover,
             ),
@@ -59,23 +61,6 @@ class _MainScaffold extends StatelessWidget {
           child: child,
         ),
       ),
-    );
-  }
-}
-
-/// 容器新增的方法
-extension ContainerAddFunction on Container {
-  Container addDesktopBgKvBackgroundImage() {
-    const decorationImage = DecorationImage(
-      image: AssetImage('assets/desktop-bg-kv-2.png'),
-      fit: BoxFit.cover,
-    );
-
-    return Container(
-      decoration: const BoxDecoration(
-        image: decorationImage,
-      ),
-      child: this,
     );
   }
 }
