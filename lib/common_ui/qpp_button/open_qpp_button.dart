@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:qpp_example/constants/server_const.dart';
+import 'package:qpp_example/extension/string/text.dart';
 import 'package:qpp_example/extension/string/url.dart';
 import 'package:qpp_example/extension/throttle_debounce.dart';
 import 'package:qpp_example/extension/widget/disable_selection_container.dart';
@@ -65,9 +66,10 @@ class CButton extends StatelessWidget {
   }
 }
 
-/// 開啟QPP數位背包按鈕
+/// 開啟QPP數位背包按鈕, 若無帶入 url 直接開啟 app
 class OpenQppButton extends StatelessWidget {
-  const OpenQppButton({super.key});
+  final String? url;
+  const OpenQppButton({super.key, this.url});
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +80,13 @@ class OpenQppButton extends StatelessWidget {
       text: context.tr(QppLocales.errorPageOpenQpp),
       textStyle: QppTextStyles.mobile_16pt_title_m_bold_oxford_blue_C,
       onTap: () {
-        ServerConst.appStoreUrl.launchURL();
+        if (url.isNullOrEmpty) {
+          ServerConst.appStoreUrl.launchURL();
+        } else {
+          // TODO: url check
+          // 檢查 帶入 &action=download 
+          url!.launchURL(isNewTab: false);
+        }
       }.throttle(),
     );
   }

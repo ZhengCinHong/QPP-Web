@@ -87,7 +87,11 @@ class _CommodityInfoPageState extends State<CommodityInfoPage> {
       // 下方 QR Code / 按鈕
       context.isDesktopPlatform
           ? UniversalLinkQRCode(url: qrCodeUrl)
-          : const Column(children: [OpenQppButton()]),
+          : Column(children: [
+              OpenQppButton(
+                url: qrCodeUrl,
+              )
+            ]),
       // 底部間距
       const SizedBox(
         height: 40,
