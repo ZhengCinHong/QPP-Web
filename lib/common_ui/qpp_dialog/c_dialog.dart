@@ -29,7 +29,7 @@ class CDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDesktopPlatform = !context.isDesktopPlatform;
+    final isDesktopPlatform = context.isDesktopPlatform;
 
     return Container(
       padding: EdgeInsets.only(

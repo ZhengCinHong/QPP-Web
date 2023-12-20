@@ -1,3 +1,6 @@
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:html' as html;
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/model/qpp_app_bar_model.dart';
@@ -89,7 +92,13 @@ class _Info extends StatelessWidget {
       direction: isDesktopStyle ? Axis.horizontal : Axis.vertical,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Image.asset(QPPImages.desktop_pic_qpp_logo_03),
+        // Image.asset(QPPImages.desktop_pic_qpp_logo_03),
+        IconButton(
+          icon: Image.asset(
+            QPPImages.desktop_pic_qpp_logo_03,
+          ),
+          onPressed: () => html.window.location.reload(),
+        ),
         const SizedBox(height: 30, width: 30),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -305,7 +314,7 @@ class _Title extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      context.tr(QppLocales.footerTerms),
+      context.tr(type.text),
       style: QppTextStyles.mobile_16pt_title_white_bold_L,
     );
   }
