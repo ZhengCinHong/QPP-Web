@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:qpp_example/common_ui/qpp_button/open_qpp_button.dart';
 import 'package:qpp_example/extension/build_context.dart';
+import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 
@@ -24,9 +25,9 @@ enum CDialogActionStyle {
   logout;
 
   String text(BuildContext context) => switch (this) {
-        CDialogActionStyle.confirm => context.tr('alert_confirm'),
-        CDialogActionStyle.cancel => context.tr('alert_cancel'),
-        CDialogActionStyle.logout => context.tr('alert_logout')
+        CDialogActionStyle.confirm => context.tr(QppLocales.alertConfirm),
+        CDialogActionStyle.cancel => context.tr(QppLocales.alertCancel),
+        CDialogActionStyle.logout => context.tr(QppLocales.alertLogout)
       };
 
   TextStyle textstyle(BuildContext context) {
