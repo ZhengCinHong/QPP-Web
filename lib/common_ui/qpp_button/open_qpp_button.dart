@@ -8,6 +8,7 @@ import 'package:qpp_example/extension/throttle_debounce.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
+import 'package:qpp_example/utils/url_generator.dart';
 
 /// 開啟QPP數位背包按鈕, 若無帶入 url 直接開啟 app
 class OpenQppButton extends StatelessWidget {
@@ -27,8 +28,9 @@ class OpenQppButton extends StatelessWidget {
           ServerConst.appStoreUrl.launchURL();
         } else {
           // TODO: url check
-          // 檢查 帶入 &action=download 
-          url?.launchURL(isNewTab: false);
+          // 檢查 帶入 &action=download
+          UrlGenerator.getQRCodeUrl(url ?? '').launchURL(isNewTab: false);
+          // url?.launchURL(isNewTab: false);
         }
       }.throttle(),
     );

@@ -165,73 +165,70 @@ class MenuBtns extends StatelessWidget {
     // debugPrint(toString());
     final bool isHorizontal = _direction == Axis.horizontal;
 
-    return Container(
-      constraints: const BoxConstraints(maxWidth: 699),
-      child: Flex(
-        crossAxisAlignment:
-            isHorizontal ? CrossAxisAlignment.center : CrossAxisAlignment.start,
-        direction: _direction,
-        children: MainMenu.values
-            .map(
-              (e) => Flex(
-                direction: isHorizontal ? Axis.horizontal : Axis.vertical,
-                children: [
-                  MouseRegionCustomWidget(
-                    builder: (event) => MouseRegion(
-                      cursor: SystemMouseCursors.click, // 改鼠標樣式
-                      child: GestureDetector(
-                        onTap: () {
-                          bool isInHomePage =
-                              ModalRoute.of(context)?.isFirst ?? false;
-    
-                          if (isInHomePage) {
-                            Scrollable.ensureVisible(
+    return Flex(
+      crossAxisAlignment:
+          isHorizontal ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+      direction: _direction,
+      children: MainMenu.values
+          .map(
+            (e) => Flex(
+              direction: isHorizontal ? Axis.horizontal : Axis.vertical,
+              children: [
+                MouseRegionCustomWidget(
+                  builder: (event) => MouseRegion(
+                    cursor: SystemMouseCursors.click, // 改鼠標樣式
+                    child: GestureDetector(
+                      onTap: () {
+                        bool isInHomePage =
+                            ModalRoute.of(context)?.isFirst ?? false;
+
+                        if (isInHomePage) {
+                          Scrollable.ensureVisible(
+                            e.currentContext!,
+                            duration: const Duration(seconds: 1),
+                          );
+                        } else {
+                          context.pop();
+
+                          Future.delayed(
+                            const Duration(milliseconds: 300),
+                            () => Scrollable.ensureVisible(
                               e.currentContext!,
                               duration: const Duration(seconds: 1),
-                            );
-                          } else {
-                            context.pop();
-    
-                            Future.delayed(
-                              const Duration(milliseconds: 300),
-                              () => Scrollable.ensureVisible(
-                                e.currentContext!,
-                                duration: const Duration(seconds: 1),
-                              ),
-                            );
-                          }
-                        }.throttleWithTimeout(timeout: 2000),
-                        child: Container(
-                          constraints: const BoxConstraints(maxWidth: 120),
-                          child: AutoSizeText(
-                            key: e.key,
-                            context.tr(e.text),
-                            style: TextStyle(
-                              color: event is PointerEnterEvent
-                                  ? QppColors.canaryYellow
-                                  : QppColors.white,
-                              fontSize: fontSize,
                             ),
-                            maxLines: 2,
-                          ).disabledSelectionContainer,
-                        ),
+                          );
+                        }
+                      }.throttleWithTimeout(timeout: 2000),
+                      child: Container(
+                        constraints: const BoxConstraints(maxWidth: 120),
+                        child: AutoSizeText(
+                          key: e.key,
+                          context.tr(e.text),
+                          style: TextStyle(
+                            color: event is PointerEnterEvent
+                                ? QppColors.canaryYellow
+                                : QppColors.white,
+                            fontSize: fontSize,
+                          ),
+                          maxLines: 2,
+                        ).disabledSelectionContainer,
                       ),
                     ),
                   ),
-                  Container(
-                    constraints: BoxConstraints(
-                        maxWidth: e == MainMenu.contact
-                            ? 0
-                            : (isHorizontal ? padding : 0),
-                        maxHeight: e == MainMenu.contact
-                            ? 0
-                            : (isHorizontal ? 0 : padding)),
-                  )
-                ],
-              ),
-            )
-            .toList(),
-      ),
+                ),
+                Container(
+                  constraints: BoxConstraints(
+                      maxWidth: e == MainMenu.contact
+                          ? 0
+                          : (isHorizontal ? padding : 0),
+                      maxHeight: e == MainMenu.contact
+                          ? 0
+                          : (isHorizontal ? 0 : padding)),
+                )
+              ],
+            ),
+          )
+          .toList(),
     );
   }
 }

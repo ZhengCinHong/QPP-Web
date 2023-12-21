@@ -88,33 +88,30 @@ class CDialogTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDesktopPlatform = context.isDesktopPlatform;
 
-    return SizedBox(
-      height: 50,
-      child: Row(
-        children: [
-          alignment == Alignment.center
-              ? const Spacer()
-              : const SizedBox.shrink(),
-          Text(text, style: style),
-          Expanded(
-            child: Row(
-              children: [
-                const Spacer(),
-                isShowCloseButton
-                    ? GestureDetector(
-                        onTap: () => context.pop(),
-                        child: Image.asset(
-                          QPPImages.desktop_icon_dialog_delete_normal,
-                          width: isDesktopPlatform ? 40 : 24,
-                          height: isDesktopPlatform ? 40 : 24,
-                        ),
-                      )
-                    : const SizedBox.shrink(),
-              ],
-            ),
+    return Row(
+      children: [
+        alignment == Alignment.center
+            ? const Spacer()
+            : const SizedBox.shrink(),
+        Text(text, style: style),
+        Expanded(
+          child: Row(
+            children: [
+              const Spacer(),
+              isShowCloseButton
+                  ? GestureDetector(
+                      onTap: () => context.pop(),
+                      child: Image.asset(
+                        QPPImages.desktop_icon_dialog_delete_normal,
+                        width: isDesktopPlatform ? 40 : 24,
+                        height: isDesktopPlatform ? 40 : 24,
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

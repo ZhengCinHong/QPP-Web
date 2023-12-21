@@ -162,7 +162,9 @@ class QppGoRouter {
       name: nftInfoTeach,
       pageBuilder: (BuildContext context, GoRouterState state) =>
           QPPTransitionPage(
-        child:  NFTInfoTeachPageMainFrame(routerState: state,),
+        child: NFTInfoTeachPageMainFrame(
+          routerState: state,
+        ),
       ),
     ),
   ];
@@ -191,7 +193,7 @@ class QppGoRouter {
       name: nftInfo,
       pageBuilder: (BuildContext context, GoRouterState state) =>
           QPPTransitionPage(
-        child: const MainFramework(child: Center(child: Text('nft物品資訊頁'))),
+        child: MainFramework(child: CommodityInfoPage(routerState: state)),
       ),
     ),
     // 動態牆登入授權頁(只有app有)
