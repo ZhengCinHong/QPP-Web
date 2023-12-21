@@ -192,6 +192,11 @@ class _LinkTextState extends State<_LinkText> {
   Widget build(BuildContext context) {
     final isDesktopStyle = widget.screenStyle.isDesktop;
 
+    // 手機樣式底線恆亮
+    if (!isDesktopStyle) {
+      isHovered = true;
+    }
+
     return StatefulBuilder(
       builder: (context, setState) {
         return InkWell(
@@ -201,7 +206,8 @@ class _LinkTextState extends State<_LinkText> {
           }),
           child: Container(
             padding: const EdgeInsets.only(
-                bottom: 3), // space between underline and text
+              bottom: 3,
+            ), // space between underline and text
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(

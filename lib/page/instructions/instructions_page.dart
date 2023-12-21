@@ -3,12 +3,13 @@ import 'package:easy_localization/easy_localization.dart' as localized;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
-import 'package:qpp_example/common_ui/qpp_framework/qpp_main_framework.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/string/text.dart';
+import 'package:qpp_example/extension/widget/background_image.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/instructions/copy_text_menu.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
 
@@ -83,8 +84,7 @@ class InstructionsPage extends StatelessWidget {
 
     return SelectionArea(
       child: Scaffold(
-        // ignore: sized_box_for_whitespace
-        body: Container(
+        body: SizedBox(
           height: double.infinity,
           child: ListView.builder(
             controller: _scrollController,
@@ -112,7 +112,9 @@ class InstructionsPage extends StatelessWidget {
               );
             },
           ),
-        ).addDesktopBgKvBackgroundImage(),
+        ).addBackgroundImage(
+          isDesktop ? QPPImages.desktop_bg_kv_2 : QPPImages.mobile_bg_kv_2,
+        ),
       ),
     );
   }

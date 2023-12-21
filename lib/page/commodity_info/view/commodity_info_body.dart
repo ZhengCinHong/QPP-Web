@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qpp_example/api/core/api_response.dart';
-import 'package:qpp_example/common_ui/qpp_button/open_qpp_button.dart';
-import 'package:qpp_example/common_ui/qpp_qrcode/universal_link_qrcode.dart';
+import 'package:qpp_example/common_ui/qpp_universal_link/universal_link_widget.dart';
 import 'package:qpp_example/common_view_model/auth_service/view_model/auth_service_view_model.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/build_context.dart';
+import 'package:qpp_example/extension/throttle_debounce.dart';
+import 'package:qpp_example/localization/qpp_locales.dart';
+import 'package:qpp_example/model/enum/item/item_category.dart';
 import 'package:qpp_example/model/nft/qpp_nft.dart';
 import 'package:qpp_example/model/qpp_item.dart';
 import 'package:qpp_example/model/vote/qpp_vote.dart';
@@ -19,14 +21,9 @@ import 'package:qpp_example/page/commodity_info/view/commodity_vote.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_vote/send_vote_button.dart';
 import 'package:qpp_example/page/commodity_info/view_model/commodity_info_view_model.dart';
 import 'package:qpp_example/universal_link/universal_link_data.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/screen.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
-
-/// 完整路徑, 產 QR Code 用
-String qrCodeUrl = '';
-
-/// 物品 ID
-String commodityID = "";
 
 /// 物品資訊 view model
 late ChangeNotifierProvider<CommodityInfoModel> itemSelectInfoProvider;
@@ -46,6 +43,14 @@ class _CommodityInfoPageState extends State<CommodityInfoPage> {
   Size? size;
   // 是否為桌面版面
   bool isDesktopStyle = true;
+
+  final ScrollController _scrollController = ScrollController();
+
+  /// 完整路徑, 產 QR Code 用
+  late String qrCodeUrl;
+
+  /// 物品 ID
+  late String commodityID;
 
   @override
   void didChangeDependencies() {
@@ -81,22 +86,72 @@ class _CommodityInfoPageState extends State<CommodityInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(children: [
-      // 上方資料區
-      isDesktopStyle ? const InfoCard.desktop() : const InfoCard.mobile(),
-      // 下方 QR Code / 按鈕
-      context.isDesktopPlatform
-          ? UniversalLinkQRCode(url: qrCodeUrl)
-          : Column(children: [
-              OpenQppButton(
-                url: qrCodeUrl,
+    return Stack(
+      children: [
+        SingleChildScrollView(
+          controller: _scrollController,
+          child: Column(
+            children: [
+              // 上方資料區
+              isDesktopStyle
+                  ? const InfoCard.desktop()
+                  : const InfoCard.mobile(),
+              // 下方 QR Code / 按鈕
+              Consumer(
+                builder: (context, ref, child) {
+                  final isQuestionnaire = ref.watch(
+                      itemSelectInfoProvider.select((value) =>
+                          value.voteDataState.data?.item.category ==
+                          ItemCategory.questionnaire));
+
+                  return isQuestionnaire
+                      ? const SizedBox.shrink()
+                      : child ?? const SizedBox.shrink();
+                },
+                child: UniversalLinkWidget(
+                  url: qrCodeUrl,
+                  mobileText: QppLocales.commodityInfoLaunchQPP,
+                ),
+              ),
+              // 底部間距
+              const SizedBox(
+                height: 40,
               )
-            ]),
-      // 底部間距
-      const SizedBox(
-        height: 40,
-      )
-    ]);
+            ],
+          ),
+        ),
+        Positioned(
+          bottom: 15,
+          right: 15,
+          child: Consumer(
+            builder: (context, ref, child) {
+              final isQuestionnaire = ref.watch(itemSelectInfoProvider.select(
+                  (value) =>
+                      value.voteDataState.data?.item.category ==
+                      ItemCategory.questionnaire));
+
+              return isQuestionnaire
+                  ? child ?? const SizedBox.shrink()
+                  : const SizedBox.shrink();
+            },
+            child: IconButton(
+              onPressed: () {
+                _scrollController.animateTo(
+                  _scrollController.position.maxScrollExtent,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeOut,
+                );
+              }.throttle(),
+              icon: Image.asset(
+                QPPImages.desktop_button_down_send_normal,
+                width: isDesktopStyle ? 80 : 54,
+                scale: 1,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
 
@@ -131,20 +186,11 @@ class InfoCard extends StatelessWidget {
 
         Future.microtask(() {
           print({logoutState.status, voteDataState.status, 12333131});
+
           // 登出，刷新頁面
           if (logoutState.isCompleted && voteDataState.isCompleted) {
             html.window.location.reload();
           }
-
-          // GCP 錯誤
-          // if (itemInfoState.isError ||
-          //     nftMetaState.isError ||
-          //     voteDataState.isError) {
-          //   // 如果彈窗已存在，先關閉彈窗
-          //   if (context.isThereCurrentDialogShowing) {
-          //     context.pop();
-          //   }
-          // }
         });
 
         return Column(
@@ -195,7 +241,7 @@ class InfoCard extends StatelessWidget {
                     : isDesktop
                         ? const SendVoteButton.desktop()
                         : const SendVoteButton.mobile()
-                : const SizedBox.shrink()
+                : const SizedBox.shrink(),
           ],
         );
       },

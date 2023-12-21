@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qpp_example/common_ui/qpp_menu/c_menu_anchor.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/home/view/home_page.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 
 /// 主頁選單
 enum MainMenu {
@@ -49,5 +50,5 @@ enum AppBarUserInfo implements CMeunAnchorData {
   }
 
   @override
-  String? get image => 'mobile-icon-actionbar-list-logout-pressed.svg';
+  String? get image => QPPImages.mobile_icon_actionbar_list_logout_pressed;
 }

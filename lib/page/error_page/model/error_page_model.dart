@@ -9,10 +9,12 @@ enum ErrorPageType {
   /// 故障(連動問題)排除說明
   troubleshootingInstructions;
 
-  String get title {
+  /// 手機平台按鈕上方字串
+  String get mobileText {
     return switch (this) {
-      ErrorPageType.urlIsWrong => QppLocales.homeWebtitle,
-      ErrorPageType.troubleshootingInstructions => QppLocales.homeWebtitle,
+      ErrorPageType.urlIsWrong => QppLocales.errorPageOpenDownloadQpp,
+      ErrorPageType.troubleshootingInstructions =>
+        QppLocales.vendorLoginOpenDownloadQpp,
     };
   }
 
@@ -21,7 +23,7 @@ enum ErrorPageType {
     return switch (this) {
       ErrorPageType.urlIsWrong => context.tr(QppLocales.errorPageText1),
       ErrorPageType.troubleshootingInstructions =>
-        '${context.tr(QppLocales.goTitle)}\n\n${context.tr(QppLocales.goText1)}\n\n${context.tr(QppLocales.goText2)}}\n\n${context.tr(isDesktopPlatform ? QppLocales.goText3Pc : QppLocales.goText3Mb)}',
+        '${context.tr(QppLocales.goTitle)}\n\n${context.tr(QppLocales.goText1)}\n\n${context.tr(QppLocales.goText2)}\n\n${context.tr(isDesktopPlatform ? QppLocales.goText3Pc : QppLocales.goText3Mb)}',
     };
   }
 }
