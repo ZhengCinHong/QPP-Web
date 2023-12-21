@@ -53,7 +53,8 @@
             // 修改渲染模式, 加速載入中文
             // https://docs.flutter.dev/platform-integration/web/renderers
             // https://juejin.cn/post/7156106959001747493
-            let config = { render: "html" };
+            // render = 'auto'
+            let config = { useColorEmoji: true };
             engineInitializer
               .initializeEngine(config)
               .then(function (appRunner) {
