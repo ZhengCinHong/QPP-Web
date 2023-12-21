@@ -26,7 +26,7 @@ jobs:
       # - run: flutter downgrade v3.13.0
       - run: flutter config --enable-web
       # 构建 web 产物
-      - run: flutter build web
+      - run: flutter build web --release --web-renderer html
       - run: |
           cd build/web
           
