@@ -4,6 +4,9 @@ import 'package:qpp_example/common_ui/qpp_app_bar/view/qpp_app_bar_view.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/screen.dart';
+// import 'package:qpp_example/common_ui/qpp_framework/qpp_main_framework.dart'
+//     deferred as box;
+import 'package:qpp_example/page/home/view/home_page.dart' deferred as box;
 
 /// 主框架
 class MainFramework extends StatelessWidget {
@@ -40,42 +43,30 @@ class _MainScaffold extends StatelessWidget {
     final Size screenSize = MediaQuery.of(context).size;
     final ScreenStyle screenStyle = screenSize.width.determineScreenStyle();
 
-    return SelectionArea(
-      child: Scaffold(
-        extendBodyBehindAppBar: true, // 設定可以在appBar後面擴充body
-        appBar: qppAppBar(screenStyle),
-        body: Container(
-          height: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                screenStyle.isDesktop
-                    ? 'assets/desktop_bg_kv.png'
-                    : 'assets/mobile-bg-kv.png',
+    return FutureBuilder(
+      future: box.loadLibrary(),
+      builder: (context, snapshot) {
+        return SelectionArea(
+          child: Scaffold(
+            extendBodyBehindAppBar: true, // 設定可以在appBar後面擴充body
+            appBar: qppAppBar(screenStyle),
+            body: Container(
+              height: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    screenStyle.isDesktop
+                        ? 'assets/desktop_bg_kv.png'
+                        : 'assets/mobile-bg-kv.png',
+                  ),
+                  fit: BoxFit.cover,
+                ),
               ),
-              fit: BoxFit.cover,
+              child: box.HomePage(),
             ),
           ),
-          child: child,
-        ),
-      ),
-    );
-  }
-}
-
-/// 容器新增的方法
-extension ContainerAddFunction on Container {
-  Container addDesktopBgKvBackgroundImage() {
-    const decorationImage = DecorationImage(
-      image: AssetImage('assets/desktop-bg-kv-2.png'),
-      fit: BoxFit.cover,
-    );
-
-    return Container(
-      decoration: const BoxDecoration(
-        image: decorationImage,
-      ),
-      child: this,
+        );
+      },
     );
   }
 }

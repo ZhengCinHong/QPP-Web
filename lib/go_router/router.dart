@@ -108,161 +108,163 @@ class QppGoRouter {
           // 更新網址列
           DisplayUrl.updateParam('lang', locale.toString());
           return QPPTransitionPage(
-            child: const MainFramework(child: HomePage()),
+            child: 
+            const MainFramework(child: HomePage()),
           );
         },
-        routes: homeRouters +
-            _getRouters(home) +
-            [
-              GoRoute(
-                path: app,
-                name: app,
-                pageBuilder: (context, state) => QPPTransitionPage(
-                  child: const MainFramework(child: HomePage()),
-                ),
-                routes: appRouters + _getRouters(app),
-              )
-            ],
+        //   routes: homeRouters +
+        //       _getRouters(home) +
+        //       [
+        //         GoRoute(
+        //           path: app,
+        //           name: app,
+        //           pageBuilder: (context, state) => QPPTransitionPage(
+        //             child: const MainFramework(child: HomePage()),
+        //           ),
+        //           routes: appRouters + _getRouters(app),
+        //         )
+        //       ],
       ),
     ],
-    errorPageBuilder: (context, state) {
-      return QPPTransitionPage(
-        child: MainFramework(
-          child: ErrorPage(type: ErrorPageType.urlIsWrong, url: state.fullURL),
-        ),
-      );
-    },
+    // errorPageBuilder: (context, state) {
+    //   return QPPTransitionPage(
+    //     child: MainFramework(
+    //       child: ErrorPage(type: ErrorPageType.urlIsWrong, url: state.fullURL),
+    //     ),
+    //   );
+    // },
   );
 
   // -----------------------------------------------------------------------------
   /// Home路由
   // -----------------------------------------------------------------------------
-  static List<RouteBase> homeRouters = <RouteBase>[
-    // 隱私權政策頁(只有home有)
-    GoRoute(
-      path: privacy,
-      name: privacy,
-      pageBuilder: (BuildContext context, GoRouterState state) =>
-          QPPTransitionPage(
-        child: InstructionsPage.privacy(),
-      ),
-    ),
-    // 使用者條款頁(只有home有)
-    GoRoute(
-      path: term,
-      name: term,
-      pageBuilder: (BuildContext context, GoRouterState state) =>
-          QPPTransitionPage(
-        child: InstructionsPage.term(),
-      ),
-    ),
-    // nft教學頁(只有home有)
-    GoRoute(
-      path: nftInfoTeach,
-      name: nftInfoTeach,
-      pageBuilder: (BuildContext context, GoRouterState state) =>
-          QPPTransitionPage(
-        child: NFTInfoTeachPageMainFrame(
-          routerState: state,
-        ),
-      ),
-    ),
-  ];
+  // static List<RouteBase> homeRouters = <RouteBase>[
+  //   // 隱私權政策頁(只有home有)
+  //   GoRoute(
+  //     path: privacy,
+  //     name: privacy,
+  //     pageBuilder: (BuildContext context, GoRouterState state) =>
+  //         QPPTransitionPage(
+  //       child: InstructionsPage.privacy(),
+  //     ),
+  //   ),
+  //   // 使用者條款頁(只有home有)
+  //   GoRoute(
+  //     path: term,
+  //     name: term,
+  //     pageBuilder: (BuildContext context, GoRouterState state) =>
+  //         QPPTransitionPage(
+  //       child: InstructionsPage.term(),
+  //     ),
+  //   ),
+  //   // nft教學頁(只有home有)
+  //   GoRoute(
+  //     path: nftInfoTeach,
+  //     name: nftInfoTeach,
+  //     pageBuilder: (BuildContext context, GoRouterState state) =>
+  //         QPPTransitionPage(
+  //       child: NFTInfoTeachPageMainFrame(
+  //         routerState: state,
+  //       ),
+  //     ),
+  //   ),
+  // ];
 
   // -----------------------------------------------------------------------------
   /// App路由
   // -----------------------------------------------------------------------------
-  static List<RouteBase> appRouters = <RouteBase>[
-    // 外部登入(只有app有)
-    GoRoute(
-      path: vendorLogin,
-      name: vendorLogin,
-      pageBuilder: (BuildContext context, GoRouterState state) =>
-          QPPTransitionPage(
-        child: MainFramework(
-          child: ErrorPage(
-            type: ErrorPageType.troubleshootingInstructions,
-            url: state.fullURL,
-          ),
-        ),
-      ),
-    ),
-    // nft物品資訊頁(只有app有)
-    GoRoute(
-      path: nftInfo,
-      name: nftInfo,
-      pageBuilder: (BuildContext context, GoRouterState state) =>
-          QPPTransitionPage(
-        child: MainFramework(child: CommodityInfoPage(routerState: state)),
-      ),
-    ),
-    // 動態牆登入授權頁(只有app有)
-    GoRoute(
-      path: loginAuth,
-      name: loginAuth,
-      pageBuilder: (BuildContext context, GoRouterState state) =>
-          QPPTransitionPage(
-        child: const MainFramework(child: Center(child: Text('動態牆登入授權頁'))),
-      ),
-    ),
-  ];
+  // static List<RouteBase> appRouters = <RouteBase>[
+  //   // 外部登入(只有app有)
+  //   GoRoute(
+  //     path: vendorLogin,
+  //     name: vendorLogin,
+  //     pageBuilder: (BuildContext context, GoRouterState state) =>
+  //         QPPTransitionPage(
+  //       child: MainFramework(
+  //         child: ErrorPage(
+  //           type: ErrorPageType.troubleshootingInstructions,
+  //           url: state.fullURL,
+  //         ),
+  //       ),
+  //     ),
+  //   ),
+  //   // nft物品資訊頁(只有app有)
+  //   GoRoute(
+  //     path: nftInfo,
+  //     name: nftInfo,
+  //     pageBuilder: (BuildContext context, GoRouterState state) =>
+  //         QPPTransitionPage(
+  //       child: MainFramework(child: CommodityInfoPage(routerState: state)),
+  //     ),
+  //   ),
+  //   // 動態牆登入授權頁(只有app有)
+  //   GoRoute(
+  //     path: loginAuth,
+  //     name: loginAuth,
+  //     pageBuilder: (BuildContext context, GoRouterState state) =>
+  //         QPPTransitionPage(
+  //       child: const MainFramework(child: Center(child: Text('動態牆登入授權頁'))),
+  //     ),
+  //   ),
+  // ];
 
   // -----------------------------------------------------------------------------
   /// 共用路徑
   // -----------------------------------------------------------------------------
-  static List<RouteBase> _getRouters(String name) {
-    final bool isHome = name == home;
+//   static List<RouteBase> _getRouters(String name) {
+//     final bool isHome = name == home;
 
-    return <RouteBase>[
-      // 個人資訊頁
-      GoRoute(
-        path: information,
-        name: isHome ? information : appInformation,
-        pageBuilder: (BuildContext context, GoRouterState state) {
-          final data =
-              UniversalLinkParamData.fromJson(state.uri.queryParameters);
-          return QPPTransitionPage(
-            child: MainFramework(
-              child: UserInformationOuterFrame(
-                userID: data.phoneNumber ?? "",
-                url: state.fullURL,
-              ),
-            ),
-          );
-        },
-      ),
-      // 物品資訊頁
-      GoRoute(
-        path: commodityInfo,
-        name: isHome ? commodityInfo : appCommodityInfo,
-        pageBuilder: (BuildContext context, GoRouterState state) =>
-            QPPTransitionPage(
-          child: MainFramework(child: CommodityInfoPage(routerState: state)),
-        ),
-      ),
-      // 物品出示頁
-      GoRoute(
-        path: commodityWithToken,
-        name: isHome ? commodityWithToken : appCommodityWithToken,
-        pageBuilder: (BuildContext context, GoRouterState state) =>
-            QPPTransitionPage(
-          child: MainFramework(child: CommodityInfoPage(routerState: state)),
-        ),
-      ),
-      // 跳轉頁
-      GoRoute(
-        path: go,
-        name: isHome ? go : appGo,
-        pageBuilder: (BuildContext context, GoRouterState state) =>
-            QPPTransitionPage(
-          child: const MainFramework(child: Center(child: Text('跳轉頁'))),
-        ),
-      ),
-    ];
-  }
-}
+//     return <RouteBase>[
+//       // 個人資訊頁
+//       GoRoute(
+//         path: information,
+//         name: isHome ? information : appInformation,
+//         pageBuilder: (BuildContext context, GoRouterState state) {
+//           final data =
+//               UniversalLinkParamData.fromJson(state.uri.queryParameters);
+//           return QPPTransitionPage(
+//             child: MainFramework(
+//               child: UserInformationOuterFrame(
+//                 userID: data.phoneNumber ?? "",
+//                 url: state.fullURL,
+//               ),
+//             ),
+//           );
+//         },
+//       ),
+//       // 物品資訊頁
+//       GoRoute(
+//         path: commodityInfo,
+//         name: isHome ? commodityInfo : appCommodityInfo,
+//         pageBuilder: (BuildContext context, GoRouterState state) =>
+//             QPPTransitionPage(
+//           child: MainFramework(child: CommodityInfoPage(routerState: state)),
+//         ),
+//       ),
+//       // 物品出示頁
+//       GoRoute(
+//         path: commodityWithToken,
+//         name: isHome ? commodityWithToken : appCommodityWithToken,
+//         pageBuilder: (BuildContext context, GoRouterState state) =>
+//             QPPTransitionPage(
+//           child: MainFramework(child: CommodityInfoPage(routerState: state)),
+//         ),
+//       ),
+//       // 跳轉頁
+//       GoRoute(
+//         path: go,
+//         name: isHome ? go : appGo,
+//         pageBuilder: (BuildContext context, GoRouterState state) =>
+//             QPPTransitionPage(
+//           child: const MainFramework(child: Center(child: Text('跳轉頁'))),
+//         ),
+//       ),
+//     ];
+//   }
+// }
 
-extension GoRouterStateExtension on GoRouterState {
-  /// 完整網址
-  String get fullURL => ServerConst.routerHost + uri.toString();
+// extension GoRouterStateExtension on GoRouterState {
+//   /// 完整網址
+//   String get fullURL => ServerConst.routerHost + uri.toString();
+// }
 }
