@@ -155,7 +155,7 @@ class InfoRowCreator extends InfoRow {
           child: GestureDetector(
             onTap: () {
               // TODO: host, isTesting, language....
-              '${ServerConst.routerHost}/app/information?phoneNumber=${data.displayID}&testing=true'
+              '${ServerConst.routerHost}/app/information?phoneNumber=${data.displayID}&testing=true&action=stay&lang=${context.locale}'
                   .launchURL(isNewTab: false);
             },
             child: Row(
