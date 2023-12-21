@@ -216,32 +216,29 @@ class InfoRowIntroLink extends InfoRow {
   @override
   Widget getContent(data) {
     if (data is ItemMultiLanguageData) {
-      // 檢查是否有資料
-      if (data.hasContent) {
-        // 有資料才顯示
-        return Builder(builder: (context) {
-          return Row(
-            // 子元件對齊頂端
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: titleWidth,
-                child: Text(
-                  context.tr(QppLocales.commodityInfoTitle),
-                  textAlign: TextAlign.start,
-                  style: QppTextStyles.web_16pt_body_category_text_L,
-                ),
+      // 有資料才顯示
+      return Builder(builder: (context) {
+        return Row(
+          // 子元件對齊頂端
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: titleWidth,
+              child: Text(
+                context.tr(QppLocales.commodityInfoTitle),
+                textAlign: TextAlign.start,
+                style: QppTextStyles.web_16pt_body_category_text_L,
               ),
-              // intro link
-              Expanded(
-                // Expanded 包 text, 實現自動換行
-                child: InfoRowLinkReadMoreText(
-                    data: data.getContentWithContext(context)),
-              ),
-            ],
-          );
-        });
-      }
+            ),
+            // intro link
+            Expanded(
+              // Expanded 包 text, 實現自動換行
+              child: InfoRowLinkReadMoreText(
+                  data: data.getContentWithContext(context)),
+            ),
+          ],
+        );
+      });
     }
     return const SizedBox.shrink();
   }
@@ -260,32 +257,29 @@ class InfoRowDescription extends InfoRow {
   @override
   Widget getContent(data) {
     if (data is ItemMultiLanguageData) {
-      // 檢查是否有資料
-      if (data.hasContent) {
-        // 有資料才顯示
-        return Builder(builder: (context) {
-          return Row(
-            // 子元件對齊頂端
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: titleWidth,
-                child: Text(
-                  context.tr(QppLocales.commodityInfoInfo),
-                  textAlign: TextAlign.start,
-                  style: QppTextStyles.web_16pt_body_category_text_L,
-                ),
+      // 有資料才顯示
+      return Builder(builder: (context) {
+        return Row(
+          // 子元件對齊頂端
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: titleWidth,
+              child: Text(
+                context.tr(QppLocales.commodityInfoInfo),
+                textAlign: TextAlign.start,
+                style: QppTextStyles.web_16pt_body_category_text_L,
               ),
-              // intro link
-              Expanded(
-                // Expanded 包 text, 實現自動換行
-                child: InfoRowLinkReadMoreText(
-                    data: data.getContentWithContext(context)),
-              ),
-            ],
-          );
-        });
-      }
+            ),
+            // intro link
+            Expanded(
+              // Expanded 包 text, 實現自動換行
+              child: InfoRowLinkReadMoreText(
+                  data: data.getContentWithContext(context)),
+            ),
+          ],
+        );
+      });
     }
     return const SizedBox.shrink();
   }
