@@ -121,6 +121,12 @@ class _AvatarWidget extends ConsumerWidget {
     final userID = userInformation.userIDState.data;
     final qppUser = userInformation.infoState.data;
 
+    /// 是否為官方帳號
+    final isOfficial = qppUser?.isOfficial == true;
+
+    /// 官方帳號Icon寬度
+    final double officaialIconWidth = isDesktopStyle ? 28 : 16;
+
     final avaterIsError = userInformation.avaterIsError;
     final bgImageIsError = userInformation.bgImageIsError;
 
@@ -167,14 +173,36 @@ class _AvatarWidget extends ConsumerWidget {
                       ),
                       SizedBox(height: isDesktopStyle ? 29 : 12),
                       Text(
-                        context.tr(qppUser?.displayName ??
-                            QppLocales.errorPageNickname),
+                        context.tr(
+                          qppUser?.displayName ?? QppLocales.errorPageNickname,
+                        ),
                         style: QppTextStyles.web_20pt_title_m_Indian_yellow_C,
                       ),
                       SizedBox(height: isDesktopStyle ? 6 : 2),
-                      Text(
-                        userID.toString(),
-                        style: QppTextStyles.mobile_14pt_body_Indian_yellow_L,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          isOfficial
+                              ? Padding(
+                                  padding: const EdgeInsets.only(right: 6),
+                                  child: Image.asset(
+                                    qppUser?.officialIconPath ?? '',
+                                    width: officaialIconWidth,
+                                    scale: 1,
+                                  ),
+                                )
+                              : const SizedBox.shrink(),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              right: isOfficial ? officaialIconWidth : 0, // 加上間距，用來讓兩個Text對齊
+                            ),
+                            child: Text(
+                              userID.toString(),
+                              style: QppTextStyles
+                                  .mobile_14pt_body_Indian_yellow_L,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

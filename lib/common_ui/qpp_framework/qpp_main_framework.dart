@@ -45,6 +45,7 @@ class _MainScaffold extends StatelessWidget {
     return SelectionArea(
       child: Scaffold(
         extendBodyBehindAppBar: true, // 設定可以在appBar後面擴充body
+        backgroundColor: QppColors.oxfordBlue,
         appBar: qppAppBar(screenStyle),
         body: Container(
           height: double.infinity,

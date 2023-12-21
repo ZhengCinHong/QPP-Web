@@ -23,7 +23,7 @@ enum ErrorPageType {
     return switch (this) {
       ErrorPageType.urlIsWrong => context.tr(QppLocales.errorPageText1),
       ErrorPageType.troubleshootingInstructions =>
-        '${context.tr(QppLocales.goTitle)}\n\n${context.tr(QppLocales.goText1)}\n\n${context.tr(QppLocales.goText2)}}\n\n${context.tr(isDesktopPlatform ? QppLocales.goText3Pc : QppLocales.goText3Mb)}',
+        '${context.tr(QppLocales.goTitle)}\n\n${context.tr(QppLocales.goText1)}\n\n${context.tr(QppLocales.goText2)}\n\n${context.tr(isDesktopPlatform ? QppLocales.goText3Pc : QppLocales.goText3Mb)}',
     };
   }
 }
