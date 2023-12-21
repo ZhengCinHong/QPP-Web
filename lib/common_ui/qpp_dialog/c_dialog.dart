@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
@@ -32,37 +31,39 @@ class CDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDesktopPlatform = context.isDesktopPlatform;
 
-    return Container(
-      padding: EdgeInsets.only(
-        top: isDesktopPlatform ? 32 : 20,
-        bottom: isDesktopPlatform ? 24 : 36,
-        left: isDesktopPlatform ? 36 : 24,
-        right: isDesktopPlatform ? 36 : 24,
-      ),
-      constraints: BoxConstraints(maxHeight: height, maxWidth: width),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: QppColors.prussianBlue,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CDialogTitle(
-            text: text,
-            style: isDesktopPlatform
-                ? QppTextStyles.web_36pt_Display_s_maya_blue_C
-                : QppTextStyles.mobile_20pt_title_L_maya_blue_L,
-          ),
-          SizedBox(height: isDesktopPlatform ? 32 : 17),
-          Text(
-            subText,
-            style: isDesktopPlatform
-                ? QppTextStyles.web_20pt_title_m_white_C
-                : QppTextStyles.mobile_14pt_body_pastel_blue_L,
-          ),
-          SizedBox(height: isDesktopPlatform ? 36 : 28),
-          child,
-        ],
+    return FittedBox(
+      child: Container(
+        padding: EdgeInsets.only(
+          top: isDesktopPlatform ? 32 : 20,
+          bottom: isDesktopPlatform ? 24 : 36,
+          left: isDesktopPlatform ? 36 : 24,
+          right: isDesktopPlatform ? 36 : 24,
+        ),
+        constraints: BoxConstraints(minHeight: height, maxWidth: width),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          color: QppColors.prussianBlue,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CDialogTitle(
+              text: text,
+              style: isDesktopPlatform
+                  ? QppTextStyles.web_36pt_Display_s_maya_blue_C
+                  : QppTextStyles.mobile_20pt_title_L_maya_blue_L,
+            ),
+            SizedBox(height: isDesktopPlatform ? 32 : 17),
+            Text(
+              subText,
+              style: isDesktopPlatform
+                  ? QppTextStyles.web_20pt_title_m_white_C
+                  : QppTextStyles.mobile_14pt_body_pastel_blue_L,
+            ),
+            SizedBox(height: isDesktopPlatform ? 36 : 28),
+            child,
+          ],
+        ),
       ),
     );
   }
