@@ -12,22 +12,27 @@ class NFTTeachInfoZone3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          margin: const EdgeInsets.only(bottom: 12),
-          child: Text(
-            context.tr(QppLocales.nftInfoTeachSubtitle3),
-            style: isDesktop
-                ? QppTextStyles.web_24pt_title_L_maya_blue_C
-                : QppTextStyles.mobile_20pt_title_L_maya_blue_L,
-          ),
-        ),
-        isDesktop ? const Info1.desktop() : const Info1.mobile(),
-        isDesktop ? const Info2.desktop() : const Info2.mobile(),
-      ],
-    );
+    return ListView.builder(
+        itemCount: 3,
+        shrinkWrap: true,
+        // 禁止 list 內容 滾動
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          return switch (index) {
+            0 => Container(
+                margin: const EdgeInsets.only(bottom: 12),
+                child: Text(
+                  context.tr(QppLocales.nftInfoTeachSubtitle3),
+                  style: isDesktop
+                      ? QppTextStyles.web_24pt_title_L_maya_blue_C
+                      : QppTextStyles.mobile_20pt_title_L_maya_blue_L,
+                ),
+              ),
+            1 => isDesktop ? const Info1.desktop() : const Info1.mobile(),
+            2 => isDesktop ? const Info2.desktop() : const Info2.mobile(),
+            _ => const SizedBox.shrink(),
+          };
+        });
   }
 }
 
@@ -62,38 +67,44 @@ class Info2 extends NFTTeachInfoExpand {
   @override
   Widget get content => Container(
         margin: const EdgeInsets.only(top: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ItemTeachInfo(
-              contentKey:
-                  QppLocales.nftInfoTeachSubtitle3ContentTeach2ContentStep1,
-              displayImg: [
-                Image.asset(QPPImages.desktop_pic_nft_instruction_22),
-              ],
-              isDesktop: isDesktop,
-            ),
-            ItemTeachInfo(
-              margin: const EdgeInsets.only(top: 64),
-              contentKey:
-                  QppLocales.nftInfoTeachSubtitle3ContentTeach2ContentStep2,
-              displayImg: [
-                Image.asset(QPPImages.desktop_pic_nft_instruction_23),
-              ],
-              isDesktop: isDesktop,
-            ),
-            ItemTeachInfo(
-              margin: const EdgeInsets.only(top: 64),
-              contentKey:
-                  QppLocales.nftInfoTeachSubtitle3ContentTeach2ContentStep3,
-              tipKey:
-                  QppLocales.nftInfoTeachSubtitle3ContentTeach2ContentStep3Tip,
-              displayImg: [
-                Image.asset(QPPImages.desktop_pic_nft_instruction_24),
-              ],
-              isDesktop: isDesktop,
-            ),
-          ],
+        child: ListView.builder(
+          itemCount: 3,
+          shrinkWrap: true,
+          // 禁止 list 內容 滾動
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            return switch (index) {
+              0 => ItemTeachInfo(
+                  contentKey:
+                      QppLocales.nftInfoTeachSubtitle3ContentTeach2ContentStep1,
+                  displayImg: [
+                    Image.asset(QPPImages.desktop_pic_nft_instruction_22),
+                  ],
+                  isDesktop: isDesktop,
+                ),
+              1 => ItemTeachInfo(
+                  margin: const EdgeInsets.only(top: 64),
+                  contentKey:
+                      QppLocales.nftInfoTeachSubtitle3ContentTeach2ContentStep2,
+                  displayImg: [
+                    Image.asset(QPPImages.desktop_pic_nft_instruction_23),
+                  ],
+                  isDesktop: isDesktop,
+                ),
+              2 => ItemTeachInfo(
+                  margin: const EdgeInsets.only(top: 64),
+                  contentKey:
+                      QppLocales.nftInfoTeachSubtitle3ContentTeach2ContentStep3,
+                  tipKey: QppLocales
+                      .nftInfoTeachSubtitle3ContentTeach2ContentStep3Tip,
+                  displayImg: [
+                    Image.asset(QPPImages.desktop_pic_nft_instruction_24),
+                  ],
+                  isDesktop: isDesktop,
+                ),
+              _ => const SizedBox.shrink()
+            };
+          },
         ),
       );
 }
