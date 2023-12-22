@@ -31,7 +31,7 @@ jobs:
           cd build/web
 
           # 使用 sed 命令替换 base href 的值
-          sed -i -e "s/<base href=\"/\">/<base href=\"QPP-Web\">/g" input.txt
+          sed -i '' "s|<base href="/" />|<base href="/QPP-Web/" />|g" index.html
 
           # 复制index.html并将其命名为404.html
           cp index.html 404.html
