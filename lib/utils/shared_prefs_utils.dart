@@ -20,7 +20,6 @@ class SharedPrefs {
       if (_instance.getString(_loginInfo).isNullOrEmpty) {
         return null;
       } else {
-        print({json.decode(_instance.getString(_loginInfo) ?? ""), 12313213});
         return LoginInfo.fromJson(
             json.decode(_instance.getString(_loginInfo) ?? ""));
       }

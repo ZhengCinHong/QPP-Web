@@ -205,7 +205,7 @@ class _DesktopStyleContent extends StatelessWidget {
 
             return Container(
               color: QppColors.oxfordBlue,
-              padding: EdgeInsets.symmetric(horizontal: horizontal),
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: horizontal),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,

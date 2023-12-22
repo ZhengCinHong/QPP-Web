@@ -30,8 +30,8 @@ AppBar qppAppBar(ScreenStyle screenStyle) {
         screenStyle.isDesktop ? kToolbarDesktopHeight : kToolbarMobileHeight,
     backgroundColor: QppColors.barMask,
     title: screenStyle.isDesktop
-        ? const _QppAppBarTitle(ScreenStyle.desktop)
-        : const _QppAppBarTitle(ScreenStyle.mobile),
+        ? const _QppAppBarTitle.desktop()
+        : const _QppAppBarTitle.mobile(),
     titleSpacing: 0,
   );
 }
@@ -40,7 +40,8 @@ AppBar qppAppBar(ScreenStyle screenStyle) {
 /// QppAppBarTitle
 // -----------------------------------------------------------------------------
 class _QppAppBarTitle extends ConsumerWidget {
-  const _QppAppBarTitle(this.screenStyle);
+  const _QppAppBarTitle.desktop() : screenStyle = ScreenStyle.desktop;
+  const _QppAppBarTitle.mobile() : screenStyle = ScreenStyle.mobile;
 
   final ScreenStyle screenStyle;
 
@@ -56,8 +57,8 @@ class _QppAppBarTitle extends ConsumerWidget {
     final checkLoginTokenState = ref.watch(
         authServiceProvider.select((value) => value.checkLoginTokenState));
 
-    final bool isLogin = ((SharedPrefs.getLoginInfo()?.isLogin ?? false) ||
-        (checkLoginTokenState.data?.isSuccess ?? false));
+    final bool isLogin = ((SharedPrefs.getLoginInfo()?.isLogin == true) ||
+        (checkLoginTokenState.data?.isSuccess == true));
 
     return Row(
       children: [
@@ -216,19 +217,44 @@ class MenuBtns extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  constraints: BoxConstraints(
-                      maxWidth: e == MainMenu.contact
-                          ? 0
-                          : (isHorizontal ? padding : 0),
-                      maxHeight: e == MainMenu.contact
-                          ? 0
-                          : (isHorizontal ? 0 : padding)),
+                MenuBtnSpacing(
+                  type: e,
+                  isHorizontal: isHorizontal,
+                  padding: padding,
                 )
               ],
             ),
           )
           .toList(),
+    );
+  }
+}
+
+/// 選單按鈕間距
+class MenuBtnSpacing extends StatelessWidget {
+  const MenuBtnSpacing({
+    super.key,
+    required this.type,
+    required this.isHorizontal,
+    required this.padding,
+  });
+
+  final MainMenu type;
+  final bool isHorizontal;
+  final double padding;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: BoxConstraints(
+        maxWidth: type == MainMenu.contact
+            ? 0
+            : (isHorizontal
+                ? padding.getRealWidth(
+                    screenWidth: MediaQuery.of(context).size.width)
+                : 0),
+        maxHeight: type == MainMenu.contact ? 0 : (isHorizontal ? 0 : padding),
+      ),
     );
   }
 }

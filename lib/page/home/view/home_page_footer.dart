@@ -92,7 +92,6 @@ class _Info extends StatelessWidget {
       direction: isDesktopStyle ? Axis.horizontal : Axis.vertical,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Image.asset(QPPImages.desktop_pic_qpp_logo_03),
         IconButton(
           icon: Image.asset(
             QPPImages.desktop_pic_qpp_logo_03,
