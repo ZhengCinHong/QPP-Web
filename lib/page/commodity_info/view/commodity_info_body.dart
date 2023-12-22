@@ -204,16 +204,14 @@ class InfoCard extends StatelessWidget {
               semanticContainer: false,
               // 容器與四周間距
               margin: isDesktop
-                  ? EdgeInsets.fromLTRB(
+                  ? const EdgeInsets.fromLTRB(
                       60,
-                      (isDesktop
-                              ? kToolbarDesktopHeight
-                              : kToolbarMobileHeight) +
-                          100,
+                      kToolbarDesktopHeight + 100,
                       60,
                       40,
                     )
-                  : const EdgeInsets.fromLTRB(24, 24, 24, 24),
+                  : const EdgeInsets.fromLTRB(
+                      24, kToolbarMobileHeight + 24, 24, 24),
               color: QppColors.oxfordBlue,
               shape: RoundedRectangleBorder(
                 // 圓角參數
