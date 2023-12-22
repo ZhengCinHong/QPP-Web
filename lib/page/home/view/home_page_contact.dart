@@ -319,9 +319,7 @@ class _BenefitItem extends StatelessWidget {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Spacer(
-                      flex: 1,
-                    ),
+                    const Spacer(),
                     AutoSizeText(
                       context.tr(type.title),
                       style: isDesktopStyle
@@ -335,9 +333,7 @@ class _BenefitItem extends StatelessWidget {
                           ? QppTextStyles.web_18pt_title_s_white_L
                           : QppTextStyles.web_16pt_body_white_L,
                     ),
-                    const Spacer(
-                      flex: 2,
-                    ),
+                    const Spacer(flex: 2),
                   ]),
             ),
           ],

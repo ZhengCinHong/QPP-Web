@@ -54,7 +54,6 @@ class _UserInformationOuterFrameState extends State<UserInformationOuterFrame> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Spacer(),
               Flexible(
                 flex: 1280,
                 child: LayoutBuilder(builder: (context, constraints) {
@@ -87,7 +86,6 @@ class _UserInformationOuterFrameState extends State<UserInformationOuterFrame> {
                   );
                 }),
               ),
-              const Spacer(),
             ],
           ),
           Container(
