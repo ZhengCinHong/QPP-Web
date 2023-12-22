@@ -1,10 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:qpp_example/common_ui/qpp_button/open_qpp_button.dart';
-import 'package:qpp_example/common_ui/qpp_qrcode/universal_link_qrcode.dart';
 import 'package:qpp_example/common_ui/qpp_text/read_more_text.dart';
-import 'package:qpp_example/extension/build_context.dart';
+import 'package:qpp_example/common_ui/qpp_universal_link/universal_link_widget.dart';
 import 'package:qpp_example/extension/string/url.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/user_information/view_model/user_information_view_model.dart';
@@ -56,7 +54,6 @@ class _UserInformationOuterFrameState extends State<UserInformationOuterFrame> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Spacer(),
               Flexible(
                 flex: 1280,
                 child: LayoutBuilder(builder: (context, constraints) {
@@ -89,23 +86,14 @@ class _UserInformationOuterFrameState extends State<UserInformationOuterFrame> {
                   );
                 }),
               ),
-              const Spacer(),
             ],
           ),
           Container(
             padding: const EdgeInsets.only(bottom: 24),
-            child: context.isDesktopPlatform
-                ? UniversalLinkQRCode(url: widget.url)
-                : Column(
-                    children: [
-                      Text(
-                        context.tr(QppLocales.commodityInfoLaunchQPP),
-                        style: QppTextStyles.web_16pt_body_platinum_L,
-                      ),
-                      const SizedBox(height: 24),
-                      OpenQppButton(url: widget.url),
-                    ],
-                  ),
+            child: UniversalLinkWidget(
+              url: widget.url,
+              mobileText: QppLocales.commodityInfoLaunchQPP,
+            ),
           ),
         ],
       ),
@@ -130,6 +118,12 @@ class _AvatarWidget extends ConsumerWidget {
 
     final userID = userInformation.userIDState.data;
     final qppUser = userInformation.infoState.data;
+
+    /// 是否為官方帳號
+    final isOfficial = qppUser?.isOfficial == true;
+
+    /// 官方帳號Icon寬度
+    final double officaialIconWidth = isDesktopStyle ? 28 : 16;
 
     final avaterIsError = userInformation.avaterIsError;
     final bgImageIsError = userInformation.bgImageIsError;
@@ -168,8 +162,8 @@ class _AvatarWidget extends ConsumerWidget {
                           backgroundColor: Colors.transparent, // 設置透明背景
                           backgroundImage: avaterIsError
                               ? const AssetImage(
-                                      'assets/desktop_pic_profile_avatar_default.png')
-                                  as ImageProvider
+                                  QPPImages.mobile_image_newsfeed_avatar_large,
+                                ) as ImageProvider
                               : NetworkImage(userInformation.avaterImage),
                           onBackgroundImageError: (exception, stackTrace) =>
                               userInformation.setImageState(isSuccess: false),
@@ -177,14 +171,36 @@ class _AvatarWidget extends ConsumerWidget {
                       ),
                       SizedBox(height: isDesktopStyle ? 29 : 12),
                       Text(
-                        context.tr(qppUser?.displayName ??
-                            QppLocales.errorPageNickname),
+                        context.tr(
+                          qppUser?.displayName ?? QppLocales.errorPageNickname,
+                        ),
                         style: QppTextStyles.web_20pt_title_m_Indian_yellow_C,
                       ),
                       SizedBox(height: isDesktopStyle ? 6 : 2),
-                      Text(
-                        userID.toString(),
-                        style: QppTextStyles.mobile_14pt_body_Indian_yellow_L,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          isOfficial
+                              ? Padding(
+                                  padding: const EdgeInsets.only(right: 6),
+                                  child: Image.asset(
+                                    qppUser?.officialIconPath ?? '',
+                                    width: officaialIconWidth,
+                                    scale: 1,
+                                  ),
+                                )
+                              : const SizedBox.shrink(),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              right: isOfficial ? officaialIconWidth : 0, // 加上間距，用來讓兩個Text對齊
+                            ),
+                            child: Text(
+                              userID.toString(),
+                              style: QppTextStyles
+                                  .mobile_14pt_body_Indian_yellow_L,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -227,7 +243,12 @@ class _InformationDescriptionWidget extends ConsumerWidget {
       width: double.infinity,
       color: QppColors.oxfordBlue,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 60),
+        padding: EdgeInsets.only(
+          top: isDesktopStyle ? 45 : 16,
+          bottom: isDesktopStyle ? 43 : 24,
+          left: isDesktopStyle ? 60 : 18,
+          right: isDesktopStyle ? 60 : 18,
+        ),
         child: ReadMoreText(
           context
               .tr(response.data?.displayInfo ?? QppLocales.errorPageInfoNotyet),
@@ -235,7 +256,7 @@ class _InformationDescriptionWidget extends ConsumerWidget {
           trimLines: 2,
           trimMode: TrimMode.Line,
           trimExpandedText: '',
-          trimCollapsedText: context.tr('commodity_info_more'),
+          trimCollapsedText: context.tr(QppLocales.commodityInfoMore),
           moreStyle: moreStyle,
           style: textStyle,
           linkTextStyle: linkTextStyle,

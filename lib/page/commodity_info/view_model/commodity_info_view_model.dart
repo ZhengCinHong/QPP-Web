@@ -160,7 +160,12 @@ class CommodityInfoModel extends ChangeNotifier {
             descriptionResponse.descriptionData;
         ItemMultiLanguageData itemDescription =
             ItemMultiLanguageData.description(descriptionData);
-        itemDescriptionInfoState = ApiResponse.completed(itemDescription);
+        if (itemDescription.hasContent) {
+          itemDescriptionInfoState = ApiResponse.completed(itemDescription);
+        } else {
+          itemDescriptionInfoState =
+              ApiResponse.error('no item description data');
+        }
       } else {
         itemDescriptionInfoState =
             ApiResponse.error(descriptionResponse.errorCode);
@@ -188,7 +193,11 @@ class CommodityInfoModel extends ChangeNotifier {
         MultiLanguageItemData introLinkData = introLinkResponse.introLinkData;
         ItemMultiLanguageData itemIntroLink =
             ItemMultiLanguageData.link(introLinkData);
-        itemLinkInfoState = ApiResponse.completed(itemIntroLink);
+        if (itemIntroLink.hasContent) {
+          itemLinkInfoState = ApiResponse.completed(itemIntroLink);
+        } else {
+          itemLinkInfoState = ApiResponse.error('no item link data');
+        }
       } else {
         itemLinkInfoState = ApiResponse.error(introLinkResponse.errorCode);
         print('取得物品連結資訊錯誤 SERVER_ERROR_CODE: ${introLinkResponse.errorCode}');

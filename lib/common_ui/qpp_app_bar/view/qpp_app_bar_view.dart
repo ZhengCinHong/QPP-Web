@@ -30,8 +30,8 @@ AppBar qppAppBar(ScreenStyle screenStyle) {
         screenStyle.isDesktop ? kToolbarDesktopHeight : kToolbarMobileHeight,
     backgroundColor: QppColors.barMask,
     title: screenStyle.isDesktop
-        ? const _QppAppBarTitle(ScreenStyle.desktop)
-        : const _QppAppBarTitle(ScreenStyle.mobile),
+        ? const _QppAppBarTitle.desktop()
+        : const _QppAppBarTitle.mobile(),
     titleSpacing: 0,
   );
 }
@@ -40,7 +40,8 @@ AppBar qppAppBar(ScreenStyle screenStyle) {
 /// QppAppBarTitle
 // -----------------------------------------------------------------------------
 class _QppAppBarTitle extends ConsumerWidget {
-  const _QppAppBarTitle(this.screenStyle);
+  const _QppAppBarTitle.desktop() : screenStyle = ScreenStyle.desktop;
+  const _QppAppBarTitle.mobile() : screenStyle = ScreenStyle.mobile;
 
   final ScreenStyle screenStyle;
 
@@ -56,8 +57,8 @@ class _QppAppBarTitle extends ConsumerWidget {
     final checkLoginTokenState = ref.watch(
         authServiceProvider.select((value) => value.checkLoginTokenState));
 
-    final bool isLogin = ((SharedPrefs.getLoginInfo()?.isLogin ?? false) ||
-        (checkLoginTokenState.data?.isSuccess ?? false));
+    final bool isLogin = ((SharedPrefs.getLoginInfo()?.isLogin == true) ||
+        (checkLoginTokenState.data?.isSuccess == true));
 
     return Row(
       children: [
@@ -77,7 +78,7 @@ class _QppAppBarTitle extends ConsumerWidget {
                 : 210),
         // 選單按鈕
         isDesktopStyle
-            ? const MenuBtns.horizontal(padding: 30, fontSize: 18)
+            ? const MenuBtns.horizontal(padding: 73, fontSize: 18)
             : const SizedBox.shrink(),
         isLogin
             ? Container(
@@ -171,56 +172,89 @@ class MenuBtns extends StatelessWidget {
       direction: _direction,
       children: MainMenu.values
           .map(
-            (e) => Padding(
-              padding: EdgeInsets.only(
-                right: e == MainMenu.contact ? 0 : (isHorizontal ? padding : 0),
-                bottom: isHorizontal ? 0 : padding,
-              ),
-              child: MouseRegionCustomWidget(
-                builder: (event) => MouseRegion(
-                  cursor: SystemMouseCursors.click, // 改鼠標樣式
-                  child: GestureDetector(
-                    onTap: () {
-                      bool isInHomePage =
-                          ModalRoute.of(context)?.isFirst ?? false;
+            (e) => Flex(
+              direction: isHorizontal ? Axis.horizontal : Axis.vertical,
+              children: [
+                MouseRegionCustomWidget(
+                  builder: (event) => MouseRegion(
+                    cursor: SystemMouseCursors.click, // 改鼠標樣式
+                    child: GestureDetector(
+                      onTap: () {
+                        bool isInHomePage =
+                            ModalRoute.of(context)?.isFirst ?? false;
 
-                      if (isInHomePage) {
-                        Scrollable.ensureVisible(
-                          e.currentContext!,
-                          duration: const Duration(seconds: 1),
-                        );
-                      } else {
-                        context.pop();
-
-                        Future.delayed(
-                          const Duration(milliseconds: 300),
-                          () => Scrollable.ensureVisible(
+                        if (isInHomePage) {
+                          Scrollable.ensureVisible(
                             e.currentContext!,
                             duration: const Duration(seconds: 1),
+                          );
+                        } else {
+                          context.pop();
+
+                          Future.delayed(
+                            const Duration(milliseconds: 300),
+                            () => Scrollable.ensureVisible(
+                              e.currentContext!,
+                              duration: const Duration(seconds: 1),
+                            ),
+                          );
+                        }
+                      }.throttleWithTimeout(timeout: 2000),
+                      child: Container(
+                        constraints: const BoxConstraints(maxWidth: 120),
+                        child: AutoSizeText(
+                          key: e.key,
+                          context.tr(e.text),
+                          style: TextStyle(
+                            color: event is PointerEnterEvent
+                                ? QppColors.canaryYellow
+                                : QppColors.white,
+                            fontSize: fontSize,
                           ),
-                        );
-                      }
-                    }.throttleWithTimeout(timeout: 2000),
-                    child: Container(
-                      constraints: const BoxConstraints(maxWidth: 120),
-                      child: AutoSizeText(
-                        key: e.key,
-                        context.tr(e.text),
-                        style: TextStyle(
-                          color: event is PointerEnterEvent
-                              ? QppColors.canaryYellow
-                              : QppColors.white,
-                          fontSize: fontSize,
-                        ),
-                        maxLines: 2,
-                      ).disabledSelectionContainer,
+                          maxLines: 2,
+                        ).disabledSelectionContainer,
+                      ),
                     ),
                   ),
                 ),
-              ),
+                MenuBtnSpacing(
+                  type: e,
+                  isHorizontal: isHorizontal,
+                  padding: padding,
+                )
+              ],
             ),
           )
           .toList(),
+    );
+  }
+}
+
+/// 選單按鈕間距
+class MenuBtnSpacing extends StatelessWidget {
+  const MenuBtnSpacing({
+    super.key,
+    required this.type,
+    required this.isHorizontal,
+    required this.padding,
+  });
+
+  final MainMenu type;
+  final bool isHorizontal;
+  final double padding;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: BoxConstraints(
+        maxWidth: type == MainMenu.contact
+            ? 0
+            : (isHorizontal
+                ? padding.getRealWidth(
+                    screenWidth: MediaQuery.of(context).size.width)
+                : 0),
+        maxHeight: type == MainMenu.contact ? 0 : (isHorizontal ? 0 : padding),
+      ),
     );
   }
 }

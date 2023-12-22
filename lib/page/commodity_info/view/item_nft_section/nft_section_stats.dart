@@ -31,6 +31,7 @@ class StatsContent extends NFTSectionInfoContent<List> {
 
   @override
   Widget get child => ListView.builder(
+        padding: listPadding,
         // 關掉 over scroll 效果
         physics: const BouncingScrollPhysics(),
         itemCount: data.length,

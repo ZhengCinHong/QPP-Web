@@ -81,10 +81,17 @@ abstract class NFTSectionInfoContent<T> extends StatelessWidget {
   }
 
   Widget get child;
-
+  
   EdgeInsets get contentPadding {
     return isDesktop
         ? const EdgeInsets.fromLTRB(60, 20, 60, 20)
         : const EdgeInsets.fromLTRB(12, 15, 12, 15);
+  }
+  // content child 若為 list, 且有 shrink wrap, 吃這個 padding
+  // https://blog.csdn.net/qq_39132095/article/details/120056020
+  EdgeInsets get listPadding {
+    return isDesktop
+        ? const EdgeInsets.fromLTRB(0, 20, 0, 20)
+        : const EdgeInsets.fromLTRB(0, 15, 0, 15);
   }
 }

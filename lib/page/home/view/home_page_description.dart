@@ -76,7 +76,9 @@ class _PhoneDescriptionState extends State<_PhoneDescription> {
               flex: isDesktopStyle ? 1 : 2,
               child: Container(
                 color: QppColors.barMask,
-                padding: const EdgeInsets.symmetric(horizontal: 50),
+                padding: isDesktopStyle
+                    ? null //const EdgeInsets.only(left: 104, right: 10)
+                    : const EdgeInsets.symmetric(horizontal: 53.5),
                 alignment: Alignment.center,
                 child: Flex(
                   direction: isDesktopStyle ? Axis.horizontal : Axis.vertical,
@@ -84,12 +86,13 @@ class _PhoneDescriptionState extends State<_PhoneDescription> {
                       ? MainAxisAlignment.start
                       : MainAxisAlignment.center,
                   children: [
-                    Flexible(
-                      child: Image.asset(QPPImages.desktop_image_qpp_logo_01),
-                    ),
+                    isDesktopStyle
+                        ? const Spacer(flex: 104)
+                        : const SizedBox.shrink(),
+                    Image.asset(QPPImages.desktop_image_qpp_logo_01),
                     const SizedBox(height: 16, width: 36),
                     Flexible(
-                      flex: isDesktopStyle ? 1 : 0,
+                      flex: isDesktopStyle ? 504 : 0,
                       child: Text(
                         context.tr(QppLocales.homeSection3Title),
                         style: isDesktopStyle
@@ -97,6 +100,9 @@ class _PhoneDescriptionState extends State<_PhoneDescription> {
                             : QppTextStyles.mobile_16pt_title_white_bold_L,
                       ),
                     ),
+                    isDesktopStyle
+                        ? const Spacer(flex: 87)
+                        : const SizedBox.shrink()
                   ],
                 ),
               ),
@@ -199,7 +205,7 @@ class _DesktopStyleContent extends StatelessWidget {
 
             return Container(
               color: QppColors.oxfordBlue,
-              padding: EdgeInsets.symmetric(horizontal: horizontal),
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: horizontal),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,

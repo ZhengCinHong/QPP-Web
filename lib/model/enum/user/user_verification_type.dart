@@ -1,3 +1,5 @@
+import 'package:qpp_example/utils/qpp_image.dart';
+
 /// 用戶驗證類型
 enum VerificationType {
   /// 一般用戶
@@ -26,7 +28,7 @@ enum VerificationType {
   /// 取得 icon 路徑
   String get iconPath {
     if (this == official) {
-      return "desktop-icon-newsfeed-official-large.svg";
+      return QPPImages.desktop_icon_newsfeed_official_large;
     } else {
       return "";
     }
