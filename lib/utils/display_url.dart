@@ -21,10 +21,18 @@ class DisplayUrl {
         // 沒有 lang parameter
         params += '&lang=$value';
       }
-      window.history.pushState({}, '', '${Uri.base.path}?$params');
+      // window.history.pushState({}, '', '${Uri.base.path}?$params');
+      setQuery('${Uri.base.path}?$params');
     } else {
       // 沒有 query, 加上去
-      window.history.pushState({}, '', '${Uri.base.path}?lang=$value');
+      // window.history.pushState({}, '', '${Uri.base.path}?lang=$value');
+      setQuery('${Uri.base.path}?lang=$value');
     }
+  }
+
+  static void setQuery(String query) {
+    // Future.delayed(const Duration(milliseconds: 100), () {
+    window.history.replaceState({}, '', query);
+    // });
   }
 }
