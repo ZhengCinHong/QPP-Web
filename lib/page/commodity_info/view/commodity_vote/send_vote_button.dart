@@ -102,7 +102,7 @@ class SendVoteButton extends StatelessWidget {
                   .read(itemSelectInfoProvider.notifier)
                   .sendUserVote(qppVote.item, voteToken);
             }
-          } else if (votedState.$1) {
+          } else if (votedState.$1 && isFirstLogin) {
             // 如果彈窗已存在，先關閉彈窗
             if (isThereCurrentDialogShowing) {
               context.pop();

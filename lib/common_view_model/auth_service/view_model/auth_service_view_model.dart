@@ -12,8 +12,6 @@ import 'package:qpp_example/utils/shared_prefs_utils.dart';
 /// 驗證服務(登入/登出)Provider
 final ChangeNotifierProvider<AuthServiceStateNotifier> authServiceProvider =
     ChangeNotifierProvider<AuthServiceStateNotifier>((ref) {
-  // TODO: 不知道為啥放在這裡才會被初始化，main()那邊無效
-  SharedPrefs.init();
   return AuthServiceStateNotifier();
 });
 

@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:qpp_example/api/core/api_response.dart';
 import 'package:qpp_example/common_ui/qpp_universal_link/universal_link_widget.dart';
 import 'package:qpp_example/common_view_model/auth_service/view_model/auth_service_view_model.dart';
+import 'package:qpp_example/constants/qpp_contanst.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/extension/throttle_debounce.dart';
@@ -88,36 +89,37 @@ class _CommodityInfoPageState extends State<CommodityInfoPage> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        SingleChildScrollView(
-          controller: _scrollController,
-          child: Column(
-            children: [
-              // 上方資料區
-              isDesktopStyle
-                  ? const InfoCard.desktop()
-                  : const InfoCard.mobile(),
-              // 下方 QR Code / 按鈕
-              Consumer(
-                builder: (context, ref, child) {
-                  final isQuestionnaire = ref.watch(
-                      itemSelectInfoProvider.select((value) =>
-                          value.voteDataState.data?.item.category ==
-                          ItemCategory.questionnaire));
+        SizedBox(
+          width: double.infinity,
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            child: Column(
+              children: [
+                // 上方資料區
+                isDesktopStyle
+                    ? const InfoCard.desktop()
+                    : const InfoCard.mobile(),
+                // 下方 QR Code / 按鈕
+                Consumer(
+                  builder: (context, ref, child) {
+                    final isQuestionnaire = ref.watch(
+                        itemSelectInfoProvider.select((value) =>
+                            value.voteDataState.data?.item.category ==
+                            ItemCategory.questionnaire));
 
-                  return isQuestionnaire
-                      ? const SizedBox.shrink()
-                      : child ?? const SizedBox.shrink();
-                },
-                child: UniversalLinkWidget(
-                  url: qrCodeUrl,
-                  mobileText: QppLocales.commodityInfoLaunchQPP,
+                    return isQuestionnaire
+                        ? const SizedBox.shrink()
+                        : child ?? const SizedBox.shrink();
+                  },
+                  child: UniversalLinkWidget(
+                    url: qrCodeUrl,
+                    mobileText: QppLocales.commodityInfoLaunchQPP,
+                  ),
                 ),
-              ),
-              // 底部間距
-              const SizedBox(
-                height: 40,
-              )
-            ],
+                // 底部間距
+                const SizedBox(height: 40)
+              ],
+            ),
           ),
         ),
         Positioned(
@@ -187,7 +189,7 @@ class InfoCard extends StatelessWidget {
         Future.microtask(() {
           print({logoutState.status, voteDataState.status, 12333131});
 
-          // 登出，刷新頁面
+          // 登出，刷新頁面(for 問券調查)
           if (logoutState.isCompleted && voteDataState.isCompleted) {
             html.window.location.reload();
           }
@@ -202,7 +204,15 @@ class InfoCard extends StatelessWidget {
               semanticContainer: false,
               // 容器與四周間距
               margin: isDesktop
-                  ? const EdgeInsets.fromLTRB(60, 100, 60, 40)
+                  ? EdgeInsets.fromLTRB(
+                      60,
+                      (isDesktop
+                              ? kToolbarDesktopHeight
+                              : kToolbarMobileHeight) +
+                          100,
+                      60,
+                      40,
+                    )
                   : const EdgeInsets.fromLTRB(24, 24, 24, 24),
               color: QppColors.oxfordBlue,
               shape: RoundedRectangleBorder(
