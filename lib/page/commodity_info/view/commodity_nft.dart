@@ -33,6 +33,7 @@ class NFTItemInfo extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.only(bottom: 20),
               child: ListView.builder(
+                padding: EdgeInsets.zero,
                 itemCount: 6,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
