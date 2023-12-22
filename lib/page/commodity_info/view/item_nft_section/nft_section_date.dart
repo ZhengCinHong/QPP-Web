@@ -38,6 +38,7 @@ class DateContent extends NFTSectionInfoContent<List> {
       itemCount: data.length,
       shrinkWrap: true,
       scrollDirection: Axis.vertical,
+      prototypeItem: ItemDate(date: data[0]),
       itemBuilder: (context, index) {
         return ItemDate(date: data[index]);
       });

@@ -38,6 +38,7 @@ class BoostContent extends NFTSectionInfoContent<List> {
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
       itemCount: data.length,
+      prototypeItem: ItemBoost(boost: data[0]),
       itemBuilder: (context, index) {
         return ItemBoost(boost: data[index]);
       });
