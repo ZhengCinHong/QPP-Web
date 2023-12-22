@@ -194,7 +194,8 @@ class VoteOptionsItem extends StatelessWidget {
                           final isSelected = voteArrayData?[index] == e.key;
 
                           /// 是否啟用點擊(選項按鈕)
-                          final isEnableTap = !votedState.$1 && qppVote.voteType == VoteType.inProgress;
+                          final isEnableTap = !votedState.$1 &&
+                              qppVote.voteType == VoteType.inProgress;
 
                           final notifier =
                               ref.read(itemSelectInfoProvider.notifier);
@@ -217,7 +218,7 @@ class VoteOptionsItem extends StatelessWidget {
 
                           return Column(
                             children: [
-                              Row(
+                              Wrap(
                                 children: [
                                   MouseRegion(
                                     cursor: isEnableTap
@@ -241,15 +242,17 @@ class VoteOptionsItem extends StatelessWidget {
                                                   width:
                                                       isDesktopStyle ? 8 : 12,
                                                 ),
-                                          Text(
-                                            e.value.option,
-                                            style: (isSelected &&
-                                                    !isEnableTap &&
-                                                    voteShowType !=
-                                                        VoteShowType.noShow)
-                                                ? selectedTextStyle
-                                                : textStyle,
-                                          ).disabledSelectionContainer
+                                          Flexible(
+                                            child: Text(
+                                              e.value.option,
+                                              style: (isSelected &&
+                                                      !isEnableTap &&
+                                                      voteShowType !=
+                                                          VoteShowType.noShow)
+                                                  ? selectedTextStyle
+                                                  : textStyle,
+                                            ).disabledSelectionContainer,
+                                          )
                                         ],
                                       ),
                                       onTap: () {
