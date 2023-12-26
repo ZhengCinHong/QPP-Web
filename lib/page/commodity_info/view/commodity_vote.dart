@@ -44,8 +44,8 @@ class VoteItemInfo extends StatelessWidget {
                   : const InfoRowIntroLink.mobile(),
               // 說明欄位
               isDesktop
-                  ? const InfoRowDescription.desktop()
-                  : const InfoRowDescription.mobile(),
+                  ? const InfoRowDescription.desktop(isQuestionnaire: true)
+                  : const InfoRowDescription.mobile(isQuestionnaire: true),
               // 目前統計
               isDesktop
                   ? const VoteStatistics.desktop()

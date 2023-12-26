@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:qpp_example/model/enum/item/vote_show_type.dart';
 import 'package:qpp_example/model/enum/item/vote_type.dart';
 import 'package:qpp_example/model/qpp_item.dart';
@@ -50,6 +51,13 @@ class QppVote {
   /// 取得問券名稱
   String get itemName {
     return item.name;
+  }
+
+  /// 顯示用過期時間
+  String get expiryDateForDisplay {
+    final originalDate = DateTime.parse(expiryDate);
+
+    return DateFormat('yyyy/MM/dd hh:mm').format(originalDate);
   }
 
   /// 投票人數

@@ -246,8 +246,13 @@ class InfoRowIntroLink extends InfoRow {
 
 /// 物品說明資訊(多語系)
 class InfoRowDescription extends InfoRow {
-  const InfoRowDescription.desktop({super.key}) : super.desktop();
-  const InfoRowDescription.mobile({super.key}) : super.mobile();
+  const InfoRowDescription.desktop({super.key, this.isQuestionnaire = false})
+      : super.desktop();
+  const InfoRowDescription.mobile({super.key, this.isQuestionnaire = false})
+      : super.mobile();
+
+  /// 是否為問券調查
+  final bool isQuestionnaire;
 
   @override
   ApiResponse getResponse(WidgetRef ref) {
@@ -266,7 +271,11 @@ class InfoRowDescription extends InfoRow {
             SizedBox(
               width: titleWidth,
               child: Text(
-                context.tr(QppLocales.commodityInfoInfo),
+                context.tr(
+                  isQuestionnaire
+                      ? QppLocales.commodityInfoVoteSummary
+                      : QppLocales.commodityInfoInfo,
+                ),
                 textAlign: TextAlign.start,
                 style: QppTextStyles.web_16pt_body_category_text_L,
               ),
