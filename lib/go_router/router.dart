@@ -101,16 +101,24 @@ class QppGoRouter {
         // 首頁
         path: home,
         name: home,
-        pageBuilder: (BuildContext context, GoRouterState state) {
+        builder: (context, state) {
           Locale locale = getLocaleFromPath;
           // context 設定 locale
           context.setLocale(locale);
           // 更新網址列
           DisplayUrl.updateParam('lang', locale.toString());
-          return QPPTransitionPage(
-            child: const MainFramework(child: HomePage()),
-          );
+          return const MainFramework(child: HomePage());
         },
+        // pageBuilder: (BuildContext context, GoRouterState state) {
+        //   Locale locale = getLocaleFromPath;
+        //   // context 設定 locale
+        //   context.setLocale(locale);
+        //   // 更新網址列
+        //   DisplayUrl.updateParam('lang', locale.toString());
+        //   return QPPTransitionPage(
+        //     child: const MainFramework(child: HomePage()),
+        //   );
+        // },
         routes: homeRouters +
             _getRouters(home) +
             [

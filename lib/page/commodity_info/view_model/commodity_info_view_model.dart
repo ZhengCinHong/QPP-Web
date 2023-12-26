@@ -266,8 +266,8 @@ class CommodityInfoModel extends ChangeNotifier {
         isOptionErrorArray = vote?.voteData.map((e) => false).toList() ?? [];
       } else {
         // 取資料失敗
-        voteDataState =
-            ApiResponse.error(getVoteInfoResponse.qppReturnError?.errorMessage);
+        voteDataState = ApiResponse.error(
+            getVoteInfoResponse.errorInfoArray?.first.errorMessage);
       }
       notifyListeners();
     }).catchError((onError) {
@@ -320,11 +320,7 @@ class CommodityInfoModel extends ChangeNotifier {
         voteDataState = ApiResponse.completed(vote);
 
         // 更新成已投票狀態
-        votedState = (
-          true,
-          VotedState.findTypeByCode(
-              userVoteResponse.qppReturnError?.errorMessage ?? '')
-        );
+        votedState = (true, VotedState.findTypeByCode(userVoteResponse));
       } else {
         // 更新成未投票狀態
         votedState = (false, VotedState.unkown);
@@ -365,7 +361,13 @@ class CommodityInfoModel extends ChangeNotifier {
       } else {
         // 取資料失敗
         voteDataState = ApiResponse.error(
-            getVoteStatusResponse.qppReturnError?.errorMessage);
+            getVoteStatusResponse.errorInfoArray?.first.errorMessage);
+
+        // 更新成未投票狀態
+        votedState = (false, VotedState.unkown);
+
+        // 取問券資料
+        getQuestionnaire(item);
       }
       notifyListeners();
     }).catchError((onError) {

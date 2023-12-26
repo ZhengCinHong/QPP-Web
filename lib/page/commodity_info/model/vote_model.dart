@@ -1,3 +1,4 @@
+import 'package:qpp_example/api/local/response/base_local_response.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 
 /// 投票狀態類型
@@ -34,16 +35,19 @@ enum VotedState {
   /// 無
   none;
 
-  static VotedState findTypeByCode(String code) {
-    print({code, 123131231});
-    return switch (code) {
-      '1' => VotedState.success,
-      '72' => VotedState.failure_72,
-      '73' => VotedState.failure_73,
-      '74' => VotedState.failure_74,
-      '' => VotedState.none,
-      _ => VotedState.unkown,
-    };
+  static VotedState findTypeByCode(BaseLocalResponse response) {
+    // print(rere)
+
+    return response.errorInfoArray == null
+        ? VotedState.success
+        : response.qppReturnError == null
+            ? VotedState.unkown
+            : switch (response.qppReturnError?.errorMessage) {
+                '72' => VotedState.failure_72,
+                '73' => VotedState.failure_73,
+                '74' => VotedState.failure_74,
+                _ => VotedState.unkown,
+              };
   }
 
   /// 顯示對話框
