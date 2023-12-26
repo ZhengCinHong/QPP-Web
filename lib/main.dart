@@ -43,6 +43,12 @@ class MyApp extends StatelessWidget {
       locale: context.locale,
       supportedLocales: context.supportedLocales,
       localizationsDelegates: context.localizationDelegates,
+      builder: (context, child) {
+        return MediaQuery(
+            // 固定字型大小
+            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+            child: child!);
+      },
     );
   }
 }
