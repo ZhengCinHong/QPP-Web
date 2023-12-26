@@ -108,7 +108,10 @@ class QppGoRouter {
           // 更新網址列
           DisplayUrl.updateParam('lang', locale.toString());
           return QPPTransitionPage(
-            child: const MainFramework(child: HomePage()),
+            child: MediaQuery(
+                // 字體大小固定
+                data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                child: const MainFramework(child: HomePage())),
           );
         },
         routes: homeRouters +
@@ -118,7 +121,11 @@ class QppGoRouter {
                 path: app,
                 name: app,
                 pageBuilder: (context, state) => QPPTransitionPage(
-                  child: const MainFramework(child: HomePage()),
+                  child: MediaQuery(
+                      // 字體大小固定
+                      data:
+                          MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                      child: const MainFramework(child: HomePage())),
                 ),
                 routes: appRouters + _getRouters(app),
               )
