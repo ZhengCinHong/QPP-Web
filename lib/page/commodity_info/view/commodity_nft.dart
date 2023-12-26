@@ -32,37 +32,44 @@ class NFTItemInfo extends StatelessWidget {
               constraints: const BoxConstraints(maxWidth: 1280),
               width: double.infinity,
               padding: const EdgeInsets.only(bottom: 20),
-              child: Column(
-                children: [
-                  // description
-                  isDesktop
-                      ? DescriptionExpand.desktop(
-                          data: nft,
-                        )
-                      : DescriptionExpand.mobile(
-                          data: nft,
-                        ),
-                  // properties
-                  isDesktop
-                      ? PropertiesExpand.desktop(data: attr.propertiesSection)
-                      : PropertiesExpand.mobile(data: attr.propertiesSection),
-                  // stats
-                  isDesktop
-                      ? StatsExpand.desktop(data: attr.statsSection)
-                      : StatsExpand.mobile(data: attr.statsSection),
-                  // levels
-                  isDesktop
-                      ? LevelsExpand.desktop(data: attr.levelsSection)
-                      : LevelsExpand.mobile(data: attr.levelsSection),
-                  // boosts
-                  isDesktop
-                      ? BoostExpand.desktop(data: attr.boostSection)
-                      : BoostExpand.mobile(data: attr.boostSection),
-                  // date
-                  isDesktop
-                      ? DateExpand.desktop(data: attr.dateSection)
-                      : DateExpand.mobile(data: attr.dateSection),
-                ],
+              child: ListView.builder(
+                padding: EdgeInsets.zero,
+                itemCount: 6,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return switch (index) {
+                    // description
+                    0 => isDesktop
+                        ? DescriptionExpand.desktop(
+                            data: nft,
+                          )
+                        : DescriptionExpand.mobile(
+                            data: nft,
+                          ),
+                    // properties
+                    1 => isDesktop
+                        ? PropertiesExpand.desktop(data: attr.propertiesSection)
+                        : PropertiesExpand.mobile(data: attr.propertiesSection),
+                    // stats
+                    2 => isDesktop
+                        ? StatsExpand.desktop(data: attr.statsSection)
+                        : StatsExpand.mobile(data: attr.statsSection),
+                    // levels
+                    3 => isDesktop
+                        ? LevelsExpand.desktop(data: attr.levelsSection)
+                        : LevelsExpand.mobile(data: attr.levelsSection),
+                    // boosts
+                    4 => isDesktop
+                        ? BoostExpand.desktop(data: attr.boostSection)
+                        : BoostExpand.mobile(data: attr.boostSection),
+                    // date
+                    5 => isDesktop
+                        ? DateExpand.desktop(data: attr.dateSection)
+                        : DateExpand.mobile(data: attr.dateSection),
+                    _ => const SizedBox.shrink()
+                  };
+                },
               ));
         },
       ),

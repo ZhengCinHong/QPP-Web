@@ -8,27 +8,33 @@ import 'package:qpp_example/utils/qpp_text_styles.dart';
 class NFTTeachInfoZone1 extends StatelessWidget {
   final bool isDesktop;
   const NFTTeachInfoZone1({super.key, required this.isDesktop});
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          margin: const EdgeInsets.only(bottom: 12),
-          child: Text(
-            context.tr(QppLocales.nftInfoTeachSubtitle1),
-            style: isDesktop
-                ? QppTextStyles.web_24pt_title_L_maya_blue_C
-                : QppTextStyles.mobile_20pt_title_L_maya_blue_L,
-          ),
-        ),
-        isDesktop ? const Info1.desktop() : const Info1.mobile(),
-        isDesktop ? const Info2.desktop() : const Info2.mobile(),
-        isDesktop ? const Info3.desktop() : const Info3.mobile(),
-        isDesktop ? const Info4.desktop() : const Info4.mobile(),
-        isDesktop ? const Info5.desktop() : const Info5.mobile(),
-      ],
-    );
+    return ListView.builder(
+        itemCount: 6,
+        shrinkWrap: true,
+        // 禁止 list 內容 滾動
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          return switch (index) {
+            0 => Container(
+                margin: const EdgeInsets.only(bottom: 12),
+                child: Text(
+                  context.tr(QppLocales.nftInfoTeachSubtitle1),
+                  style: isDesktop
+                      ? QppTextStyles.web_24pt_title_L_maya_blue_C
+                      : QppTextStyles.mobile_20pt_title_L_maya_blue_L,
+                ),
+              ),
+            1 => isDesktop ? const Info1.desktop() : const Info1.mobile(),
+            2 => isDesktop ? const Info2.desktop() : const Info2.mobile(),
+            3 => isDesktop ? const Info3.desktop() : const Info3.mobile(),
+            4 => isDesktop ? const Info4.desktop() : const Info4.mobile(),
+            5 => isDesktop ? const Info5.desktop() : const Info5.mobile(),
+            _ => const SizedBox.shrink(),
+          };
+        });
   }
 }
 
@@ -43,7 +49,7 @@ class Info1 extends NFTTeachInfoExpand {
       );
 
   @override
-  Widget get content =>  ItemTeachInfo(
+  Widget get content => ItemTeachInfo(
         margin: const EdgeInsets.only(top: 20),
         contentKey: QppLocales.nftInfoTeachSubtitle1ContentA1,
         isDesktop: isDesktop,
@@ -82,7 +88,7 @@ class Info3 extends NFTTeachInfoExpand {
         isDesktop: isDesktop,
       );
   @override
-  Widget get content =>  ItemTeachInfo(
+  Widget get content => ItemTeachInfo(
         margin: const EdgeInsets.only(top: 20),
         contentKey: QppLocales.nftInfoTeachSubtitle1ContentA3,
         isDesktop: isDesktop,
@@ -100,7 +106,7 @@ class Info4 extends NFTTeachInfoExpand {
       );
 
   @override
-  Widget get content =>  ItemTeachInfo(
+  Widget get content => ItemTeachInfo(
         margin: const EdgeInsets.only(top: 20),
         contentKey: QppLocales.nftInfoTeachSubtitle1ContentA4,
         isDesktop: isDesktop,
@@ -118,7 +124,7 @@ class Info5 extends NFTTeachInfoExpand {
       );
 
   @override
-  Widget get content =>  ItemTeachInfo(
+  Widget get content => ItemTeachInfo(
         margin: const EdgeInsets.only(top: 20),
         contentKey: QppLocales.nftInfoTeachSubtitle1ContentA5,
         isDesktop: isDesktop,

@@ -37,6 +37,7 @@ class PropertiesContent extends NFTSectionInfoContent<List> {
 
   @override
   Widget get child => GridView.builder(
+      padding: listPadding,
       // 關掉 over scroll 效果
       physics: const BouncingScrollPhysics(),
       // 方向
