@@ -61,11 +61,14 @@ class SendVoteButton extends StatelessWidget {
         final isCheckLoginSuccess =
             checkLoginTokenState.data?.isSuccess == true;
 
-        /// 投票Token
-        final String? voteToken =
-            ref.watch(authServiceProvider.select((value) => value.voteToken));
+        /// 本地登入資訊
+        final loginInfo = SharedPrefs.getLoginInfo();
 
-        final bool isLogin = SharedPrefs.getLoginInfo()?.isLogin == true;
+        /// 投票Token
+        final String? voteToken = loginInfo?.voteToken;
+
+        /// 是否登成功
+        final bool isLogin = loginInfo?.isLogin == true;
 
         /// 判斷是否有對話框正在顯示
         final bool isThereCurrentDialogShowing =
@@ -85,40 +88,45 @@ class SendVoteButton extends StatelessWidget {
           });
         }
 
+        /// 發送投票
+        void sendVote() {
+          if (voteToken != null && qppVote != null) {
+            ref
+                .read(itemSelectInfoProvider.notifier)
+                .sendUserVote(qppVote.item, voteToken);
+          }
+        }
+
         Future.microtask(() {
           // 成功取得login toke顯示Login dialog
           if (getLoginTokenState.isCompleted && !isLogin) {
             showLoginDialog();
-          } else if (isCheckLoginSuccess && isFirstLogin) {
-            // 關閉登入QRCode對話框
-            context.pop();
-
-            // 更新是否為第一次登入的值(不打通知更新畫面)
-            ref.read(itemSelectInfoProvider.notifier).isFirstLogin = false;
-
-            // 發送投票
-            if (voteToken != null && qppVote != null) {
-              ref
-                  .read(itemSelectInfoProvider.notifier)
-                  .sendUserVote(qppVote.item, voteToken);
-            }
           } else if (votedState.$1 && isFirstLogin) {
             // 如果彈窗已存在，先關閉彈窗
             if (isThereCurrentDialogShowing) {
               context.pop();
             }
 
-            // 顯示對話框
+            // 更新是否為第一次登入的值(不打通知更新畫面)
+            ref.read(itemSelectInfoProvider.notifier).isFirstLogin = false;
+
+            // 顯示投票成功或失敗對話框
             if (votedState.$2.displayDialog) {
               votedState.$2 == VotedState.success
                   ? showVoteSuccessDialog(context, screenStyle: screenStyle)
                   : showVoteFailureDialog(context,
                       screenStyle: screenStyle, subText: votedState.$2.message);
             }
+          } else if (isCheckLoginSuccess && isFirstLogin) {
+            // 關閉登入QRCode對話框
+            context.pop();
+
+            // 發送投票
+            sendVote();
           }
         });
 
-        return isLogin || qppVote?.voteType != VoteType.inProgress
+        return votedState.$1 == true || qppVote?.voteType != VoteType.inProgress
             ? const SizedBox.shrink()
             : Padding(
                 padding: EdgeInsets.symmetric(
@@ -145,15 +153,19 @@ class SendVoteButton extends StatelessWidget {
                           : QppTextStyles.mobile_18pt_title_m_oxford_blue_C,
                       onTap: () {
                         if (isOptionsSuccess) {
-                          if (getLoginTokenState.isCompleted) {
-                            if (!isLogin) {
-                              showLoginDialog();
-                            }
+                          if (isLogin) {
+                            // 發送投票
+                            sendVote();
+                          } else if (getLoginTokenState.isCompleted) {
+                            // 顯示登入對話框
+                            showLoginDialog();
                           } else {
+                            // 拿取登入token(製作QRCode)
                             ref.read(authServiceProvider.notifier).getLoginToken(
                                 '${context.locale.languageCode}-${context.locale.countryCode}');
                           }
                         } else {
+                          // 有尚未選擇的選項，設定錯誤
                           ref
                               .watch(itemSelectInfoProvider.notifier)
                               .setupErrorOptions();

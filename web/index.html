@@ -49,7 +49,140 @@
   }
 </style>
 
+<!--loading 样式 -->
+<style type="text/css">
+  .loading-logoFadeIn {
+    background-color: #000b2b;
+    background-image: -webkit-radial-gradient(center, circle, #1e4287, #000b2b);
+    background-image: -moz-radial-gradient(center, circle, #1e4287, #000b2b);
+    background-image: -o-radial-gradient(center, circle, #1e4287, #000b2b);
+    background-image: radial-gradient(circle at center, #1e4287, #000b2b);
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999
+  }
+
+  .loading-logoFadeIn .loadingArea {
+    max-width: 300px;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%)
+  }
+
+  .loading-logoFadeIn .loadingArea .icon.loading-left {
+    opacity: 0;
+    position: relative;
+    left: -30px;
+    -webkit-animation: fadeIn_left 1.5s linear 0s forwards;
+    -moz-animation: fadeIn_left 1.5s linear 0s forwards;
+    animation: fadeIn_left 1.5s linear 0s forwards
+  }
+
+  .loading-logoFadeIn .loadingArea .icon.loading-right {
+    position: relative;
+    right: -30px;
+    opacity: 0;
+    -webkit-animation: fadeIn_right 1.5s linear 0s forwards;
+    -moz-animation: fadeIn_right 1.5s linear 0s forwards;
+    animation: fadeIn_right 1.5s linear 0s forwards
+  }
+
+  .loading-logoFadeIn img {
+    max-height: 64px;
+    vertical-align: middle;
+  }
+
+  @-webkit-keyframes fadeIn_left {
+    0% {
+      opacity: 0;
+      left: -30px
+    }
+
+    to {
+      opacity: 1;
+      left: -2px
+    }
+  }
+
+  @-moz-keyframes fadeIn_left {
+    0% {
+      opacity: 0;
+      left: -30px
+    }
+
+    to {
+      opacity: 1;
+      left: -2px
+    }
+  }
+
+  @keyframes fadeIn_left {
+    0% {
+      opacity: 0;
+      left: -30px
+    }
+
+    to {
+      opacity: 1;
+      left: -2px
+    }
+  }
+
+  @-webkit-keyframes fadeIn_right {
+    0% {
+      opacity: 0;
+      right: -30px
+    }
+
+    to {
+      opacity: 1;
+      right: -2px
+    }
+  }
+
+  @-moz-keyframes fadeIn_right {
+    0% {
+      opacity: 0;
+      right: -30px
+    }
+
+    to {
+      opacity: 1;
+      right: -2px
+    }
+  }
+
+  @keyframes fadeIn_right {
+    0% {
+      opacity: 0;
+      right: -30px
+    }
+
+    to {
+      opacity: 1;
+      right: -2px
+    }
+  }
+</style>
+
 <body>
+  <div id="loading-logoFadeIn" class="loading-logoFadeIn" style="display:block;">
+    <div class="loadingArea align-self-center"><img
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD4AAAAuCAYAAABwF6rfAAAACXBIWXMAAAsTAAALEwEAmpwYAAAGvmlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIiB4bWxuczpwaG90b3Nob3A9Imh0dHA6Ly9ucy5hZG9iZS5jb20vcGhvdG9zaG9wLzEuMC8iIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTggKFdpbmRvd3MpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAxOS0wMy0xM1QxMzo0MDoyMyswODowMCIgeG1wOk1vZGlmeURhdGU9IjIwMTktMDMtMjZUMTE6NTY6MTUrMDg6MDAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMTktMDMtMjZUMTE6NTY6MTUrMDg6MDAiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OGVlNDlkNzMtMDJmYy05YTRiLTllMTEtMmZlYTdkODhkNDdlIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjdGNjc3MDhDNDU1MjExRTk5QkRCODUzNzY5OEFEQjdGIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6N0Y2NzcwOEM0NTUyMTFFOTlCREI4NTM3Njk4QURCN0YiIGRjOmZvcm1hdD0iaW1hZ2UvcG5nIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIiBwaG90b3Nob3A6SUNDUHJvZmlsZT0ic1JHQiBJRUM2MTk2Ni0yLjEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo3RjY3NzA4OTQ1NTIxMUU5OUJEQjg1Mzc2OThBREI3RiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo3RjY3NzA4QTQ1NTIxMUU5OUJEQjg1Mzc2OThBREI3RiIvPiA8eG1wTU06SGlzdG9yeT4gPHJkZjpTZXE+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJzYXZlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDpiYjAzMzYwZS1jMjg0LTFjNGQtYjAxOS03NWViNTQxMmEwMjEiIHN0RXZ0OndoZW49IjIwMTktMDMtMTNUMTM6NTM6NTMrMDg6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE4IChXaW5kb3dzKSIgc3RFdnQ6Y2hhbmdlZD0iLyIvPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0ic2F2ZWQiIHN0RXZ0Omluc3RhbmNlSUQ9InhtcC5paWQ6OGVlNDlkNzMtMDJmYy05YTRiLTllMTEtMmZlYTdkODhkNDdlIiBzdEV2dDp3aGVuPSIyMDE5LTAzLTI2VDExOjU2OjE1KzA4OjAwIiBzdEV2dDpzb2Z0d2FyZUFnZW50PSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxOCAoV2luZG93cykiIHN0RXZ0OmNoYW5nZWQ9Ii8iLz4gPC9yZGY6U2VxPiA8L3htcE1NOkhpc3Rvcnk+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+b1Vf8QAACC5JREFU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"
+        alt="" class="icon loading-left img-fluid"><img
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFMAAAAeCAYAAABQdCKyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAF7mlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIiB4bWxuczpwaG90b3Nob3A9Imh0dHA6Ly9ucy5hZG9iZS5jb20vcGhvdG9zaG9wLzEuMC8iIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTggKFdpbmRvd3MpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAxOS0wMy0xM1QxMzo0MDozOSswODowMCIgeG1wOk1vZGlmeURhdGU9IjIwMTktMDMtMTNUMTM6NTQ6MDUrMDg6MDAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMTktMDMtMTNUMTM6NTQ6MDUrMDg6MDAiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MjA5ZjViNWQtNjczNC1hOTQ0LTkxMmItNTE2ZWRmOTAzMTE2IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjg4Q0YzNDZCNDU1MjExRTk4MDNDQjhDNkJDMjk5MEEyIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6ODhDRjM0NkI0NTUyMTFFOTgwM0NCOEM2QkMyOTkwQTIiIGRjOmZvcm1hdD0iaW1hZ2UvcG5nIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIiBwaG90b3Nob3A6SUNDUHJvZmlsZT0ic1JHQiBJRUM2MTk2Ni0yLjEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4OENGMzQ2ODQ1NTIxMUU5ODAzQ0I4QzZCQzI5OTBBMiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4OENGMzQ2OTQ1NTIxMUU5ODAzQ0I4QzZCQzI5OTBBMiIvPiA8eG1wTU06SGlzdG9yeT4gPHJkZjpTZXE+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJzYXZlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDoyMDlmNWI1ZC02NzM0LWE5NDQtOTEyYi01MTZlZGY5MDMxMTYiIHN0RXZ0OndoZW49IjIwMTktMDMtMTNUMTM6NTQ6MDUrMDg6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE4IChXaW5kb3dzKSIgc3RFdnQ6Y2hhbmdlZD0iLyIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz78fw1wAAAFAUlEQVRogd2aa4hVVRTHf3NnRkXM1JjMmigJqrFsJMgnA9UHX6jNl5KGqD5EDdPbPpgE1pdwIKiwqAQRK4gekEmlE6UToVBDmTZkZeaUJePoOEbzEDX792GfW3fOrH0e954b6R82l7v23ut/7trr7L3W2rdCEilRCVwOTAZGAYPAb0B3WkXnGqoSjqsBmoBGYA4w2hjTC7QD7wCbgVMZPN9ZhYoYz5wIrAaagTEp9P4KrAHWAX8V/XRnGaKMuQh4FeeVxeIL4HagK2ZcJfAA0EDytwXcQvUA3wBbgF8S8NwH3ARUp+ARcCTg2QocsEdJVluh7NAnaZ6HJ99eyYhrs6RpETzPZsTTJqk+rN8ifCwjwkIMSpplcCGpWtKpDLlOSrrXwzWUIc9pSQ8pwphLYhQckLRa0lxJNZLGSaqVtFjSy5IGIuYelnSRRv7ACcX9llg8anCVA6tkGHOSpF7PhAFJLZKqjAcsbBMlrYsg/sCYUy5jnpF0o8pvTElaIGnYAfQicL+xrR7CHUadKTbsu4ANQM7oWxxs4nlMAI4b4z4CDsfwVAPXAdd6+n8ApvFvRGGdtu3AwRieqoCj3tP/M3BVfsUmSzphWHxA0nRFe6OvtXhWcaeSeWbYq6LaQklHPXoaFe2Zhf1x7WZJ3R49TXnPuQM7jlxJOo8sxEvAh4Z8Ls5bskQbsBA4Y/TdmiHPdmA+dkJyW96YtxidXbiguxSs9MiXlajXwlfAm4Z8dsY8nbj4O4yZOdy+YxG+BvxZIvG3QIchbyhRrw/bDdnFZeBpN2RTcsBU7Gzgk4yIrR9Yl5HuMPoMWZo0OClOWMIccKFnwr6MiPcbsgsy0v2/Qg5/Lpyk6jMauAG4NGLMoCErh7cAnGfITpeBZ5QlzAFDngmTYhTW4eK4Dlyc9hxQYYyzCiXW65gF5hiyuFi1GMwyZMdy+Cst18cofB64rOD7I7hwKGzQGcbcchSSp+KShTB2ZcxzCXCPIf8yhyth9RidVrhUiCsNWTPDDVoFLDHGWSd8KbgaF2uONfo2ZchzBS4zG2/0bc7vl9twlfRCLAdW4a4kLOzEXV+E0Yw77Vbgguh3A1khPo156ELMxx/kj8d5/lLsvb8beDshz1KcsSyMC3iWYUc+vcDr+TRpqSdF2hSRWtVI6vTMk6TWYFyFXEUpjz8kjVXydHJjBEccloee2UI+nXyvBJ67Jf1TiNgK/GRYvBF4wrNaR4EFnnngsp9WXHGhBVgfyDfgP/SyxFrgrf+AZz2wERhWgmuKsHyrpErZHloraX/E3KeDcZVyFfWa0PxyeOYzcm9EknpmKZ65VgV2CZO1RUz8WtIiSTnjIeMM+rgxpxzG3KugtuhpFoox5j65rXGY/vCmfSeuYFBruPMM3KXVIVxu+j1wEhdH1hOdA68JPluLeI0OAnsi+vuC/vdxB1uxt6FdMTzHg/4tuFR7JI+xenWSelKsUho8bPBlUc9M2iykqWdGNqsS/h0wD9hb5ApHoRU75TsnYBkTXHFiJu4qI8s/EYzB/a2mEL4aQKnlPwvWtYVZASoGPmOCK1A8CEwH3sDtj0lwBHgSV7PsDfV1MfIPCUPAjpDsGLA7IV8afBz6/jvweWbaU+wJ58sFwS9I2iZpt6QfJXXIXf4/JXdHUhhC1Un6TFK/pB2SrvHorpWLJPol7ZI0uwz7JZKmyN2Q9kvaI6khS/1/A2IjOEC/BIvBAAAAAElFTkSuQmCC"
+        alt="" class="icon loading-right img-fluid"></div>
+  </div>
+
   <script>
     window.addEventListener("load", function (ev) {
       // Download main.dart.js
@@ -71,6 +204,17 @@
             });
         },
       });
+    });
+
+    // Flutter 渲染的第一幀完成就關閉載入動畫
+    window.addEventListener("flutter-first-frame", function () {
+      setTimeout(() => {
+        console.log("Script is executed");
+        var element = document.getElementById("loading-logoFadeIn");
+        if (element) {
+          element.style.display = "none";
+        }
+      }, 300);
     });
   </script>
 </body>

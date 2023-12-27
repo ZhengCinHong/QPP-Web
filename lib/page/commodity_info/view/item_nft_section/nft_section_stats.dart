@@ -35,6 +35,9 @@ class StatsContent extends NFTSectionInfoContent<List> {
         // 關掉 over scroll 效果
         physics: const BouncingScrollPhysics(),
         itemCount: data.length,
+        prototypeItem: ItemStats(
+          trait: data[0],
+        ),
         itemBuilder: (context, index) {
           return ItemStats(
             trait: data[index],

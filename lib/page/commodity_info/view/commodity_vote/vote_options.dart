@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -150,9 +151,11 @@ class VoteOptionsItem extends StatelessWidget {
                                     .mobile_14pt_body_category_text_L,
                       ),
                     ),
-                    Text(
-                      voteData.voteTitle,
-                      style: isError ? errorTextStyle : textStyle,
+                    Flexible(
+                      child: AutoSizeText(
+                        voteData.voteTitle,
+                        style: isError ? errorTextStyle : textStyle,
+                      ),
                     )
                   ],
                 );
@@ -209,6 +212,9 @@ class VoteOptionsItem extends StatelessWidget {
                           final percent =
                               e.value.percent(voteData.totalVoteNumber);
 
+                          /// 是否為0%
+                          final bool isZeroPercent = percent == 0;
+
                           /// 投票顯示狀態
                           final voteShowType = qppVote.voteShowType;
 
@@ -218,54 +224,52 @@ class VoteOptionsItem extends StatelessWidget {
 
                           return Column(
                             children: [
-                              Wrap(
-                                children: [
-                                  MouseRegion(
-                                    cursor: isEnableTap
-                                        ? MaterialStateMouseCursor.clickable
-                                        : MouseCursor.defer,
-                                    child: GestureDetector(
-                                      child: Row(
-                                        children: [
-                                          !isEnableTap
-                                              ? const SizedBox.shrink()
-                                              : Image.asset(
-                                                  isSelected
-                                                      ? QPPImages
-                                                          .desktop_icon_button_check_single
-                                                      : QPPImages
-                                                          .desktop_icon_button_check_default,
-                                                ),
-                                          !isEnableTap
-                                              ? const SizedBox.shrink()
-                                              : SizedBox(
-                                                  width:
-                                                      isDesktopStyle ? 8 : 12,
-                                                ),
-                                          Flexible(
-                                            child: Text(
-                                              e.value.option,
-                                              style: (isSelected &&
-                                                      !isEnableTap &&
-                                                      voteShowType !=
-                                                          VoteShowType.noShow)
-                                                  ? selectedTextStyle
-                                                  : textStyle,
-                                            ).disabledSelectionContainer,
-                                          )
-                                        ],
-                                      ),
-                                      onTap: () {
-                                        if (isEnableTap) {
-                                          notifier.selectedOption(index, e.key);
-                                          notifier.updateErrorOptions(
-                                              index, false);
-                                        }
-                                      },
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: MouseRegion(
+                                  cursor: isEnableTap
+                                      ? MaterialStateMouseCursor.clickable
+                                      : MouseCursor.defer,
+                                  child: GestureDetector(
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        !isEnableTap
+                                            ? const SizedBox.shrink()
+                                            : Image.asset(
+                                                isSelected
+                                                    ? QPPImages
+                                                        .desktop_icon_button_check_single
+                                                    : QPPImages
+                                                        .desktop_icon_button_check_default,
+                                              ),
+                                        !isEnableTap
+                                            ? const SizedBox.shrink()
+                                            : SizedBox(
+                                                width: isDesktopStyle ? 8 : 12,
+                                              ),
+                                        Flexible(
+                                          child: Text(
+                                            e.value.option,
+                                            style: (isSelected &&
+                                                    !isEnableTap &&
+                                                    voteShowType !=
+                                                        VoteShowType.noShow)
+                                                ? selectedTextStyle
+                                                : textStyle,
+                                          ).disabledSelectionContainer,
+                                        ),
+                                      ],
                                     ),
+                                    onTap: () {
+                                      if (isEnableTap) {
+                                        notifier.selectedOption(index, e.key);
+                                        notifier.updateErrorOptions(
+                                            index, false);
+                                      }
+                                    },
                                   ),
-                                  const Spacer(),
-                                ],
+                                ),
                               ),
                               voteShowType != VoteShowType.noShow
                                   ? Column(
@@ -288,10 +292,6 @@ class VoteOptionsItem extends StatelessWidget {
                                                         percent *
                                                             constraints
                                                                 .maxWidth;
-
-                                                    /// 是否為0%
-                                                    final bool isZeroPercent =
-                                                        percentWidth == 0;
 
                                                     // 百分比條
                                                     return Container(
@@ -332,7 +332,9 @@ class VoteOptionsItem extends StatelessWidget {
                                               Text(
                                                 isQuestionMark
                                                     ? '?%'
-                                                    : '${(percent * 100).toStringAsFixed(2)}%',
+                                                    : isZeroPercent
+                                                        ? '0.0%'
+                                                        : '${(percent * 100).toStringAsFixed(2)}%',
                                                 style: isDesktopStyle
                                                     ? isQuestionMark
                                                         ? QppTextStyles

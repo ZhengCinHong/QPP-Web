@@ -7,7 +7,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qpp_example/common_ui/qpp_menu/c_menu_anchor.dart';
 import 'package:qpp_example/common_view_model/auth_service/view_model/auth_service_view_model.dart';
+import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/build_context.dart';
+import 'package:qpp_example/extension/string/url.dart';
 import 'package:qpp_example/extension/void/dialog_void.dart';
 import 'package:qpp_example/extension/throttle_debounce.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/model/qpp_app_bar_model.dart';
@@ -131,9 +133,9 @@ class _Logo extends StatelessWidget {
         width: isDesktopStyle ? 147.2 : 89,
         height: isDesktopStyle ? 44.4 : 27.4,
       ),
-      onPressed: () => context.canPop()
-          ? context.goNamed(QppGoRouter.app)
-          : context.goNamed(QppGoRouter.home), // 要在修改，現在只有error畫面會跳到home
+      onPressed: () => Uri.base.path == QppGoRouter.home
+          ? null
+          : ServerConst.testRouterHost.launchURL(isNewTab: false),
     );
   }
 }
@@ -179,45 +181,36 @@ class MenuBtns extends StatelessWidget {
                   builder: (event) => MouseRegion(
                     cursor: SystemMouseCursors.click, // 改鼠標樣式
                     child: GestureDetector(
-                      onTap: () {
-                        bool isInHomePage =
-                            ModalRoute.of(context)?.isFirst ?? false;
+                        onTap: () {
+                          bool isInHomePage =
+                              ModalRoute.of(context)?.isFirst ?? false;
 
-                        if (isInHomePage) {
-                          Scrollable.ensureVisible(
-                            e.currentContext!,
-                            duration: const Duration(seconds: 1),
-                          );
-                        } else {
-                          context.pop();
-
-                          Future.delayed(
-                            const Duration(milliseconds: 300),
-                            () => Scrollable.ensureVisible(
+                          if (isInHomePage) {
+                            Scrollable.ensureVisible(
                               e.currentContext!,
                               duration: const Duration(seconds: 1),
-                            ),
-                          );
-                        }
-                      }.throttleWithTimeout(timeout: 2000),
-                      child: Container(
-                        constraints: const BoxConstraints(maxWidth: 120),
-                        child: AutoSizeText(
-                          key: e.key,
-                          context.tr(e.text),
-                          style: TextStyle(
-                            color: event is PointerEnterEvent
-                                ? QppColors.canaryYellow
-                                : QppColors.white,
-                            fontSize: fontSize,
-                          ),
-                          maxLines: 2,
-                        ).disabledSelectionContainer,
-                      ),
-                    ),
+                            );
+                          } else {
+                            context.pop();
+
+                            Future.delayed(
+                              const Duration(milliseconds: 300),
+                              () => Scrollable.ensureVisible(
+                                e.currentContext!,
+                                duration: const Duration(seconds: 1),
+                              ),
+                            );
+                          }
+                        }.throttleWithTimeout(timeout: 2000),
+                        child: _MenuBtnText(
+                          type: e,
+                          isHorizontal: isHorizontal,
+                          event: event,
+                          fontSize: fontSize,
+                        )),
                   ),
                 ),
-                MenuBtnSpacing(
+                _MenuBtnSpacing(
                   type: e,
                   isHorizontal: isHorizontal,
                   padding: padding,
@@ -231,9 +224,45 @@ class MenuBtns extends StatelessWidget {
 }
 
 /// 選單按鈕間距
-class MenuBtnSpacing extends StatelessWidget {
-  const MenuBtnSpacing({
-    super.key,
+class _MenuBtnText extends StatelessWidget {
+  const _MenuBtnText({
+    required this.type,
+    required this.isHorizontal,
+    required this.event,
+    required this.fontSize,
+  });
+
+  final MainMenu type;
+  final bool isHorizontal;
+  final PointerEvent event;
+  final double fontSize;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: BoxConstraints(
+        maxWidth: isHorizontal
+            ? 120.getRealWidth(screenWidth: MediaQuery.of(context).size.width)
+            : 120,
+      ),
+      child: AutoSizeText(
+        key: type.key,
+        context.tr(type.text),
+        style: TextStyle(
+          color: event is PointerEnterEvent
+              ? QppColors.canaryYellow
+              : QppColors.white,
+          fontSize: fontSize,
+        ),
+        maxLines: 2,
+      ).disabledSelectionContainer,
+    );
+  }
+}
+
+/// 選單按鈕間距
+class _MenuBtnSpacing extends StatelessWidget {
+  const _MenuBtnSpacing({
     required this.type,
     required this.isHorizontal,
     required this.padding,
@@ -248,12 +277,14 @@ class MenuBtnSpacing extends StatelessWidget {
     return Container(
       constraints: BoxConstraints(
         maxWidth: type == MainMenu.contact
-            ? 0
+            ? double.infinity
             : (isHorizontal
                 ? padding.getRealWidth(
                     screenWidth: MediaQuery.of(context).size.width)
-                : 0),
-        maxHeight: type == MainMenu.contact ? 0 : (isHorizontal ? 0 : padding),
+                : double.infinity),
+        maxHeight: type == MainMenu.contact
+            ? double.infinity
+            : (isHorizontal ? double.infinity : padding),
       ),
     );
   }
@@ -365,7 +396,13 @@ class _UserInfo extends StatelessWidget {
               child: Row(
                 children: [
                   ClipOval(
-                    child: Image.network(loginInfo?.uidImage ?? "", width: 24),
+                    child: Image.network(
+                      loginInfo?.uidImage ?? "",
+                      width: 24,
+                      errorBuilder: (context, error, stackTrace) => Image.asset(
+                        QPPImages.mobile_icon_actionbar_profile_login_default,
+                      ),
+                    ),
                   ),
                   isDesktopStyle
                       ? const SizedBox(width: 8)
@@ -558,10 +595,12 @@ class FullScreenMenuBtnPage extends ConsumerWidget {
                               isOpenAppBarMenuBtnNotifier.toggle();
 
                               BuildContext? currentContext = e.currentContext;
-                              bool isHomePage = currentContext != null;
+                              bool isHomePage =
+                                  Uri.base.path == QppGoRouter.home;
 
                               if (!isHomePage) {
-                                context.goNamed(QppGoRouter.home);
+                                ServerConst.testRouterHost
+                                    .launchURL(isNewTab: false);
                               }
 
                               /// 延遲等待跳轉完，重新抓currentContext

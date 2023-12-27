@@ -61,7 +61,8 @@ class CActionsDialog extends StatelessWidget {
           isDesktopPlatform
               ? UnconstrainedBox(
                   child: Container(
-                      height: 1, width: width, color: QppColors.white))
+                      height: 1, width: width, color: QppColors.white),
+                )
               : const SizedBox.shrink(),
           SizedBox(height: isDesktopPlatform ? 16 : 0),
           Text(

@@ -141,7 +141,7 @@ class _VoteStateItem extends StatelessWidget {
                     ?
                     // 截止Text(for 狀態)
                     Text(
-                        '(${context.tr(QppLocales.commodityInfoExpriy)}${data.expiryDate})',
+                        '(${context.tr(QppLocales.commodityInfoExpriy)}${data.expiryDateForDisplay})',
                         style: isDesktopStyle
                             ? QppTextStyles.web_16pt_body_red_L
                             : QppTextStyles.mobile_10pt_caption_red_L,

@@ -190,15 +190,12 @@ class _AvatarWidget extends ConsumerWidget {
                                   ),
                                 )
                               : const SizedBox.shrink(),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              right: isOfficial ? officaialIconWidth : 0, // 加上間距，用來讓兩個Text對齊
-                            ),
-                            child: Text(
-                              userID.toString(),
-                              style: QppTextStyles
-                                  .mobile_14pt_body_Indian_yellow_L,
-                            ),
+                          Text(
+                            userID.toString(),
+                            style: isDesktopStyle
+                                ? QppTextStyles.web_16pt_body_Indian_yellow_L
+                                : QppTextStyles
+                                    .mobile_14pt_body_Indian_yellow_L,
                           ),
                         ],
                       ),
