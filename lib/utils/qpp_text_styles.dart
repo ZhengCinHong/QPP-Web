@@ -249,12 +249,10 @@ abstract class QppTextStyles {
     color: QppColors.cyanBlueAzure,
     fontSize: 16,
   );
-
   static const TextStyle web_16pt_body_white_L = TextStyle(
     color: QppColors.white,
     fontSize: 16,
   );
-
   static const TextStyle web_16pt_body_red_L = TextStyle(
     color: QppColors.outrageousOrange,
     fontSize: 16,
