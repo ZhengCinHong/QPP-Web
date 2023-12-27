@@ -204,6 +204,7 @@ class MenuBtns extends StatelessWidget {
                         }.throttleWithTimeout(timeout: 2000),
                         child: _MenuBtnText(
                           type: e,
+                          isHorizontal: isHorizontal,
                           event: event,
                           fontSize: fontSize,
                         )),
@@ -226,11 +227,13 @@ class MenuBtns extends StatelessWidget {
 class _MenuBtnText extends StatelessWidget {
   const _MenuBtnText({
     required this.type,
+    required this.isHorizontal,
     required this.event,
     required this.fontSize,
   });
 
   final MainMenu type;
+  final bool isHorizontal;
   final PointerEvent event;
   final double fontSize;
 
@@ -238,8 +241,9 @@ class _MenuBtnText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints(
-        maxWidth:
-            120.getRealWidth(screenWidth: MediaQuery.of(context).size.width),
+        maxWidth: isHorizontal
+            ? 120.getRealWidth(screenWidth: MediaQuery.of(context).size.width)
+            : 120,
       ),
       child: AutoSizeText(
         key: type.key,
@@ -273,12 +277,14 @@ class _MenuBtnSpacing extends StatelessWidget {
     return Container(
       constraints: BoxConstraints(
         maxWidth: type == MainMenu.contact
-            ? 0
+            ? double.infinity
             : (isHorizontal
                 ? padding.getRealWidth(
                     screenWidth: MediaQuery.of(context).size.width)
-                : 0),
-        maxHeight: type == MainMenu.contact ? 0 : (isHorizontal ? 0 : padding),
+                : double.infinity),
+        maxHeight: type == MainMenu.contact
+            ? double.infinity
+            : (isHorizontal ? double.infinity : padding),
       ),
     );
   }

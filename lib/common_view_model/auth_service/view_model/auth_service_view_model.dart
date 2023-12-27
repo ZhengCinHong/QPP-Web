@@ -38,7 +38,7 @@ class AuthServiceStateNotifier extends ChangeNotifier {
     getLoginTokenState = ApiResponse.loading();
     notifyListeners();
 
-    if (SharedPrefs.getLoginInfo()?.isLogin == false) {
+    if (!(SharedPrefs.getLoginInfo()?.isLogin ?? false)) {
       final request = GetLoginTokenRequest().createBody(lang);
 
       LocalApi.client.postGetLoginToken(request).then((getLoginTokenResponse) {
