@@ -90,6 +90,7 @@ class StateNFTInfoTeach extends State<NFTInfoTeachScaffold>
 
     return SelectionArea(
         child: Scaffold(
+      backgroundColor: QppColors.oxfordBlue,
       extendBodyBehindAppBar: true,
       body: Container(
         padding: const EdgeInsets.only(bottom: 20),

@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:qpp_example/common_ui/qpp_app_bar/model/qpp_app_bar_model.dart';
 
 /// 是否顯示全螢幕選單Provider
 final StateNotifierProvider<IsOpenAppBarMenuBtnPageStateNotifier, bool>
@@ -27,3 +28,6 @@ class MouseRegionStateNotifier extends StateNotifier<PointerEvent> {
     state = const PointerExitEvent();
   }
 }
+
+/// 滑動到context位置
+final scrollToContextProvider = StateProvider<MainMenu?>((ref) => null);

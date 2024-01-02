@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:qpp_example/extension/string/text.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 
 class CopyTextMenu extends StatefulWidget {
   final String tipText;
@@ -15,7 +16,7 @@ class CopyTextMenu extends StatefulWidget {
     required this.tipTextStyle,
     required this.scrollController,
   }) : tipBackgroundImage = const DecorationImage(
-          image: AssetImage('assets/bg-dialog.png'),
+          image: AssetImage(QPPImages.bg_dialog),
           fit: BoxFit.fill,
         );
 

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:qpp_example/common_ui/qpp_app_bar/model/qpp_app_bar_model.dart';
 import 'package:qpp_example/common_ui/qpp_universal_link/universal_link_qrcode.dart';
 import 'package:qpp_example/constants/qpp_contanst.dart';
 import 'package:qpp_example/constants/server_const.dart';
@@ -10,7 +11,6 @@ import 'package:qpp_example/extension/string/url.dart';
 import 'package:qpp_example/extension/widget/disable_selection_container.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/home/model/home_page_model.dart';
-import 'package:qpp_example/page/home/view/home_page.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
@@ -24,7 +24,7 @@ class HomePageIntroduce extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDesktopStyle = context.screenStyle.isDesktop;
+    final isDesktopStyle = MediaQuery.of(context).size.width >= 1300; // 特殊螢幕風格
 
     return Padding(
       padding: EdgeInsets.only(

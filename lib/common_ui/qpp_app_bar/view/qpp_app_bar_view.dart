@@ -162,6 +162,14 @@ class MenuBtns extends StatelessWidget {
   final double padding;
   final double fontSize;
 
+  /// 滑動到context
+  void scrollToContext(BuildContext context) {
+    Scrollable.ensureVisible(
+      context,
+      duration: const Duration(seconds: 1),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // debugPrint(toString());
@@ -179,34 +187,41 @@ class MenuBtns extends StatelessWidget {
                 MouseRegionCustomWidget(
                   builder: (event) => MouseRegion(
                     cursor: SystemMouseCursors.click, // 改鼠標樣式
-                    child: GestureDetector(
-                        onTap: () {
-                          bool isInHomePage =
-                              ModalRoute.of(context)?.isFirst ?? false;
+                    child: Consumer(builder: (context, ref, child) {
+                      final scrollToContextNotifier =
+                          ref.read(scrollToContextProvider.notifier);
 
-                          if (isInHomePage) {
-                            Scrollable.ensureVisible(
-                              e.currentContext!,
-                              duration: const Duration(seconds: 1),
-                            );
-                          } else {
-                            context.pop();
+                      return GestureDetector(
+                          onTap: () {
+                            final bool isHomePage =
+                                Uri.base.path == QppGoRouter.home;
 
-                            Future.delayed(
-                              const Duration(milliseconds: 300),
-                              () => Scrollable.ensureVisible(
-                                e.currentContext!,
-                                duration: const Duration(seconds: 1),
-                              ),
-                            );
-                          }
-                        }.throttleWithTimeout(timeout: 2000),
-                        child: _MenuBtnText(
-                          type: e,
-                          isHorizontal: isHorizontal,
-                          event: event,
-                          fontSize: fontSize,
-                        )),
+                            if (isHomePage) {
+                              if (e.currentContext != null) {
+                                scrollToContextNotifier.state = e;
+                              }
+                            } else {
+                              if (context.canPop()) {
+                                context.pop();
+                              } else {
+                                context.go(QppGoRouter.home);
+                              }
+
+                              Future.delayed(
+                                const Duration(milliseconds: 300),
+                                () => e.currentContext != null
+                                    ? scrollToContextNotifier.state = e
+                                    : null,
+                              );
+                            }
+                          }.throttleWithTimeout(timeout: 1000),
+                          child: _MenuBtnText(
+                            type: e,
+                            isHorizontal: isHorizontal,
+                            event: event,
+                            fontSize: fontSize,
+                          ));
+                    }),
                   ),
                 ),
                 _MenuBtnSpacing(

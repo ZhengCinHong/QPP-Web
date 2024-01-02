@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qpp_example/api/core/http_service.dart';
+import 'package:qpp_example/extension/string/text.dart';
 import 'package:qpp_example/go_router/router.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
@@ -9,6 +10,7 @@ import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:qpp_example/utils/shared_prefs_utils.dart';
 
 void main() async {
+  Setting();
   SharedPrefs.init();
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -45,10 +47,28 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       builder: (context, child) {
         return MediaQuery(
-            // 固定字型大小
-            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-            child: child!);
+          // 固定字型大小
+          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+          child: child!,
+        );
       },
     );
+  }
+}
+
+class Setting {
+  Setting._internal();
+  factory Setting() => _instance;
+  static final Setting _instance = Setting._internal();
+
+  final String url = Uri.base.toString();
+  final Map<String, String> params = Uri.base.queryParameters;
+  /// 是否連接測試 server
+  bool isTest() {
+    String? testParam = params["isTest"];
+    if (!testParam.isNullOrEmpty) {
+      return testParam == "true";
+    }
+    return false;
   }
 }
