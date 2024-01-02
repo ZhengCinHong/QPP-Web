@@ -38,12 +38,6 @@ class StateClickArrow extends State<BtnArrowUpDown>
     with TickerProviderStateMixin {
   late bool _isUp;
 
-  void _onTap() {
-    setState(() {
-      rotate();
-    });
-  }
-
   /// 動畫參考出處 https://blog.csdn.net/ww897532167/article/details/125280054
 
   late final Animation<double> _animation;
@@ -63,15 +57,12 @@ class StateClickArrow extends State<BtnArrowUpDown>
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      // onTap: widget.onTap ?? _onTap,
-      child: RotationTransition(
-        turns: _animation,
-        child: Image.asset(
-          widget._arrowPath,
-          width: widget.size,
-          height: widget.size,
-        ),
+    return RotationTransition(
+      turns: _animation,
+      child: Image.asset(
+        widget._arrowPath,
+        width: widget.size,
+        height: widget.size,
       ),
     );
   }
