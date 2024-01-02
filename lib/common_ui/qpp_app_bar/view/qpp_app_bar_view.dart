@@ -53,6 +53,9 @@ class _QppAppBarTitle extends ConsumerWidget {
 
     final bool isDesktopStyle = screenStyle.isDesktop;
 
+    final bool isOpenAppBarMenuBtnPage =
+        ref.watch(isOpenAppBarMenuBtnPageProvider);
+
     final checkLoginTokenState = ref.watch(
         authServiceProvider.select((value) => value.checkLoginTokenState));
 
@@ -100,9 +103,12 @@ class _QppAppBarTitle extends ConsumerWidget {
         // 三條 or 最右邊間距
         isDesktopStyle
             ? const Flexible(child: SizedBox.shrink())
-            : const Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: AnimationMenuBtn(isClose: false),
+            : Opacity(
+                opacity: isOpenAppBarMenuBtnPage ? 0 : 1,
+                child: const Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: AnimationMenuBtn(isClose: false),
+                ),
               ),
         isDesktopStyle ? const Spacer(flex: 319) : const SizedBox(width: 24)
       ],
