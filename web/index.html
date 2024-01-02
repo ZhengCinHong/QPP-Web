@@ -209,6 +209,25 @@
       loadingAnimation.style.display = 'none';
     });
   </script>
+
+  <!-- 修正 iOS webview 無法滾動問題 -->
+  <script>
+    var element = document.getElementsByTagName("body")[0];
+
+    var handleScroll = function () {
+      element.scrollTo(0, 0); // required when scroll bar is drgged
+    };
+
+    element.addEventListener("scroll", handleScroll, false);
+
+    var handleEvent = function (e) {
+      e.preventDefault(); // disables scrolling by mouse wheel and touch move
+    };
+
+    element.addEventListener("scroll", handleEvent, { passive: false });
+    element.addEventListener("mousewheel", handleEvent, { passive: false });
+    element.addEventListener("touchmove", handleEvent, { passive: false });
+  </script>
 </body>
 
 </html>
