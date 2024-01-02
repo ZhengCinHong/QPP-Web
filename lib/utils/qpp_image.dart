@@ -277,4 +277,7 @@ class QPPImages {
       "assets/desktop-pic-nft-instruction-23.png";
   static const String desktop_pic_nft_instruction_24 =
       "assets/desktop-pic-nft-instruction-24.png";
+  static const String mobile_icon_actionbar_close_normal =
+      "assets/mobile-icon-actionbar-close-normal.png";
+  static const String bg_dialog = "assets/bg-dialog.png";
 }

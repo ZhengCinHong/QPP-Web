@@ -35,39 +35,51 @@ class VoteItemState extends ConsumerWidget {
               left: isDesktopStyle ? 37 : 0,
               right: isDesktopStyle ? 37 : 0,
             ),
-            child: Row(
+            child: Table(
+              columnWidths: {
+                1: FixedColumnWidth(isDesktopStyle ? 18 : 1),
+              },
               children: [
-                // 狀態
-                Expanded(
-                  child: isDesktopStyle
-                      ? _VoteStateItem.desktop(
-                          type: VoteItemStateType.state,
-                          data: voteData,
-                        )
-                      : _VoteStateItem.mobile(
-                          type: VoteItemStateType.state,
-                          data: voteData,
-                        ),
-                ),
-                // 間距
-                isDesktopStyle
-                    ? const SizedBox(width: 18)
-                    : Container(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        width: 1,
-                        color: QppColors.ashGray,
+                TableRow(
+                  children: [
+                    // 狀態
+                    Container(
+                      child: isDesktopStyle
+                          ? _VoteStateItem.desktop(
+                              type: VoteItemStateType.state,
+                              data: voteData,
+                            )
+                          : _VoteStateItem.mobile(
+                              type: VoteItemStateType.state,
+                              data: voteData,
+                            ),
+                    ),
+                    // 間距
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.fill,
+                      child: isDesktopStyle
+                          ? const SizedBox()
+                          : Container(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              color: QppColors.ashGray,
+                            ),
+                    ),
+                    // 投票人數
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.fill,
+                      child: Container(
+                        child: isDesktopStyle
+                            ? _VoteStateItem.desktop(
+                                type: VoteItemStateType.voteCount,
+                                data: voteData,
+                              )
+                            : _VoteStateItem.mobile(
+                                type: VoteItemStateType.voteCount,
+                                data: voteData,
+                              ),
                       ),
-                // 投票人數
-                Expanded(
-                  child: isDesktopStyle
-                      ? _VoteStateItem.desktop(
-                          type: VoteItemStateType.voteCount,
-                          data: voteData,
-                        )
-                      : _VoteStateItem.mobile(
-                          type: VoteItemStateType.voteCount,
-                          data: voteData,
-                        ),
+                    ),
+                  ],
                 ),
               ],
             ),
