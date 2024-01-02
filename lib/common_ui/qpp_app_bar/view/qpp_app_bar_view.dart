@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
@@ -25,13 +24,12 @@ import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
 import 'package:qpp_example/utils/shared_prefs_utils.dart';
 
-AppBar qppAppBar(ScreenStyle screenStyle) {
+AppBar qppAppBar(bool isDesktop) {
   return AppBar(
     automaticallyImplyLeading: false, // 關閉返回按鈕
-    toolbarHeight:
-        screenStyle.isDesktop ? kToolbarDesktopHeight : kToolbarMobileHeight,
+    toolbarHeight: isDesktop ? kToolbarDesktopHeight : kToolbarMobileHeight,
     backgroundColor: QppColors.barMask,
-    title: screenStyle.isDesktop
+    title: isDesktop
         ? const _QppAppBarTitle.desktop()
         : const _QppAppBarTitle.mobile(),
     titleSpacing: 0,
@@ -305,54 +303,55 @@ class AnimationMenuBtn extends StatefulWidget {
 
 class _AnimationMenuBtn extends State<AnimationMenuBtn>
     with TickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 500),
-  );
-
-  int _count = 0;
-  final int _targetCount = 1;
+  late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
 
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _count++;
-        if (_count < _targetCount) {
-          _controller.reset();
-          _controller.forward();
-        }
-      }
-    });
-    _controller.forward();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+
+    // 只針對非彈窗按鈕，瀏覽器拉縮時要顯示動畫。(close->menu)
+    if (!widget.isClose) {
+      _controller.forward(from: 1.0);
+      _controller.reverse();
+    }
   }
 
   @override
   void dispose() {
-    _controller.dispose(); // 要在super.dispose()之前處置Ticker
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        return Transform.rotate(
-          angle: -_controller.value * 2 * pi,
-          child: Consumer(builder: (context, ref, child) {
-            final notifier = ref.read(isOpenAppBarMenuBtnPageProvider.notifier);
+    return Consumer(
+      builder: (context, ref, child) {
+        final notifier = ref.read(isOpenAppBarMenuBtnPageProvider.notifier);
+        final isOpenAppBarMenuBtnPage =
+            ref.watch(isOpenAppBarMenuBtnPageProvider);
 
-            return IconButton(
-              iconSize: 24,
-              onPressed: () => notifier.toggle(),
-              icon: widget.isClose || _count < _targetCount
-                  ? Image.asset('assets/mobile-icon-actionbar-close-normal.png')
-                  : Image.asset(QPPImages.mobile_icon_actionbar_list_normal),
-            );
-          }),
+        // 處理播放動畫
+        if (isOpenAppBarMenuBtnPage) {
+          _controller.forward();
+        } else {
+          _controller.reverse();
+        }
+
+        return InkWell(
+          child: AnimatedIcon(
+            icon: AnimatedIcons.menu_close,
+            progress: _controller,
+            size: 24,
+            color: Colors.white,
+          ),
+          onTap: () {
+            notifier.toggle();
+          },
         );
       },
     );
@@ -576,6 +575,15 @@ class _FullScreenMenuBtnPageState extends State<FullScreenMenuBtnPage>
     curve: Curves.fastOutSlowIn,
   );
 
+  late bool _isInitState;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _isInitState = true;
+  }
+
   @override
   void dispose() {
     _controller.dispose();
@@ -585,11 +593,29 @@ class _FullScreenMenuBtnPageState extends State<FullScreenMenuBtnPage>
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, child) {
-      final bool isOpenAppBarMenuBtnPage =
+      final isOpenAppBarMenuBtnPage =
           ref.watch(isOpenAppBarMenuBtnPageProvider);
       final isOpenAppBarMenuBtnNotifier =
           ref.read(isOpenAppBarMenuBtnPageProvider.notifier);
 
+      // 強制處理介面被回收時，參數需要重置。
+      if (_isInitState) {
+        _isInitState = false;
+
+        if (isOpenAppBarMenuBtnPage) {
+          Future.microtask(() {
+            // 避免被銷毀時，強制設定會直接死機。
+            if (!context.mounted) {
+              return;
+            }
+            isOpenAppBarMenuBtnNotifier.toggle();
+          });
+
+          return const SizedBox.shrink();
+        }
+      }
+
+      // 播放動畫
       if (isOpenAppBarMenuBtnPage) {
         _controller.reset();
         _controller.forward();
@@ -600,11 +626,11 @@ class _FullScreenMenuBtnPageState extends State<FullScreenMenuBtnPage>
               sizeFactor: _animation,
               axis: Axis.vertical,
               axisAlignment: -1,
-              child: ColoredBox(
-                color: const Color.fromARGB(255, 23, 57, 117).withOpacity(0.9),
-                child: Stack(
-                  children: [
-                    const SizedBox(
+              child: Stack(
+                children: [
+                  const Scaffold(
+                    backgroundColor: Color.fromARGB(153, 0, 0, 0),
+                    body: SizedBox(
                       height: kToolbarMobileHeight,
                       child: Row(
                         children: [
@@ -618,52 +644,50 @@ class _FullScreenMenuBtnPageState extends State<FullScreenMenuBtnPage>
                         ],
                       ),
                     ),
-                    Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: MainMenu.values
-                            .map(
-                              (e) => TextButton(
-                                onPressed: () {
-                                  isOpenAppBarMenuBtnNotifier.toggle();
+                  ),
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: MainMenu.values
+                          .map(
+                            (e) => TextButton(
+                              onPressed: () {
+                                isOpenAppBarMenuBtnNotifier.toggle();
 
-                                  BuildContext? currentContext =
-                                      e.currentContext;
-                                  bool isHomePage =
-                                      Uri.base.path == QppGoRouter.home;
+                                BuildContext? currentContext = e.currentContext;
+                                bool isHomePage =
+                                    Uri.base.path == QppGoRouter.home;
 
-                                  if (!isHomePage) {
-                                    ServerConst.testRouterHost
-                                        .launchURL(isNewTab: false);
+                                if (!isHomePage) {
+                                  ServerConst.testRouterHost
+                                      .launchURL(isNewTab: false);
+                                }
+
+                                /// 延遲等待跳轉完，重新抓currentContext
+                                Future.delayed(
+                                    Duration(
+                                        milliseconds: isHomePage ? 0 : 300),
+                                    () {
+                                  currentContext = e.currentContext;
+                                  if (currentContext != null) {
+                                    Scrollable.ensureVisible(currentContext!,
+                                        duration: const Duration(seconds: 1));
                                   }
-
-                                  /// 延遲等待跳轉完，重新抓currentContext
-                                  Future.delayed(
-                                      Duration(
-                                          milliseconds: isHomePage ? 0 : 300),
-                                      () {
-                                    currentContext = e.currentContext;
-                                    if (currentContext != null) {
-                                      Scrollable.ensureVisible(currentContext!,
-                                          duration: const Duration(seconds: 1));
-                                    }
-                                  });
-                                }.throttleWithTimeout(timeout: 2000),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(25),
-                                  child: Text(
-                                    context.tr(e.text),
-                                    style:
-                                        QppTextStyles.web_20pt_title_m_white_C,
-                                  ),
+                                });
+                              }.throttleWithTimeout(timeout: 2000),
+                              child: Padding(
+                                padding: const EdgeInsets.all(25),
+                                child: Text(
+                                  context.tr(e.text),
+                                  style: QppTextStyles.web_20pt_title_m_white_C,
                                 ),
                               ),
-                            )
-                            .toList(),
-                      ),
+                            ),
+                          )
+                          .toList(),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             )
           : const SizedBox.shrink();
