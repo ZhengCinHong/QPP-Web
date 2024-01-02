@@ -66,11 +66,9 @@ class _QppAppBarTitle extends ConsumerWidget {
       children: [
         // 最左邊間距
         isDesktopStyle ? const Spacer(flex: 320) : const SizedBox(width: 29),
-        isOpenAppBarMenuBtnPage
-            ? const SizedBox.shrink()
-            : isDesktopStyle
-                ? const _Logo(ScreenStyle.desktop)
-                : const _Logo(ScreenStyle.mobile),
+        isDesktopStyle
+            ? const _Logo(ScreenStyle.desktop)
+            : const _Logo(ScreenStyle.mobile),
         // QPP -> Button 間距
         Spacer(
             flex: isDesktopStyle
@@ -105,9 +103,12 @@ class _QppAppBarTitle extends ConsumerWidget {
         // 三條 or 最右邊間距
         isDesktopStyle
             ? const Flexible(child: SizedBox.shrink())
-            : const Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: AnimationMenuBtn(isClose: false),
+            : Opacity(
+                opacity: isOpenAppBarMenuBtnPage ? 0 : 1,
+                child: const Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: AnimationMenuBtn(isClose: false),
+                ),
               ),
         isDesktopStyle ? const Spacer(flex: 319) : const SizedBox(width: 24)
       ],
@@ -204,6 +205,7 @@ class MenuBtns extends StatelessWidget {
                         }.throttleWithTimeout(timeout: 2000),
                         child: _MenuBtnText(
                           type: e,
+                          isHorizontal: isHorizontal,
                           event: event,
                           fontSize: fontSize,
                         )),
@@ -226,11 +228,13 @@ class MenuBtns extends StatelessWidget {
 class _MenuBtnText extends StatelessWidget {
   const _MenuBtnText({
     required this.type,
+    required this.isHorizontal,
     required this.event,
     required this.fontSize,
   });
 
   final MainMenu type;
+  final bool isHorizontal;
   final PointerEvent event;
   final double fontSize;
 
@@ -238,8 +242,9 @@ class _MenuBtnText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints(
-        maxWidth:
-            120.getRealWidth(screenWidth: MediaQuery.of(context).size.width),
+        maxWidth: isHorizontal
+            ? 120.getRealWidth(screenWidth: MediaQuery.of(context).size.width)
+            : 120,
       ),
       child: AutoSizeText(
         key: type.key,
@@ -273,12 +278,14 @@ class _MenuBtnSpacing extends StatelessWidget {
     return Container(
       constraints: BoxConstraints(
         maxWidth: type == MainMenu.contact
-            ? 0
+            ? double.infinity
             : (isHorizontal
                 ? padding.getRealWidth(
                     screenWidth: MediaQuery.of(context).size.width)
-                : 0),
-        maxHeight: type == MainMenu.contact ? 0 : (isHorizontal ? 0 : padding),
+                : double.infinity),
+        maxHeight: type == MainMenu.contact
+            ? double.infinity
+            : (isHorizontal ? double.infinity : padding),
       ),
     );
   }
@@ -550,80 +557,117 @@ class MouseRegionCustomWidget extends ConsumerWidget {
 // -----------------------------------------------------------------------------
 /// 全螢幕選單按鈕頁面 (手機樣式才會出現)
 // -----------------------------------------------------------------------------
-class FullScreenMenuBtnPage extends ConsumerWidget {
+class FullScreenMenuBtnPage extends StatefulWidget {
   const FullScreenMenuBtnPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final bool isOpenAppBarMenuBtnPage =
-        ref.watch(isOpenAppBarMenuBtnPageProvider);
-    final isOpenAppBarMenuBtnNotifier =
-        ref.read(isOpenAppBarMenuBtnPageProvider.notifier);
+  State<FullScreenMenuBtnPage> createState() => _FullScreenMenuBtnPageState();
+}
 
-    return isOpenAppBarMenuBtnPage
-        ? ColoredBox(
-            color: const Color.fromARGB(255, 23, 57, 117).withOpacity(0.9),
-            child: Stack(
-              children: [
-                const SizedBox(
-                  height: kToolbarMobileHeight,
-                  child: Row(
-                    children: [
-                      // 最左邊間距
-                      SizedBox(width: 29),
-                      _Logo(ScreenStyle.mobile),
-                      Spacer(),
-                      // 三條 or 最右邊間距
-                      AnimationMenuBtn(isClose: true),
-                      SizedBox(width: 24)
-                    ],
-                  ),
-                ),
-                Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: MainMenu.values
-                        .map(
-                          (e) => TextButton(
-                            onPressed: () {
-                              isOpenAppBarMenuBtnNotifier.toggle();
+class _FullScreenMenuBtnPageState extends State<FullScreenMenuBtnPage>
+    with TickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(milliseconds: 800),
+    vsync: this,
+  );
 
-                              BuildContext? currentContext = e.currentContext;
-                              bool isHomePage =
-                                  Uri.base.path == QppGoRouter.home;
+  late final Animation<double> _animation = CurvedAnimation(
+    parent: _controller,
+    curve: Curves.fastOutSlowIn,
+  );
 
-                              if (!isHomePage) {
-                                ServerConst.testRouterHost
-                                    .launchURL(isNewTab: false);
-                              }
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
-                              /// 延遲等待跳轉完，重新抓currentContext
-                              Future.delayed(
-                                  Duration(milliseconds: isHomePage ? 0 : 300),
-                                  () {
-                                currentContext = e.currentContext;
-                                if (currentContext != null) {
-                                  Scrollable.ensureVisible(currentContext!,
-                                      duration: const Duration(seconds: 1));
-                                }
-                              });
-                            }.throttleWithTimeout(timeout: 2000),
-                            child: Padding(
-                              padding: const EdgeInsets.all(25),
-                              child: Text(
-                                context.tr(e.text),
-                                style: QppTextStyles.web_20pt_title_m_white_C,
+  @override
+  Widget build(BuildContext context) {
+    return Consumer(builder: (context, ref, child) {
+      final bool isOpenAppBarMenuBtnPage =
+          ref.watch(isOpenAppBarMenuBtnPageProvider);
+      final isOpenAppBarMenuBtnNotifier =
+          ref.read(isOpenAppBarMenuBtnPageProvider.notifier);
+
+      if (isOpenAppBarMenuBtnPage) {
+        _controller.reset();
+        _controller.forward();
+      }
+
+      return isOpenAppBarMenuBtnPage
+          ? SizeTransition(
+              sizeFactor: _animation,
+              axis: Axis.vertical,
+              axisAlignment: -1,
+              child: ColoredBox(
+                color: const Color.fromARGB(255, 23, 57, 117).withOpacity(0.9),
+                child: Stack(
+                  children: [
+                    const SizedBox(
+                      height: kToolbarMobileHeight,
+                      child: Row(
+                        children: [
+                          // 最左邊間距
+                          SizedBox(width: 29),
+                          _Logo(ScreenStyle.mobile),
+                          Spacer(),
+                          // 三條 or 最右邊間距
+                          AnimationMenuBtn(isClose: true),
+                          SizedBox(width: 24)
+                        ],
+                      ),
+                    ),
+                    Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: MainMenu.values
+                            .map(
+                              (e) => TextButton(
+                                onPressed: () {
+                                  isOpenAppBarMenuBtnNotifier.toggle();
+
+                                  BuildContext? currentContext =
+                                      e.currentContext;
+                                  bool isHomePage =
+                                      Uri.base.path == QppGoRouter.home;
+
+                                  if (!isHomePage) {
+                                    ServerConst.testRouterHost
+                                        .launchURL(isNewTab: false);
+                                  }
+
+                                  /// 延遲等待跳轉完，重新抓currentContext
+                                  Future.delayed(
+                                      Duration(
+                                          milliseconds: isHomePage ? 0 : 300),
+                                      () {
+                                    currentContext = e.currentContext;
+                                    if (currentContext != null) {
+                                      Scrollable.ensureVisible(currentContext!,
+                                          duration: const Duration(seconds: 1));
+                                    }
+                                  });
+                                }.throttleWithTimeout(timeout: 2000),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(25),
+                                  child: Text(
+                                    context.tr(e.text),
+                                    style:
+                                        QppTextStyles.web_20pt_title_m_white_C,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  ),
+                            )
+                            .toList(),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          )
-        : const SizedBox.shrink();
+              ),
+            )
+          : const SizedBox.shrink();
+    });
   }
 }
 

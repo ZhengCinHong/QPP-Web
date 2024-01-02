@@ -187,8 +187,6 @@ class InfoCard extends StatelessWidget {
             ref.watch(authServiceProvider.select((value) => value.logoutState));
 
         Future.microtask(() {
-          print({logoutState.status, voteDataState.status, 12333131});
-
           // 登出，刷新頁面(for 問券調查)
           if (logoutState.isCompleted && voteDataState.isCompleted) {
             html.window.location.reload();
