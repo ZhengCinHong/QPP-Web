@@ -64,7 +64,7 @@ class StateClickArrow extends State<BtnArrowUpDown>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.onTap ?? _onTap,
+      // onTap: widget.onTap ?? _onTap,
       child: RotationTransition(
         turns: _animation,
         child: Image.asset(
