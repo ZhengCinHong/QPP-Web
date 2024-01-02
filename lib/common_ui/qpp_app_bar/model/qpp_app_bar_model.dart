@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:qpp_example/common_ui/qpp_menu/c_menu_anchor.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
-import 'package:qpp_example/page/home/view/home_page.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
+
+// 要滾動到位置的全局鍵
+final GlobalKey introduceKey = GlobalKey();
+final GlobalKey featureKey = GlobalKey();
+final GlobalKey descriptionKey = GlobalKey();
+final GlobalKey contactKey = GlobalKey();
 
 /// 主頁選單
 enum MainMenu {

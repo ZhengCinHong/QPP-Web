@@ -22,7 +22,7 @@ class VoteStatistics extends InfoRow {
 
   @override
   Widget getContent(data) {
-    return (data is QppVote && data.voteShowType == VoteShowType.questionMark)
+    return data is QppVote
         ? Builder(
             builder: (context) {
               return Row(
@@ -32,18 +32,21 @@ class VoteStatistics extends InfoRow {
                     width: titleWidth,
                     child: Text(
                       context.tr(QppLocales.commodityInfoVoteTotal),
-                      // textAlign: TextAlign.start,
                       style: isDesktop
                           ? QppTextStyles.web_16pt_body_category_text_L
                           : QppTextStyles.mobile_14pt_body_category_text_L,
                     ),
                   ),
-                  Text(
-                    context.tr(QppLocales.commodityInfoVoteAfter),
-                    style: isDesktop
-                        ? QppTextStyles.web_16pt_body_red_L
-                        : QppTextStyles.mobile_14pt_body_outrageous_orange_L,
-                  )
+                  // 紅字(投票結果將於結束後公佈)
+                  data.voteShowType == VoteShowType.questionMark
+                      ? Text(
+                          context.tr(QppLocales.commodityInfoVoteAfter),
+                          style: isDesktop
+                              ? QppTextStyles.web_16pt_body_red_L
+                              : QppTextStyles
+                                  .mobile_14pt_body_outrageous_orange_L,
+                        )
+                      : const SizedBox.shrink(),
                 ],
               );
             },

@@ -193,6 +193,10 @@ class VoteOptionsItem extends StatelessWidget {
                           final votedState = ref.watch(itemSelectInfoProvider
                               .select((value) => value.votedState));
 
+                          /// 是否為創建者
+                          final isCreater = ref.watch(itemSelectInfoProvider
+                              .select((value) => value.isCreater));
+
                           /// 是否選擇
                           final isSelected = voteArrayData?[index] == e.key;
 
@@ -234,19 +238,20 @@ class VoteOptionsItem extends StatelessWidget {
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        !isEnableTap
+                                        isCreater
                                             ? const SizedBox.shrink()
-                                            : Image.asset(
-                                                isSelected
-                                                    ? QPPImages
-                                                        .desktop_icon_button_check_single
-                                                    : QPPImages
-                                                        .desktop_icon_button_check_default,
-                                              ),
-                                        !isEnableTap
-                                            ? const SizedBox.shrink()
-                                            : SizedBox(
-                                                width: isDesktopStyle ? 8 : 12,
+                                            : Padding(
+                                                padding: EdgeInsets.only(
+                                                    right: isDesktopStyle
+                                                        ? 8
+                                                        : 12),
+                                                child: Image.asset(
+                                                  isSelected
+                                                      ? QPPImages
+                                                          .desktop_icon_button_check_single
+                                                      : QPPImages
+                                                          .desktop_icon_button_check_default,
+                                                ),
                                               ),
                                         Flexible(
                                           child: Text(
@@ -358,12 +363,12 @@ class VoteOptionsItem extends StatelessWidget {
                                                   ? QppTextStyles
                                                       .web_12pt_caption_midnight_blue_L
                                                   : QppTextStyles
-                                                      .web_12pt_caption_maya_blue_L
+                                                      .web_16pt_body_maya_blue_R
                                               : isQuestionMark
                                                   ? QppTextStyles
-                                                      .mobile_9pt_caption_midnight_blue_L
+                                                      .web_12pt_caption_midnight_blue_L
                                                   : QppTextStyles
-                                                      .mobile_9pt_caption_maya_blue_L,
+                                                      .web_12pt_caption_maya_blue_L,
                                         )
                                       ],
                                     )

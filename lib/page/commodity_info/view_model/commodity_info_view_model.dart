@@ -14,6 +14,7 @@ import 'package:qpp_example/api/local/response/get_vote_info.dart';
 import 'package:qpp_example/api/local/response/get_vote_status.dart';
 import 'package:qpp_example/api/local/response/user_vote.dart';
 import 'package:qpp_example/api/nft/nft_meta_api.dart';
+import 'package:qpp_example/common_view_model/auth_service/model/login_info.dart';
 import 'package:qpp_example/extension/string/text.dart';
 import 'package:qpp_example/model/enum/item/item_category.dart';
 import 'package:qpp_example/model/item_img_data.dart';
@@ -58,6 +59,12 @@ class CommodityInfoModel extends ChangeNotifier {
 
   ///  是否為第一次登入(自動發送投票使用)
   bool isFirstLogin = true;
+
+  /// 登入資訊
+  LoginInfo? get loginInfo => SharedPrefs.getLoginInfo();
+
+  /// 是否為創建者
+  bool get isCreater => (userInfoState.data?.id).toString() == loginInfo?.uid;
 
   final client = ClientApi.client;
 
@@ -111,8 +118,6 @@ class CommodityInfoModel extends ChangeNotifier {
         QppItem item = QppItem.create(itemData);
 
         if (item.category == ItemCategory.questionnaire) {
-          final loginInfo = SharedPrefs.getLoginInfo();
-
           if (loginInfo?.isLogin == true) {
             // 取使用者問券資料
             _getVoteStatus(item, loginInfo?.voteToken ?? '');
@@ -353,11 +358,8 @@ class CommodityInfoModel extends ChangeNotifier {
 
         // 更新投票狀態
         // 選項沒有錯誤或是創建者，就代表已經投票過
-        votedState = (
-          vote?.haveOptionError == false ||
-              item.creatorId == userInfoState.data?.id,
-          VotedState.none
-        );
+        votedState =
+            (vote?.haveOptionError == false || isCreater, VotedState.none);
       } else {
         // 取資料失敗
         voteDataState = ApiResponse.error(
