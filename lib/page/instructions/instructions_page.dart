@@ -228,40 +228,41 @@ class InstructionsPage extends StatelessWidget {
             );
 
             // 顯示 "電子郵件" 文案
-            result.add(
+            result.addAll([
               WidgetSpan(
-                  child: Wrap(
-                children: [
-                  const SizedBox(
-                    width: 4,
-                  ),
-                  InkWell(
-                    child: Text(
-                      text[InstructionsPage.privacyJsonTextName],
-                      key: copyTextMenuDisplayTextKey,
-                      style: isDesktop
-                          ? QppTextStyles.web_16pt_body_canary_yellow_C
-                          : QppTextStyles.mobile_14pt_body_canary_yellow_L,
+                alignment: PlaceholderAlignment.middle,
+                child: Wrap(
+                  children: [
+                    const SizedBox(
+                      width: 4,
                     ),
-                    onTap: () async {
-                      copyTextMenuStateKey.currentState
-                          ?.showTip(copyTextMenuDisplayTextKey);
-                      await Clipboard.setData(ClipboardData(text: href ?? ""));
-                    },
-                  ),
-                  const SizedBox(
-                    width: 4,
-                  ),
-                ],
-              )),
-            );
-
-            // 彈窗預設不顯示，點擊後顯示，放在介面上方便給 listview 做回收。
-            result.add(
+                    InkWell(
+                      child: Text(
+                        text[InstructionsPage.privacyJsonTextName],
+                        key: copyTextMenuDisplayTextKey,
+                        textAlign: TextAlign.center,
+                        style: isDesktop
+                            ? QppTextStyles.web_16pt_body_canary_yellow_C
+                            : QppTextStyles.mobile_14pt_body_canary_yellow_L,
+                      ),
+                      onTap: () async {
+                        copyTextMenuStateKey.currentState
+                            ?.showTip(copyTextMenuDisplayTextKey);
+                        await Clipboard.setData(
+                            ClipboardData(text: href ?? ""));
+                      },
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                  ],
+                ),
+              ),
+              // 彈窗預設不顯示，點擊後顯示，放在介面上方便給 listview 做回收。
               WidgetSpan(
                 child: copyTextMenu,
               ),
-            );
+            ]);
           } else {
             result.add(TextSpan(text: children.innerHtml, style: textStyle));
           }
