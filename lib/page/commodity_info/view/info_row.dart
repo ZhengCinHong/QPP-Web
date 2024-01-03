@@ -108,9 +108,9 @@ class InfoRowInfo extends InfoRow {
             const SizedBox(
               width: 8,
             ),
-            // 類別名稱
+            // 類別名稱 多語系
             Text(
-              data.categoryName,
+              context.tr(data.categoryMultiLangKey),
               textAlign: TextAlign.center,
               style: QppTextStyles.web_16pt_body_platinum_L,
             ),

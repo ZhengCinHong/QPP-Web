@@ -20,25 +20,17 @@ class ServerConst {
   static const appleStoreUrl = 'https://apps.apple.com/tw/app/qpp/id1501319938';
 
   /// 隱私權網址
-  static final privacyPolicyUrl = "${testRouterHost}privacy?lang=%s";
+  static final privacyPolicyUrl = "${testRouterHost}privacy";
 
   /// 使用條款網址
   static final termsOfUseUrl =
-      "${testRouterHost}term?lang=%s"; // "${routerHost}term?lang=%s";
+      "${testRouterHost}term"; // "${routerHost}term?lang=%s";
 
   /// 信箱顯示字串
   static const mailStr = 'info@qpptec.com';
 
   /// 信箱
   static const mailUrl = 'mailto:$mailStr';
-
-  /// 跨境燃料費 url
-  static const crossBorderFueCostUrl =
-      "https://www.qpptec.com/nft_info_teach/?lang=%s&anchor=cross-border";
-
-  /// 入境 url
-  static const importUrl =
-      "https://www.qpptec.com/nft_info_teach/?lang=%s&anchor=entry";
 
   /// AppLink url
   static const appLinkUrl = "https://qpptec.com/app/";

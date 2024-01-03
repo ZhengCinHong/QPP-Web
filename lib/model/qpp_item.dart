@@ -48,4 +48,12 @@ class QppItem {
     }
     return subCategory.displayName;
   }
+
+  /// 取得物品類別名稱 多語系 key
+  String get categoryMultiLangKey {
+    if (category != ItemCategory.hiddenVoucher) {
+      return category.multiLangKey;
+    }
+    return subCategory.multiLangKey;
+  }
 }

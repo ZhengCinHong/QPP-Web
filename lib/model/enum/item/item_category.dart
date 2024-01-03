@@ -108,4 +108,33 @@ enum ItemCategory {
         return "";
     }
   }
+
+  /// 取得多語系 key
+  String get multiLangKey {
+    return switch (this) {
+      // 系統貨幣
+      systemCoin => "commodity_info_type_system",
+      // 問卷調查
+      questionnaire => "commodity_info_type_vote",
+      // TODO: 待語系表更新
+      commission => "交易_委託",
+      authorize => "開放授權",
+      // 數位貨幣
+      virtualCoin => "commodity_info_type_digital",
+      // 虛擬寶物
+      virtualTreasure => "commodity_info_type_virtual",
+      // 虛擬寶物
+      virtualTreasureWithTag => "commodity_info_type_virtual",
+      // 實體票券
+      physicalVoucher => "commodity_info_type_voucher",
+      hiddenVoucher => "序號/QR Code",
+      // 數位票券
+      digitVoucher => "commodity_info_type_eTicket",
+      // 身份識別
+      idCard => "commodity_info_type_id",
+      // 數位物品,
+      digitItem => "commodity_info_type_digital_object",
+      _ => "",
+    };
+  }
 }

@@ -330,7 +330,7 @@ class _LinkText extends StatelessWidget {
   Widget build(BuildContext context) {
     return CUnderlineText.link(
       text: context.tr(type.text),
-      link: type.link,
+      link: '${type.link}?lang=${context.locale}',
       style: QppTextStyles.web_12pt_caption_white_L,
       isNewTab: true,
     );
