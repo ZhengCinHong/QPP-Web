@@ -27,6 +27,16 @@ enum ItemSubCategory {
       _ => "unknown",
     };
   }
+  /// 取得多語系 key
+  String get multiLangKey {
+    return switch (this) {
+      // 序號
+      serial => "commodity_info_type_number",
+      // QR Code
+      qrCodeOrSpecial => "commodity_info_type_qrcode",
+      _ => "unknown",
+    };
+  }
 
   /// 取得 icon 路徑
   String get iconPath {
