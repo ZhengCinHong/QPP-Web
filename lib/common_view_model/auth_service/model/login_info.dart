@@ -35,8 +35,6 @@ class LoginInfo {
   String get hiddenUID {
     final int start = (uid.length ~/ 2) - 1 - 1; // -1: 從0開始算, -1: 有三個*，往前一位
 
-    print(uid.length);
-
     return uid.replaceRange(start, start + 3, '*' * 3);
   }
 
