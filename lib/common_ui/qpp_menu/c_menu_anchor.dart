@@ -69,10 +69,12 @@ class CMenuAnchor extends StatelessWidget {
                         isShowImage
                             ? const SizedBox(width: 6)
                             : const SizedBox.shrink(),
-                        Text(context.tr(e.title),
-                            style: event is PointerEnterEvent
-                                ? QppTextStyles.mobile_14pt_body_canary_yellow_L
-                                : QppTextStyles.mobile_14pt_body_white_L),
+                        Text(
+                          context.tr(e.title),
+                          style: event is PointerEnterEvent
+                              ? QppTextStyles.mobile_14pt_body_canary_yellow_L
+                              : QppTextStyles.mobile_14pt_body_white_L,
+                        ),
                       ],
                     ),
                   ),

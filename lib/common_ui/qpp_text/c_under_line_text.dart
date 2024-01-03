@@ -14,6 +14,8 @@ class CUnderlineText extends StatefulWidget {
     this.style = QppTextStyles.web_14pt_body_s_white_L,
     required this.onTap,
     this.maxLines,
+    this.softWrap,
+    this.overflow,
   })  : link = '',
         isNewTab = false;
 
@@ -24,6 +26,8 @@ class CUnderlineText extends StatefulWidget {
     required this.link,
     this.isNewTab = false,
     this.maxLines,
+    this.softWrap,
+    this.overflow,
   }) : onTap = null;
 
   final String text;
@@ -32,6 +36,8 @@ class CUnderlineText extends StatefulWidget {
   final bool isNewTab; // 是否打開新頁面
   final Function? onTap;
   final int? maxLines;
+  final bool? softWrap;
+  final TextOverflow? overflow;
 
   @override
   State<CUnderlineText> createState() => _CUnderlineText();
@@ -54,6 +60,8 @@ class _CUnderlineText extends State<CUnderlineText> {
         style: widget.style,
         isShowUnderline: isHovered,
         maxLines: widget.maxLines,
+        softWrap: widget.softWrap,
+        overflow: widget.overflow,
       ),
     );
   }
@@ -66,12 +74,16 @@ class _UnderlineText extends StatelessWidget {
     required this.style,
     required this.isShowUnderline,
     required this.maxLines,
+    required this.softWrap,
+    required this.overflow,
   });
 
   final String text;
   final TextStyle style;
   final bool isShowUnderline;
   final int? maxLines;
+  final bool? softWrap;
+  final TextOverflow? overflow;
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +97,8 @@ class _UnderlineText extends StatelessWidget {
         decorationColor: style.color?.withOpacity(isShowUnderline ? 1 : 0),
       ),
       maxLines: maxLines,
+      softWrap: softWrap,
+      overflow: overflow,
     );
   }
 }
