@@ -256,11 +256,11 @@ class _MenuBtnText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(
-        maxWidth: isHorizontal
-            ? 120.getRealWidth(screenWidth: MediaQuery.of(context).size.width)
-            : 120,
-      ),
+      alignment: Alignment.center,
+      width: isHorizontal
+          ? 120.getRealWidth(screenWidth: MediaQuery.of(context).size.width)
+          : 120,
+      height: kToolbarDesktopHeight - 10,
       child: AutoSizeText(
         key: type.key,
         context.tr(type.text),
@@ -270,7 +270,8 @@ class _MenuBtnText extends StatelessWidget {
               : QppColors.white,
           fontSize: fontSize,
         ),
-        maxLines: 2,
+        softWrap: true,
+        overflow: TextOverflow.clip,
       ).disabledSelectionContainer,
     );
   }
@@ -424,7 +425,7 @@ class _UserInfo extends StatelessWidget {
                       ? const SizedBox(width: 8)
                       : const SizedBox.shrink(),
                   isDesktopStyle
-                      ? Text(loginInfo?.uid ?? "",
+                      ? Text(loginInfo?.hiddenUID ?? "",
                           style: QppTextStyles.mobile_14pt_body_white_L)
                       : const SizedBox.shrink(),
                   isDesktopStyle
