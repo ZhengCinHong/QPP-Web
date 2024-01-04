@@ -14,14 +14,20 @@ class MainFramework extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final screenStyle = screenSize.width.determineScreenStyle();
+    final isDesktopStyle = screenStyle.isDesktop;
+
     // 設定頁籤上方顯示內容
     return Title(
       title: context.tr(QppLocales.homeWebtitle),
       color: QppColors.platinum,
       child: Stack(
         children: [
-          _MainScaffold(child: child),
-          const FullScreenMenuBtnPage(),
+          _MainScaffold(isDesktopStyle: isDesktopStyle, child: child),
+          isDesktopStyle
+              ? const SizedBox.shrink()
+              : const FullScreenMenuBtnPage(),
         ],
       ),
     );
@@ -30,23 +36,24 @@ class MainFramework extends StatelessWidget {
 
 /// 主鷹架
 class _MainScaffold extends StatelessWidget {
-  const _MainScaffold({required this.child});
+  const _MainScaffold({
+    required this.child,
+    required this.isDesktopStyle,
+  });
 
   final Widget child;
+
+  final bool isDesktopStyle;
 
   @override
   Widget build(BuildContext context) {
     // debugPrint(toString());
 
-    final Size screenSize = MediaQuery.of(context).size;
-    final ScreenStyle screenStyle = screenSize.width.determineScreenStyle();
-    final isDesktopStyle = screenStyle.isDesktop;
-
     return SelectionArea(
       child: Scaffold(
         extendBodyBehindAppBar: true, // 設定可以在appBar後面擴充body
         backgroundColor: QppColors.oxfordBlue,
-        appBar: qppAppBar(screenStyle),
+        appBar: qppAppBar(isDesktopStyle),
         body: Container(
           height: double.infinity,
           decoration: BoxDecoration(
