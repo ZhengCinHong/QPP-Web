@@ -295,7 +295,8 @@ class _MenuButton extends StatelessWidget {
                   duration: const Duration(seconds: 1));
             }
           },
-          maxLines: 2,
+          softWrap: true,
+          overflow: TextOverflow.clip,
         ),
       ),
     );

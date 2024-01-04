@@ -81,18 +81,18 @@
     opacity: 0;
     position: relative;
     left: -20px;
-    -webkit-animation: fadeIn_left 1s linear 0ms forwards;
-    -moz-animation: fadeIn_left 1s linear 0ms forwards;
-    animation: fadeIn_left 1s linear 0ms forwards
+    -webkit-animation: fadeIn_left 1s linear 300ms forwards;
+    -moz-animation: fadeIn_left 1s linear 300ms forwards;
+    animation: fadeIn_left 1s linear 300ms forwards
   }
 
   .loading-logoFadeIn .loadingArea .icon.loading-right {
     position: relative;
     right: -20px;
     opacity: 0;
-    -webkit-animation: fadeIn_right 1s linear 0ms forwards;
-    -moz-animation: fadeIn_right 1s linear 0ms forwards;
-    animation: fadeIn_right 1s linear 0ms forwards
+    -webkit-animation: fadeIn_right 1s linear 300ms forwards;
+    -moz-animation: fadeIn_right 1s linear 300ms forwards;
+    animation: fadeIn_right 1s linear 300ms forwards
   }
 
   .loading-logoFadeIn img {
@@ -175,8 +175,8 @@
 
 <body>
   <div class="loading-logoFadeIn">
-    <div class="loadingArea align-self-center"><img src="assets/pic-animation-icon-2.png" alt=""
-        class="icon loading-left img-fluid"><img src="assets/pic-animation-qpp.png" alt=""
+    <div class="loadingArea align-self-center"><img src="assets/assets/pic-animation-icon-2.png" alt
+        class="icon loading-left img-fluid"><img src="assets/assets/pic-animation-qpp.png" alt
         class="icon loading-right img-fluid"></div>
   </div>
 
@@ -205,12 +205,10 @@
 
     // Flutter 渲染的第一幀完成就關閉載入動畫
     window.addEventListener("flutter-first-frame", function () {
-      // 隱藏
-      // var loadingAnimation = document.querySelector('.loading-logoFadeIn');
-      // loadingAnimation.style.display = 'none';
-
-      // 加載一次後，沒有再用到，暫時先移除。
-      document.querySelector('.loading-logoFadeIn')?.remove();
+      setTimeout(() => {
+        var loadingAnimation = document.querySelector('.loading-logoFadeIn');
+        loadingAnimation.style.display = 'none';
+      }, 1000);
     });
   </script>
 

@@ -31,6 +31,13 @@ class LoginInfo {
   /// 用戶圖片
   final String uidImage;
 
+  /// 隱藏的uid
+  String get hiddenUID {
+    final int start = (uid.length ~/ 2) - 1 - 1; // -1: 從0開始算, -1: 有三個*，往前一位
+
+    return uid.replaceRange(start, start + 3, '*' * 3);
+  }
+
   factory LoginInfo.fromJson(Map<String, dynamic> json) =>
       _$LoginInfoFromJson(json);
 

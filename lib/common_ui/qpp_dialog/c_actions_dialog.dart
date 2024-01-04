@@ -35,8 +35,6 @@ class CActionsDialog extends StatelessWidget {
       padding: EdgeInsets.only(
         top: isDesktopPlatform ? 25 : 36,
         bottom: 24,
-        left: isDesktopPlatform ? 28 : 16,
-        right: isDesktopPlatform ? 28 : 16,
       ),
       constraints: BoxConstraints(maxHeight: height, maxWidth: width),
       decoration: BoxDecoration(
@@ -48,52 +46,88 @@ class CActionsDialog extends StatelessWidget {
             ? CrossAxisAlignment.start
             : CrossAxisAlignment.center,
         children: [
-          CDialogTitle(
-            text: text,
-            style: isDesktopPlatform
-                ? QppTextStyles.web_24pt_title_L_white_L
-                : QppTextStyles.web_20pt_title_m_white_C,
-            alignment:
-                isDesktopPlatform ? Alignment.centerLeft : Alignment.center,
-            isShowCloseButton: isDesktopPlatform,
+          _CommonPaddingWidget(
+            child: Padding(
+              padding: EdgeInsets.only(bottom: isDesktopPlatform ? 16 : 17),
+              child: CDialogTitle(
+                text: text,
+                style: isDesktopPlatform
+                    ? QppTextStyles.web_24pt_title_L_white_L
+                    : QppTextStyles.web_20pt_title_m_white_C,
+                alignment:
+                    isDesktopPlatform ? Alignment.centerLeft : Alignment.center,
+                isShowCloseButton: isDesktopPlatform,
+              ),
+            ),
           ),
-          SizedBox(height: isDesktopPlatform ? 16 : 17),
           isDesktopPlatform
               ? UnconstrainedBox(
                   child: Container(
-                      height: 1, width: width, color: QppColors.white),
+                      height: 1, width: width, color: QppColors.midnightBlue),
                 )
               : const SizedBox.shrink(),
-          SizedBox(height: isDesktopPlatform ? 16 : 0),
-          Text(
-            subText,
-            style: isDesktopPlatform
-                ? QppTextStyles.mobile_16pt_title_pastel_blue
-                : QppTextStyles.mobile_14pt_body_pastel_blue_L,
-          ),
-          SizedBox(height: isDesktopPlatform ? 28 : 41),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: (isDesktopPlatform
-                    ? <Widget>[const Spacer()]
-                    : <Widget>[]) +
-                actions
-                    .map(
-                      (e) => Padding(
-                        padding:
-                            EdgeInsets.only(left: isDesktopPlatform ? 16 : 0),
-                        child: DialogActionButton(
-                          style: e.style,
-                          height: 44,
-                          width: isDesktopPlatform ? 124 : 140,
-                          onTap: e.callback,
-                        ),
-                      ),
-                    )
-                    .toList(),
+          _CommonPaddingWidget(
+            child: Column(
+              crossAxisAlignment: isDesktopPlatform
+                  ? CrossAxisAlignment.start
+                  : CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: isDesktopPlatform ? 16 : 0,
+                      bottom: isDesktopPlatform ? 28 : 41),
+                  child: Text(
+                    subText,
+                    style: isDesktopPlatform
+                        ? QppTextStyles.mobile_16pt_title_pastel_blue
+                        : QppTextStyles.mobile_14pt_body_pastel_blue_L,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: (isDesktopPlatform
+                          ? <Widget>[const Spacer()]
+                          : <Widget>[]) +
+                      actions
+                          .map(
+                            (e) => Padding(
+                              padding: EdgeInsets.only(
+                                  left: isDesktopPlatform ? 16 : 0),
+                              child: DialogActionButton(
+                                style: e.style,
+                                height: 44,
+                                width: isDesktopPlatform ? 124 : 140,
+                                onTap: e.callback,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                ),
+              ],
+            ),
           ),
         ],
       ),
+    );
+  }
+}
+
+/// 共用padding
+class _CommonPaddingWidget extends StatelessWidget {
+  const _CommonPaddingWidget({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final isDesktopPlatform = context.isDesktopPlatform;
+
+    return Padding(
+      padding: EdgeInsets.only(
+        left: isDesktopPlatform ? 28 : 16,
+        right: isDesktopPlatform ? 28 : 16,
+      ),
+      child: child,
     );
   }
 }
