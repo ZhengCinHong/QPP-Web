@@ -174,6 +174,15 @@
       right: -2px
     }
   }
+
+  .loading-logoFadeIn {
+    opacity: 1;
+    transition: opacity 300ms ease-in-out;
+  }
+
+  .loading-logoFadeIn.fadeOut {
+    opacity: 0;
+  }
 </style>
 
 <body>
@@ -206,11 +215,21 @@
       });
     });
 
+    const loadingLogo = document.querySelector('.loading-logoFadeIn');
+
     // Flutter 渲染的第一幀完成就關閉載入動畫
     window.addEventListener("flutter-first-frame", function () {
       setTimeout(() => {
-        document.querySelector('.loading-logoFadeIn')?.remove();
-      }, 1100);
+        // 動畫淡出
+        loadingLogo.classList.add('fadeOut');
+      }, 300);
+    });
+
+    // 移除載入元件
+    loadingLogo.addEventListener('animationend', (event) => {
+      if (event.animationName === 'fadeOut') {
+        loadingLogo.remove();
+      }
     });
   </script>
 
