@@ -175,13 +175,49 @@
     }
   }
 
-  .loading-logoFadeIn {
+  /* .loading-logoFadeIn {
     opacity: 1;
     transition: opacity 300ms ease-in-out;
   }
 
   .loading-logoFadeIn.fadeOut {
     opacity: 0;
+  } */
+
+  .fadeOut {
+    -webkit-animation: fadeOut 300ms ease-in-out forwards;
+    -moz-animation: fadeOut 300ms ease-in-out forwards;
+    animation: fadeOut 300ms ease-in-out forwards;
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+
+  @-webkit-keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+
+  @-moz-keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+    }
   }
 </style>
 
@@ -222,11 +258,12 @@
       setTimeout(() => {
         // 動畫淡出
         loadingLogo.classList.add('fadeOut');
-      }, 600);
+      }, 1000);
     });
 
     // 移除載入元件
     loadingLogo.addEventListener('animationend', (event) => {
+      console.log(event.animationName);
       if (event.animationName === 'fadeOut') {
         loadingLogo.remove();
       }
