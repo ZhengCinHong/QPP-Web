@@ -57,6 +57,7 @@ dependencies:
   auto_size_text: ^3.0.0
   flutter_widget_from_html_core: ^0.14.9
   # easy_localization_generator: ^0.3.2
+  universal_html: ^2.2.4
 
 # 解決有衝突的套件
 dependency_overrides:
