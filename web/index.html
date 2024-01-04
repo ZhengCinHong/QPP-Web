@@ -27,6 +27,9 @@
   <meta name="apple-mobile-web-app-title" content="qpp_example" />
   <link rel="apple-touch-icon" href="icons/Icon-192.png" />
 
+  <!-- 修正mobile css寬度錯誤的問題 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png" />
 
@@ -206,9 +209,8 @@
     // Flutter 渲染的第一幀完成就關閉載入動畫
     window.addEventListener("flutter-first-frame", function () {
       setTimeout(() => {
-        var loadingAnimation = document.querySelector('.loading-logoFadeIn');
-        loadingAnimation.style.display = 'none';
-      }, 1000);
+        document.querySelector('.loading-logoFadeIn')?.remove();
+      }, 1100);
     });
   </script>
 
