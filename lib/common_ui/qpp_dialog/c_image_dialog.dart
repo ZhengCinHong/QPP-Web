@@ -54,11 +54,14 @@ class CImageDialog extends StatelessWidget {
               isDesktopStyle
                   ? const SizedBox(width: 16)
                   : const SizedBox(height: 36),
-              Text(
-                text,
-                style: isDesktopStyle
-                    ? QppTextStyles.web_36pt_Display_s_maya_blue_C
-                    : QppTextStyles.mobile_20pt_title_L_maya_blue_L,
+              Flexible(
+                flex: isDesktopStyle ? 1 : 0,
+                child: Text(
+                  text,
+                  style: isDesktopStyle
+                      ? QppTextStyles.web_36pt_Display_s_maya_blue_C
+                      : QppTextStyles.mobile_20pt_title_L_maya_blue_L,
+                ),
               ),
             ],
           ),
@@ -69,7 +72,8 @@ class CImageDialog extends StatelessWidget {
                 ? QppTextStyles.web_20pt_title_m_white_C
                 : QppTextStyles.mobile_14pt_body_pastel_blue_L,
             textAlign: TextAlign.center,
-            maxLines: 2, // 沒有設定這行就不會自動換行，待研究
+            softWrap: true,
+            overflow: TextOverflow.clip,
           ),
           Flexible(child: SizedBox(height: isDesktopStyle ? 48 : 39)),
           DialogActionButton(

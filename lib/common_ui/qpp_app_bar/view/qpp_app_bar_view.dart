@@ -239,7 +239,7 @@ class MenuBtns extends StatelessWidget {
   }
 }
 
-/// 選單按鈕間距
+/// 選單按鈕間距(目前horizontal是toolbar，vertical是手機樣式的首頁頁尾)
 class _MenuBtnText extends StatelessWidget {
   const _MenuBtnText({
     required this.type,
@@ -256,11 +256,11 @@ class _MenuBtnText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(
-        maxWidth: isHorizontal
-            ? 120.getRealWidth(screenWidth: MediaQuery.of(context).size.width)
-            : 120,
-      ),
+      alignment: isHorizontal ? Alignment.center : null,
+      width: isHorizontal
+          ? 120.getRealWidth(screenWidth: MediaQuery.of(context).size.width)
+          : 120,
+      height: isHorizontal ? kToolbarDesktopHeight - 10 : null,
       child: AutoSizeText(
         key: type.key,
         context.tr(type.text),
@@ -270,7 +270,8 @@ class _MenuBtnText extends StatelessWidget {
               : QppColors.white,
           fontSize: fontSize,
         ),
-        maxLines: 2,
+        softWrap: true,
+        overflow: TextOverflow.clip,
       ).disabledSelectionContainer,
     );
   }
@@ -392,56 +393,64 @@ class _UserInfo extends StatelessWidget {
     final StateProvider<bool> isOpenControllerProvider =
         StateProvider((ref) => false);
 
-    return CMenuAnchor(
-      list: AppBarUserInfo.values,
-      builder: (context, controller, child) {
-        return Consumer(
-          builder: (context, ref, child) {
-            final isOpen = ref.watch(isOpenControllerProvider);
-            final isOpenNotifier = ref.read(isOpenControllerProvider.notifier);
+    final loginInfo = SharedPrefs.getLoginInfo();
 
-            final loginInfo = SharedPrefs.getLoginInfo();
+    return MouseRegionCustomWidget(
+      builder: (e) => CMenuAnchor(
+        list: AppBarUserInfo.values,
+        builder: (context, controller, child) {
+          return Consumer(
+            builder: (context, ref, child) {
+              final isOpen = ref.watch(isOpenControllerProvider);
+              final isOpenNotifier =
+                  ref.read(isOpenControllerProvider.notifier);
 
-            Future.microtask(
-              () => isOpen ? controller.open() : controller.close(),
-            );
+              Future.microtask(
+                () => isOpen ? controller.open() : controller.close(),
+              );
 
-            return CMouseRegion(
-              onEnter: (event) => isOpenNotifier.state = true,
-              onExit: (event) => isOpenNotifier.state = false,
-              child: Row(
-                children: [
-                  ClipOval(
-                    child: Image.network(
-                      loginInfo?.uidImage ?? "",
-                      width: 24,
-                      errorBuilder: (context, error, stackTrace) => Image.asset(
-                        QPPImages.mobile_icon_actionbar_profile_login_default,
+              return CMouseRegion(
+                onEnter: (event) => isOpenNotifier.state = true,
+                onExit: (event) => isOpenNotifier.state = false,
+                child: Row(
+                  children: [
+                    ClipOval(
+                      child: Image.network(
+                        loginInfo?.uidImage ?? "",
+                        width: 24,
+                        errorBuilder: (context, error, stackTrace) =>
+                            Image.asset(
+                          QPPImages.mobile_icon_actionbar_profile_login_default,
+                        ),
                       ),
                     ),
-                  ),
-                  isDesktopStyle
-                      ? const SizedBox(width: 8)
-                      : const SizedBox.shrink(),
-                  isDesktopStyle
-                      ? Text(loginInfo?.uid ?? "",
-                          style: QppTextStyles.mobile_14pt_body_white_L)
-                      : const SizedBox.shrink(),
-                  isDesktopStyle
-                      ? Row(children: [
-                          const SizedBox(width: 4),
-                          Image.asset(QPPImages.desktop_icon_arrowdown)
-                        ])
-                      : const SizedBox.shrink(),
-                ],
-              ),
-            );
-          },
-        );
-      },
-      isOpenControllerProvider: isOpenControllerProvider,
-      onTap: (BuildContext context, _) =>
-          showLogoutDialog(context, screenStyle: screenStyle),
+                    isDesktopStyle
+                        ? const SizedBox(width: 8)
+                        : const SizedBox.shrink(),
+                    isDesktopStyle
+                        ? Text(
+                            loginInfo?.hiddenUID ?? "",
+                            style: e is PointerEnterEvent
+                                ? QppTextStyles.mobile_14pt_body_canary_yellow_L
+                                : QppTextStyles.mobile_14pt_body_white_L,
+                          )
+                        : const SizedBox.shrink(),
+                    isDesktopStyle
+                        ? Row(children: [
+                            const SizedBox(width: 4),
+                            Image.asset(QPPImages.desktop_icon_arrowdown)
+                          ])
+                        : const SizedBox.shrink(),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+        isOpenControllerProvider: isOpenControllerProvider,
+        onTap: (BuildContext context, _) =>
+            showLogoutDialog(context, screenStyle: screenStyle),
+      ),
     );
   }
 }
@@ -521,8 +530,8 @@ class LanguageDropdownMenu extends StatelessWidget {
 // -----------------------------------------------------------------------------
 /// 判斷手勢是否在元件上
 // -----------------------------------------------------------------------------
-class MouseRegionCustomWidget extends ConsumerWidget {
-  MouseRegionCustomWidget({
+class MouseRegionCustomWidget extends StatefulWidget {
+  const MouseRegionCustomWidget({
     super.key,
     required this.builder,
     this.onEnter,
@@ -538,33 +547,42 @@ class MouseRegionCustomWidget extends ConsumerWidget {
 
   final void Function()? onTap;
 
-  /// 滑鼠狀態Provider
-  final StateNotifierProvider<MouseRegionStateNotifier, PointerEvent>
-      mouseRegionProvider =
-      StateNotifierProvider((ref) => MouseRegionStateNotifier());
+  @override
+  State<MouseRegionCustomWidget> createState() =>
+      _MouseRegionCustomWidgetState();
+}
+
+class _MouseRegionCustomWidgetState extends State<MouseRegionCustomWidget> {
+  PointerEvent event = const PointerExitEvent();
+
+  void enter() {
+    setState(() {
+      event = const PointerEnterEvent();
+    });
+  }
+
+  void exit() {
+    setState(() {
+      event = const PointerExitEvent();
+    });
+  }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // debugPrint(toString());
-
-    final notifier = ref.read(mouseRegionProvider.notifier);
-
-    final PointerEvent event = ref.watch(mouseRegionProvider);
-
+  Widget build(BuildContext context) {
     return CMouseRegion(
       onEnter: (event) {
-        onEnter != null ? onEnter!(event) : ();
-        notifier.onEnter();
+        widget.onEnter != null ? widget.onEnter!(event) : ();
+        enter();
       },
       onExit: (event) {
-        onExit != null ? onExit!(event) : ();
-        notifier.onExit();
+        widget.onExit != null ? widget.onExit!(event) : ();
+        exit();
       },
       onTap: () {
-        onExit != null ? onTap!() : ();
-        notifier.onExit();
+        widget.onExit != null ? widget.onTap!() : ();
+        exit();
       },
-      child: builder(event),
+      child: widget.builder(event),
     );
   }
 }

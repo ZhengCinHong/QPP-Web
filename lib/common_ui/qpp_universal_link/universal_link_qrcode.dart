@@ -32,6 +32,7 @@ class UniversalLinkQRCode extends StatelessWidget {
   }
 }
 
+/// 中間有QPP Icon的QRCode
 class QPPQRCode extends StatelessWidget {
   const QPPQRCode({super.key, required this.data, required this.size});
 
