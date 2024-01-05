@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
   HomePage({super.key});
 
   final ScrollController scrollController = ScrollController();
-  
+
   void scrollTo(
     StateController<MainMenu?> notifier,
     ScrollController scrollController,
@@ -45,6 +45,8 @@ class HomePage extends StatelessWidget {
 
           scrollTo(scrollToContextNotifier, scrollController,
               scrollPoint <= 0 ? 0 : scrollPoint);
+
+          print({scrollToContext.currentContext, scrollPoint});
         }
 
         return SingleChildScrollView(
