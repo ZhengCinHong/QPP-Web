@@ -19,7 +19,6 @@ class HomePage extends StatelessWidget {
     ScrollController scrollController,
     double scrollPoint,
   ) {
-    print(scrollPoint);
     Future.microtask(() => {
           scrollController.animateTo(
             scrollPoint,

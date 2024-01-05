@@ -1,3 +1,5 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:qpp_example/common_ui/qpp_app_bar/view_model/qpp_app_bar_view_model.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -92,7 +94,9 @@ class _Info extends StatelessWidget {
       children: [
         IconButton(
           icon: Image.asset(
-            QPPImages.desktop_pic_qpp_logo_03,
+            isDesktopStyle
+                ? QPPImages.desktop_pic_qpp_logo_03
+                : QPPImages.mobile_pic_qpp_logo_03,
           ),
           onPressed: () => html.window.location.reload(),
         ),
@@ -284,19 +288,21 @@ class _MenuButton extends StatelessWidget {
     return MouseRegionCustomWidget(
       builder: (event) => Container(
         constraints: const BoxConstraints(maxWidth: 100),
-        child: CUnderlineText(
-          text: context.tr(type.text),
-          style: QppTextStyles.mobile_16pt_title_white_bold_L,
-          onTap: () {
-            BuildContext? currentContext = type.currentContext;
+        child: Consumer(
+          builder: (context, ref, child) {
+            final scrollToContextNotifier =
+                ref.read(scrollToContextProvider.notifier);
 
-            if (currentContext != null) {
-              Scrollable.ensureVisible(currentContext,
-                  duration: const Duration(seconds: 1));
-            }
+            return CUnderlineText(
+              text: context.tr(type.text),
+              style: QppTextStyles.mobile_16pt_title_white_bold_L,
+              onTap: () {
+                scrollToContextNotifier.state = type;
+              },
+              softWrap: true,
+              overflow: TextOverflow.clip,
+            );
           },
-          softWrap: true,
-          overflow: TextOverflow.clip,
         ),
       ),
     );

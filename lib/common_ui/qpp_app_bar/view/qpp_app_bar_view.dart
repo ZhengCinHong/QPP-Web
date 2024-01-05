@@ -162,14 +162,6 @@ class MenuBtns extends StatelessWidget {
   final double padding;
   final double fontSize;
 
-  /// 滑動到context
-  void scrollToContext(BuildContext context) {
-    Scrollable.ensureVisible(
-      context,
-      duration: const Duration(seconds: 1),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     // debugPrint(toString());
