@@ -26,8 +26,8 @@
     <meta name="apple-mobile-web-app-title" content="qpp_example" />
     <link rel="apple-touch-icon" href="icons/Icon-192.png" />
 
-  <!-- 修正mobile css寬度錯誤的問題 -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 修正mobile css寬度錯誤的問題 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png" />
@@ -79,23 +79,23 @@
       transform: translate(-50%, -50%);
     }
 
-  .loading-logoFadeIn .loadingArea .icon.loading-left {
-    opacity: 0;
-    position: relative;
-    left: -20px;
-    -webkit-animation: fadeIn_left 1s linear 0ms forwards;
-    -moz-animation: fadeIn_left 1s linear 0ms forwards;
-    animation: fadeIn_left 1s linear 0ms forwards
-  }
+    .loading-logoFadeIn .loadingArea .icon.loading-left {
+      opacity: 0;
+      position: relative;
+      left: -20px;
+      -webkit-animation: fadeIn_left 1s linear 0ms forwards;
+      -moz-animation: fadeIn_left 1s linear 0ms forwards;
+      animation: fadeIn_left 1s linear 0ms forwards;
+    }
 
-  .loading-logoFadeIn .loadingArea .icon.loading-right {
-    position: relative;
-    right: -20px;
-    opacity: 0;
-    -webkit-animation: fadeIn_right 1s linear 0ms forwards;
-    -moz-animation: fadeIn_right 1s linear 0ms forwards;
-    animation: fadeIn_right 1s linear 0ms forwards
-  }
+    .loading-logoFadeIn .loadingArea .icon.loading-right {
+      position: relative;
+      right: -20px;
+      opacity: 0;
+      -webkit-animation: fadeIn_right 1s linear 0ms forwards;
+      -moz-animation: fadeIn_right 1s linear 0ms forwards;
+      animation: fadeIn_right 1s linear 0ms forwards;
+    }
 
     .loading-logoFadeIn img {
       max-height: 64px;
@@ -175,27 +175,46 @@
     }
   </style>
 
-<body>
-  <div class="loading-logoFadeIn">
-    <div class="loadingArea align-self-center"><img src="assets/pic-animation-icon-2.png" alt=""
-        class="icon loading-left img-fluid"><img src="assets/pic-animation-qpp.png" alt=""
-        class="icon loading-right img-fluid"></div>
-  </div>
+  <body>
+    <div class="loading-logoFadeIn">
+      <div class="loadingArea align-self-center">
+        <img
+          src="assets/pic-animation-icon-2.png"
+          alt=""
+          class="icon loading-left img-fluid"
+        /><img
+          src="assets/pic-animation-qpp.png"
+          alt=""
+          class="icon loading-right img-fluid"
+        />
+      </div>
+    </div>
 
     <script>
       window.addEventListener("load", function (ev) {
-        // Download main.dart.js
+        function useCanvas() {
+          let nav = window.navigator;
+          let uad = nav.userAgentData;
+          if (uad.platform == "Android" && uad.mobile == true) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+        console.log(useCanvas());
         _flutter.loader.loadEntrypoint({
-          // disable pwa
-          // serviceWorker: {
-          //   serviceWorkerVersion: serviceWorkerVersion,
-          // },
+          serviceWorker: {
+            serviceWorkerVersion: serviceWorkerVersion,
+          },
           onEntrypointLoaded: function (engineInitializer) {
             // 修改渲染模式, 加速載入中文
             // https://docs.flutter.dev/platform-integration/web/renderers
             // https://juejin.cn/post/7156106959001747493
             // render = 'auto'
-            let config = { useColorEmoji: true };
+            let config = {
+              renderer: useCanvas() ? "canvaskit" : "html",
+              useColorEmoji: true,
+            };
             engineInitializer
               .initializeEngine(config)
               .then(function (appRunner) {
@@ -205,12 +224,12 @@
         });
       });
 
-    // Flutter 渲染的第一幀完成就關閉載入動畫
-    window.addEventListener("flutter-first-frame", function () {
-      var loadingAnimation = document.querySelector('.loading-logoFadeIn');
-      loadingAnimation.style.display = 'none';
-    });
-  </script>
+      // Flutter 渲染的第一幀完成就關閉載入動畫
+      window.addEventListener("flutter-first-frame", function () {
+        var loadingAnimation = document.querySelector(".loading-logoFadeIn");
+        loadingAnimation.style.display = "none";
+      });
+    </script>
 
     <!-- 修正 iOS webview 無法滾動問題 -->
     <script>
