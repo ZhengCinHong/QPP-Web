@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "qppwebdev"
-  }
+  },
+  "targets": {
+    "qppwebdev": {
+      "hosting": {
+        "qppwebdev": [
+          "qppwebdev"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

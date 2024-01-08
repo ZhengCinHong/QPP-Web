@@ -1,6 +1,7 @@
 {
   "hosting": {
     "source": ".",
+    "target": "qppwebdev",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -8,6 +9,10 @@
     ],
     "frameworksBackend": {
       "region": "asia-east1"
-    }
+    },
+    "rewrites": [ {
+      "source": "**",
+      "destination": "/index.html"
+    } ]
   }
 }
