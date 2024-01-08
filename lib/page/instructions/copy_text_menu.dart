@@ -31,7 +31,6 @@ class CopyTextMenuState extends State<CopyTextMenu>
   late Offset _buttonPosition;
   late Size _buttonSize;
   late OverlayEntry _overlayEntry;
-  late Point _tipPoint;
 
   bool _isMenuOpen = false;
   Timer? _timer;
@@ -49,20 +48,13 @@ class CopyTextMenuState extends State<CopyTextMenu>
   @override
   void initState() {
     // 滾動時位移彈出視窗
-    widget.scrollController.addListener(() {
-      if (_isMenuOpen == false) {
-        return;
-      }
-      Overlay.of(context).setState(() {
-        // 強制更新 OverlayEntry 狀態
-      });
-    });
-
+    widget.scrollController.addListener(_onScrollControllerValueChanged);
     super.initState();
   }
 
   @override
   void dispose() {
+    widget.scrollController.removeListener(_onScrollControllerValueChanged);
     _closeMenu();
     _timer?.cancel();
     super.dispose();
@@ -71,6 +63,16 @@ class CopyTextMenuState extends State<CopyTextMenu>
   @override
   Widget build(BuildContext context) {
     return const SizedBox.shrink();
+  }
+
+  // 滾動變化事件
+  void _onScrollControllerValueChanged() {
+    if (_isMenuOpen == false || !mounted) {
+      return;
+    }
+    Overlay.of(context).setState(() {
+      // 強制更新 OverlayEntry 狀態
+    });
   }
 }
 
@@ -114,21 +116,27 @@ extension _CopyTextMenuStatePrivateFunctions on CopyTextMenuState {
     const textPadding = EdgeInsets.fromLTRB(32, 8, 32, 14);
 
     final size = widget.tipText.size(widget.tipTextStyle);
-    final textHieght = size.height + textPadding.bottom + textPadding.top;
-
-    // 寬與高
-    final width = size.width + textPadding.left + textPadding.right;
-    final height = size.height + textPadding.top + textPadding.bottom;
 
     return OverlayEntry(
       builder: (context) {
         return LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
+            // 尋找按鈕
             _findButton();
 
-            final top = _buttonPosition.dy - textHieght;
+            final defaultTipMaxWidth = constraints.biggest.width / 3;
+            final tipWidth = min(defaultTipMaxWidth, size.width);
+            final tipHeight = widget.tipText
+                .size(widget.tipTextStyle, maxWidth: tipWidth)
+                .height;
+
+            // 寬與高
+            final width = tipWidth + textPadding.left + textPadding.right;
+            final height = tipHeight + textPadding.top + textPadding.bottom;
+
+            final top = _buttonPosition.dy - height;
             final left = _buttonPosition.dx -
-                ((size.width / 2) + textPadding.left) +
+                ((tipWidth / 2) + textPadding.left) +
                 (_buttonSize.width / 2);
 
             // 計算彈出視窗是否被左右遮擋
@@ -142,27 +150,26 @@ extension _CopyTextMenuStatePrivateFunctions on CopyTextMenuState {
             }
 
             // 記錄目前點擊資訊
-            _tipPoint = Point(left - offset, top);
+            final tipPoint = Point(left - offset, top);
 
             return Container(
               alignment: Alignment.topLeft,
-              child: Material(
-                color: Colors.white.withOpacity(0),
+              child: Container(
+                margin: EdgeInsets.only(
+                  top: tipPoint.y.toDouble(),
+                  left: tipPoint.x.toDouble(),
+                ),
                 child: Container(
-                  margin: EdgeInsets.only(
-                    top: _tipPoint.y.toDouble(),
-                    left: _tipPoint.x.toDouble(),
+                  width: width,
+                  padding: textPadding,
+                  decoration: BoxDecoration(
+                    image: widget.tipBackgroundImage,
                   ),
-                  child: Container(
-                    width: width,
-                    height: height,
-                    padding: textPadding,
-                    decoration: BoxDecoration(
-                      image: widget.tipBackgroundImage,
-                    ),
+                  child: Material(
+                    color: Colors.white.withOpacity(0),
+                    textStyle: widget.tipTextStyle,
                     child: Text(
                       widget.tipText,
-                      style: widget.tipTextStyle,
                     ),
                   ),
                 ),

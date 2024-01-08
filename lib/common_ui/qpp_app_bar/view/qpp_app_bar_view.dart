@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
@@ -25,13 +24,12 @@ import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
 import 'package:qpp_example/utils/shared_prefs_utils.dart';
 
-AppBar qppAppBar(ScreenStyle screenStyle) {
+AppBar qppAppBar(bool isDesktop) {
   return AppBar(
     automaticallyImplyLeading: false, // 關閉返回按鈕
-    toolbarHeight:
-        screenStyle.isDesktop ? kToolbarDesktopHeight : kToolbarMobileHeight,
+    toolbarHeight: isDesktop ? kToolbarDesktopHeight : kToolbarMobileHeight,
     backgroundColor: QppColors.barMask,
-    title: screenStyle.isDesktop
+    title: isDesktop
         ? const _QppAppBarTitle.desktop()
         : const _QppAppBarTitle.mobile(),
     titleSpacing: 0,
@@ -53,8 +51,7 @@ class _QppAppBarTitle extends ConsumerWidget {
 
     final bool isDesktopStyle = screenStyle.isDesktop;
 
-    final bool isOpenAppBarMenuBtnPage =
-        ref.watch(isOpenAppBarMenuBtnPageProvider);
+    final style = ref.watch(fullScreenMenuPageStateProvider).state;
 
     final checkLoginTokenState = ref.watch(
         authServiceProvider.select((value) => value.checkLoginTokenState));
@@ -104,7 +101,7 @@ class _QppAppBarTitle extends ConsumerWidget {
         isDesktopStyle
             ? const Flexible(child: SizedBox.shrink())
             : Opacity(
-                opacity: isOpenAppBarMenuBtnPage ? 0 : 1,
+                opacity: style.isSrcMenuVisible ? 1 : 0,
                 child: const Padding(
                   padding: EdgeInsets.only(left: 10),
                   child: AnimationMenuBtn(isClose: false),
@@ -321,54 +318,57 @@ class AnimationMenuBtn extends StatefulWidget {
 
 class _AnimationMenuBtn extends State<AnimationMenuBtn>
     with TickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 500),
-  );
-
-  int _count = 0;
-  final int _targetCount = 1;
+  late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
 
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _count++;
-        if (_count < _targetCount) {
-          _controller.reset();
-          _controller.forward();
-        }
-      }
-    });
-    _controller.forward();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+
+    // 只針對非彈窗按鈕，瀏覽器拉縮時要顯示動畫。(close->menu)
+    if (!widget.isClose) {
+      _controller.forward(from: 1.0);
+      _controller.reverse();
+    }
   }
 
   @override
   void dispose() {
-    _controller.dispose(); // 要在super.dispose()之前處置Ticker
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        return Transform.rotate(
-          angle: -_controller.value * 2 * pi,
-          child: Consumer(builder: (context, ref, child) {
-            final notifier = ref.read(isOpenAppBarMenuBtnPageProvider.notifier);
+    return Consumer(
+      builder: (context, ref, child) {
+        final notifier = ref.read(fullScreenMenuPageStateProvider.notifier);
+        final style = ref.watch(fullScreenMenuPageStateProvider).state;
 
-            return IconButton(
-              iconSize: 24,
-              onPressed: () => notifier.toggle(),
-              icon: widget.isClose || _count < _targetCount
-                  ? Image.asset(QPPImages.mobile_icon_actionbar_close_normal)
-                  : Image.asset(QPPImages.mobile_icon_actionbar_list_normal),
-            );
-          }),
+        // 處理播放動畫
+        if (style == FullScreenMenuPageStyle.animateToShow) {
+          _controller.reset();
+          _controller.forward();
+        } else if (style == FullScreenMenuPageStyle.animateToHidden) {
+          _controller.reset();
+          _controller.forward(from: 1.0);
+          _controller.reverse();
+        }
+
+        return InkWell(
+          child: AnimatedIcon(
+            icon: AnimatedIcons.menu_close,
+            progress: _controller,
+            size: 24,
+            color: Colors.white,
+          ),
+          onTap: () {
+            notifier.tapToggle();
+          },
         );
       },
     );
@@ -590,14 +590,15 @@ class _MouseRegionCustomWidgetState extends State<MouseRegionCustomWidget> {
 // -----------------------------------------------------------------------------
 /// 全螢幕選單按鈕頁面 (手機樣式才會出現)
 // -----------------------------------------------------------------------------
-class FullScreenMenuBtnPage extends StatefulWidget {
+class FullScreenMenuBtnPage extends ConsumerStatefulWidget {
   const FullScreenMenuBtnPage({super.key});
 
   @override
-  State<FullScreenMenuBtnPage> createState() => _FullScreenMenuBtnPageState();
+  ConsumerState<FullScreenMenuBtnPage> createState() =>
+      _FullScreenMenuBtnPageState();
 }
 
-class _FullScreenMenuBtnPageState extends State<FullScreenMenuBtnPage>
+class _FullScreenMenuBtnPageState extends ConsumerState<FullScreenMenuBtnPage>
     with TickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     duration: const Duration(milliseconds: 800),
@@ -609,98 +610,145 @@ class _FullScreenMenuBtnPageState extends State<FullScreenMenuBtnPage>
     curve: Curves.fastOutSlowIn,
   );
 
+  AnimationStatus? _animationPlayType;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // 動畫結束處理
+    _animation.addStatusListener(_onAnimationStatusChanged);
+  }
+
+  @override
+  void deactivate() {
+    final notifier = ref.read(fullScreenMenuPageStateProvider.notifier);
+    notifier.reset(isNotifyListeners: false);
+
+    super.deactivate();
+  }
+
   @override
   void dispose() {
+    // 清除動畫
+    _animation.removeStatusListener(_onAnimationStatusChanged);
+    _animationPlayType = null;
+    // 關閉動畫
     _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer(builder: (context, ref, child) {
-      final bool isOpenAppBarMenuBtnPage =
-          ref.watch(isOpenAppBarMenuBtnPageProvider);
-      final isOpenAppBarMenuBtnNotifier =
-          ref.read(isOpenAppBarMenuBtnPageProvider.notifier);
+    final style = ref.watch(fullScreenMenuPageStateProvider).state;
+    final notifier = ref.read(fullScreenMenuPageStateProvider.notifier);
 
-      if (isOpenAppBarMenuBtnPage) {
-        _controller.reset();
-        _controller.forward();
-      }
+    // 播放動畫
+    _controller.reset();
+    if (style == FullScreenMenuPageStyle.animateToShow) {
+      _controller.forward();
+    } else if (style == FullScreenMenuPageStyle.animateToHidden) {
+      _controller.forward(from: 1.0);
+      _controller.reverse();
+    } else if (style == FullScreenMenuPageStyle.show) {
+      _controller.forward(from: 1.0);
+    }
 
-      return isOpenAppBarMenuBtnPage
-          ? SizeTransition(
-              sizeFactor: _animation,
-              axis: Axis.vertical,
-              axisAlignment: -1,
-              child: ColoredBox(
-                color: const Color.fromARGB(255, 23, 57, 117).withOpacity(0.9),
-                child: Stack(
-                  children: [
-                    const SizedBox(
-                      height: kToolbarMobileHeight,
-                      child: Row(
-                        children: [
-                          // 最左邊間距
-                          SizedBox(width: 29),
-                          _Logo(ScreenStyle.mobile),
-                          Spacer(),
-                          // 三條 or 最右邊間距
-                          AnimationMenuBtn(isClose: true),
-                          SizedBox(width: 24)
-                        ],
-                      ),
+    return (style == FullScreenMenuPageStyle.hide)
+        ? const SizedBox.shrink()
+        : SizeTransition(
+            sizeFactor: _animation,
+            axis: Axis.vertical,
+            axisAlignment: -1,
+            child: Stack(
+              children: [
+                const Scaffold(
+                  backgroundColor: Color.fromARGB(153, 0, 0, 0),
+                  body: SizedBox(
+                    height: kToolbarMobileHeight,
+                    child: Row(
+                      children: [
+                        // 最左邊間距
+                        SizedBox(width: 29),
+                        _Logo(ScreenStyle.mobile),
+                        Spacer(),
+                        // 三條 or 最右邊間距
+                        AnimationMenuBtn(isClose: true),
+                        SizedBox(width: 24)
+                      ],
                     ),
-                    Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: MainMenu.values
-                            .map(
-                              (e) => TextButton(
-                                onPressed: () {
-                                  isOpenAppBarMenuBtnNotifier.toggle();
-
-                                  BuildContext? currentContext =
-                                      e.currentContext;
-                                  bool isHomePage =
-                                      Uri.base.path == QppGoRouter.home;
-
-                                  if (!isHomePage) {
-                                    ServerConst.testRouterHost
-                                        .launchURL(isNewTab: false);
-                                  }
-
-                                  /// 延遲等待跳轉完，重新抓currentContext
-                                  Future.delayed(
-                                      Duration(
-                                          milliseconds: isHomePage ? 0 : 300),
-                                      () {
-                                    currentContext = e.currentContext;
-                                    if (currentContext != null) {
-                                      Scrollable.ensureVisible(currentContext!,
-                                          duration: const Duration(seconds: 1));
-                                    }
-                                  });
-                                }.throttleWithTimeout(timeout: 2000),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(25),
-                                  child: Text(
-                                    context.tr(e.text),
-                                    style:
-                                        QppTextStyles.web_20pt_title_m_white_C,
-                                  ),
-                                ),
-                              ),
-                            )
-                            .toList(),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            )
-          : const SizedBox.shrink();
-    });
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: MainMenu.values
+                        .map(
+                          (e) => TextButton(
+                            onPressed: () {
+                              notifier.tapToggle();
+
+                              BuildContext? currentContext = e.currentContext;
+                              bool isHomePage =
+                                  Uri.base.path == QppGoRouter.home;
+
+                              if (!isHomePage) {
+                                ServerConst.testRouterHost
+                                    .launchURL(isNewTab: false);
+                              }
+
+                              /// 延遲等待跳轉完，重新抓currentContext
+                              Future.delayed(
+                                  Duration(milliseconds: isHomePage ? 0 : 300),
+                                  () {
+                                currentContext = e.currentContext;
+                                if (currentContext != null) {
+                                  Scrollable.ensureVisible(currentContext!,
+                                      duration: const Duration(seconds: 1));
+                                }
+                              });
+                            }.throttleWithTimeout(timeout: 2000),
+                            child: Padding(
+                              padding: const EdgeInsets.all(25),
+                              child: Text(
+                                context.tr(e.text),
+                                style: QppTextStyles.web_20pt_title_m_white_C,
+                              ),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+              ],
+            ),
+          );
+  }
+
+  void _onAnimationStatusChanged(AnimationStatus status) {
+    switch (status) {
+      case AnimationStatus.forward:
+        _animationPlayType = AnimationStatus.forward;
+        break;
+      case AnimationStatus.reverse:
+        _animationPlayType = AnimationStatus.reverse;
+        break;
+      case AnimationStatus.completed:
+      case AnimationStatus.dismissed:
+        if ((status == AnimationStatus.completed &&
+                _animationPlayType == AnimationStatus.forward) ||
+            (status == AnimationStatus.dismissed &&
+                _animationPlayType == AnimationStatus.reverse)) {
+          ref
+              .read(fullScreenMenuPageStateProvider.notifier)
+              .animationComplete();
+        }
+
+        _animationPlayType = null;
+
+      default:
+        break;
+    }
   }
 }
 

@@ -98,6 +98,7 @@ class _PhoneDescriptionState extends State<_PhoneDescription> {
                         style: isDesktopStyle
                             ? QppTextStyles.web_24pt_title_L_white_L
                             : QppTextStyles.mobile_16pt_title_white_bold_L,
+                        textAlign: isDesktopStyle ? null : TextAlign.center,
                       ),
                     ),
                     isDesktopStyle
@@ -205,7 +206,8 @@ class _DesktopStyleContent extends StatelessWidget {
 
             return Container(
               color: QppColors.oxfordBlue,
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: horizontal),
+              padding:
+                  EdgeInsets.symmetric(vertical: 10, horizontal: horizontal),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,

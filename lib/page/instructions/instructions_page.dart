@@ -1,10 +1,10 @@
 import 'dart:convert';
+import 'package:universal_html/html.dart' as html;
 import 'package:easy_localization/easy_localization.dart' as localized;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:qpp_example/constants/server_const.dart';
-import 'package:qpp_example/extension/string/text.dart';
 import 'package:qpp_example/extension/widget/background_image.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/instructions/copy_text_menu.dart';
@@ -135,9 +135,7 @@ class InstructionsPage extends StatelessWidget {
     return (element) {
       if (element.className == InstructionsHtmlClass.title.name ||
           element.className == InstructionsHtmlClass.firstTitle.name) {
-        final size = element.innerHtml.size(titleTextStyle);
         // optional(空格(92)) + 標題 + 空格(23) + 分割線 + 空格(48)
-
         List<Widget> children = [];
 
         // 是否要加入上方空白
@@ -149,10 +147,15 @@ class InstructionsPage extends StatelessWidget {
         children.addAll([
           SizedBox(
             width: listWidth,
-            height: size.height,
-            child: FittedBox(
-              fit: BoxFit.none,
-              child: Text(element.innerHtml, style: titleTextStyle),
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              children: [
+                Text(
+                  _parseHtmlString(element.innerHtml),
+                  style: titleTextStyle,
+                  textAlign: TextAlign.center,
+                )
+              ],
             ),
           ),
           SizedBox(height: isDesktop ? 23 : 15),
@@ -167,7 +170,7 @@ class InstructionsPage extends StatelessWidget {
         // 標題 + 空格(24)
         return Column(
           children: [
-            Text(element.innerHtml, style: subTitleTextStyle),
+            Text(_parseHtmlString(element.innerHtml), style: subTitleTextStyle),
             SizedBox(width: listWidth, height: 24)
           ],
         );
@@ -228,42 +231,44 @@ class InstructionsPage extends StatelessWidget {
             );
 
             // 顯示 "電子郵件" 文案
-            result.add(
+            result.addAll([
               WidgetSpan(
-                  child: Wrap(
-                children: [
-                  const SizedBox(
-                    width: 4,
-                  ),
-                  InkWell(
-                    child: Text(
-                      text[InstructionsPage.privacyJsonTextName],
-                      key: copyTextMenuDisplayTextKey,
-                      style: isDesktop
-                          ? QppTextStyles.web_16pt_body_canary_yellow_C
-                          : QppTextStyles.mobile_14pt_body_canary_yellow_L,
+                alignment: PlaceholderAlignment.middle,
+                child: Wrap(
+                  children: [
+                    const SizedBox(
+                      width: 4,
                     ),
-                    onTap: () async {
-                      copyTextMenuStateKey.currentState
-                          ?.showTip(copyTextMenuDisplayTextKey);
-                      await Clipboard.setData(ClipboardData(text: href ?? ""));
-                    },
-                  ),
-                  const SizedBox(
-                    width: 4,
-                  ),
-                ],
-              )),
-            );
-
-            // 彈窗預設不顯示，點擊後顯示，放在介面上方便給 listview 做回收。
-            result.add(
+                    InkWell(
+                      child: Text(
+                        text[InstructionsPage.privacyJsonTextName],
+                        key: copyTextMenuDisplayTextKey,
+                        textAlign: TextAlign.center,
+                        style: isDesktop
+                            ? QppTextStyles.web_16pt_body_canary_yellow_C
+                            : QppTextStyles.mobile_14pt_body_canary_yellow_L,
+                      ),
+                      onTap: () async {
+                        copyTextMenuStateKey.currentState
+                            ?.showTip(copyTextMenuDisplayTextKey);
+                        await Clipboard.setData(
+                            ClipboardData(text: href ?? ""));
+                      },
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                  ],
+                ),
+              ),
+              // 彈窗預設不顯示，點擊後顯示，放在介面上方便給 listview 做回收。
               WidgetSpan(
                 child: copyTextMenu,
               ),
-            );
+            ]);
           } else {
-            result.add(TextSpan(text: children.innerHtml, style: textStyle));
+            result.add(TextSpan(
+                text: _parseHtmlString(children.innerHtml), style: textStyle));
           }
         }
 
@@ -325,7 +330,7 @@ class InstructionsPage extends StatelessWidget {
 
         if (index != null) {
           return HtmlWidget(
-            "(${index + 1}) ${element.outerHtml}",
+            "(${index + 1}) ${element.innerHtml}",
             textStyle: olTextStyle,
             customStylesBuilder: customStylesBuilder(lineHeight),
             customWidgetBuilder:
@@ -336,6 +341,12 @@ class InstructionsPage extends StatelessWidget {
 
       return null;
     };
+  }
+
+  // 解析 html 字串
+  String _parseHtmlString(String htmlString) {
+    var text = html.Element.span()..appendHtml(htmlString);
+    return text.innerText;
   }
 }
 
