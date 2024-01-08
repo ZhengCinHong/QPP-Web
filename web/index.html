@@ -240,11 +240,14 @@
         function useCanvas() {
           let nav = window.navigator;
           let uad = nav.userAgentData;
-          if (uad.platform == "Android" && uad.mobile == true) {
-            return true;
-          } else {
-            return false;
+          if (uad != null) {
+            if (uad.platform == "Android" && uad.mobile == true) {
+              return true;
+            } else {
+              return false;
+            }
           }
+          return false;
         }
         console.log(useCanvas());
         _flutter.loader.loadEntrypoint({
