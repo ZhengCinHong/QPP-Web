@@ -57,7 +57,7 @@ class QppVote {
   String get expiryDateForDisplay {
     final originalDate = DateTime.parse(expiryDate);
 
-    return DateFormat('yyyy/MM/dd hh:mm').format(originalDate);
+    return DateFormat('yyyy/MM/dd HH:mm').format(originalDate);
   }
 
   /// 投票人數

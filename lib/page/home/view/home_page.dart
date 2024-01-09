@@ -31,42 +31,51 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(context) {
     return Consumer(
-      builder: (context, ref, child) {
-        final scrollToContext = ref.watch(scrollToContextProvider);
-        final scrollToContextNotifier =
-            ref.read(scrollToContextProvider.notifier);
+        builder: (context, ref, child) {
+          final scrollToContext = ref.watch(scrollToContextProvider);
+          final scrollToContextNotifier =
+              ref.read(scrollToContextProvider.notifier);
 
-        if (scrollToContext != null) {
-          final container =
-              scrollToContext.currentContext?.findRenderObject() as RenderBox;
-          final scrollPoint =
-              container.localToGlobal(Offset(0, scrollController.offset)).dy -
-                  (Scaffold.of(context).appBarMaxHeight ?? 0);
+          if (scrollToContext != null) {
+            final container =
+                scrollToContext.currentContext?.findRenderObject() as RenderBox;
+            final scrollPoint =
+                container.localToGlobal(Offset(0, scrollController.offset)).dy -
+                    (Scaffold.of(context).appBarMaxHeight ?? 0);
 
-          scrollTo(scrollToContextNotifier, scrollController,
-              scrollPoint <= 0 ? 0 : scrollPoint);
+            scrollTo(scrollToContextNotifier, scrollController,
+                scrollPoint <= 0 ? 0 : scrollPoint);
+          }
 
-          print({scrollToContext.currentContext, scrollPoint});
-        }
-
-        return SingleChildScrollView(
-            controller: scrollController, child: child);
-      },
-      child: ListView.builder(
-        padding: EdgeInsets.zero,
-        itemCount: 5,
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          return switch (index) {
-            0 => HomePageIntroduce(key: introduceKey),
-            1 => HomePageFeature(key: featureKey),
-            2 => HomePageDescription(key: descriptionKey),
-            3 => HomePageContact(key: contactKey),
-            _ => const HomePageFooter(),
-          };
+          return SingleChildScrollView(
+            controller: scrollController,
+            child: child,
+          );
         },
-      ),
-    );
+        child: Column(
+          children: [
+            HomePageIntroduce(key: introduceKey),
+            HomePageFeature(key: featureKey),
+            HomePageDescription(key: descriptionKey),
+            HomePageContact(key: contactKey),
+            const HomePageFooter(),
+          ],
+        )
+        //     ListView.builder(
+        //   padding: EdgeInsets.zero,
+        //   itemCount: 5,
+        //   physics: const NeverScrollableScrollPhysics(),
+        //   shrinkWrap: true,
+        //   itemBuilder: (context, index) {
+        //     return switch (index) {
+        //       0 => HomePageIntroduce(key: introduceKey),
+        //       1 => HomePageFeature(key: featureKey),
+        //       2 => HomePageDescription(key: descriptionKey),
+        //       3 => HomePageContact(key: contactKey),
+        //       _ => const HomePageFooter(),
+        //     };
+        //   },
+        // ),
+        );
   }
 }

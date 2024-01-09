@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qpp_example/api/core/api_response.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/model/enum/item/vote_show_type.dart';
+import 'package:qpp_example/model/enum/item/vote_type.dart';
 import 'package:qpp_example/model/vote/qpp_vote.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
 import 'package:qpp_example/page/commodity_info/view/info_row.dart';
@@ -22,6 +23,10 @@ class VoteStatistics extends InfoRow {
 
   @override
   Widget getContent(data) {
+    final contentTextStyle = isDesktop
+        ? QppTextStyles.web_16pt_body_red_L
+        : QppTextStyles.mobile_14pt_body_outrageous_orange_L;
+
     return data is QppVote
         ? Builder(
             builder: (context) {
@@ -38,15 +43,18 @@ class VoteStatistics extends InfoRow {
                     ),
                   ),
                   // 紅字(投票結果將於結束後公佈)
-                  data.voteShowType == VoteShowType.questionMark
+                  data.voteShowType == VoteShowType.questionMark &&
+                          data.voteType == VoteType.inProgress
                       ? Text(
                           context.tr(QppLocales.commodityInfoVoteAfter),
-                          style: isDesktop
-                              ? QppTextStyles.web_16pt_body_red_L
-                              : QppTextStyles
-                                  .mobile_14pt_body_outrageous_orange_L,
+                          style: contentTextStyle,
                         )
-                      : const SizedBox.shrink(),
+                      : data.voteType == VoteType.expired
+                          ? Text(
+                              context.tr(QppLocales.commodityInfoVoteOver),
+                              style: contentTextStyle,
+                            )
+                          : const SizedBox.shrink(),
                 ],
               );
             },

@@ -204,6 +204,10 @@ class VoteOptionsItem extends StatelessWidget {
                           final isEnableTap = !votedState.$1 &&
                               qppVote.voteType == VoteType.inProgress;
 
+                          /// 是否為已過期
+                          final isExpired =
+                              qppVote.voteType == VoteType.expired;
+
                           final notifier =
                               ref.read(itemSelectInfoProvider.notifier);
 
@@ -238,7 +242,7 @@ class VoteOptionsItem extends StatelessWidget {
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        isCreater
+                                        isCreater || isExpired
                                             ? const SizedBox.shrink()
                                             : Padding(
                                                 padding: EdgeInsets.only(
@@ -255,7 +259,7 @@ class VoteOptionsItem extends StatelessWidget {
                                               ),
                                         Flexible(
                                           child: Text(
-                                            e.value.option,
+                                            '${isExpired ? '・' : ''} ${e.value.option}',
                                             style: (isSelected &&
                                                     !isEnableTap &&
                                                     voteShowType !=
@@ -337,9 +341,7 @@ class VoteOptionsItem extends StatelessWidget {
                                               Text(
                                                 isQuestionMark
                                                     ? '?%'
-                                                    : isZeroPercent
-                                                        ? '0.0%'
-                                                        : '${(percent * 100).toStringAsFixed(2)}%',
+                                                    : '${(percent * 100).toStringAsFixed(1)}%',
                                                 style: isDesktopStyle
                                                     ? isQuestionMark
                                                         ? QppTextStyles
