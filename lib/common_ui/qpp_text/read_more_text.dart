@@ -237,6 +237,7 @@ class ReadMoreTextState extends State<ReadMoreText> {
                 data: _readMore
                     ? widget.data.substring(0, widget.trimLength)
                     : widget.data,
+                fullData: widget.data,
                 textStyle: effectiveTextStyle,
                 linkTextStyle: linkStyle,
                 onPressed: widget.onLinkPressed,
@@ -259,6 +260,7 @@ class ReadMoreTextState extends State<ReadMoreText> {
                     ? widget.data.substring(0, endIndex) +
                         (linkLongerThanLine ? _kLineSeparator : '')
                     : widget.data,
+                fullData: widget.data,
                 textStyle: effectiveTextStyle,
                 linkTextStyle: linkStyle,
                 onPressed: widget.onLinkPressed,
@@ -309,12 +311,14 @@ class ReadMoreTextState extends State<ReadMoreText> {
 
   TextSpan _buildData({
     required String data,
+    String? fullData,
     TextStyle? textStyle,
     TextStyle? linkTextStyle,
     ValueChanged<String>? onPressed,
     required List<TextSpan> children,
   }) {
-    RegExp exp = RegExp(r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+');
+    // 定义URL的正则表达式
+    RegExp exp = RegExp(r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.&]+');
 
     List<TextSpan> contents = [];
 
@@ -323,6 +327,10 @@ class ReadMoreTextState extends State<ReadMoreText> {
 
       final firstTextPart = data.substring(0, match!.start);
       final linkTextPart = data.substring(match.start, match.end);
+      // 取完整 URL 資料
+      final fullMatch = exp.firstMatch(fullData ?? '');
+      String? fullTextPart =
+          fullData?.substring(fullMatch!.start, fullMatch.end);
 
       contents.add(
         TextSpan(
@@ -335,7 +343,7 @@ class ReadMoreTextState extends State<ReadMoreText> {
           style: linkTextStyle,
           recognizer: TapGestureRecognizer()
             ..onTap = () => onPressed?.call(
-                  linkTextPart.trim(),
+                  fullTextPart?.trim() ?? linkTextPart.trim(),
                 ),
         ),
       );

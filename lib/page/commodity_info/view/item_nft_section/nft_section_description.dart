@@ -194,7 +194,7 @@ class NFTInfoRowIntroLink extends NFTInfoRow {
   }
 }
 
-/// NFT 物品連結資訊
+/// NFT 物品說明資訊
 class NFTInfoRowDescription extends NFTInfoRow {
   const NFTInfoRowDescription(
       {super.key, required super.data, super.isDesktop});
