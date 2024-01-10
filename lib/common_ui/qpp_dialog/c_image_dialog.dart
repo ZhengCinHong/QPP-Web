@@ -14,6 +14,7 @@ class CImageDialog extends StatelessWidget {
     super.key,
     required this.image,
     required this.text,
+    required this.textStyle,
     required this.subText,
     this.style = CDialogActionStyle.confirm,
     required this.height,
@@ -24,6 +25,7 @@ class CImageDialog extends StatelessWidget {
   final ScreenStyle screenStyle;
   final String image;
   final String text;
+  final TextStyle textStyle;
   final String subText;
   final CDialogActionStyle style;
   final double height;
@@ -56,12 +58,7 @@ class CImageDialog extends StatelessWidget {
                   : const SizedBox(height: 36),
               Flexible(
                 flex: isDesktopStyle ? 1 : 0,
-                child: Text(
-                  text,
-                  style: isDesktopStyle
-                      ? QppTextStyles.web_36pt_Display_s_maya_blue_C
-                      : QppTextStyles.mobile_20pt_title_L_maya_blue_L,
-                ),
+                child: Text(text, style: textStyle),
               ),
             ],
           ),

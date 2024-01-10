@@ -11,6 +11,7 @@ import 'package:qpp_example/common_view_model/auth_service/view_model/auth_servi
 import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
+import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
 import 'package:qpp_example/utils/shared_prefs_utils.dart';
 
@@ -78,6 +79,9 @@ extension DialogVoid on void {
             width: isDesktopStyle ? 780 : 327,
             image: QPPImages.pic_successful,
             text: context.tr(QppLocales.commodityInfoVoteSuccess),
+            textStyle: isDesktopStyle
+                ? QppTextStyles.web_36pt_Display_s_maya_blue_C
+                : QppTextStyles.mobile_20pt_title_L_maya_blue_L,
             subText: context.tr(QppLocales.commodityInfoVoteSuccessP),
           ),
         );
@@ -103,7 +107,10 @@ extension DialogVoid on void {
             height: isDesktopStyle ? 403 : 379,
             width: isDesktopStyle ? 780 : 327,
             image: QPPImages.pic_fail,
-            text: context.tr(QppLocales.commodityInfoVoteFault),
+            text: context.tr(QppLocales.commodityInfoVoteCannot),
+            textStyle: isDesktopStyle
+                ? QppTextStyles.web_36pt_Display_s_outrageous_orange_C
+                : QppTextStyles.mobile_20pt_title_L_outrageous_orange_L,
             subText: context.tr(subText),
           ),
         );

@@ -30,6 +30,7 @@ class UniversalLinkWidget extends StatelessWidget {
               Text(
                 context.tr(mobileText),
                 style: QppTextStyles.web_16pt_body_platinum_L,
+                textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
               OpenQppButton(url: url),

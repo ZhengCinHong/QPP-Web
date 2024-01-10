@@ -185,7 +185,7 @@ class _MobileGuide extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         MenuBtns.vertical(padding: 20, fontSize: 16),
-        SizedBox(width: 100),
+        Flexible(child: SizedBox(width: 100)),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

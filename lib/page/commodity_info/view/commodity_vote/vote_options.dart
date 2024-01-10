@@ -177,11 +177,12 @@ class VoteOptionsItem extends StatelessWidget {
                   .map(
                     (e) => Padding(
                       padding: EdgeInsets.only(
-                          top: e.key == 0
-                              ? 0
-                              : isDesktopStyle
-                                  ? 16
-                                  : 8),
+                        top: e.key == 0
+                            ? 0
+                            : isDesktopStyle
+                                ? 16
+                                : 8,
+                      ),
                       child: Consumer(
                         builder: (context, ref, child) {
                           /// 問券 自己的投票陣列
@@ -193,6 +194,9 @@ class VoteOptionsItem extends StatelessWidget {
                           final votedState = ref.watch(itemSelectInfoProvider
                               .select((value) => value.votedState));
 
+                          /// 是否為已投票
+                          final isVoted = votedState.$1;
+
                           /// 是否為創建者
                           final isCreater = ref.watch(itemSelectInfoProvider
                               .select((value) => value.isCreater));
@@ -201,12 +205,15 @@ class VoteOptionsItem extends StatelessWidget {
                           final isSelected = voteArrayData?[index] == e.key;
 
                           /// 是否啟用點擊(選項按鈕)
-                          final isEnableTap = !votedState.$1 &&
+                          final isEnableTap = !isVoted &&
                               qppVote.voteType == VoteType.inProgress;
 
                           /// 是否為已過期
                           final isExpired =
                               qppVote.voteType == VoteType.expired;
+
+                          /// 是否為已結束
+                          final isEnded = qppVote.voteType == VoteType.ended;
 
                           final notifier =
                               ref.read(itemSelectInfoProvider.notifier);
@@ -242,13 +249,16 @@ class VoteOptionsItem extends StatelessWidget {
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        isCreater || isExpired
+                                        isCreater ||
+                                                isExpired ||
+                                                isEnded ||
+                                                (!isSelected && isVoted)
                                             ? const SizedBox.shrink()
                                             : Padding(
                                                 padding: EdgeInsets.only(
-                                                    right: isDesktopStyle
-                                                        ? 8
-                                                        : 12),
+                                                  right:
+                                                      isDesktopStyle ? 8 : 12,
+                                                ),
                                                 child: Image.asset(
                                                   isSelected
                                                       ? QPPImages
@@ -259,7 +269,7 @@ class VoteOptionsItem extends StatelessWidget {
                                               ),
                                         Flexible(
                                           child: Text(
-                                            '${isExpired ? '・' : ''} ${e.value.option}',
+                                            '${isExpired ? '・' : ''}${e.value.option}',
                                             style: (isSelected &&
                                                     !isEnableTap &&
                                                     voteShowType !=
@@ -274,7 +284,9 @@ class VoteOptionsItem extends StatelessWidget {
                                       if (isEnableTap) {
                                         notifier.selectedOption(index, e.key);
                                         notifier.updateErrorOptions(
-                                            index, false);
+                                          index,
+                                          false,
+                                        );
                                       }
                                     },
                                   ),
