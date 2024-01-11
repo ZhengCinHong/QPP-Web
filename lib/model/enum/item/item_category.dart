@@ -89,8 +89,9 @@ enum ItemCategory {
       case virtualCoin:
         return QPPImages.icon_display_coin;
       case virtualTreasure:
-      case virtualTreasureWithTag:
         return QPPImages.icon_display_treasure;
+      case virtualTreasureWithTag:
+        return QPPImages.icon_display_treasure_tag;
       case physicalVoucher:
       case digitVoucher:
         return QPPImages.icon_display_ticket;
