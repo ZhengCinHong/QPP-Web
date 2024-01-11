@@ -65,14 +65,18 @@ class NFTItemImg extends StatelessWidget {
       // foregroundDecoration 畫框線用
       foregroundDecoration: _rectDecorBorder(),
       child: Stack(children: [
-        Image.network(
-          path,
-          // 圖片讀取錯誤處理
-          errorBuilder: (context, error, stackTrace) {
-            return const SizedBox.shrink();
-          },
-          filterQuality: FilterQuality.high,
-          fit: BoxFit.fitWidth,
+        ConstrainedBox(
+          // 撐滿容器
+          constraints: const BoxConstraints.expand(),
+          child: Image.network(
+            path,
+            // 圖片讀取錯誤處理
+            errorBuilder: (context, error, stackTrace) {
+              return const SizedBox.shrink();
+            },
+            filterQuality: FilterQuality.high,
+            fit: BoxFit.cover,
+          ),
         ),
         // 圖片放大按鈕
         Positioned(

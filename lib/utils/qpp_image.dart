@@ -190,6 +190,8 @@ class QPPImages {
       "assets/icon-display-treasure.png";
   static const String icon_display_treasure_2 =
       "assets/icon-display-treasure-2.png";
+  static const String icon_display_treasure_tag =
+      "assets/icon-display-treasure-tag.png";
   static const String mobile_icon_article_function_pressed =
       "assets/mobile-icon-article-function-pressed.png";
   static const String desktop_icon_commodity_nft_date =

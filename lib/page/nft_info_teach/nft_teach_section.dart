@@ -16,10 +16,10 @@ abstract class NFTTeachInfoExpand extends StatelessWidget {
       margin: const EdgeInsets.only(top: 12),
       padding: padding,
       clipBehavior: Clip.antiAlias,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
           shape: BoxShape.rectangle,
-          color: QppColors.prussianBlue,
-          borderRadius: BorderRadius.all(Radius.circular(12.0))),
+          color: isDesktop ? QppColors.prussianBlue : QppColors.darkOxfordBlue,
+          borderRadius: const BorderRadius.all(Radius.circular(12.0))),
       child: expandWidget,
     );
   }
@@ -36,7 +36,7 @@ abstract class NFTTeachInfoExpand extends StatelessWidget {
     return ExpandContainer.mobile(
       title: title,
       content: content,
-      titleBackground: QppColors.prussianBlue,
+      titleBackground: QppColors.darkOxfordBlue,
       titlePadding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
     );
   }
