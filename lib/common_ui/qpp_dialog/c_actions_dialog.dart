@@ -33,7 +33,7 @@ class CActionsDialog extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.only(
-        top: isDesktopPlatform ? 25 : 36,
+        top: isDesktopPlatform ? 24 : 36,
         bottom: 24,
       ),
       constraints: BoxConstraints(maxHeight: height, maxWidth: width),
@@ -63,7 +63,7 @@ class CActionsDialog extends StatelessWidget {
           isDesktopPlatform
               ? UnconstrainedBox(
                   child: Container(
-                      height: 1, width: width, color: QppColors.midnightBlue),
+                      height: 2, width: width, color: QppColors.midnightBlue),
                 )
               : const SizedBox.shrink(),
           _CommonPaddingWidget(
@@ -74,8 +74,9 @@ class CActionsDialog extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.only(
-                      top: isDesktopPlatform ? 16 : 0,
-                      bottom: isDesktopPlatform ? 28 : 41),
+                    top: isDesktopPlatform ? 16 : 0,
+                    bottom: isDesktopPlatform ? 28 : 41,
+                  ),
                   child: Text(
                     subText,
                     style: isDesktopPlatform
@@ -112,7 +113,7 @@ class CActionsDialog extends StatelessWidget {
   }
 }
 
-/// 共用padding
+/// 共用padding(左右間距)
 class _CommonPaddingWidget extends StatelessWidget {
   const _CommonPaddingWidget({required this.child});
 

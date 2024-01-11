@@ -18,12 +18,14 @@ class UniversalLinkQRCode extends StatelessWidget {
     return Column(
       children: [
         Container(
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(6))),
-            child: QPPQRCode(data: UrlGenerator.getQRCodeUrl(url), size: size)),
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(6))),
+          child: QPPQRCode(data: UrlGenerator.getQRCodeUrl(url), size: size),
+        ),
         const SizedBox(height: 16),
         Text(
+          softWrap: true,
           context.tr(QppLocales.commodityInfoScanViaQPP),
           style: QppTextStyles.web_16pt_body_canary_yellow_C,
         ),

@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MediaQuery(
           // 固定字型大小
-          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0, navigationMode: NavigationMode.traditional),
           child: child!,
         );
       },

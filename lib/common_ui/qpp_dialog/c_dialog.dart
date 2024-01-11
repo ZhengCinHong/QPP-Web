@@ -104,7 +104,7 @@ class CDialogTitle extends StatelessWidget {
                       child: Image.asset(
                         QPPImages.desktop_icon_dialog_delete_normal,
                         width: isDesktopPlatform ? 40 : 24,
-                        height: isDesktopPlatform ? 40 : 24,
+                        scale: 1,
                       ),
                     )
                   : const SizedBox.shrink(),

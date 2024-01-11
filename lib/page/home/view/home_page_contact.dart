@@ -17,53 +17,44 @@ class HomePageContact extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      final maxWidth = constraints.maxWidth;
-      // 聯絡我們的客製螢幕樣式
-      final contactScreenStyle = switch (maxWidth) {
-        >= 1250 => ScreenStyle.desktop,
-        >= 850 && < 1250 => ScreenStyle.tablet,
-        _ => ScreenStyle.mobile
-      };
-      final isDesktopStyle = contactScreenStyle.isDesktop;
+    final maxWidth = MediaQuery.of(context).size.width;
+    // 聯絡我們的客製螢幕樣式
+    final contactScreenStyle = switch (maxWidth) {
+      >= 1250 => ScreenStyle.desktop,
+      >= 850 && < 1250 => ScreenStyle.tablet,
+      _ => ScreenStyle.mobile
+    };
+    final isDesktopStyle = contactScreenStyle.isDesktop;
 
-      return Container(
-          width: maxWidth,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: maxWidth.determineScreenStyle().isDesktop // 換背景用一般的螢幕樣式去判斷
-                  ? const AssetImage(QPPImages.desktop_bg_area_03)
-                  : const AssetImage(QPPImages.mobile_bg_area_03),
-              fit: BoxFit.cover,
-            ),
+    return Container(
+      width: maxWidth,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: maxWidth.determineScreenStyle().isDesktop // 換背景用一般的螢幕樣式去判斷
+              ? const AssetImage(QPPImages.desktop_bg_area_03)
+              : const AssetImage(QPPImages.mobile_bg_area_03),
+          fit: BoxFit.cover,
+        ),
+      ),
+      padding: EdgeInsets.symmetric(vertical: isDesktopStyle ? 152 : 72),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 36),
+            child: switch (contactScreenStyle) {
+              ScreenStyle.mobile => const _TitleContent.mobile(),
+              _ => const _TitleContent.desktop()
+            },
           ),
-          padding: EdgeInsets.symmetric(vertical: isDesktopStyle ? 152 : 72),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 36),
-                child: _titleContent(contactScreenStyle),
-              ),
-              SizedBox(height: isDesktopStyle ? 45 : 60),
-              _benefit(contactScreenStyle)
-            ],
-          ));
-    });
-  }
-
-  Widget _titleContent(ScreenStyle style) {
-    return switch (style) {
-      ScreenStyle.mobile => const _TitleContent.mobile(),
-      _ => const _TitleContent.desktop()
-    };
-  }
-
-  Widget _benefit(ScreenStyle style) {
-    return switch (style) {
-      ScreenStyle.desktop => const _Benefit.desktop(),
-      ScreenStyle.tablet => const _Benefit.tablete(),
-      ScreenStyle.mobile => const _Benefit.mobile()
-    };
+          SizedBox(height: isDesktopStyle ? 45 : 60),
+          switch (contactScreenStyle) {
+            ScreenStyle.desktop => const _Benefit.desktop(),
+            ScreenStyle.tablet => const _Benefit.tablete(),
+            ScreenStyle.mobile => const _Benefit.mobile()
+          }
+        ],
+      ),
+    );
   }
 }
 
@@ -154,16 +145,6 @@ class _ShadowText extends StatelessWidget {
             blurRadius: 20,
             offset: Offset.zero,
           ),
-          Shadow(
-            color: Colors.black.withOpacity(0.35),
-            blurRadius: 30,
-            offset: Offset.zero,
-          ),
-          Shadow(
-            color: Colors.black.withOpacity(0.35),
-            blurRadius: 40,
-            offset: Offset.zero,
-          )
         ],
         color: style.color,
         fontSize: style.fontSize,
@@ -186,16 +167,19 @@ class _LinkText extends StatefulWidget {
 }
 
 class _LinkTextState extends State<_LinkText> {
-  bool isHovered = false;
+  late bool isHovered;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // 手機樣式底線恆亮
+    isHovered = !widget.screenStyle.isDesktop;
+  }
 
   @override
   Widget build(BuildContext context) {
     final isDesktopStyle = widget.screenStyle.isDesktop;
-
-    // 手機樣式底線恆亮
-    if (!isDesktopStyle) {
-      isHovered = true;
-    }
 
     return StatefulBuilder(
       builder: (context, setState) {
@@ -241,13 +225,15 @@ class _Benefit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const types = HomePageContactType.values;
+
     switch (screenStyle) {
       case ScreenStyle.desktop:
         const double space = 64;
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: HomePageContactType.values
+          children: types
               .map(
                 (e) => Flexible(
                   child: Padding(
@@ -261,8 +247,6 @@ class _Benefit extends StatelessWidget {
               .toList(),
         );
       case ScreenStyle.tablet:
-        const types = HomePageContactType.values;
-
         return Column(
           children: [
             Row(
@@ -280,8 +264,6 @@ class _Benefit extends StatelessWidget {
           ],
         );
       case ScreenStyle.mobile:
-        const types = HomePageContactType.values;
-
         return Column(
           children: types
               .map((e) => Padding(
@@ -315,25 +297,30 @@ class _BenefitItem extends StatelessWidget {
           children: [
             SizedBox(child: Image.asset(QPPImages.desktop_bg_area_03_box)),
             Container(
+              padding: const EdgeInsets.symmetric(vertical: 30),
               constraints: BoxConstraints(maxWidth: isDesktopStyle ? 280 : 235),
               child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Spacer(),
-                    AutoSizeText(
-                      context.tr(type.title),
-                      style: isDesktopStyle
-                          ? QppTextStyles.web_24pt_title_L_bold_canary_yellow_L
-                          : QppTextStyles.web_20pt_title_m_canary_yellow_L,
+                    Flexible(
+                      child: AutoSizeText(
+                        context.tr(type.title),
+                        style: isDesktopStyle
+                            ? QppTextStyles
+                                .web_24pt_title_L_bold_canary_yellow_L
+                            : QppTextStyles.web_20pt_title_m_canary_yellow_L,
+                      ),
                     ),
-                    const SizedBox(height: 16),
-                    AutoSizeText(
-                      context.tr(type.directions),
-                      style: isDesktopStyle
-                          ? QppTextStyles.web_18pt_title_s_white_L
-                          : QppTextStyles.web_16pt_body_white_L,
+                    const Flexible(child: SizedBox(height: 16)),
+                    Flexible(
+                      child: AutoSizeText(
+                        context.tr(type.directions),
+                        style: isDesktopStyle
+                            ? QppTextStyles.web_18pt_title_s_white_L
+                            : QppTextStyles.web_16pt_body_white_L,
+                      ),
                     ),
-                    const Spacer(flex: 2),
                   ]),
             ),
           ],

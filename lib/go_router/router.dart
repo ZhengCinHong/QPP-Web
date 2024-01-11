@@ -161,11 +161,9 @@ class QppGoRouter {
       path: vendorLogin,
       name: vendorLogin,
       builder: (context, state) => MainFramework(
-        child: MainFramework(
-          child: ErrorPage(
-            type: ErrorPageType.troubleshootingInstructions,
-            url: state.fullURL,
-          ),
+        child: ErrorPage(
+          type: ErrorPageType.troubleshootingInstructions,
+          url: state.fullURL,
         ),
       ),
     ),
