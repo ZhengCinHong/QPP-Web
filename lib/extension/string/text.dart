@@ -18,10 +18,23 @@ extension TextExtension on String {
 }
 
 extension StringExtension on String? {
+  /// 判斷是否為空字串或 null
   bool get isNullOrEmpty {
     if (this != null) {
       return this!.isEmpty;
     }
     return true;
+  }
+
+  /// 是否為 Url
+  bool get isUrl {
+    var urlExp = RegExp(r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.&]+');
+    return urlExp.hasMatch(this!);
+  }
+
+  /// 是否為 Mail
+  bool get isMail {
+    var mailExp = RegExp(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}');
+    return mailExp.hasMatch(this!);
   }
 }
