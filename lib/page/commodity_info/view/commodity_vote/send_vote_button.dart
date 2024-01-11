@@ -130,7 +130,8 @@ class SendVoteButton extends StatelessWidget {
             ? const SizedBox.shrink()
             : Padding(
                 padding: EdgeInsets.symmetric(
-                    vertical: context.isDesktopPlatform ? 36 : 16),
+                  vertical: context.isDesktopPlatform ? 36 : 16,
+                ),
                 child: Column(
                   children: [
                     isOptionErrorArray.contains(true) && !isOptionsSuccess

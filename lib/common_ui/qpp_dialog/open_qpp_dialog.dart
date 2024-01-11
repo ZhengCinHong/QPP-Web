@@ -12,11 +12,13 @@ class OpenQppDialog extends StatelessWidget {
     super.key,
     required this.text,
     required this.subText,
+    required this.url,
     this.timerText = "",
   });
 
   final String text;
   final String subText;
+  final String? url;
   final String timerText;
 
   @override
@@ -28,7 +30,7 @@ class OpenQppDialog extends StatelessWidget {
       subText: subText,
       child: Column(
         children: [
-          const OpenQppButton(),
+          OpenQppButton(url: url),
           const SizedBox(height: 36),
           CTimerText(
             timerText,

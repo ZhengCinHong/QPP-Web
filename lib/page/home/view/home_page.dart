@@ -13,13 +13,12 @@ class HomePage extends StatelessWidget {
   HomePage({super.key});
 
   final ScrollController scrollController = ScrollController();
-  
+
   void scrollTo(
     StateController<MainMenu?> notifier,
     ScrollController scrollController,
     double scrollPoint,
   ) {
-    print(scrollPoint);
     Future.microtask(() => {
           scrollController.animateTo(
             scrollPoint,
@@ -49,23 +48,34 @@ class HomePage extends StatelessWidget {
         }
 
         return SingleChildScrollView(
-            controller: scrollController, child: child);
+          controller: scrollController,
+          child: child,
+        );
       },
-      child: ListView.builder(
-        padding: EdgeInsets.zero,
-        itemCount: 5,
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          return switch (index) {
-            0 => HomePageIntroduce(key: introduceKey),
-            1 => HomePageFeature(key: featureKey),
-            2 => HomePageDescription(key: descriptionKey),
-            3 => HomePageContact(key: contactKey),
-            _ => const HomePageFooter(),
-          };
-        },
+      child: Column(
+        children: [
+          HomePageIntroduce(key: introduceKey),
+          HomePageFeature(key: featureKey),
+          HomePageDescription(key: descriptionKey),
+          HomePageContact(key: contactKey),
+          const HomePageFooter(),
+        ],
       ),
+      //     ListView.builder(
+      //   padding: EdgeInsets.zero,
+      //   itemCount: 5,
+      //   physics: const NeverScrollableScrollPhysics(),
+      //   shrinkWrap: true,
+      //   itemBuilder: (context, index) {
+      //     return switch (index) {
+      //       0 => HomePageIntroduce(key: introduceKey),
+      //       1 => HomePageFeature(key: featureKey),
+      //       2 => HomePageDescription(key: descriptionKey),
+      //       3 => HomePageContact(key: contactKey),
+      //       _ => const HomePageFooter(),
+      //     };
+      //   },
+      // ),
     );
   }
 }

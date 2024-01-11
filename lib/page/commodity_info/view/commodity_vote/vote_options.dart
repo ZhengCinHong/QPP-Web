@@ -33,34 +33,37 @@ class VoteOptions extends StatelessWidget {
             itemSelectInfoProvider.select((value) => value.voteDataState));
 
         final QppVote? qppVote = voteDataState.data;
+        final voteData = qppVote?.voteData;
 
-        return voteDataState.isCompleted && qppVote != null
-            ? Column(
-                children: qppVote.voteData
-                    .asMap()
-                    .entries
-                    .map(
-                      (e) => Padding(
-                        padding: EdgeInsets.only(
-                            top: e.key == 0
-                                ? 14
-                                : isDesktopStyle
-                                    ? 8
-                                    : 4),
-                        child: isDesktopStyle
-                            ? VoteOptionsItem.desktop(
-                                index: e.key,
-                                voteData: e.value,
-                                qppVote: qppVote,
-                              )
-                            : VoteOptionsItem.mobile(
-                                index: e.key,
-                                voteData: e.value,
-                                qppVote: qppVote,
-                              ),
-                      ),
-                    )
-                    .toList(),
+        return voteDataState.isCompleted && qppVote != null && voteData != null
+            ? ListView.builder(
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: voteData.length,
+                itemBuilder: (context, index) {
+                  final data = voteData[index];
+
+                  return Padding(
+                    padding: EdgeInsets.only(
+                        top: index == 0
+                            ? 14
+                            : isDesktopStyle
+                                ? 8
+                                : 4),
+                    child: isDesktopStyle
+                        ? VoteOptionsItem.desktop(
+                            index: index,
+                            voteData: data,
+                            qppVote: qppVote,
+                          )
+                        : VoteOptionsItem.mobile(
+                            index: index,
+                            voteData: data,
+                            qppVote: qppVote,
+                          ),
+                  );
+                },
               )
             : const SizedBox.shrink();
       },
@@ -101,6 +104,9 @@ class VoteOptionsItem extends StatelessWidget {
     final textStyle = isDesktopStyle
         ? QppTextStyles.web_16pt_body_platinum_L
         : QppTextStyles.mobile_14pt_body_pastel_blue_L;
+
+    /// 所有選項
+    final options = voteData.options;
 
     return Container(
       color: QppColors.prussianBlue,
@@ -170,217 +176,460 @@ class VoteOptionsItem extends StatelessWidget {
               left: leftSpacing + titleWidth,
               right: isDesktopStyle ? 57 : 25,
             ),
-            child: Column(
-              children: voteData.options
-                  .asMap()
-                  .entries
-                  .map(
-                    (e) => Padding(
-                      padding: EdgeInsets.only(
-                          top: e.key == 0
-                              ? 0
-                              : isDesktopStyle
-                                  ? 16
-                                  : 8),
-                      child: Consumer(
-                        builder: (context, ref, child) {
-                          /// 問券 自己的投票陣列
-                          final List<int>? voteArrayData = ref.watch(
-                              itemSelectInfoProvider.select((value) =>
-                                  value.voteDataState.data?.voteArrayData));
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: options.length,
+              itemBuilder: (context, itemIndex) {
+                final item = options[itemIndex];
 
-                          /// 投票狀態(是否已投票，已投票狀態)
-                          final votedState = ref.watch(itemSelectInfoProvider
-                              .select((value) => value.votedState));
+                return Padding(
+                  padding: EdgeInsets.only(
+                    top: itemIndex == 0
+                        ? 0
+                        : isDesktopStyle
+                            ? 16
+                            : 8,
+                  ),
+                  child: Consumer(
+                    builder: (context, ref, child) {
+                      /// 問券 自己的投票陣列
+                      final List<int>? voteArrayData = ref.watch(
+                          itemSelectInfoProvider.select((value) =>
+                              value.voteDataState.data?.voteArrayData));
 
-                          /// 是否為創建者
-                          final isCreater = ref.watch(itemSelectInfoProvider
-                              .select((value) => value.isCreater));
+                      /// 投票狀態(是否已投票，已投票狀態)
+                      final votedState = ref.watch(itemSelectInfoProvider
+                          .select((value) => value.votedState));
 
-                          /// 是否選擇
-                          final isSelected = voteArrayData?[index] == e.key;
+                      /// 是否為已投票
+                      final isVoted = votedState.$1;
 
-                          /// 是否啟用點擊(選項按鈕)
-                          final isEnableTap = !votedState.$1 &&
-                              qppVote.voteType == VoteType.inProgress;
+                      /// 是否為創建者
+                      final isCreater = ref.watch(itemSelectInfoProvider
+                          .select((value) => value.isCreater));
 
-                          final notifier =
-                              ref.read(itemSelectInfoProvider.notifier);
+                      /// 是否選擇
+                      final isSelected = voteArrayData?[index] == itemIndex;
 
-                          /// 已選擇的字型
-                          final selectedTextStyle = isDesktopStyle
-                              ? QppTextStyles.web_16pt_body_pastel_yellow_L
-                              : QppTextStyles.mobile_14pt_body_canary_yellow_L;
+                      /// 是否啟用點擊(選項按鈕)
+                      final isEnableTap =
+                          !isVoted && qppVote.voteType == VoteType.inProgress;
 
-                          /// 百分比
-                          final percent =
-                              e.value.percent(voteData.totalVoteNumber);
+                      /// 是否為已過期
+                      final isExpired = qppVote.voteType == VoteType.expired;
 
-                          /// 是否為0%
-                          final bool isZeroPercent = percent == 0;
+                      /// 是否為已結束
+                      final isEnded = qppVote.voteType == VoteType.ended;
 
-                          /// 投票顯示狀態
-                          final voteShowType = qppVote.voteShowType;
+                      final notifier =
+                          ref.read(itemSelectInfoProvider.notifier);
 
-                          /// 是否為問號
-                          final isQuestionMark =
-                              voteShowType == VoteShowType.questionMark;
+                      /// 已選擇的字型
+                      final selectedTextStyle = isDesktopStyle
+                          ? QppTextStyles.web_16pt_body_pastel_yellow_L
+                          : QppTextStyles.mobile_14pt_body_canary_yellow_L;
 
-                          return Column(
-                            children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: MouseRegion(
-                                  cursor: isEnableTap
-                                      ? MaterialStateMouseCursor.clickable
-                                      : MouseCursor.defer,
-                                  child: GestureDetector(
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        isCreater
+                      /// 百分比
+                      final percent = item.percent(voteData.totalVoteNumber);
+
+                      /// 是否為0%
+                      final bool isZeroPercent = percent == 0;
+
+                      /// 投票顯示狀態
+                      final voteShowType = qppVote.voteShowType;
+
+                      /// 是否為問號
+                      final isQuestionMark =
+                          voteShowType == VoteShowType.questionMark;
+
+                      return Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: MouseRegion(
+                              cursor: isEnableTap
+                                  ? MaterialStateMouseCursor.clickable
+                                  : MouseCursor.defer,
+                              child: GestureDetector(
+                                child: Text.rich(
+                                  TextSpan(
+                                    children: <InlineSpan>[
+                                      WidgetSpan(
+                                        child: isCreater ||
+                                                isExpired ||
+                                                isEnded ||
+                                                (!isSelected && isVoted)
                                             ? const SizedBox.shrink()
                                             : Padding(
                                                 padding: EdgeInsets.only(
-                                                    right: isDesktopStyle
-                                                        ? 8
-                                                        : 12),
+                                                  right:
+                                                      isDesktopStyle ? 8 : 12,
+                                                ),
                                                 child: Image.asset(
                                                   isSelected
                                                       ? QPPImages
                                                           .desktop_icon_button_check_single
                                                       : QPPImages
                                                           .desktop_icon_button_check_default,
+                                                  width:
+                                                      isDesktopStyle ? 20 : 16,
+                                                  scale: 1,
                                                 ),
                                               ),
-                                        Flexible(
-                                          child: Text(
-                                            e.value.option,
-                                            style: (isSelected &&
-                                                    !isEnableTap &&
-                                                    voteShowType !=
-                                                        VoteShowType.noShow)
-                                                ? selectedTextStyle
-                                                : textStyle,
-                                          ).disabledSelectionContainer,
-                                        ),
-                                      ],
-                                    ),
-                                    onTap: () {
-                                      if (isEnableTap) {
-                                        notifier.selectedOption(index, e.key);
-                                        notifier.updateErrorOptions(
-                                            index, false);
-                                      }
-                                    },
+                                      ),
+                                      TextSpan(
+                                        text:
+                                            '${isExpired ? '・' : ''}${item.option}',
+                                        style: (isSelected &&
+                                                !isEnableTap &&
+                                                voteShowType !=
+                                                    VoteShowType.noShow)
+                                            ? selectedTextStyle
+                                            : textStyle,
+                                      ),
+                                    ],
                                   ),
-                                ),
+                                ).disabledSelectionContainer,
+                                onTap: () {
+                                  if (isEnableTap) {
+                                    notifier.selectedOption(index, itemIndex);
+                                    notifier.updateErrorOptions(
+                                      index,
+                                      false,
+                                    );
+                                  }
+                                },
                               ),
-                              voteShowType != VoteShowType.noShow
-                                  ? Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                            top: isDesktopStyle ? 13 : 5,
-                                            bottom: isDesktopStyle ? 4 : 2,
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Flexible(
-                                                child: LayoutBuilder(
-                                                  builder:
-                                                      (context, constraints) {
-                                                    /// 百分比條寬度
-                                                    final double percentWidth =
-                                                        percent *
-                                                            constraints
-                                                                .maxWidth;
+                            ),
+                          ),
+                          voteShowType != VoteShowType.noShow
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        top: isDesktopStyle ? 13 : 5,
+                                        bottom: isDesktopStyle ? 4 : 2,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Flexible(
+                                            child: LayoutBuilder(
+                                              builder: (context, constraints) {
+                                                /// 百分比條寬度
+                                                final double percentWidth =
+                                                    percent *
+                                                        constraints.maxWidth;
 
-                                                    // 百分比條
-                                                    return Container(
-                                                      width: isQuestionMark
-                                                          ? constraints.maxWidth
-                                                          : isZeroPercent
-                                                              ? 6
-                                                              : percentWidth,
-                                                      height: isDesktopStyle
-                                                          ? 12
-                                                          : 8,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                          isDesktopStyle
-                                                              ? 2
-                                                              : 1,
-                                                        ),
-                                                        color: isQuestionMark
+                                                // 百分比條
+                                                return Container(
+                                                  width: isQuestionMark
+                                                      ? constraints.maxWidth
+                                                      : isZeroPercent
+                                                          ? 6
+                                                          : percentWidth,
+                                                  height:
+                                                      isDesktopStyle ? 12 : 8,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                      isDesktopStyle ? 2 : 1,
+                                                    ),
+                                                    color: isQuestionMark
+                                                        ? QppColors.midnightBlue
+                                                        : isZeroPercent
                                                             ? QppColors
                                                                 .midnightBlue
-                                                            : isZeroPercent
-                                                                ? QppColors
-                                                                    .midnightBlue
-                                                                : QppColors
-                                                                    .mayaBlue,
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                              // 間距
-                                              SizedBox(
-                                                width: isDesktopStyle ? 10 : 6,
-                                              ),
-                                              // 百分比字串
-                                              Text(
-                                                isQuestionMark
-                                                    ? '?%'
-                                                    : isZeroPercent
-                                                        ? '0.0%'
-                                                        : '${(percent * 100).toStringAsFixed(2)}%',
-                                                style: isDesktopStyle
-                                                    ? isQuestionMark
-                                                        ? QppTextStyles
-                                                            .web_12pt_caption_midnight_blue_L
-                                                        : QppTextStyles
-                                                            .web_16pt_body_maya_blue_R
-                                                    : isQuestionMark
-                                                        ? QppTextStyles
-                                                            .web_12pt_caption_midnight_blue_L
-                                                        : QppTextStyles
-                                                            .web_12pt_caption_maya_blue_L,
-                                              )
-                                            ],
+                                                            : QppColors
+                                                                .mayaBlue,
+                                                  ),
+                                                );
+                                              },
+                                            ),
                                           ),
-                                        ),
-                                        // 人數
-                                        Text(
-                                          '${context.tr(QppLocales.commodityInfoPeople)} ${isQuestionMark ? '?' : e.value.voteCount}',
-                                          style: isDesktopStyle
-                                              ? isQuestionMark
-                                                  ? QppTextStyles
-                                                      .web_12pt_caption_midnight_blue_L
-                                                  : QppTextStyles
-                                                      .web_16pt_body_maya_blue_R
-                                              : isQuestionMark
-                                                  ? QppTextStyles
-                                                      .web_12pt_caption_midnight_blue_L
-                                                  : QppTextStyles
-                                                      .web_12pt_caption_maya_blue_L,
-                                        )
-                                      ],
+                                          // 間距
+                                          SizedBox(
+                                            width: isDesktopStyle ? 10 : 6,
+                                          ),
+                                          // 百分比字串
+                                          Text(
+                                            isQuestionMark
+                                                ? '?%'
+                                                : '${(percent * 100).toStringAsFixed(1)}%',
+                                            style: isDesktopStyle
+                                                ? isQuestionMark
+                                                    ? QppTextStyles
+                                                        .web_12pt_caption_midnight_blue_L
+                                                    : QppTextStyles
+                                                        .web_16pt_body_maya_blue_R
+                                                : isQuestionMark
+                                                    ? QppTextStyles
+                                                        .web_12pt_caption_midnight_blue_L
+                                                    : QppTextStyles
+                                                        .web_12pt_caption_maya_blue_L,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    // 人數
+                                    Text(
+                                      '${context.tr(QppLocales.commodityInfoPeople)} ${isQuestionMark ? '?' : item.voteCount}',
+                                      style: isDesktopStyle
+                                          ? isQuestionMark
+                                              ? QppTextStyles
+                                                  .web_12pt_caption_midnight_blue_L
+                                              : QppTextStyles
+                                                  .web_16pt_body_maya_blue_R
+                                          : isQuestionMark
+                                              ? QppTextStyles
+                                                  .web_12pt_caption_midnight_blue_L
+                                              : QppTextStyles
+                                                  .web_12pt_caption_maya_blue_L,
                                     )
-                                  : const SizedBox.shrink(),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-                  )
-                  .toList(),
+                                  ],
+                                )
+                              : const SizedBox.shrink(),
+                        ],
+                      );
+                    },
+                  ),
+                );
+              },
             ),
+            //       Column(
+            //         children: voteData.options
+            //             .asMap()
+            //             .entries
+            //             .map(
+            //               (e) => Padding(
+            //                 padding: EdgeInsets.only(
+            //                   top: e.key == 0
+            //                       ? 0
+            //                       : isDesktopStyle
+            //                           ? 16
+            //                           : 8,
+            //                 ),
+            //                 child: Consumer(
+            //                   builder: (context, ref, child) {
+            //                     /// 問券 自己的投票陣列
+            //                     final List<int>? voteArrayData = ref.watch(
+            //                         itemSelectInfoProvider.select((value) =>
+            //                             value.voteDataState.data?.voteArrayData));
+
+            //                     /// 投票狀態(是否已投票，已投票狀態)
+            //                     final votedState = ref.watch(itemSelectInfoProvider
+            //                         .select((value) => value.votedState));
+
+            //                     /// 是否為已投票
+            //                     final isVoted = votedState.$1;
+
+            //                     /// 是否為創建者
+            //                     final isCreater = ref.watch(itemSelectInfoProvider
+            //                         .select((value) => value.isCreater));
+
+            //                     /// 是否選擇
+            //                     final isSelected = voteArrayData?[index] == e.key;
+
+            //                     /// 是否啟用點擊(選項按鈕)
+            //                     final isEnableTap = !isVoted &&
+            //                         qppVote.voteType == VoteType.inProgress;
+
+            //                     /// 是否為已過期
+            //                     final isExpired =
+            //                         qppVote.voteType == VoteType.expired;
+
+            //                     /// 是否為已結束
+            //                     final isEnded = qppVote.voteType == VoteType.ended;
+
+            //                     final notifier =
+            //                         ref.read(itemSelectInfoProvider.notifier);
+
+            //                     /// 已選擇的字型
+            //                     final selectedTextStyle = isDesktopStyle
+            //                         ? QppTextStyles.web_16pt_body_pastel_yellow_L
+            //                         : QppTextStyles.mobile_14pt_body_canary_yellow_L;
+
+            //                     /// 百分比
+            //                     final percent =
+            //                         e.value.percent(voteData.totalVoteNumber);
+
+            //                     /// 是否為0%
+            //                     final bool isZeroPercent = percent == 0;
+
+            //                     /// 投票顯示狀態
+            //                     final voteShowType = qppVote.voteShowType;
+
+            //                     /// 是否為問號
+            //                     final isQuestionMark =
+            //                         voteShowType == VoteShowType.questionMark;
+
+            //                     return Column(
+            //                       children: [
+            //                         Align(
+            //                           alignment: Alignment.centerLeft,
+            //                           child: MouseRegion(
+            //                             cursor: isEnableTap
+            //                                 ? MaterialStateMouseCursor.clickable
+            //                                 : MouseCursor.defer,
+            //                             child: GestureDetector(
+            //                               child: Text.rich(
+            //                                 TextSpan(
+            //                                   children: <InlineSpan>[
+            //                                     WidgetSpan(
+            //                                       child: isCreater ||
+            //                                               isExpired ||
+            //                                               isEnded ||
+            //                                               (!isSelected && isVoted)
+            //                                           ? const SizedBox.shrink()
+            //                                           : Padding(
+            //                                               padding: EdgeInsets.only(
+            //                                                 right: isDesktopStyle
+            //                                                     ? 8
+            //                                                     : 12,
+            //                                               ),
+            //                                               child: Image.asset(
+            //                                                 isSelected
+            //                                                     ? QPPImages
+            //                                                         .desktop_icon_button_check_single
+            //                                                     : QPPImages
+            //                                                         .desktop_icon_button_check_default,
+            //                                                 width: isDesktopStyle
+            //                                                     ? 20
+            //                                                     : 16,
+            //                                                 scale: 1,
+            //                                               ),
+            //                                             ),
+            //                                     ),
+            //                                     TextSpan(
+            //                                       text:
+            //                                           '${isExpired ? '・' : ''}${e.value.option}',
+            //                                       style: (isSelected &&
+            //                                               !isEnableTap &&
+            //                                               voteShowType !=
+            //                                                   VoteShowType.noShow)
+            //                                           ? selectedTextStyle
+            //                                           : textStyle,
+            //                                     ),
+            //                                   ],
+            //                                 ),
+            //                               ).disabledSelectionContainer,
+            //                               onTap: () {
+            //                                 if (isEnableTap) {
+            //                                   notifier.selectedOption(index, e.key);
+            //                                   notifier.updateErrorOptions(
+            //                                     index,
+            //                                     false,
+            //                                   );
+            //                                 }
+            //                               },
+            //                             ),
+            //                           ),
+            //                         ),
+            //                         voteShowType != VoteShowType.noShow
+            //                             ? Column(
+            //                                 crossAxisAlignment:
+            //                                     CrossAxisAlignment.start,
+            //                                 children: [
+            //                                   Padding(
+            //                                     padding: EdgeInsets.only(
+            //                                       top: isDesktopStyle ? 13 : 5,
+            //                                       bottom: isDesktopStyle ? 4 : 2,
+            //                                     ),
+            //                                     child: Row(
+            //                                       children: [
+            //                                         Flexible(
+            //                                           child: LayoutBuilder(
+            //                                             builder:
+            //                                                 (context, constraints) {
+            //                                               /// 百分比條寬度
+            //                                               final double percentWidth =
+            //                                                   percent *
+            //                                                       constraints
+            //                                                           .maxWidth;
+
+            //                                               // 百分比條
+            //                                               return Container(
+            //                                                 width: isQuestionMark
+            //                                                     ? constraints.maxWidth
+            //                                                     : isZeroPercent
+            //                                                         ? 6
+            //                                                         : percentWidth,
+            //                                                 height: isDesktopStyle
+            //                                                     ? 12
+            //                                                     : 8,
+            //                                                 decoration: BoxDecoration(
+            //                                                   borderRadius:
+            //                                                       BorderRadius
+            //                                                           .circular(
+            //                                                     isDesktopStyle
+            //                                                         ? 2
+            //                                                         : 1,
+            //                                                   ),
+            //                                                   color: isQuestionMark
+            //                                                       ? QppColors
+            //                                                           .midnightBlue
+            //                                                       : isZeroPercent
+            //                                                           ? QppColors
+            //                                                               .midnightBlue
+            //                                                           : QppColors
+            //                                                               .mayaBlue,
+            //                                                 ),
+            //                                               );
+            //                                             },
+            //                                           ),
+            //                                         ),
+            //                                         // 間距
+            //                                         SizedBox(
+            //                                           width: isDesktopStyle ? 10 : 6,
+            //                                         ),
+            //                                         // 百分比字串
+            //                                         Text(
+            //                                           isQuestionMark
+            //                                               ? '?%'
+            //                                               : '${(percent * 100).toStringAsFixed(1)}%',
+            //                                           style: isDesktopStyle
+            //                                               ? isQuestionMark
+            //                                                   ? QppTextStyles
+            //                                                       .web_12pt_caption_midnight_blue_L
+            //                                                   : QppTextStyles
+            //                                                       .web_16pt_body_maya_blue_R
+            //                                               : isQuestionMark
+            //                                                   ? QppTextStyles
+            //                                                       .web_12pt_caption_midnight_blue_L
+            //                                                   : QppTextStyles
+            //                                                       .web_12pt_caption_maya_blue_L,
+            //                                         )
+            //                                       ],
+            //                                     ),
+            //                                   ),
+            //                                   // 人數
+            //                                   Text(
+            //                                     '${context.tr(QppLocales.commodityInfoPeople)} ${isQuestionMark ? '?' : e.value.voteCount}',
+            //                                     style: isDesktopStyle
+            //                                         ? isQuestionMark
+            //                                             ? QppTextStyles
+            //                                                 .web_12pt_caption_midnight_blue_L
+            //                                             : QppTextStyles
+            //                                                 .web_16pt_body_maya_blue_R
+            //                                         : isQuestionMark
+            //                                             ? QppTextStyles
+            //                                                 .web_12pt_caption_midnight_blue_L
+            //                                             : QppTextStyles
+            //                                                 .web_12pt_caption_maya_blue_L,
+            //                                   )
+            //                                 ],
+            //                               )
+            //                             : const SizedBox.shrink(),
+            //                       ],
+            //                     );
+            //                   },
+            //                 ),
+            //               ),
+            //             )
+            //             .toList(),
+            //       ),
           ),
         ],
       ),

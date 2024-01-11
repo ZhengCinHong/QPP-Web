@@ -1,6 +1,8 @@
 // ignore_for_file: constant_identifier_names, no_leading_underscores_for_local_identifiers, prefer_typing_uninitialized_variables
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:qpp_example/extension/string/text.dart';
+import 'package:qpp_example/extension/string/url.dart';
 
 // 修改自 https://pub-web.flutter-io.cn/packages/readmore
 
@@ -318,37 +320,64 @@ class ReadMoreTextState extends State<ReadMoreText> {
     required List<TextSpan> children,
   }) {
     // 定义URL的正则表达式
-    RegExp exp = RegExp(r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.&]+');
+    // urlExp = RegExp(r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.&]+');
+    // mailExp = RegExp(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}');
+    // 判斷 url & mail 的正則
+    RegExp exp = RegExp(
+      r'(?:[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|'
+      r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.&]+)',
+    );
 
     List<TextSpan> contents = [];
 
+    // 處理 URL
     while (exp.hasMatch(data)) {
+      // 這邊處理顯示的字串
       final match = exp.firstMatch(data);
-
       final firstTextPart = data.substring(0, match!.start);
       final linkTextPart = data.substring(match.start, match.end);
-      // 取完整 URL 資料
-      final fullMatch = exp.firstMatch(fullData ?? '');
-      String? fullTextPart =
-          fullData?.substring(fullMatch!.start, fullMatch.end);
 
+      // if (!fullData.isNullOrEmpty) {
+      // 取完整 URL 資料
+      final fullLinkMatch = exp.firstMatch(fullData ?? '');
+      String? fullLinkPart =
+          fullData?.substring(fullLinkMatch!.start, fullLinkMatch.end);
+      // }
+      // contents 加入一般文字
       contents.add(
         TextSpan(
           text: firstTextPart,
         ),
       );
+      // contents 加入連結文字
       contents.add(
         TextSpan(
           text: linkTextPart,
           style: linkTextStyle,
           recognizer: TapGestureRecognizer()
-            ..onTap = () => onPressed?.call(
-                  fullTextPart?.trim() ?? linkTextPart.trim(),
-                ),
+            ..onTap = () {
+              // 判斷是否為 mail
+              if (linkTextPart.isMail) {
+                // 若為 mail
+                'mailto:${fullLinkPart?.trim() ?? linkTextPart.trim()}'
+                    .launchURL(isNewTab: false);
+              } else {
+                // 若為 url , call onPressed
+                onPressed?.call(
+                  fullLinkPart?.trim() ?? linkTextPart.trim(),
+                );
+              }
+            },
         ),
       );
+      // 若有塞FullData, 也要剪掉處理完的文字
+      if (!fullData.isNullOrEmpty) {
+        fullData = fullData!.substring(fullLinkMatch!.end, fullData.length);
+      }
+      // 剪掉處理完的文字
       data = data.substring(match.end, data.length);
     }
+
     contents.add(
       TextSpan(
         text: data,

@@ -282,4 +282,6 @@ class QPPImages {
   static const String mobile_icon_actionbar_close_normal =
       "assets/mobile-icon-actionbar-close-normal.png";
   static const String bg_dialog = "assets/bg-dialog.png";
+  static const String mobile_pic_qpp_logo_03 =
+      "assets/mobile-pic-qpp-logo-03.png";
 }

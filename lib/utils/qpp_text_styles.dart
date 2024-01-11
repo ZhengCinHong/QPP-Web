@@ -162,6 +162,10 @@ abstract class QppTextStyles {
     color: QppColors.mayaBlue,
     fontSize: 20,
   );
+  static const TextStyle mobile_20pt_title_L_outrageous_orange_L = TextStyle(
+    color: QppColors.outrageousOrange,
+    fontSize: 20,
+  );
   static const TextStyle mobile_18pt_title_m_oxford_blue_C = TextStyle(
     color: Color(0xff1b3267),
     fontSize: 18,

@@ -56,40 +56,43 @@ class _UserInformationOuterFrameState extends State<UserInformationOuterFrame> {
             children: [
               Flexible(
                 flex: 1280,
-                child: LayoutBuilder(builder: (context, constraints) {
-                  final bool isDesktopStyle = screenWidthWithoutContext()
-                      .determineScreenStyle()
-                      .isDesktop;
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final bool isDesktopStyle = screenWidthWithoutContext()
+                        .determineScreenStyle()
+                        .isDesktop;
 
-                  return Container(
-                    constraints: const BoxConstraints(maxWidth: 1280),
-                    padding: EdgeInsets.only(
+                    return Container(
+                      constraints: const BoxConstraints(maxWidth: 1280),
+                      padding: EdgeInsets.only(
                         top: isDesktopStyle
                             ? kToolbarDesktopHeight + 100
                             : kToolbarMobileHeight + 24,
                         bottom: isDesktopStyle ? 48 : 20,
                         left: 20,
-                        right: 20),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Column(
-                        children: [
-                          isDesktopStyle
-                              ? const _AvatarWidget.desktop()
-                              : const _AvatarWidget.mobile(),
-                          isDesktopStyle
-                              ? const _InformationDescriptionWidget.desktop()
-                              : const _InformationDescriptionWidget.mobile(),
-                        ],
+                        right: 20,
                       ),
-                    ),
-                  );
-                }),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Column(
+                          children: [
+                            isDesktopStyle
+                                ? const _AvatarWidget.desktop()
+                                : const _AvatarWidget.mobile(),
+                            isDesktopStyle
+                                ? const _InformationDescriptionWidget.desktop()
+                                : const _InformationDescriptionWidget.mobile(),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           ),
           Container(
-            padding: const EdgeInsets.only(bottom: 24),
+            padding: const EdgeInsets.only(bottom: 24, left: 24, right: 24),
             child: UniversalLinkWidget(
               url: widget.url,
               mobileText: QppLocales.commodityInfoLaunchQPP,

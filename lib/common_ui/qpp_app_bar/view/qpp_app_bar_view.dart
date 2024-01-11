@@ -8,6 +8,7 @@ import 'package:qpp_example/common_ui/qpp_menu/c_menu_anchor.dart';
 import 'package:qpp_example/common_view_model/auth_service/view_model/auth_service_view_model.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/build_context.dart';
+import 'package:qpp_example/extension/go_router/go_router_extension.dart';
 import 'package:qpp_example/extension/string/url.dart';
 import 'package:qpp_example/extension/void/dialog_void.dart';
 import 'package:qpp_example/extension/throttle_debounce.dart';
@@ -161,14 +162,6 @@ class MenuBtns extends StatelessWidget {
   final double padding;
   final double fontSize;
 
-  /// 滑動到context
-  void scrollToContext(BuildContext context) {
-    Scrollable.ensureVisible(
-      context,
-      duration: const Duration(seconds: 1),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     // debugPrint(toString());
@@ -192,8 +185,7 @@ class MenuBtns extends StatelessWidget {
 
                       return GestureDetector(
                           onTap: () {
-                            final bool isHomePage =
-                                Uri.base.path == QppGoRouter.home;
+                            final bool isHomePage = Uri.base.path.isHomePage;
 
                             if (isHomePage) {
                               if (e.currentContext != null) {
@@ -207,7 +199,7 @@ class MenuBtns extends StatelessWidget {
                               }
 
                               Future.delayed(
-                                const Duration(milliseconds: 300),
+                                const Duration(milliseconds: 500),
                                 () => e.currentContext != null
                                     ? scrollToContextNotifier.state = e
                                     : null,
@@ -601,7 +593,7 @@ class FullScreenMenuBtnPage extends ConsumerStatefulWidget {
 class _FullScreenMenuBtnPageState extends ConsumerState<FullScreenMenuBtnPage>
     with TickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
-    duration: const Duration(milliseconds: 800),
+    duration: const Duration(milliseconds: 300),
     vsync: this,
   );
 
@@ -640,21 +632,26 @@ class _FullScreenMenuBtnPageState extends ConsumerState<FullScreenMenuBtnPage>
 
   @override
   Widget build(BuildContext context) {
-    final style = ref.watch(fullScreenMenuPageStateProvider).state;
-    final notifier = ref.read(fullScreenMenuPageStateProvider.notifier);
+    final fullScreenMenuPageState =
+        ref.watch(fullScreenMenuPageStateProvider).state;
+    final fullScreenMenuPageStateNotifier =
+        ref.read(fullScreenMenuPageStateProvider.notifier);
+
+    final scrollToContextNotifier = ref.read(scrollToContextProvider.notifier);
 
     // 播放動畫
     _controller.reset();
-    if (style == FullScreenMenuPageStyle.animateToShow) {
+    if (fullScreenMenuPageState == FullScreenMenuPageStyle.animateToShow) {
       _controller.forward();
-    } else if (style == FullScreenMenuPageStyle.animateToHidden) {
+    } else if (fullScreenMenuPageState ==
+        FullScreenMenuPageStyle.animateToHidden) {
       _controller.forward(from: 1.0);
       _controller.reverse();
-    } else if (style == FullScreenMenuPageStyle.show) {
+    } else if (fullScreenMenuPageState == FullScreenMenuPageStyle.show) {
       _controller.forward(from: 1.0);
     }
 
-    return (style == FullScreenMenuPageStyle.hide)
+    return (fullScreenMenuPageState == FullScreenMenuPageStyle.hide)
         ? const SizedBox.shrink()
         : SizeTransition(
             sizeFactor: _animation,
@@ -686,28 +683,31 @@ class _FullScreenMenuBtnPageState extends ConsumerState<FullScreenMenuBtnPage>
                         .map(
                           (e) => TextButton(
                             onPressed: () {
-                              notifier.tapToggle();
+                              // 隱藏視窗
+                              fullScreenMenuPageStateNotifier.tapToggle();
 
-                              BuildContext? currentContext = e.currentContext;
-                              bool isHomePage =
-                                  Uri.base.path == QppGoRouter.home;
+                              // 滾動
+                              final bool isHomePage = Uri.base.path.isHomePage;
 
-                              if (!isHomePage) {
-                                ServerConst.testRouterHost
-                                    .launchURL(isNewTab: false);
-                              }
-
-                              /// 延遲等待跳轉完，重新抓currentContext
-                              Future.delayed(
-                                  Duration(milliseconds: isHomePage ? 0 : 300),
-                                  () {
-                                currentContext = e.currentContext;
-                                if (currentContext != null) {
-                                  Scrollable.ensureVisible(currentContext!,
-                                      duration: const Duration(seconds: 1));
+                              if (isHomePage) {
+                                if (e.currentContext != null) {
+                                  scrollToContextNotifier.state = e;
                                 }
-                              });
-                            }.throttleWithTimeout(timeout: 2000),
+                              } else {
+                                if (context.canPop()) {
+                                  context.pop();
+                                } else {
+                                  context.go(QppGoRouter.home);
+                                }
+
+                                Future.delayed(
+                                  const Duration(milliseconds: 500),
+                                  () => e.currentContext != null
+                                      ? scrollToContextNotifier.state = e
+                                      : null,
+                                );
+                              }
+                            }.throttleWithTimeout(timeout: 1000),
                             child: Padding(
                               padding: const EdgeInsets.all(25),
                               child: Text(

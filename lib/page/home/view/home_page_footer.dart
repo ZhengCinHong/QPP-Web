@@ -1,3 +1,5 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:qpp_example/common_ui/qpp_app_bar/view_model/qpp_app_bar_view_model.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +43,7 @@ class _FooterInfo extends StatelessWidget {
       ),
       padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 24),
       child: LayoutBuilder(builder: (context, constraints) {
-        final bool isDesktopStyle = constraints.screenStyle.isDesktop;
+        final bool isDesktopStyle = constraints.maxWidth > 981; // 特殊樣式，防止多語系跑版
 
         return Flex(
           direction: isDesktopStyle ? Axis.horizontal : Axis.vertical,
@@ -53,9 +55,7 @@ class _FooterInfo extends StatelessWidget {
                 ? const _Info(ScreenStyle.desktop)
                 : const _Info(ScreenStyle.mobile),
             isDesktopStyle ? const Spacer() : const SizedBox(height: 50),
-            isDesktopStyle && constraints.maxWidth > 961 // 防止多語系跑版
-                ? const _Guide()
-                : const _MobileGuide(),
+            isDesktopStyle ? const _Guide() : const _MobileGuide(),
             isDesktopStyle
                 ? Flexible(
                     child: Container(
@@ -92,7 +92,9 @@ class _Info extends StatelessWidget {
       children: [
         IconButton(
           icon: Image.asset(
-            QPPImages.desktop_pic_qpp_logo_03,
+            isDesktopStyle
+                ? QPPImages.desktop_pic_qpp_logo_03
+                : QPPImages.mobile_pic_qpp_logo_03,
           ),
           onPressed: () => html.window.location.reload(),
         ),
@@ -181,7 +183,7 @@ class _MobileGuide extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         MenuBtns.vertical(padding: 20, fontSize: 16),
-        SizedBox(width: 100),
+        Flexible(child: SizedBox(width: 100)),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -284,19 +286,21 @@ class _MenuButton extends StatelessWidget {
     return MouseRegionCustomWidget(
       builder: (event) => Container(
         constraints: const BoxConstraints(maxWidth: 100),
-        child: CUnderlineText(
-          text: context.tr(type.text),
-          style: QppTextStyles.mobile_16pt_title_white_bold_L,
-          onTap: () {
-            BuildContext? currentContext = type.currentContext;
+        child: Consumer(
+          builder: (context, ref, child) {
+            final scrollToContextNotifier =
+                ref.read(scrollToContextProvider.notifier);
 
-            if (currentContext != null) {
-              Scrollable.ensureVisible(currentContext,
-                  duration: const Duration(seconds: 1));
-            }
+            return CUnderlineText(
+              text: context.tr(type.text),
+              style: QppTextStyles.mobile_16pt_title_white_bold_L,
+              onTap: () {
+                scrollToContextNotifier.state = type;
+              },
+              softWrap: true,
+              overflow: TextOverflow.clip,
+            );
           },
-          softWrap: true,
-          overflow: TextOverflow.clip,
         ),
       ),
     );

@@ -102,15 +102,14 @@ class _FeatureInfo extends StatelessWidget {
 
   final ScreenStyle screenStyle;
 
+  final types = HomePageFeatureInfoType.values;
+
   @override
   Widget build(BuildContext context) {
-    return StatefulBuilder(
-      builder: (context, setState) {
-        return Column(
-            children: HomePageFeatureInfoType.values
-                .map((e) => _FeatureInfoItem(screenStyle, type: e))
-                .toList());
-      },
+    return Column(
+      children: HomePageFeatureInfoType.values
+          .map((e) => _FeatureInfoItem(screenStyle, type: e))
+          .toList(),
     );
   }
 }
