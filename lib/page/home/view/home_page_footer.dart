@@ -43,7 +43,7 @@ class _FooterInfo extends StatelessWidget {
       ),
       padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 24),
       child: LayoutBuilder(builder: (context, constraints) {
-        final bool isDesktopStyle = constraints.screenStyle.isDesktop;
+        final bool isDesktopStyle = constraints.maxWidth > 981; // 特殊樣式，防止多語系跑版
 
         return Flex(
           direction: isDesktopStyle ? Axis.horizontal : Axis.vertical,
@@ -55,9 +55,7 @@ class _FooterInfo extends StatelessWidget {
                 ? const _Info(ScreenStyle.desktop)
                 : const _Info(ScreenStyle.mobile),
             isDesktopStyle ? const Spacer() : const SizedBox(height: 50),
-            isDesktopStyle && constraints.maxWidth > 961 // 防止多語系跑版
-                ? const _Guide()
-                : const _MobileGuide(),
+            isDesktopStyle ? const _Guide() : const _MobileGuide(),
             isDesktopStyle
                 ? Flexible(
                     child: Container(

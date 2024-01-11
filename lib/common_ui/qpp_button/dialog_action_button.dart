@@ -30,15 +30,11 @@ enum CDialogActionStyle {
         CDialogActionStyle.logout => context.tr(QppLocales.alertLogout)
       };
 
-  TextStyle textstyle(BuildContext context) {
-    final isDesktopPlatform = context.isDesktopPlatform;
-
+  TextStyle get textstyle {
     return switch (this) {
       CDialogActionStyle.confirm ||
       CDialogActionStyle.cancel =>
-        isDesktopPlatform
-            ? QppTextStyles.web_20pt_title_m_white_C
-            : QppTextStyles.mobile_16pt_title_white_bold_L,
+        QppTextStyles.mobile_16pt_title_white_bold_L,
       CDialogActionStyle.logout => QppTextStyles.web_16pt_body_maya_blue_R
     };
   }
@@ -71,11 +67,12 @@ class DialogActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CButton.rectangle(
-        width: width,
-        height: height,
-        border: Border.all(color: style.borderColor),
-        text: style.text(context),
-        textStyle: style.textstyle(context),
-        onTap: onTap);
+      width: width,
+      height: height,
+      border: Border.all(color: style.borderColor),
+      text: style.text(context),
+      textStyle: style.textstyle,
+      onTap: onTap,
+    );
   }
 }

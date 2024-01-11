@@ -297,25 +297,30 @@ class _BenefitItem extends StatelessWidget {
           children: [
             SizedBox(child: Image.asset(QPPImages.desktop_bg_area_03_box)),
             Container(
+              padding: const EdgeInsets.symmetric(vertical: 30),
               constraints: BoxConstraints(maxWidth: isDesktopStyle ? 280 : 235),
               child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Spacer(),
-                    AutoSizeText(
-                      context.tr(type.title),
-                      style: isDesktopStyle
-                          ? QppTextStyles.web_24pt_title_L_bold_canary_yellow_L
-                          : QppTextStyles.web_20pt_title_m_canary_yellow_L,
+                    Flexible(
+                      child: AutoSizeText(
+                        context.tr(type.title),
+                        style: isDesktopStyle
+                            ? QppTextStyles
+                                .web_24pt_title_L_bold_canary_yellow_L
+                            : QppTextStyles.web_20pt_title_m_canary_yellow_L,
+                      ),
                     ),
-                    const SizedBox(height: 16),
-                    AutoSizeText(
-                      context.tr(type.directions),
-                      style: isDesktopStyle
-                          ? QppTextStyles.web_18pt_title_s_white_L
-                          : QppTextStyles.web_16pt_body_white_L,
+                    const Flexible(child: SizedBox(height: 16)),
+                    Flexible(
+                      child: AutoSizeText(
+                        context.tr(type.directions),
+                        style: isDesktopStyle
+                            ? QppTextStyles.web_18pt_title_s_white_L
+                            : QppTextStyles.web_16pt_body_white_L,
+                      ),
                     ),
-                    const Spacer(flex: 2),
                   ]),
             ),
           ],
