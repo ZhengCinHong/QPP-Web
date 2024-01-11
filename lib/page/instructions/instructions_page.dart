@@ -309,7 +309,7 @@ class InstructionsPage extends StatelessWidget {
       }
       if (element.localName == 'u') {
         return {
-          'border-bottom': "1px solid",
+          'text-decoration-color': QppColors.canaryYellow.toHexString(),
         };
       }
       return null;
