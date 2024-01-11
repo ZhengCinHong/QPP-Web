@@ -33,34 +33,35 @@ class VoteOptions extends StatelessWidget {
             itemSelectInfoProvider.select((value) => value.voteDataState));
 
         final QppVote? qppVote = voteDataState.data;
+        final voteData = qppVote?.voteData;
 
-        return voteDataState.isCompleted && qppVote != null
-            ? Column(
-                children: qppVote.voteData
-                    .asMap()
-                    .entries
-                    .map(
-                      (e) => Padding(
-                        padding: EdgeInsets.only(
-                            top: e.key == 0
-                                ? 14
-                                : isDesktopStyle
-                                    ? 8
-                                    : 4),
-                        child: isDesktopStyle
-                            ? VoteOptionsItem.desktop(
-                                index: e.key,
-                                voteData: e.value,
-                                qppVote: qppVote,
-                              )
-                            : VoteOptionsItem.mobile(
-                                index: e.key,
-                                voteData: e.value,
-                                qppVote: qppVote,
-                              ),
-                      ),
-                    )
-                    .toList(),
+        return voteDataState.isCompleted && qppVote != null && voteData != null
+            ? ListView.builder(
+                shrinkWrap: true,
+                itemCount: voteData.length,
+                itemBuilder: (context, index) {
+                  final data = voteData[index];
+
+                  return Padding(
+                    padding: EdgeInsets.only(
+                        top: index == 0
+                            ? 14
+                            : isDesktopStyle
+                                ? 8
+                                : 4),
+                    child: isDesktopStyle
+                        ? VoteOptionsItem.desktop(
+                            index: index,
+                            voteData: data,
+                            qppVote: qppVote,
+                          )
+                        : VoteOptionsItem.mobile(
+                            index: index,
+                            voteData: data,
+                            qppVote: qppVote,
+                          ),
+                  );
+                },
               )
             : const SizedBox.shrink();
       },
@@ -246,40 +247,47 @@ class VoteOptionsItem extends StatelessWidget {
                                       ? MaterialStateMouseCursor.clickable
                                       : MouseCursor.defer,
                                   child: GestureDetector(
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        isCreater ||
-                                                isExpired ||
-                                                isEnded ||
-                                                (!isSelected && isVoted)
-                                            ? const SizedBox.shrink()
-                                            : Padding(
-                                                padding: EdgeInsets.only(
-                                                  right:
-                                                      isDesktopStyle ? 8 : 12,
-                                                ),
-                                                child: Image.asset(
-                                                  isSelected
-                                                      ? QPPImages
-                                                          .desktop_icon_button_check_single
-                                                      : QPPImages
-                                                          .desktop_icon_button_check_default,
-                                                ),
-                                              ),
-                                        Flexible(
-                                          child: Text(
-                                            '${isExpired ? '・' : ''}${e.value.option}',
+                                    child: Text.rich(
+                                      TextSpan(
+                                        children: <InlineSpan>[
+                                          WidgetSpan(
+                                            child: isCreater ||
+                                                    isExpired ||
+                                                    isEnded ||
+                                                    (!isSelected && isVoted)
+                                                ? const SizedBox.shrink()
+                                                : Padding(
+                                                    padding: EdgeInsets.only(
+                                                      right: isDesktopStyle
+                                                          ? 8
+                                                          : 12,
+                                                    ),
+                                                    child: Image.asset(
+                                                      isSelected
+                                                          ? QPPImages
+                                                              .desktop_icon_button_check_single
+                                                          : QPPImages
+                                                              .desktop_icon_button_check_default,
+                                                      width: isDesktopStyle
+                                                          ? 20
+                                                          : 16,
+                                                      scale: 1,
+                                                    ),
+                                                  ),
+                                          ),
+                                          TextSpan(
+                                            text:
+                                                '${isExpired ? '・' : ''}${e.value.option}',
                                             style: (isSelected &&
                                                     !isEnableTap &&
                                                     voteShowType !=
                                                         VoteShowType.noShow)
                                                 ? selectedTextStyle
                                                 : textStyle,
-                                          ).disabledSelectionContainer,
-                                        ),
-                                      ],
-                                    ),
+                                          ),
+                                        ],
+                                      ),
+                                    ).disabledSelectionContainer,
                                     onTap: () {
                                       if (isEnableTap) {
                                         notifier.selectedOption(index, e.key);

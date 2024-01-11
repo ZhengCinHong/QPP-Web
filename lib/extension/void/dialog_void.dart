@@ -50,6 +50,7 @@ extension DialogVoid on void {
               : OpenQppDialog(
                   text: text,
                   subText: subText,
+                  url: url,
                   timerText: timerText,
                 ),
         );

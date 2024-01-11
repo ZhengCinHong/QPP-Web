@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:qpp_example/common_ui/qpp_button/c_button.dart';
-import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
