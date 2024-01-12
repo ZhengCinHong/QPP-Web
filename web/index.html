@@ -1,40 +1,22 @@
 <!DOCTYPE html>
 <html>
+  <!-- QPPWeb ver 0.1.2 -->
   <head>
-    <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
     <base href="$FLUTTER_BASE_HREF" />
-
     <meta charset="UTF-8" />
     <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
     <meta name="description" content="A new Flutter project." />
-
     <!-- iOS meta tags & icons -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="apple-mobile-web-app-title" content="qpp_example" />
     <link rel="apple-touch-icon" href="icons/Icon-192.png" />
-
     <!-- 修正mobile css寬度錯誤的問題 -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png" />
-
     <title>qpp_example</title>
     <link rel="manifest" href="manifest.json" />
-
     <script>
       // The value below is injected by flutter build, do not touch.
       var serviceWorkerVersion = null;
@@ -264,9 +246,6 @@
           },
           onEntrypointLoaded: function (engineInitializer) {
             // 修改渲染模式, 加速載入中文
-            // https://docs.flutter.dev/platform-integration/web/renderers
-            // https://juejin.cn/post/7156106959001747493
-            // render = 'auto'
             let config = {
               renderer: useCanvas() ? "canvaskit" : "html",
               useColorEmoji: true,
@@ -286,13 +265,15 @@
       var element = document.getElementsByTagName("body")[0];
 
       var handleScroll = function () {
-        element.scrollTo(0, 0); // required when scroll bar is drgged
+        // required when scroll bar is drgged
+        element.scrollTo(0, 0);
       };
 
       element.addEventListener("scroll", handleScroll, false);
 
       var handleEvent = function (e) {
-        e.preventDefault(); // disables scrolling by mouse wheel and touch move
+        // disables scrolling by mouse wheel and touch move
+        e.preventDefault();
       };
 
       element.addEventListener("scroll", handleEvent, { passive: false });
