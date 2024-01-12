@@ -90,18 +90,6 @@ class NFTItemImg extends StatelessWidget {
   }
 }
 
-class _MyClipper extends CustomClipper<Rect> {
-  @override
-  Rect getClip(Size size) {
-    return Rect.fromLTRB(1.5, 1.5, size.width - 1.5, size.height - 1.5);
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Rect> oldClipper) {
-    return false;
-  }
-}
-
 /// 一般物品圖片
 class NormalItemImg extends StatelessWidget {
   // 是否為 mobile layout
@@ -123,7 +111,7 @@ class NormalItemImg extends StatelessWidget {
       // foregroundDecoration 畫框線用
       foregroundDecoration: _circleDecorBorder(),
       // 只用 Container 切圓會溢出, 這邊加上 ClipOval 強制把圖片切圓
-      child: ClipOval(clipper: _MyClipper(), child: _img),
+      child: ClipOval(clipper: _NormalItemImgClipper(), child: _img),
     );
   }
 
@@ -175,6 +163,19 @@ BoxDecoration _rectDecorBorder() {
       shape: BoxShape.rectangle,
       border: Border.all(color: QppColors.midnightBlue, width: 1.0),
       borderRadius: const BorderRadius.all(Radius.circular(8.0)));
+}
+
+/// 一般物品切圓用
+class _NormalItemImgClipper extends CustomClipper<Rect> {
+  @override
+  Rect getClip(Size size) {
+    return Rect.fromLTRB(1.5, 1.5, size.width - 1.5, size.height - 1.5);
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Rect> oldClipper) {
+    return false;
+  }
 }
 
 /// 點擊展開圖片元件
