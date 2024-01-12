@@ -433,98 +433,98 @@ extension InstructionsTypeExtension on InstructionsType {
       case InstructionsType.privacy:
         result.addPrivacyString(content, QppLocales.privacyTitle);
         result.addPrivacyString(content, QppLocales.privacyP);
-        result.addPrivacyString(content, QppLocales.privacyParagraph1Title);
+      //   result.addPrivacyString(content, QppLocales.privacyParagraph1Title);
 
-        result.add([
-          InstructionsHtmlTag.paragraph
-              .createByKey(content, QppLocales.privacyParagraph1P1),
-          InstructionsHtmlTag.paragraph
-              .createByKey(content, QppLocales.privacyParagraph1P2),
-          InstructionsHtmlTag.paragraph
-              .createByKey(content, QppLocales.privacyParagraph1P3),
-          InstructionsHtmlTag.paragraph
-              .createByKey(content, QppLocales.privacyParagraph1P4)
-        ].join(""));
+      //   result.add([
+      //     InstructionsHtmlTag.paragraph
+      //         .createByKey(content, QppLocales.privacyParagraph1P1),
+      //     InstructionsHtmlTag.paragraph
+      //         .createByKey(content, QppLocales.privacyParagraph1P2),
+      //     InstructionsHtmlTag.paragraph
+      //         .createByKey(content, QppLocales.privacyParagraph1P3),
+      //     InstructionsHtmlTag.paragraph
+      //         .createByKey(content, QppLocales.privacyParagraph1P4)
+      //   ].join(""));
 
-        result.addPrivacyString(content, QppLocales.privacyParagraph2Title);
+      //   result.addPrivacyString(content, QppLocales.privacyParagraph2Title);
 
-        result.add([
-          InstructionsHtmlTag.paragraph
-              .createByKey(content, QppLocales.privacyParagraph2P),
-          InstructionsHtmlTag.orderedList.create([
-            InstructionsHtmlTag.listItem
-                .createByKey(content, QppLocales.privacyParagraph2Li1),
-            InstructionsHtmlTag.listItem
-                .createByKey(content, QppLocales.privacyParagraph2Li2),
-            InstructionsHtmlTag.listItem
-                .createByKey(content, QppLocales.privacyParagraph2Li3),
-            InstructionsHtmlTag.listItem
-                .createByKey(content, QppLocales.privacyParagraph2Li4),
-            InstructionsHtmlTag.listItem
-                .createByKey(content, QppLocales.privacyParagraph2Li5),
-          ].join("")),
-        ].join(""));
+      //   result.add([
+      //     InstructionsHtmlTag.paragraph
+      //         .createByKey(content, QppLocales.privacyParagraph2P),
+      //     InstructionsHtmlTag.orderedList.create([
+      //       InstructionsHtmlTag.listItem
+      //           .createByKey(content, QppLocales.privacyParagraph2Li1),
+      //       InstructionsHtmlTag.listItem
+      //           .createByKey(content, QppLocales.privacyParagraph2Li2),
+      //       InstructionsHtmlTag.listItem
+      //           .createByKey(content, QppLocales.privacyParagraph2Li3),
+      //       InstructionsHtmlTag.listItem
+      //           .createByKey(content, QppLocales.privacyParagraph2Li4),
+      //       InstructionsHtmlTag.listItem
+      //           .createByKey(content, QppLocales.privacyParagraph2Li5),
+      //     ].join("")),
+      //   ].join(""));
 
-        result.addPrivacyString(content, QppLocales.privacyParagraph3Title);
+      //   result.addPrivacyString(content, QppLocales.privacyParagraph3Title);
 
-        result.add(
-          InstructionsHtmlTag.orderedList.create([
-            InstructionsHtmlTag.listItem
-                .createByKey(content, QppLocales.privacyParagraph3Li1),
-            InstructionsHtmlTag.listItem
-                .createByKey(content, QppLocales.privacyParagraph3Li2),
-            InstructionsHtmlTag.listItem
-                .createByKey(content, QppLocales.privacyParagraph3Li3),
-            InstructionsHtmlTag.listItem
-                .createByKey(content, QppLocales.privacyParagraph3Li4),
-          ].join("")),
-        );
+      //   result.add(
+      //     InstructionsHtmlTag.orderedList.create([
+      //       InstructionsHtmlTag.listItem
+      //           .createByKey(content, QppLocales.privacyParagraph3Li1),
+      //       InstructionsHtmlTag.listItem
+      //           .createByKey(content, QppLocales.privacyParagraph3Li2),
+      //       InstructionsHtmlTag.listItem
+      //           .createByKey(content, QppLocales.privacyParagraph3Li3),
+      //       InstructionsHtmlTag.listItem
+      //           .createByKey(content, QppLocales.privacyParagraph3Li4),
+      //     ].join("")),
+      //   );
 
-        result.addPrivacyString(content, QppLocales.privacyParagraph4Title);
+      //   result.addPrivacyString(content, QppLocales.privacyParagraph4Title);
 
-        result.add(
-          InstructionsHtmlTag.orderedList.create([
-            InstructionsHtmlTag.listItem
-                .createByKey(content, QppLocales.privacyParagraph4Li1),
-            InstructionsHtmlTag.listItem
-                .createByKey(content, QppLocales.privacyParagraph4Li2),
-            InstructionsHtmlTag.listItem
-                .createByKey(content, QppLocales.privacyParagraph4Li3),
-            InstructionsHtmlTag.listItem
-                .createByKey(content, QppLocales.privacyParagraph4Li4),
-          ].join("")),
-        );
+      //   result.add(
+      //     InstructionsHtmlTag.orderedList.create([
+      //       InstructionsHtmlTag.listItem
+      //           .createByKey(content, QppLocales.privacyParagraph4Li1),
+      //       InstructionsHtmlTag.listItem
+      //           .createByKey(content, QppLocales.privacyParagraph4Li2),
+      //       InstructionsHtmlTag.listItem
+      //           .createByKey(content, QppLocales.privacyParagraph4Li3),
+      //       InstructionsHtmlTag.listItem
+      //           .createByKey(content, QppLocales.privacyParagraph4Li4),
+      //     ].join("")),
+      //   );
 
-        result.addPrivacyString(content, QppLocales.privacyParagraph5Title);
-        result.addPrivacyString(content, QppLocales.privacyParagraph5P);
-        result.addPrivacyString(content, QppLocales.privacyParagraph6Title);
-        result.addPrivacyString(content, QppLocales.privacyParagraph6P);
-        result.addPrivacyString(content, QppLocales.privacyParagraph7Title);
-        result.addPrivacyString(content, QppLocales.privacyParagraph7P);
-        result.addPrivacyString(content, QppLocales.privacyParagraph8Title);
-        result.addPrivacyString(content, QppLocales.privacyParagraph8P);
-        result.addPrivacyString(content, QppLocales.privacyParagraph9Title);
+      //   result.addPrivacyString(content, QppLocales.privacyParagraph5Title);
+      //   result.addPrivacyString(content, QppLocales.privacyParagraph5P);
+      //   result.addPrivacyString(content, QppLocales.privacyParagraph6Title);
+      //   result.addPrivacyString(content, QppLocales.privacyParagraph6P);
+      //   result.addPrivacyString(content, QppLocales.privacyParagraph7Title);
+      //   result.addPrivacyString(content, QppLocales.privacyParagraph7P);
+      //   result.addPrivacyString(content, QppLocales.privacyParagraph8Title);
+      //   result.addPrivacyString(content, QppLocales.privacyParagraph8P);
+      //   result.addPrivacyString(content, QppLocales.privacyParagraph9Title);
 
-        final paragraph9P1Text =
-            "<h1>${content.tr(QppLocales.privacyParagraph9P1)}</h1>";
+      //   final paragraph9P1Text =
+      //       "<h1>${content.tr(QppLocales.privacyParagraph9P1)}</h1>";
 
-        final sendEmailText = '''{
-        "${InstructionsPage.privacyJsonTextName}":"${content.tr(QppLocales.privacyParagraph9SendMail)}",
-        "${InstructionsPage.privacyJsonTipTextName}":"${content.tr(QppLocales.privacyParagraph9Copy)}"
-      }''';
+      //   final sendEmailText = '''{
+      //   "${InstructionsPage.privacyJsonTextName}":"${content.tr(QppLocales.privacyParagraph9SendMail)}",
+      //   "${InstructionsPage.privacyJsonTipTextName}":"${content.tr(QppLocales.privacyParagraph9Copy)}"
+      // }''';
 
-        final privacySendEmail = "<a href="
-            "${ServerConst.mailStr}"
-            ">$sendEmailText</a>";
+      //   final privacySendEmail = "<a href="
+      //       "${ServerConst.mailStr}"
+      //       ">$sendEmailText</a>";
 
-        final paragraph9P2Text =
-            "<h1>${content.tr(QppLocales.privacyParagraph9P2)}</h1>";
+      //   final paragraph9P2Text =
+      //       "<h1>${content.tr(QppLocales.privacyParagraph9P2)}</h1>";
 
-        result.add(
-          "<div class="
-          "${InstructionsHtmlClass.privacySendEmail.name}"
-          ">$paragraph9P1Text$privacySendEmail$paragraph9P2Text</div>",
-        );
+      //   result.add(
+      //     "<div class="
+      //     "${InstructionsHtmlClass.privacySendEmail.name}"
+      //     ">$paragraph9P1Text$privacySendEmail$paragraph9P2Text</div>",
+      //   );
 
       case InstructionsType.term:
         result.addTermString(content, QppLocales.termTitle);
