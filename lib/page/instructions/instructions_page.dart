@@ -39,8 +39,8 @@ class InstructionsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     List<String> texts = type.create(context);
 
-    final mediaQuery = MediaQuery.of(context);
-    final size = mediaQuery.size;
+    final size = MediaQuery.of(context).size;
+    final height = size.height;
     final width = size.width;
     final isDesktop = width.determineScreenStyle().isDesktop;
 
@@ -83,16 +83,10 @@ class InstructionsPage extends StatelessWidget {
       bottom: bottom,
     );
 
-    final a = mediaQuery.padding;
-    final test = size.height - a.top - a.bottom;
-
-    print("shit height>>> ${size.height}");
-    print("shit to ${test}  padding: ${a.top} ${a.bottom}");
-
     return SelectionArea(
       child: Scaffold(
         body: SizedBox(
-          height: test,
+          height: height,
           child: ListView.builder(
             controller: _scrollController,
             padding: padding,
