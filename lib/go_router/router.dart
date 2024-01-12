@@ -36,7 +36,7 @@ class QppGoRouter {
   static const String go = 'go';
 
   /// 隱私權政策頁(只有home有)
-  static const String privacy = 'privacy';
+  static const String privacy = 'QPP-Web/privacy';
 
   /// 使用者條款頁(只有home有)
   static const String term = 'term';
