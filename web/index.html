@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-  <!--
+  <head>
+    <!--
     If you are serving your web app in a path other than the root, change the
     href value below to reflect the base path you are serving from.
 
@@ -15,306 +14,290 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-  <base href="$FLUTTER_BASE_HREF" />
+    <base href="$FLUTTER_BASE_HREF" />
 
-  <meta charset="UTF-8" />
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
-  <meta name="description" content="A new Flutter project." />
+    <meta charset="UTF-8" />
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
+    <meta name="description" content="A new Flutter project." />
 
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <meta name="apple-mobile-web-app-title" content="qpp_example" />
-  <link rel="apple-touch-icon" href="icons/Icon-192.png" />
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="qpp_example" />
+    <link rel="apple-touch-icon" href="icons/Icon-192.png" />
 
-  <!-- 修正mobile css寬度錯誤的問題 -->
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- 修正mobile css寬度錯誤的問題 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png" />
 
-  <title>qpp_example</title>
-  <link rel="manifest" href="manifest.json" />
+    <title>qpp_example</title>
+    <link rel="manifest" href="manifest.json" />
 
-  <script>
-    // The value below is injected by flutter build, do not touch.
-    var serviceWorkerVersion = null;
-  </script>
-  <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer></script>
-</head>
+    <script>
+      // The value below is injected by flutter build, do not touch.
+      var serviceWorkerVersion = null;
+    </script>
+    <!-- This script adds the flutter initialization JS code -->
+    <script src="flutter.js" defer></script>
+  </head>
 
-<!-- 背景顏色 -->
-<style>
-  body {
-    background-image: radial-gradient(circle at center, #1e4287, #000b2b);
-  }
+  <!-- 背景顏色 -->
+  <style>
+    body {
+      background-image: radial-gradient(circle at center, #1e4287, #000b2b);
+    }
 
-  html {
-    height: 100%;
-  }
-</style>
+    html {
+      height: 100%;
+    }
+  </style>
 
-<!--loading 样式 -->
-<style type="text/css">
-  .loading-logoFadeIn {
-    background-image: radial-gradient(circle at center, #1e4287, #000b2b);
-    width: 100%;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9999;
-  }
+  <!--loading 样式 -->
+  <style type="text/css">
+    .loading-logoFadeIn {
+      background-image: radial-gradient(circle at center, #1e4287, #000b2b);
+      width: 100%;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+    }
 
-  .loading-logoFadeIn .loadingArea {
-    max-width: 300px;
-    margin: 0 auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-  }
+    .loading-logoFadeIn .loadingArea {
+      max-width: 300px;
+      margin: 0 auto;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      -o-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
 
-  .loading-logoFadeIn .loadingArea .icon.loading-left {
-    opacity: 0;
-    position: relative;
-    left: -20px;
-    -webkit-animation: fadeIn_left 1s linear 0ms forwards;
-    -moz-animation: fadeIn_left 1s linear 0ms forwards;
-    animation: fadeIn_left 1s linear 0ms forwards;
-  }
-
-  .loading-logoFadeIn .loadingArea .icon.loading-right {
-    position: relative;
-    right: -20px;
-    opacity: 0;
-    -webkit-animation: fadeIn_right 1s linear 0ms forwards;
-    -moz-animation: fadeIn_right 1s linear 0ms forwards;
-    animation: fadeIn_right 1s linear 0ms forwards;
-  }
-
-  .loading-logoFadeIn img {
-    max-height: 64px;
-    vertical-align: middle;
-  }
-
-  @-webkit-keyframes fadeIn_left {
-    0% {
+    .loading-logoFadeIn .loadingArea .icon.loading-left {
       opacity: 0;
+      position: relative;
       left: -20px;
+      -webkit-animation: fadeIn_left 1s linear 0ms forwards;
+      -moz-animation: fadeIn_left 1s linear 0ms forwards;
+      animation: fadeIn_left 1s linear 0ms forwards;
     }
 
-    to {
-      opacity: 1;
-      left: -2px;
-    }
-  }
-
-  @-moz-keyframes fadeIn_left {
-    0% {
-      opacity: 0;
-      left: -20px;
-    }
-
-    to {
-      opacity: 1;
-      left: -2px;
-    }
-  }
-
-  @keyframes fadeIn_left {
-    0% {
-      opacity: 0;
-      left: -20px;
-    }
-
-    to {
-      opacity: 1;
-      left: -2px;
-    }
-  }
-
-  @-webkit-keyframes fadeIn_right {
-    0% {
-      opacity: 0;
+    .loading-logoFadeIn .loadingArea .icon.loading-right {
+      position: relative;
       right: -20px;
-    }
-
-
-    to {
-      opacity: 1;
-      right: -2px;
-    }
-  }
-
-  @-moz-keyframes fadeIn_right {
-    0% {
       opacity: 0;
-      right: -20px;
+      -webkit-animation: fadeIn_right 1s linear 0ms forwards;
+      -moz-animation: fadeIn_right 1s linear 0ms forwards;
+      animation: fadeIn_right 1s linear 0ms forwards;
     }
 
-    to {
-      opacity: 1;
-      right: -2px;
-    }
-  }
-
-  @keyframes fadeIn_right {
-    0% {
-      opacity: 0;
-      right: -20px;
+    .loading-logoFadeIn img {
+      max-height: 64px;
+      vertical-align: middle;
     }
 
-    to {
-      opacity: 1;
-      right: -2px;
-    }
-  }
-
-  .fadeOut {
-    -webkit-animation: fadeOut 300ms ease-in-out forwards;
-    -moz-animation: fadeOut 300ms ease-in-out forwards;
-    animation: fadeOut 300ms ease-in-out forwards;
-  }
-
-  @keyframes fadeOut {
-    from {
-      opacity: 1;
-    }
-
-    to {
-      opacity: 0;
-    }
-  }
-
-  @-webkit-keyframes fadeOut {
-    from {
-      opacity: 1;
-    }
-
-    to {
-      opacity: 0;
-    }
-  }
-
-  @-moz-keyframes fadeOut {
-    from {
-      opacity: 1;
-    }
-
-    to {
-      opacity: 0;
-    }
-  }
-</style>
-
-<body>
-  <div class="loading-logoFadeIn">
-    <div class="loadingArea align-self-center"><img src="assets/assets/pic-animation-icon-2.png" alt
-        class="icon loading-left img-fluid"><img src="assets/assets/pic-animation-qpp.png" alt
-        class="icon loading-right img-fluid"></div>
-  </div>
-
-  <script>
-    window.addEventListener("load", function (ev) {
-      // Download main.dart.js
-      _flutter.loader.loadEntrypoint({
-        // disable pwa
-        // serviceWorker: {
-        //   serviceWorkerVersion: serviceWorkerVersion,
-        // },
-        onEntrypointLoaded: function (engineInitializer) {
-          // 修改渲染模式, 加速載入中文
-          // https://docs.flutter.dev/platform-integration/web/renderers
-          // https://juejin.cn/post/7156106959001747493
-          // render = 'auto'
-          let config = { useColorEmoji: true };
-          engineInitializer
-            .initializeEngine(config)
-            .then(function (appRunner) {
-              appRunner.runApp();
-            });
-        },
-      });
-    });
-
-    const loadingLogo = document.querySelector('.loading-logoFadeIn');
-
-    // Flutter 渲染的第一幀完成就關閉載入動畫
-    window.addEventListener("flutter-first-frame", function () {
-      setTimeout(() => {
-        // 動畫淡出
-        loadingLogo.classList.add('fadeOut');
-      }, 1000);
-    });
-
-    // 移除載入元件
-    loadingLogo.addEventListener('animationend', (event) => {
-      if (event.animationName === 'fadeOut') {
-        loadingLogo.remove();
+    @-webkit-keyframes fadeIn_left {
+      0% {
+        opacity: 0;
+        left: -20px;
       }
-    })
 
-    window.addEventListener("load", function (ev) {
-      function useCanvas() {
-        let nav = window.navigator;
-        let uad = nav.userAgentData;
-        if (uad != null) {
-          if (uad.platform == "Android" && uad.mobile == true) {
-            return true;
-          } else {
-            return false;
-          }
+      to {
+        opacity: 1;
+        left: -2px;
+      }
+    }
+
+    @-moz-keyframes fadeIn_left {
+      0% {
+        opacity: 0;
+        left: -20px;
+      }
+
+      to {
+        opacity: 1;
+        left: -2px;
+      }
+    }
+
+    @keyframes fadeIn_left {
+      0% {
+        opacity: 0;
+        left: -20px;
+      }
+
+      to {
+        opacity: 1;
+        left: -2px;
+      }
+    }
+
+    @-webkit-keyframes fadeIn_right {
+      0% {
+        opacity: 0;
+        right: -20px;
+      }
+
+      to {
+        opacity: 1;
+        right: -2px;
+      }
+    }
+
+    @-moz-keyframes fadeIn_right {
+      0% {
+        opacity: 0;
+        right: -20px;
+      }
+
+      to {
+        opacity: 1;
+        right: -2px;
+      }
+    }
+
+    @keyframes fadeIn_right {
+      0% {
+        opacity: 0;
+        right: -20px;
+      }
+
+      to {
+        opacity: 1;
+        right: -2px;
+      }
+    }
+
+    .fadeOut {
+      -webkit-animation: fadeOut 300ms ease-in-out forwards;
+      -moz-animation: fadeOut 300ms ease-in-out forwards;
+      animation: fadeOut 300ms ease-in-out forwards;
+    }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+      }
+    }
+
+    @-webkit-keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+      }
+    }
+
+    @-moz-keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+      }
+    }
+  </style>
+
+  <body>
+    <div class="loading-logoFadeIn">
+      <div class="loadingArea align-self-center">
+        <img
+          src="assets/assets/pic-animation-icon-2.png"
+          alt
+          class="icon loading-left img-fluid"
+        /><img
+          src="assets/assets/pic-animation-qpp.png"
+          alt
+          class="icon loading-right img-fluid"
+        />
+      </div>
+    </div>
+
+    <script>
+      const loadingLogo = document.querySelector(".loading-logoFadeIn");
+
+      // Flutter 渲染的第一幀完成就關閉載入動畫
+      window.addEventListener("flutter-first-frame", function () {
+        setTimeout(() => {
+          // 動畫淡出
+          loadingLogo.classList.add("fadeOut");
+        }, 1000);
+      });
+
+      // 移除載入元件
+      loadingLogo.addEventListener("animationend", (event) => {
+        if (event.animationName === "fadeOut") {
+          loadingLogo.remove();
         }
-        return false;
-      }
-      console.log(useCanvas());
-      _flutter.loader.loadEntrypoint({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        },
-        onEntrypointLoaded: function (engineInitializer) {
-          // 修改渲染模式, 加速載入中文
-          // https://docs.flutter.dev/platform-integration/web/renderers
-          // https://juejin.cn/post/7156106959001747493
-          // render = 'auto'
-          let config = {
-            renderer: useCanvas() ? "canvaskit" : "html",
-            useColorEmoji: true,
-          };
-          engineInitializer
-            .initializeEngine(config)
-            .then(function (appRunner) {
-              appRunner.runApp();
-            });
-        },
       });
-    });
-  </script>
 
-  <!-- 修正 iOS webview 無法滾動問題 -->
-  <script>
-    var element = document.getElementsByTagName("body")[0];
+      window.addEventListener("load", function (ev) {
+        function useCanvas() {
+          let nav = window.navigator;
+          let uad = nav.userAgentData;
+          if (uad != null) {
+            if (uad.platform == "Android" && uad.mobile == true) {
+              return true;
+            } else {
+              return false;
+            }
+          }
+          return false;
+        }
+        console.log(useCanvas());
+        _flutter.loader.loadEntrypoint({
+          serviceWorker: {
+            serviceWorkerVersion: serviceWorkerVersion,
+          },
+          onEntrypointLoaded: function (engineInitializer) {
+            // 修改渲染模式, 加速載入中文
+            // https://docs.flutter.dev/platform-integration/web/renderers
+            // https://juejin.cn/post/7156106959001747493
+            // render = 'auto'
+            let config = {
+              renderer: useCanvas() ? "canvaskit" : "html",
+              useColorEmoji: true,
+            };
+            engineInitializer
+              .initializeEngine(config)
+              .then(function (appRunner) {
+                appRunner.runApp();
+              });
+          },
+        });
+      });
+    </script>
 
-    var handleScroll = function () {
-      element.scrollTo(0, 0); // required when scroll bar is drgged
-    };
+    <!-- 修正 iOS webview 無法滾動問題 -->
+    <script>
+      var element = document.getElementsByTagName("body")[0];
 
-    element.addEventListener("scroll", handleScroll, false);
+      var handleScroll = function () {
+        element.scrollTo(0, 0); // required when scroll bar is drgged
+      };
 
-    var handleEvent = function (e) {
-      e.preventDefault(); // disables scrolling by mouse wheel and touch move
-    };
+      element.addEventListener("scroll", handleScroll, false);
 
-    element.addEventListener("scroll", handleEvent, { passive: false });
-    element.addEventListener("mousewheel", handleEvent, { passive: false });
-    element.addEventListener("touchmove", handleEvent, { passive: false });
-  </script>
-</body>
+      var handleEvent = function (e) {
+        e.preventDefault(); // disables scrolling by mouse wheel and touch move
+      };
 
+      element.addEventListener("scroll", handleEvent, { passive: false });
+      element.addEventListener("mousewheel", handleEvent, { passive: false });
+      element.addEventListener("touchmove", handleEvent, { passive: false });
+    </script>
+  </body>
 </html>
