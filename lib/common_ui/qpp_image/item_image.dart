@@ -90,6 +90,18 @@ class NFTItemImg extends StatelessWidget {
   }
 }
 
+class _MyClipper extends CustomClipper<Rect> {
+  @override
+  Rect getClip(Size size) {
+    return Rect.fromLTRB(1.5, 1.5, size.width - 1.5, size.height - 1.5);
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Rect> oldClipper) {
+    return false;
+  }
+}
+
 /// 一般物品圖片
 class NormalItemImg extends StatelessWidget {
   // 是否為 mobile layout
@@ -101,14 +113,34 @@ class NormalItemImg extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      alignment: Alignment.center,
       margin: const EdgeInsets.only(top: 83),
       width: isMobile ? 88 : 100,
+      height: isMobile ? 88 : 100,
       clipBehavior: Clip.antiAlias,
       // decoration 負責切形狀
       decoration: _circleDecor(),
       // foregroundDecoration 畫框線用
       foregroundDecoration: _circleDecorBorder(),
-      child: _img,
+      // 只用 Container 切圓會溢出, 這邊加上 ClipOval 強制把圖片切圓
+      child: ClipOval(clipper: _MyClipper(), child: _img),
+    );
+  }
+
+  /// 切圓形
+  BoxDecoration _circleDecor() {
+    return const BoxDecoration(
+      shape: BoxShape.circle,
+      // 一般物品底色, 有可能有透明圖片物品
+      color: QppColors.lightStPatricksBlue,
+    );
+  }
+
+  /// 切圓框線
+  BoxDecoration _circleDecorBorder() {
+    return BoxDecoration(
+      shape: BoxShape.circle,
+      border: Border.all(color: QppColors.lapisLazuli, width: 1.5),
     );
   }
 
@@ -117,33 +149,16 @@ class NormalItemImg extends StatelessWidget {
       return Image.asset(
         QPPImages.desktop_pic_commodity_avatar_default,
         filterQuality: FilterQuality.high,
-        fit: BoxFit.fitWidth,
+        fit: BoxFit.cover,
       );
     }
     // 錯誤處理在 model 做完了
     return Image.network(
       path!,
       filterQuality: FilterQuality.high,
-      fit: BoxFit.fitWidth,
+      fit: BoxFit.cover,
     );
   }
-}
-
-/// 切圓形
-BoxDecoration _circleDecor() {
-  return const BoxDecoration(
-    shape: BoxShape.circle,
-    // 一般物品底色, 有可能有透明圖片物品
-    color: QppColors.lightStPatricksBlue,
-  );
-}
-
-/// 切圓框線
-BoxDecoration _circleDecorBorder() {
-  return BoxDecoration(
-    shape: BoxShape.circle,
-    border: Border.all(color: QppColors.lapisLazuli, width: 1.5),
-  );
 }
 
 /// 切圓角
