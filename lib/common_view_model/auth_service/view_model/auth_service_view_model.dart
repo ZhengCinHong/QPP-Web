@@ -41,7 +41,9 @@ class AuthServiceStateNotifier extends ChangeNotifier {
     if (!(SharedPrefs.getLoginInfo()?.isLogin ?? false)) {
       final request = GetLoginTokenRequest().createBody(lang);
 
-      LocalApi.client.postGetLoginToken(request).then((getLoginTokenResponse) {
+      LocalApiClient.client
+          .postGetLoginToken(request)
+          .then((getLoginTokenResponse) {
         if (getLoginTokenResponse.isSuccess) {
           checkLoginToken(getLoginTokenResponse.data.vendorToken ?? "");
           getLoginTokenState = ApiResponse.completed(getLoginTokenResponse);
@@ -67,7 +69,7 @@ class AuthServiceStateNotifier extends ChangeNotifier {
     timer = Timer.periodic(const Duration(seconds: 2), (timer) {
       final request = CheckLoginTokenRequest().createBody(vendorToken);
 
-      LocalApi.client
+      LocalApiClient.client
           .postCheckLoginToken(request)
           .then((checkLoginTokenResponse) {
         getLoginTokenState = ApiResponse.initial();
@@ -111,7 +113,7 @@ class AuthServiceStateNotifier extends ChangeNotifier {
     logoutState = ApiResponse.loading();
     notifyListeners();
 
-    LocalApi.client.getLogout(vendorToken).then((_) {
+    LocalApiClient.client.getLogout(vendorToken).then((_) {
       getLoginTokenState = ApiResponse.initial();
       checkLoginTokenState = ApiResponse.initial();
       SharedPrefs.removeLoginInfo();

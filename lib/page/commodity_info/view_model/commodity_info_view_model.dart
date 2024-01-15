@@ -263,7 +263,7 @@ class CommodityInfoModel extends ChangeNotifier {
     voteDataState = ApiResponse.loading();
     notifyListeners();
     final request = GetVoteInfoRequest().createBody(item.id.toString());
-    LocalApi.client.postGetVoteInfo(request).then((getVoteInfoResponse) {
+    LocalApiClient.client.postGetVoteInfo(request).then((getVoteInfoResponse) {
       if (getVoteInfoResponse.isSuccess) {
         // 取資料成功
         QppVote? vote = getVoteInfoResponse.getVoteData(item);
@@ -318,7 +318,7 @@ class CommodityInfoModel extends ChangeNotifier {
     voteDataState = ApiResponse.loading();
     notifyListeners();
 
-    LocalApi.client.postUserVote(request).then((userVoteResponse) {
+    LocalApiClient.client.postUserVote(request).then((userVoteResponse) {
       if (userVoteResponse.isSuccess) {
         // 投票成功
         QppVote? vote = userVoteResponse.getVoteData(item);
@@ -349,7 +349,9 @@ class CommodityInfoModel extends ChangeNotifier {
       voteToken: voteToken,
     );
 
-    LocalApi.client.postGetVoteStatus(request).then((getVoteStatusResponse) {
+    LocalApiClient.client
+        .postGetVoteStatus(request)
+        .then((getVoteStatusResponse) {
       if (getVoteStatusResponse.isSuccess) {
         // 取資料成功
         QppVote? vote = getVoteStatusResponse.getVoteData(item);

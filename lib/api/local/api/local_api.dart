@@ -11,16 +11,11 @@ import 'package:dio/dio.dart' hide Headers;
 part 'local_api.g.dart';
 
 /// 票券 相關的 API, 登入, 投票...
-@RestApi(baseUrl: ServerConst.localApiUrl)
+// @RestApi(baseUrl: ServerConst.localApiUrl)
+@RestApi()
 abstract class LocalApi {
-  @Deprecated('取得 client 請使用 LoginApi.client')
+  @Deprecated('取得 client 請使用 LocalApiExtension.client')
   factory LocalApi(Dio dio, {String baseUrl}) = _LocalApi;
-
-  /// 取得 client
-  static LocalApi get client {
-    // ignore: deprecated_member_use_from_same_package
-    return LocalApi(HttpService.instance.dio);
-  }
 
   /// 取得登入 token
   @POST("login/GetLoginToken")
@@ -60,4 +55,15 @@ abstract class LocalApi {
     'Content-Type': 'application/json',
   })
   Future<UserVoteResponse> postUserVote(@Body() data);
+}
+
+class LocalApiClient {
+  /// 取得 client
+  static LocalApi get client {
+    Dio dio = HttpService.instance.dio;
+    // 判斷是否用測試url
+    dio.options.baseUrl = ServerConst.localApiUrl;
+    // ignore: deprecated_member_use_from_same_package
+    return LocalApi(dio);
+  }
 }

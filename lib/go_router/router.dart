@@ -69,6 +69,9 @@ class QppGoRouter {
 
   /// 外部登入(只有app有)
   static const String vendorLogin = 'vendor_login';
+  // TODO:
+  // commodity_request
+  // commodity_request_v2
 
   /// 動態牆登入授權頁(只有app有)
   static const String loginAuth = 'login_auth';

@@ -12,9 +12,7 @@ class _LocalApi implements LocalApi {
   _LocalApi(
     this._dio, {
     this.baseUrl,
-  }) {
-    baseUrl ??= 'https://stage.qpptec.com/api/';
-  }
+  });
 
   final Dio _dio;
 

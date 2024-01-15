@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:qpp_example/main.dart';
 
 // server 常數放置
 class ServerConst {
@@ -52,18 +52,7 @@ class ServerConst {
   static const clientApiUrl = "https://dev2-api.qpptec.com/client/";
 
   /// local api, 正式 拿掉 stage
-  static const localApiUrl = "https://stage.qpptec.com/api/";
-
-  /// Polygonscan位址
-  static const polygonUrl = "https://polygonscan.com/tx/";
-
-  /// ethereum 正式 / 測試  url
-  static const ethereumUrl = kReleaseMode
-      ? "https://etherscan.io/tx/"
-      : "https://goerli.etherscan.io/tx/";
-
-  /// ethereum 正式 / 測試  地址
-  static const hainAddressEthereum = kReleaseMode
-      ? "0x3dbeb39b1f87bcd85a66ea8f6a69ffaf87157b0d"
-      : "0x77263fd6b4eeadc1932ddf4b9eb7d38e3466628e";
+  static final localApiUrl = Setting().isTest
+      ? "https://stage.qpptec.com/api/"
+      : "https://qpptec.com/api/";
 }

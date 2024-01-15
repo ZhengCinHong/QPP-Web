@@ -48,7 +48,8 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MediaQuery(
           // 固定字型大小
-          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0, navigationMode: NavigationMode.traditional),
+          data: MediaQuery.of(context).copyWith(
+              textScaleFactor: 1.0, navigationMode: NavigationMode.traditional),
           child: child!,
         );
       },
@@ -63,9 +64,10 @@ class Setting {
 
   final String url = Uri.base.toString();
   final Map<String, String> params = Uri.base.queryParameters;
+
   /// 是否連接測試 server
-  bool isTest() {
-    String? testParam = params["isTest"];
+  bool get isTest {
+    String? testParam = params["testing"];
     if (!testParam.isNullOrEmpty) {
       return testParam == "true";
     }

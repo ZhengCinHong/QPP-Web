@@ -6,7 +6,7 @@ part of 'qpp_locales.dart';
 // LocalizationGenerator
 // **************************************************************************
 
-// Generated at: Tue, 19 Dec 2023 14:44:56 +08:00
+// Generated at: Mon, 15 Jan 2024 16:01:35 +08:00
 class QppLocales {
   static const supportedLocales = [
     Locale('zh', 'TW'),
