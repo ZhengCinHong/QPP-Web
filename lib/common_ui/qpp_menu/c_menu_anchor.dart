@@ -16,12 +16,13 @@ abstract class CMeunAnchorData {
 ///
 /// Note: 樣式請參考語系選單
 class CMenuAnchor extends StatelessWidget {
-  const CMenuAnchor(
-      {super.key,
-      required this.list,
-      this.builder,
-      required this.isOpenControllerProvider,
-      required this.onTap});
+  const CMenuAnchor({
+    super.key,
+    required this.list,
+    this.builder,
+    required this.isOpenControllerProvider,
+    required this.onTap,
+  });
 
   final List<CMeunAnchorData> list;
   // 控制器狀態Provider
