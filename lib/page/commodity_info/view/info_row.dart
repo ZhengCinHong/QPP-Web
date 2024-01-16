@@ -114,7 +114,9 @@ class InfoRowInfo extends InfoRow {
             Text(
               context.tr(data.categoryMultiLangKey),
               textAlign: TextAlign.center,
-              style: QppTextStyles.web_16pt_body_platinum_L,
+              style: isDesktop
+                  ? QppTextStyles.web_16pt_body_platinum_L
+                  : QppTextStyles.mobile_14pt_body_category_text_L,
             ),
             // 間隔
             const SizedBox(
@@ -124,7 +126,9 @@ class InfoRowInfo extends InfoRow {
             Text(
               data.id.toString(),
               textAlign: TextAlign.center,
-              style: QppTextStyles.web_16pt_body_ID_text_L,
+              style: isDesktop
+                  ? QppTextStyles.web_16pt_body_ID_text_L
+                  : QppTextStyles.mobile_14pt_body_ID_text_L,
             ),
           ],
         );
@@ -167,7 +171,9 @@ class InfoRowCreator extends InfoRow {
                   child: Text(
                     context.tr(QppLocales.commodityInfoCreator),
                     textAlign: TextAlign.start,
-                    style: QppTextStyles.web_16pt_body_category_text_L,
+                    style: isDesktop
+                        ? QppTextStyles.web_16pt_body_category_text_L
+                        : QppTextStyles.mobile_14pt_body_category_text_L,
                   ),
                 ),
                 // 若為官方帳號, 顯示 icon
@@ -187,7 +193,9 @@ class InfoRowCreator extends InfoRow {
                     maxLines: 1,
                     textAlign: TextAlign.start,
                     overflow: TextOverflow.ellipsis,
-                    style: QppTextStyles.web_16pt_body_Indian_yellow_L,
+                    style: isDesktop
+                        ? QppTextStyles.web_16pt_body_Indian_yellow_L
+                        : QppTextStyles.mobile_14pt_body_Indian_yellow_L,
                   ),
                 ),
                 // 物件左右翻轉, 或用 RotatedBox
@@ -229,7 +237,9 @@ class InfoRowIntroLink extends InfoRow {
               child: Text(
                 context.tr(QppLocales.commodityInfoTitle),
                 textAlign: TextAlign.start,
-                style: QppTextStyles.web_16pt_body_category_text_L,
+                style: isDesktop
+                    ? QppTextStyles.web_16pt_body_category_text_L
+                    : QppTextStyles.mobile_14pt_body_category_text_L,
               ),
             ),
             // intro link
@@ -279,14 +289,17 @@ class InfoRowDescription extends InfoRow {
                       : QppLocales.commodityInfoInfo,
                 ),
                 textAlign: TextAlign.start,
-                style: QppTextStyles.web_16pt_body_category_text_L,
+                style: isDesktop
+                    ? QppTextStyles.web_16pt_body_category_text_L
+                    : QppTextStyles.mobile_14pt_body_category_text_L,
               ),
             ),
             // intro link
             Expanded(
               // Expanded 包 text, 實現自動換行
               child: InfoRowLinkReadMoreText(
-                  data: data.getContentWithContext(context)),
+                data: data.getContentWithContext(context),
+              ),
             ),
           ],
         );
