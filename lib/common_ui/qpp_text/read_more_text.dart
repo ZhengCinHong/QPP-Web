@@ -320,13 +320,11 @@ class ReadMoreTextState extends State<ReadMoreText> {
     required List<TextSpan> children,
   }) {
     // 定义URL的正则表达式
-    // urlExp = RegExp(r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.&]+');
-    // mailExp = RegExp(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}');
+    // url RegExp exp = RegExp(r'(https|http):\/\/?[\w/\-?=%.]+\.[\w/\-?=%.&]+');
+    // mail RegExp exp = RegExp(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}');
     // 判斷 url & mail 的正則
-    RegExp exp = RegExp(
-      r'(?:[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|'
-      r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.&]+)',
-    );
+    RegExp exp = RegExp(r'(?:[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|'
+        r'(https|http):\/\/?[\w/\-?=%.]+\.[\w/\-?=%.&]+)');
 
     List<TextSpan> contents = [];
 
