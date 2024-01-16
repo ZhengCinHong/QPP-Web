@@ -60,7 +60,9 @@ abstract class LocalApi {
 class LocalApiClient {
   /// 取得 client
   static LocalApi get client {
-    Dio dio = HttpService.instance.dio;
+    Dio dio = Dio();
+    dio.options.connectTimeout = const Duration(seconds: 10);
+    dio.options.receiveTimeout = const Duration(seconds: 8);
     // 判斷是否用測試url
     dio.options.baseUrl = ServerConst.localApiUrl;
     // ignore: deprecated_member_use_from_same_package
