@@ -8,6 +8,7 @@ class UrlGenerator {
     var checkAction = modifyUrlParameter(result, "action", "download");
     // TODO: 目前強制加入 testing = true
     // var checkTesting = modifyUrlParameter(checkAction, "testing", "true");
+    // line 強制用外部瀏覽器開啟
     var checkOpen = modifyUrlParameter(checkAction, "openExternalBrowser", "1");
     // Uri origin = Uri.parse(checkTesting);
     Uri origin = Uri.parse(checkOpen);
