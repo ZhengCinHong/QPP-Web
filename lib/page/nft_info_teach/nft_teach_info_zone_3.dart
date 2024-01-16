@@ -16,7 +16,7 @@ class NFTTeachInfoZone3 extends StatelessWidget {
         itemCount: 3,
         shrinkWrap: true,
         // 禁止 list 內容 滾動
-        physics: const NeverScrollableScrollPhysics(),
+        primary: false,
         itemBuilder: (context, index) {
           return switch (index) {
             0 => Container(
@@ -71,7 +71,7 @@ class Info2 extends NFTTeachInfoExpand {
           itemCount: 3,
           shrinkWrap: true,
           // 禁止 list 內容 滾動
-          physics: const NeverScrollableScrollPhysics(),
+          primary: false,
           itemBuilder: (context, index) {
             return switch (index) {
               0 => ItemTeachInfo(

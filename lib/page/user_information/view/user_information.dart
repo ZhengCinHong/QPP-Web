@@ -145,14 +145,18 @@ class _AvatarWidget extends ConsumerWidget {
                     : NetworkImage(userInformation.bgImage),
                 onError: (exception, stackTrace) =>
                     userInformation.setImageState(
-                        style: QppImageStyle.backgroundImage, isSuccess: false),
+                  style: QppImageStyle.backgroundImage,
+                  isSuccess: false,
+                ),
               ),
             ),
             child: Stack(
               children: [
-                ModalBarrier(
-                  color: Colors.black.withOpacity(0.5),
-                  dismissible: false,
+                // 遮罩層，這裡使用 Positioned 和 Container 實現
+                Positioned.fill(
+                  child: Container(
+                    color: QppColors.maskAlpha60, // 遮罩的顏色和透明度
+                  ),
                 ), // 遮罩
                 Center(
                   child: Column(

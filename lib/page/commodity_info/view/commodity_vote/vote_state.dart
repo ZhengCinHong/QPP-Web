@@ -60,8 +60,12 @@ class VoteItemState extends ConsumerWidget {
                       child: isDesktopStyle
                           ? const SizedBox()
                           : Container(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              color: QppColors.ashGray,
+                              color: QppColors.prussianBlue,
+                              child: Container(
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                color: QppColors.ashGray,
+                              ),
                             ),
                     ),
                     // 投票人數
