@@ -36,7 +36,7 @@ class NFTItemInfo extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 itemCount: 6,
                 shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
+                primary: false,
                 itemBuilder: (context, index) {
                   return switch (index) {
                     // description

@@ -52,30 +52,31 @@ class HomePage extends StatelessWidget {
           child: child,
         );
       },
-      child: Column(
-        children: [
-          HomePageIntroduce(key: introduceKey),
-          HomePageFeature(key: featureKey),
-          HomePageDescription(key: descriptionKey),
-          HomePageContact(key: contactKey),
-          const HomePageFooter(),
-        ],
+      child:
+          // Column(
+          //   children: [
+          //     HomePageIntroduce(key: introduceKey),
+          //     HomePageFeature(key: featureKey),
+          //     HomePageDescription(key: descriptionKey),
+          //     HomePageContact(key: contactKey),
+          //     const HomePageFooter(),
+          //   ],
+          // ),
+          ListView.builder(
+        padding: EdgeInsets.zero,
+        itemCount: 5,
+        primary: false,
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return switch (index) {
+            0 => HomePageIntroduce(key: introduceKey),
+            1 => HomePageFeature(key: featureKey),
+            2 => HomePageDescription(key: descriptionKey),
+            3 => HomePageContact(key: contactKey),
+            _ => const HomePageFooter(),
+          };
+        },
       ),
-      //     ListView.builder(
-      //   padding: EdgeInsets.zero,
-      //   itemCount: 5,
-      //   physics: const NeverScrollableScrollPhysics(),
-      //   shrinkWrap: true,
-      //   itemBuilder: (context, index) {
-      //     return switch (index) {
-      //       0 => HomePageIntroduce(key: introduceKey),
-      //       1 => HomePageFeature(key: featureKey),
-      //       2 => HomePageDescription(key: descriptionKey),
-      //       3 => HomePageContact(key: contactKey),
-      //       _ => const HomePageFooter(),
-      //     };
-      //   },
-      // ),
     );
   }
 }
