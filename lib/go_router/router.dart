@@ -69,9 +69,9 @@ class QppGoRouter {
 
   /// 外部登入(只有app有)
   static const String vendorLogin = 'vendor_login';
-  // TODO:
-  // commodity_request
-  // commodity_request_v2
+  // 物品移轉
+  static const String commodityRequest = 'commodity_request';
+  static const String commodityRequestV2 = 'commodity_request_v2';
 
   /// 動態牆登入授權頁(只有app有)
   static const String loginAuth = 'login_auth';
@@ -163,6 +163,28 @@ class QppGoRouter {
     GoRoute(
       path: vendorLogin,
       name: vendorLogin,
+      builder: (context, state) => MainFramework(
+        child: ErrorPage(
+          type: ErrorPageType.troubleshootingInstructions,
+          url: state.fullURL,
+        ),
+      ),
+    ),
+    // 物品移轉
+    GoRoute(
+      path: commodityRequest,
+      name: commodityRequest,
+      builder: (context, state) => MainFramework(
+        child: ErrorPage(
+          type: ErrorPageType.troubleshootingInstructions,
+          url: state.fullURL,
+        ),
+      ),
+    ),
+    // 物品移轉
+    GoRoute(
+      path: commodityRequestV2,
+      name: commodityRequestV2,
       builder: (context, state) => MainFramework(
         child: ErrorPage(
           type: ErrorPageType.troubleshootingInstructions,
