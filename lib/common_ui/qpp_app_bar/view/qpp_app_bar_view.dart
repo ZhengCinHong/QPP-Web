@@ -134,7 +134,7 @@ class _Logo extends StatelessWidget {
       ),
       onPressed: () => Uri.base.path == QppGoRouter.home
           ? null
-          : ServerConst.testRouterHost.launchURL(isNewTab: false),
+          : ServerConst.routerHost.launchURL(isNewTab: false),
     );
   }
 }

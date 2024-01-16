@@ -14,6 +14,8 @@ void main() async {
   SharedPrefs.init();
   WidgetsFlutterBinding.ensureInitialized();
 
+  print('Now Url: ${Setting().baseHref}');
+
   // 多語系套件
   await EasyLocalization.ensureInitialized();
 
@@ -62,8 +64,11 @@ class Setting {
   factory Setting() => _instance;
   static final Setting _instance = Setting._internal();
 
+  // final String baseHref = Uri.base.scheme + Uri.base.host;
+  final Uri baseUri = Uri.base;
   final String url = Uri.base.toString();
   final Map<String, String> params = Uri.base.queryParameters;
+  int? port;
 
   /// 是否連接測試 server
   bool get isTest {
@@ -72,5 +77,14 @@ class Setting {
       return testParam == "true";
     }
     return false;
+  }
+
+  /// base href
+  String get baseHref {
+    if (baseUri.host == "localhost") {
+      port = baseUri.port;
+      return "${baseUri.host}:${baseUri.port}";
+    }
+    return "${Uri.base.scheme}://${Uri.base.host}";
   }
 }
