@@ -97,7 +97,9 @@ class InfoRowInfo extends InfoRow {
               child: Text(
                 context.tr(QppLocales.commodityInfoCategory),
                 textAlign: TextAlign.start,
-                style: QppTextStyles.web_16pt_body_category_text_L,
+                style: isDesktop
+                    ? QppTextStyles.web_16pt_body_category_text_L
+                    : QppTextStyles.mobile_14pt_body_category_text_L,
               ),
             ),
             Image.asset(
