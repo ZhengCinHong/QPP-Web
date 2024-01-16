@@ -64,7 +64,7 @@ class HomePage extends StatelessWidget {
       //     ListView.builder(
       //   padding: EdgeInsets.zero,
       //   itemCount: 5,
-      //   physics: const NeverScrollableScrollPhysics(),
+      //   primary: false,
       //   shrinkWrap: true,
       //   itemBuilder: (context, index) {
       //     return switch (index) {

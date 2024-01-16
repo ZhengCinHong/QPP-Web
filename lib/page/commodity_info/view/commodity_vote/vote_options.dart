@@ -39,7 +39,7 @@ class VoteOptions extends StatelessWidget {
             ? ListView.builder(
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
+                primary: false,
                 itemCount: voteData.length,
                 itemBuilder: (context, index) {
                   final data = voteData[index];
@@ -179,7 +179,7 @@ class VoteOptionsItem extends StatelessWidget {
             child: ListView.builder(
               padding: EdgeInsets.zero,
               shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
+              primary: false,
               itemCount: options.length,
               itemBuilder: (context, itemIndex) {
                 final item = options[itemIndex];
