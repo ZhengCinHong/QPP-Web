@@ -28,7 +28,7 @@ extension StringExtension on String? {
 
   /// 是否為 Url
   bool get isUrl {
-    var urlExp = RegExp(r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.&]+');
+    var urlExp = RegExp(r'(https|http):\/\/?[\w/\-?=%.]+\.[\w/\-?=%.&]+');
     return urlExp.hasMatch(this!);
   }
 
