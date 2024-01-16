@@ -31,12 +31,10 @@ class QppImageUtils {
   static final QppImageUtils instance = QppImageUtils._internal();
 
   /// 商品圖片下載位址
-  static String commodityImageUrl =
-      "https://storage.googleapis.com/qpp_blockchain_test/Item/";
+  static String commodityImageUrl = "${ServerConst.storage}Item/";
 
   /// 用戶圖片下載位址
-  static String userImageUrl =
-      "https://storage.googleapis.com/qpp_blockchain_test/Profile/";
+  static String userImageUrl = "${ServerConst.storage}Profile/";
 
   /// 取得用戶圖片檔名
   /// - Parameters:
