@@ -1,5 +1,6 @@
 import 'package:qpp_example/main.dart';
 
+// kReleaseMode 若在 release -> true / 若在 debug & profile -> false
 // server 常數放置
 class ServerConst {
   /// TODO: 先改成目前站點
@@ -35,14 +36,10 @@ class ServerConst {
   /// AppLink url
   static const appLinkUrl = "https://qpptec.com/app/";
 
-// kReleaseMode 若在 release -> true / 若在 debug & profile -> false
-
   /// Storage api 位址 正式 / 測試
-  // static const storage = kReleaseMode
-  //     ? "https://storage.googleapis.com/qpp_blockchain/"
-  //     : "https://storage.googleapis.com/qpp_blockchain_test/";
-  // TODO: 目前發布為測試服, 正式上線後打開上面
-  static const storage = "https://storage.googleapis.com/qpp_blockchain_test/";
+  static final storage = Setting().isTest
+      ? "https://storage.googleapis.com/qpp_blockchain_test/"
+      : "https://storage.googleapis.com/qpp_blockchain/";
 
   /// Client API- 正式 / 測試
   static final clientApiUrl = Setting().isTest

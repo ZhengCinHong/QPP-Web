@@ -91,7 +91,7 @@ class CommodityInfoModel extends ChangeNotifier {
   getNFTMetaData(String id) {
     nftMetaDataState = ApiResponse.loading();
     notifyListeners();
-    var nftClient = NftMetaApi.client;
+    var nftClient = NftMetaApiClient.client;
 
     nftClient.getNFTMeta(id).then((nftMetaDataResponse) {
       QppNFT nft = nftMetaDataResponse.NFT;

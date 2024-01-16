@@ -12,9 +12,7 @@ class _NftMetaApi implements NftMetaApi {
   _NftMetaApi(
     this._dio, {
     this.baseUrl,
-  }) {
-    baseUrl ??= 'https://storage.googleapis.com/qpp_blockchain_test/';
-  }
+  });
 
   final Dio _dio;
 
