@@ -5,10 +5,11 @@ import 'package:qpp_example/main.dart';
 class ServerConst {
   /// TODO: 先改成目前站點
   // static const routerHost = "https://qpptec.com";
-  static const routerHost = "https://webside-dev.qpptec.com";
+  // static const routerHost = "https://webside-dev.qpptec.com";
+  static final routerHost = Setting().baseHref;
 
   /// 測試用連結
-  static final testRouterHost = "${Uri.base.origin}/";
+  // static final testRouterHost = "${Setting().baseHref}/";
 
   /// 依照裝置跳轉Google Play Store or Apple App Store
   static const appStoreUrl = 'https://qpptec.com/app/go';
@@ -21,11 +22,11 @@ class ServerConst {
   static const appleStoreUrl = 'https://apps.apple.com/tw/app/qpp/id1501319938';
 
   /// 隱私權網址
-  static final privacyPolicyUrl = "${testRouterHost}privacy";
+  static final privacyPolicyUrl = "$routerHost/privacy";
 
   /// 使用條款網址
   static final termsOfUseUrl =
-      "${testRouterHost}term"; // "${routerHost}term?lang=%s";
+      "$routerHost/term"; // "${routerHost}term?lang=%s";
 
   /// 信箱顯示字串
   static const mailStr = 'info@qpptec.com';

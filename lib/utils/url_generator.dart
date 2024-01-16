@@ -1,3 +1,5 @@
+import 'package:qpp_example/main.dart';
+
 /// 網址工具
 class UrlGenerator {
   /// QR Code 及按鈕 網址處理(打開 APP)
@@ -6,20 +8,23 @@ class UrlGenerator {
     var result = nftTypeCheck(url);
     // action 要給 download, firebase 才會連結至 app
     var checkAction = modifyUrlParameter(result, "action", "download");
-    // TODO: 目前強制加入 testing = true
-    // var checkTesting = modifyUrlParameter(checkAction, "testing", "true");
     // line 強制用外部瀏覽器開啟
     var checkOpen = modifyUrlParameter(checkAction, "openExternalBrowser", "1");
-    // Uri origin = Uri.parse(checkTesting);
     Uri origin = Uri.parse(checkOpen);
-    // TODO: 目前為測試站台, host 先強制給原站
+    // host 強制給原站
+    String scheme = 'https';
     String host = 'qpptec.com';
+    // 有 port 要拿掉, 不然會被當成 path 塞進去
+    String path = (Setting().port != null)
+        ? origin.path.replaceAll(Setting().port.toString(), '')
+        : origin.path;
     Uri generated = Uri(
-      scheme: origin.scheme,
+      scheme: scheme,
       host: host,
-      path: origin.path,
+      path: path,
       queryParameters: origin.queryParameters,
     );
+    print('test generated ${generated.toString()}');
     return generated.toString();
   }
 

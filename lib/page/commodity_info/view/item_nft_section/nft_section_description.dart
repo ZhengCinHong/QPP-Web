@@ -91,7 +91,7 @@ class NFTInfoRowPublisher extends InfoRow {
           onTap: () {
             // 點擊前往發行者頁面
             // TODO: isTesting
-            '${ServerConst.testRouterHost}app/information?phoneNumber=${data.displayID}&testing=true&action=stay&lang=${context.locale}'
+            '${ServerConst.routerHost}/app/information?phoneNumber=${data.displayID}&testing=true&action=stay&lang=${context.locale}'
                 .launchURL(isNewTab: false);
           },
           child: Row(
