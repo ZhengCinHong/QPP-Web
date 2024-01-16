@@ -44,12 +44,10 @@ class ServerConst {
   // TODO: 目前發布為測試服, 正式上線後打開上面
   static const storage = "https://storage.googleapis.com/qpp_blockchain_test/";
 
-// /// Client API- 正式 / 測試
-// const apiUrl = kDebugMode
-//     ? "https://pro2-api.qpptec.com/client/"
-//     : "https://dev2-api.qpptec.com/client/";
-
-  static const clientApiUrl = "https://dev2-api.qpptec.com/client/";
+  /// Client API- 正式 / 測試
+  static final clientApiUrl = Setting().isTest
+      ? "https://dev2-api.qpptec.com/client/"
+      : "https://pro2-api.qpptec.com/client/";
 
   /// local api, 正式 拿掉 stage
   static final localApiUrl = Setting().isTest

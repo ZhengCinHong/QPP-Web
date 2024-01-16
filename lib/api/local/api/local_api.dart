@@ -14,7 +14,7 @@ part 'local_api.g.dart';
 // @RestApi(baseUrl: ServerConst.localApiUrl)
 @RestApi()
 abstract class LocalApi {
-  @Deprecated('取得 client 請使用 LocalApiExtension.client')
+  @Deprecated('取得 client 請使用 LocalApiClient.client')
   factory LocalApi(Dio dio, {String baseUrl}) = _LocalApi;
 
   /// 取得登入 token

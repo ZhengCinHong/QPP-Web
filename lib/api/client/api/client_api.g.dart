@@ -12,9 +12,7 @@ class _ClientApi implements ClientApi {
   _ClientApi(
     this._dio, {
     this.baseUrl,
-  }) {
-    baseUrl ??= 'https://dev2-api.qpptec.com/client/';
-  }
+  });
 
   final Dio _dio;
 

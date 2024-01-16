@@ -66,7 +66,7 @@ class CommodityInfoModel extends ChangeNotifier {
   /// 是否為創建者
   bool get isCreater => (userInfoState.data?.id).toString() == loginInfo?.uid;
 
-  final client = ClientApi.client;
+  final client = ClientApiClient.client;
 
   /// 開始取得物品資訊
   loadData(String id) {

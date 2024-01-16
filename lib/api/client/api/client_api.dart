@@ -9,16 +9,10 @@ import 'package:retrofit/retrofit.dart';
 
 part 'client_api.g.dart';
 
-@RestApi(baseUrl: ServerConst.clientApiUrl)
+@RestApi()
 abstract class ClientApi {
-  @Deprecated('取得 client 請使用 ClientApi.client')
+  @Deprecated('取得 client 請使用 ClientApiClient.client')
   factory ClientApi(Dio dio, {String baseUrl}) = _ClientApi;
-
-  /// 取得 client
-  static ClientApi get client {
-    // ignore: deprecated_member_use_from_same_package
-    return ClientApi(HttpService.instance.dio);
-  }
 
   /// 商品列表資訊_查詢
   @POST("ItemSelect")
@@ -49,4 +43,15 @@ abstract class ClientApi {
     'Content-Type': 'application/json',
   })
   Future<UserSelectInfoResponse> postUserSelect(@Body() userId);
+}
+
+class ClientApiClient {
+  /// 取得 client
+  static ClientApi get client {
+    Dio dio = HttpService.instance.dio;
+    // 判斷是否用測試url
+    dio.options.baseUrl = ServerConst.clientApiUrl;
+    // ignore: deprecated_member_use_from_same_package
+    return ClientApi(dio);
+  }
 }

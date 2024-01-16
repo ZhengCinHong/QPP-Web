@@ -62,7 +62,7 @@ class UserInformationChangeNotifier extends ChangeNotifier {
 
     final request = UserSelectInfoRequest().createBody(userID.toString());
 
-    ClientApi.client.postUserSelect(request).then((userSelectInfoResponse) {
+    ClientApiClient.client.postUserSelect(request).then((userSelectInfoResponse) {
       infoState =
           ApiResponse.completed(QppUser.create(userID, userSelectInfoResponse));
       notifyListeners();
