@@ -23,8 +23,8 @@ class UserSelectInfoResponse extends BaseClientResponse {
 
   factory UserSelectInfoResponse.fromJson(Map<String, dynamic> json) {
     return UserSelectInfoResponse(
-      info: json['info'],
-      name: json['name'],
+      info: json['info'] ?? "",
+      name: json['name'] ?? "",
       verificationType: json['verificationType'],
       json: json,
     );
