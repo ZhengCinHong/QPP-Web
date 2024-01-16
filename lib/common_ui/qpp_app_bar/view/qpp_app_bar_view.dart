@@ -69,11 +69,12 @@ class _QppAppBarTitle extends ConsumerWidget {
             : const _Logo(ScreenStyle.mobile),
         // QPP -> Button 間距
         Spacer(
-            flex: isDesktopStyle
-                ? isLogin
-                    ? 362
-                    : 527
-                : 210),
+          flex: isDesktopStyle
+              ? isLogin
+                  ? 362
+                  : 527
+              : 210,
+        ),
         // 選單按鈕
         isDesktopStyle
             ? const MenuBtns.horizontal(padding: 73, fontSize: 18)
@@ -89,11 +90,12 @@ class _QppAppBarTitle extends ConsumerWidget {
                 : const _UserInfo(ScreenStyle.mobile)
             : const SizedBox.shrink(),
         Spacer(
-            flex: isDesktopStyle
-                ? isLogin
-                    ? 48
-                    : 64
-                : 20),
+          flex: isDesktopStyle
+              ? isLogin
+                  ? 48
+                  : 64
+              : 20,
+        ),
         // 語系
         isDesktopStyle
             ? const LanguageDropdownMenu(ScreenStyle.desktop)
@@ -404,6 +406,7 @@ class _UserInfo extends StatelessWidget {
               return CMouseRegion(
                 onEnter: (event) => isOpenNotifier.state = true,
                 onExit: (event) => isOpenNotifier.state = false,
+                onTap: () => isOpenNotifier.state = !isOpenNotifier.state,
                 child: Row(
                   children: [
                     ClipOval(
