@@ -7,8 +7,10 @@ class UrlGenerator {
     // action 要給 download, firebase 才會連結至 app
     var checkAction = modifyUrlParameter(result, "action", "download");
     // TODO: 目前強制加入 testing = true
-    var checkTesting = modifyUrlParameter(checkAction, "testing", "true");
-    Uri origin = Uri.parse(checkTesting);
+    // var checkTesting = modifyUrlParameter(checkAction, "testing", "true");
+    var checkOpen = modifyUrlParameter(checkAction, "openExternalBrowser", "1");
+    // Uri origin = Uri.parse(checkTesting);
+    Uri origin = Uri.parse(checkOpen);
     // TODO: 目前為測試站台, host 先強制給原站
     String host = 'qpptec.com';
     Uri generated = Uri(
