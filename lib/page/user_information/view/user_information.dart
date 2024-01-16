@@ -134,7 +134,6 @@ class _AvatarWidget extends ConsumerWidget {
     return userID == null
         ? const SizedBox.shrink()
         : Container(
-            height: isDesktopStyle ? 265 : 196,
             decoration: BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.cover,
@@ -158,55 +157,61 @@ class _AvatarWidget extends ConsumerWidget {
                     color: QppColors.maskAlpha60, // 遮罩的顏色和透明度
                   ),
                 ), // 遮罩
-                Center(
-                  child: Column(
-                    children: [
-                      SizedBox(height: isDesktopStyle ? 36 : 24),
-                      SizedBox(
-                        width: isDesktopStyle ? 100 : 88,
-                        height: isDesktopStyle ? 100 : 88,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.transparent, // 設置透明背景
-                          backgroundImage: avaterIsError
-                              ? const AssetImage(
-                                  QPPImages.mobile_image_newsfeed_avatar_large,
-                                ) as ImageProvider
-                              : NetworkImage(userInformation.avaterImage),
-                          onBackgroundImageError: (exception, stackTrace) =>
-                              userInformation.setImageState(isSuccess: false),
-                        ),
-                      ),
-                      SizedBox(height: isDesktopStyle ? 29 : 12),
-                      Text(
-                        context.tr(
-                          qppUser?.displayName ?? QppLocales.errorPageNickname,
-                        ),
-                        style: QppTextStyles.web_20pt_title_m_Indian_yellow_C,
-                      ),
-                      SizedBox(height: isDesktopStyle ? 6 : 2),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          isOfficial
-                              ? Padding(
-                                  padding: const EdgeInsets.only(right: 6),
-                                  child: Image.asset(
-                                    qppUser?.officialIconPath ?? '',
-                                    width: officaialIconWidth,
-                                    scale: 1,
-                                  ),
-                                )
-                              : const SizedBox.shrink(),
-                          Text(
-                            userID.toString(),
-                            style: isDesktopStyle
-                                ? QppTextStyles.web_16pt_body_Indian_yellow_L
-                                : QppTextStyles
-                                    .mobile_14pt_body_Indian_yellow_L,
+                Padding(
+                  padding:
+                      EdgeInsets.symmetric(vertical: isDesktopStyle ? 36 : 24, horizontal: 10),
+                  child: Center(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: isDesktopStyle ? 100 : 88,
+                          height: isDesktopStyle ? 100 : 88,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.transparent, // 設置透明背景
+                            backgroundImage: avaterIsError
+                                ? const AssetImage(
+                                    QPPImages
+                                        .mobile_image_newsfeed_avatar_large,
+                                  ) as ImageProvider
+                                : NetworkImage(userInformation.avaterImage),
+                            onBackgroundImageError: (exception, stackTrace) =>
+                                userInformation.setImageState(isSuccess: false),
                           ),
-                        ],
-                      ),
-                    ],
+                        ),
+                        SizedBox(height: isDesktopStyle ? 29 : 12),
+                        Text(
+                          context.tr(
+                            qppUser?.displayName ??
+                                QppLocales.errorPageNickname,
+                          ),
+                          style: QppTextStyles.web_20pt_title_m_Indian_yellow_C,
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: isDesktopStyle ? 6 : 2),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            isOfficial
+                                ? Padding(
+                                    padding: const EdgeInsets.only(right: 6),
+                                    child: Image.asset(
+                                      qppUser?.officialIconPath ?? '',
+                                      width: officaialIconWidth,
+                                      scale: 1,
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
+                            Text(
+                              userID.toString(),
+                              style: isDesktopStyle
+                                  ? QppTextStyles.web_16pt_body_Indian_yellow_L
+                                  : QppTextStyles
+                                      .mobile_14pt_body_Indian_yellow_L,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -245,29 +250,27 @@ class _InformationDescriptionWidget extends ConsumerWidget {
 
     return Container(
       width: double.infinity,
+      padding: EdgeInsets.only(
+        top: isDesktopStyle ? 45 : 16,
+        bottom: isDesktopStyle ? 43 : 24,
+        left: isDesktopStyle ? 60 : 18,
+        right: isDesktopStyle ? 60 : 18,
+      ),
       color: QppColors.oxfordBlue,
-      child: Padding(
-        padding: EdgeInsets.only(
-          top: isDesktopStyle ? 45 : 16,
-          bottom: isDesktopStyle ? 43 : 24,
-          left: isDesktopStyle ? 60 : 18,
-          right: isDesktopStyle ? 60 : 18,
-        ),
-        child: ReadMoreText(
-          context
-              .tr(response.data?.displayInfo ?? QppLocales.errorPageInfoNotyet),
-          textAlign: TextAlign.start,
-          trimLines: 2,
-          trimMode: TrimMode.Line,
-          trimExpandedText: '',
-          trimCollapsedText: context.tr(QppLocales.commodityInfoMore),
-          moreStyle: moreStyle,
-          style: textStyle,
-          linkTextStyle: linkTextStyle,
-          onLinkPressed: (String url) {
-            url.launchURL();
-          },
-        ),
+      child: ReadMoreText(
+        context
+            .tr(response.data?.displayInfo ?? QppLocales.errorPageInfoNotyet),
+        textAlign: TextAlign.start,
+        trimLines: 2,
+        trimMode: TrimMode.Line,
+        trimExpandedText: '',
+        trimCollapsedText: context.tr(QppLocales.commodityInfoMore),
+        moreStyle: moreStyle,
+        style: textStyle,
+        linkTextStyle: linkTextStyle,
+        onLinkPressed: (String url) {
+          url.launchURL();
+        },
       ),
     );
   }
