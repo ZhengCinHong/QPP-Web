@@ -83,7 +83,7 @@ class Setting {
   String get baseHref {
     if (baseUri.host == "localhost") {
       port = baseUri.port;
-      return "${baseUri.host}:${baseUri.port}";
+      return "http://${baseUri.host}:${baseUri.port}";
     }
     return "${Uri.base.scheme}://${Uri.base.host}";
   }
