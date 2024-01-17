@@ -16,9 +16,8 @@ class UrlGenerator {
     String scheme = 'https';
     String host = 'qpptec.com';
     // 有 port 要拿掉, 不然會被當成 path 塞進去
-    String path = (Setting().port != null)
-        ? origin.path.replaceAll(Setting().port.toString(), '')
-        : origin.path;
+    String path = origin.path.replaceAll(Setting().port.toString(), '');
+
     Uri generated = Uri(
       scheme: scheme,
       host: host,
@@ -28,6 +27,4 @@ class UrlGenerator {
     print('test generated ${generated.toString()}');
     return generated.toString();
   }
-
-  
 }

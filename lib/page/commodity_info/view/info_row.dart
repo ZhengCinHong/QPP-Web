@@ -157,6 +157,7 @@ class InfoRowCreator extends InfoRow {
               // TODO: isTesting
               '${ServerConst.routerHost}/app/information?phoneNumber=${data.displayID}&testing=true&action=stay&lang=${context.locale}'
                   .launchURL(isNewTab: false);
+                  
             },
             child: Row(
               children: [
