@@ -45,22 +45,27 @@ class DescriptionContent extends NFTSectionInfoContent<QppNFT> {
       {super.key, required super.isDesktop, required super.data});
 
   @override
-  Widget get child => Column(
-        children: [
-          isDesktop
-              ? const NFTInfoRowPublisher.desktop()
-              : const NFTInfoRowPublisher.mobile(),
-          // 連結
-          NFTInfoRowIntroLink(data: data.externalUrl, isDesktop: isDesktop),
-          // 說明
-          NFTInfoRowDescription(
-            data: data.description,
-            isDesktop: isDesktop,
-          )
-        ],
+  Widget get child => ListView.builder(
+        padding: EdgeInsets.zero,
+        shrinkWrap: true,
+        itemCount: 3,
+        itemBuilder: (context, index) {
+          return switch (index) {
+            // 連結
+            1 =>
+              NFTInfoRowIntroLink(data: data.externalUrl, isDesktop: isDesktop),
+            // 說明
+            2 => NFTInfoRowDescription(
+                data: data.description,
+                isDesktop: isDesktop,
+              ),
+            _ => isDesktop
+                ? const NFTInfoRowPublisher.desktop()
+                : const NFTInfoRowPublisher.mobile(),
+          };
+        },
       );
 }
-
 /// NFT Info Row -----------------
 
 /// 發行者資訊
