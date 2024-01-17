@@ -1,4 +1,3 @@
-import 'package:qpp_example/api/core/http_service.dart';
 import 'package:qpp_example/api/local/response/check_login_token.dart';
 import 'package:qpp_example/api/local/response/get_login_token.dart';
 import 'package:qpp_example/api/local/response/get_vote_info.dart';
