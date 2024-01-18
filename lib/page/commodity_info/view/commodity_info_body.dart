@@ -90,35 +90,37 @@ class _CommodityInfoPageState extends State<CommodityInfoPage> {
       children: [
         SizedBox(
           width: double.infinity,
-          child: SingleChildScrollView(
-            controller: _scrollController,
-            child: Column(
-              children: [
+          child: ListView.builder(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            itemCount: 2,
+            itemBuilder: (context, index) {
+              return switch (index) {
+                // 下方 QR Code / 按鈕
+                1 => Consumer(
+                    builder: (context, ref, child) {
+                      final isQuestionnaire = ref.watch(
+                          itemSelectInfoProvider.select((value) =>
+                              value.voteDataState.data?.item.category ==
+                              ItemCategory.questionnaire));
+
+                      return isQuestionnaire
+                          ? const SizedBox.shrink()
+                          : child ?? const SizedBox.shrink();
+                    },
+                    child: UniversalLinkWidget(
+                      url: qrCodeUrl,
+                      mobileText: QppLocales.commodityInfoLaunchQPP,
+                    ),
+                  ),
+                // 底部間距
+                2 => const SizedBox(height: 40),
                 // 上方資料區
-                isDesktopStyle
+                _ => isDesktopStyle
                     ? const InfoCard.desktop()
                     : const InfoCard.mobile(),
-                // 下方 QR Code / 按鈕
-                Consumer(
-                  builder: (context, ref, child) {
-                    final isQuestionnaire = ref.watch(
-                        itemSelectInfoProvider.select((value) =>
-                            value.voteDataState.data?.item.category ==
-                            ItemCategory.questionnaire));
-
-                    return isQuestionnaire
-                        ? const SizedBox.shrink()
-                        : child ?? const SizedBox.shrink();
-                  },
-                  child: UniversalLinkWidget(
-                    url: qrCodeUrl,
-                    mobileText: QppLocales.commodityInfoLaunchQPP,
-                  ),
-                ),
-                // 底部間距
-                const SizedBox(height: 40)
-              ],
-            ),
+              };
+            },
           ),
         ),
         Positioned(
@@ -126,13 +128,10 @@ class _CommodityInfoPageState extends State<CommodityInfoPage> {
           right: 15,
           child: Consumer(
             builder: (context, ref, child) {
-              final isQuestionnaire = ref.watch(
-                itemSelectInfoProvider.select(
+              final isQuestionnaire = ref.watch(itemSelectInfoProvider.select(
                   (value) =>
                       value.voteDataState.data?.item.category ==
-                      ItemCategory.questionnaire,
-                ),
-              );
+                      ItemCategory.questionnaire));
 
               return isQuestionnaire
                   ? child ?? const SizedBox.shrink()
