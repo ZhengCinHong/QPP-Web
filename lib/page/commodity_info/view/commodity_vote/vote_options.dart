@@ -37,6 +37,7 @@ class VoteOptions extends StatelessWidget {
 
         return voteDataState.isCompleted && qppVote != null && voteData != null
             ? ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
                 primary: false,
@@ -177,6 +178,7 @@ class VoteOptionsItem extends StatelessWidget {
               right: isDesktopStyle ? 57 : 25,
             ),
             child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
               padding: EdgeInsets.zero,
               shrinkWrap: true,
               primary: false,

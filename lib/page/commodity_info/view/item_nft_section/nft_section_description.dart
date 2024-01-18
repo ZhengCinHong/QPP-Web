@@ -46,6 +46,7 @@ class DescriptionContent extends NFTSectionInfoContent<QppNFT> {
 
   @override
   Widget get child => ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
         padding: EdgeInsets.zero,
         shrinkWrap: true,
         itemCount: 3,
@@ -66,6 +67,7 @@ class DescriptionContent extends NFTSectionInfoContent<QppNFT> {
         },
       );
 }
+
 /// NFT Info Row -----------------
 
 /// 發行者資訊
