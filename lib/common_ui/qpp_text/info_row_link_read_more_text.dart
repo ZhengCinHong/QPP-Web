@@ -16,7 +16,7 @@ class InfoRowLinkReadMoreText extends StatelessWidget {
       textAlign: TextAlign.start,
       trimLines: 2,
       trimMode: TrimMode.Line,
-      trimExpandedText: '',
+      trimExpandedText: ' ',
       trimCollapsedText: context.tr('commodity_info_more'),
       moreStyle: QppTextStyles.web_16pt_body_category_text_L,
       style: QppTextStyles.web_16pt_body_platinum_L,
