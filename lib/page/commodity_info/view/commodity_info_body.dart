@@ -90,37 +90,35 @@ class _CommodityInfoPageState extends State<CommodityInfoPage> {
       children: [
         SizedBox(
           width: double.infinity,
-          child: ListView.builder(
-            padding: EdgeInsets.zero,
-            shrinkWrap: true,
-            itemCount: 2,
-            itemBuilder: (context, index) {
-              return switch (index) {
-                // 下方 QR Code / 按鈕
-                1 => Consumer(
-                    builder: (context, ref, child) {
-                      final isQuestionnaire = ref.watch(
-                          itemSelectInfoProvider.select((value) =>
-                              value.voteDataState.data?.item.category ==
-                              ItemCategory.questionnaire));
-
-                      return isQuestionnaire
-                          ? const SizedBox.shrink()
-                          : child ?? const SizedBox.shrink();
-                    },
-                    child: UniversalLinkWidget(
-                      url: qrCodeUrl,
-                      mobileText: QppLocales.commodityInfoLaunchQPP,
-                    ),
-                  ),
-                // 底部間距
-                2 => const SizedBox(height: 40),
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            child: Column(
+              children: [
                 // 上方資料區
-                _ => isDesktopStyle
+                isDesktopStyle
                     ? const InfoCard.desktop()
                     : const InfoCard.mobile(),
-              };
-            },
+                // 下方 QR Code / 按鈕
+                Consumer(
+                  builder: (context, ref, child) {
+                    final isQuestionnaire = ref.watch(
+                        itemSelectInfoProvider.select((value) =>
+                            value.voteDataState.data?.item.category ==
+                            ItemCategory.questionnaire));
+
+                    return isQuestionnaire
+                        ? const SizedBox.shrink()
+                        : child ?? const SizedBox.shrink();
+                  },
+                  child: UniversalLinkWidget(
+                    url: qrCodeUrl,
+                    mobileText: QppLocales.commodityInfoLaunchQPP,
+                  ),
+                ),
+                // 底部間距
+                const SizedBox(height: 40)
+              ],
+            ),
           ),
         ),
         Positioned(
