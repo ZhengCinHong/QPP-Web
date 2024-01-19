@@ -36,13 +36,13 @@ class QppGoRouter {
   static const String go = 'go';
 
   /// 隱私權政策頁(只有home有)
-  static const String privacy = 'privacy';
+  static const String privacy = '/privacy';
 
   /// 使用者條款頁(只有home有)
-  static const String term = 'term';
+  static const String term = '/term';
 
   /// nft教學頁(只有home有)
-  static const String nftInfoTeach = 'nft_info_teach';
+  static const String nftInfoTeach = '/nft_info_teach';
 
   // static const String membershipFetch = 'membership_fetch';
 
@@ -97,7 +97,7 @@ class QppGoRouter {
   /// The route configuration.
   // -----------------------------------------------------------------------------
   static final GoRouter router = GoRouter(
-    initialLocation: home,
+    // initialLocation: home,
     routes: <RouteBase>[
       GoRoute(
         // 首頁
@@ -111,8 +111,7 @@ class QppGoRouter {
           DisplayUrl.updateParam('lang', locale.toString());
           return MainFramework(child: HomePage());
         },
-        routes: homeRouters +
-            _getRouters(home) +
+        routes: _getRouters(home) +
             [
               GoRoute(
                 path: app,
@@ -124,36 +123,30 @@ class QppGoRouter {
               )
             ],
       ),
+      // nft教學頁
+      GoRoute(
+        path: nftInfoTeach,
+        name: nftInfoTeach,
+        builder: (context, state) =>
+            NFTInfoTeachPageMainFrame(routerState: state),
+      ),
+      // 隱私權政策頁
+      GoRoute(
+        path: privacy,
+        name: privacy,
+        builder: (context, state) => InstructionsPage.privacy(),
+      ),
+      // 使用者條款頁
+      GoRoute(
+        path: term,
+        name: term,
+        builder: (context, state) => InstructionsPage.term(),
+      ),
     ],
     errorBuilder: (context, state) => MainFramework(
       child: ErrorPage(type: ErrorPageType.urlIsWrong, url: state.fullURL),
     ),
   );
-
-  // -----------------------------------------------------------------------------
-  /// Home路由
-  // -----------------------------------------------------------------------------
-  static List<RouteBase> homeRouters = <RouteBase>[
-    // 隱私權政策頁(只有home有)
-    GoRoute(
-      path: privacy,
-      name: privacy,
-      builder: (context, state) => InstructionsPage.privacy(),
-    ),
-    // 使用者條款頁(只有home有)
-    GoRoute(
-      path: term,
-      name: term,
-      builder: (context, state) => InstructionsPage.term(),
-    ),
-    // nft教學頁(只有home有)
-    GoRoute(
-      path: nftInfoTeach,
-      name: nftInfoTeach,
-      builder: (context, state) =>
-          NFTInfoTeachPageMainFrame(routerState: state),
-    ),
-  ];
 
   // -----------------------------------------------------------------------------
   /// App路由

@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qpp_example/api/core/api_response.dart';
@@ -83,6 +84,13 @@ class InfoRowInfo extends InfoRow {
   @override
   ApiResponse getResponse(WidgetRef ref) {
     return ref.watch(itemSelectInfoProvider).itemSelectInfoState;
+  }
+  // 手機裝置調整 padding top
+  @override
+  rowPadding() {
+    return isDesktop
+        ? super.rowPadding()
+        : const EdgeInsets.fromLTRB(14, 0, 14, 10);
   }
 
   @override

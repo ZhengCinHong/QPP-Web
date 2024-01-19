@@ -11,15 +11,19 @@ class MultiLanguageItemDescriptionSelectRequest {
 /// 搜尋物品多語系說明資訊
 class MultiLanguageItemDescriptionSelectInfoResponse
     extends BaseClientResponse {
-  final MultiLanguageItemData descriptionData;
+  // 若無資料會跳 exception, 所以多一層轉接
+  final dynamic descriptionJson;
 
   const MultiLanguageItemDescriptionSelectInfoResponse(
-      {required this.descriptionData, required super.json});
+      {required this.descriptionJson, required super.json});
 
   factory MultiLanguageItemDescriptionSelectInfoResponse.fromJson(
       Map<String, dynamic> json) {
     return MultiLanguageItemDescriptionSelectInfoResponse(
-        json: json,
-        descriptionData: MultiLanguageItemData.fromJson(json['description']));
+        json: json, descriptionJson: json['description']);
+  }
+
+  MultiLanguageItemData get descriptionData {
+    return MultiLanguageItemData.fromJson(descriptionJson);
   }
 }

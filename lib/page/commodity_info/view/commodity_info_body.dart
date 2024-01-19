@@ -126,13 +126,10 @@ class _CommodityInfoPageState extends State<CommodityInfoPage> {
           right: 15,
           child: Consumer(
             builder: (context, ref, child) {
-              final isQuestionnaire = ref.watch(
-                itemSelectInfoProvider.select(
+              final isQuestionnaire = ref.watch(itemSelectInfoProvider.select(
                   (value) =>
                       value.voteDataState.data?.item.category ==
-                      ItemCategory.questionnaire,
-                ),
-              );
+                      ItemCategory.questionnaire));
 
               return isQuestionnaire
                   ? child ?? const SizedBox.shrink()

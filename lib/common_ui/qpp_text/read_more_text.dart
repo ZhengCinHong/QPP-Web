@@ -75,10 +75,10 @@ class ReadMoreText extends StatefulWidget {
   /// Called when state change between expanded/compress
   final Function(bool val)? callback;
 
-  /// 收起提示字串, 預設為 'Less', 若不需要收起請給空字串
+  /// 收起提示字串, 預設為 'Less', 若不需要收起請給一個空白字元
   final String trimExpandedText;
 
-  /// 顯示更多提示字串, 預設為 'More', 若不需要打開請給空字串
+  /// 顯示更多提示字串, 預設為 'More', 若不需要打開請給一個空白字元
   final String trimCollapsedText;
 
   /// 點擊連結處理
@@ -338,7 +338,7 @@ class ReadMoreTextState extends State<ReadMoreText> {
       // if (!fullData.isNullOrEmpty) {
       // 取完整 URL 資料
       final fullLinkMatch = exp.firstMatch(fullData ?? '');
-      String? fullLinkPart =
+      final String? fullLinkPart =
           fullData?.substring(fullLinkMatch!.start, fullLinkMatch.end);
       // }
       // contents 加入一般文字

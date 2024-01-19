@@ -113,8 +113,9 @@ class CommodityInfoModel extends ChangeNotifier {
     String requestBody = ItemSelectRequest().createItemSelectBody([id]);
 
     client.postItemSelect(requestBody).then((itemSelectResponse) {
-      if (itemSelectResponse.errorCode == "OK") {
-        ItemData itemData = itemSelectResponse.getItem(0);
+      if (itemSelectResponse.errorCode == "OK" &&
+          itemSelectResponse.itemList.isNotEmpty) {
+        ItemData itemData = itemSelectResponse.getItem(0)!;
         QppItem item = QppItem.create(itemData);
 
         if (item.category == ItemCategory.questionnaire) {
@@ -160,7 +161,8 @@ class CommodityInfoModel extends ChangeNotifier {
     client
         .postMultiLanguageItemDescriptionSelect(requestBody)
         .then((descriptionResponse) {
-      if (descriptionResponse.errorCode == "OK") {
+      if (descriptionResponse.errorCode == "OK" &&
+          descriptionResponse.descriptionJson != null) {
         MultiLanguageItemData descriptionData =
             descriptionResponse.descriptionData;
         ItemMultiLanguageData itemDescription =
@@ -194,7 +196,8 @@ class CommodityInfoModel extends ChangeNotifier {
     client
         .postMultiLanguageItemIntroLinkSelect(requestBody)
         .then((introLinkResponse) {
-      if (introLinkResponse.errorCode == "OK") {
+      if (introLinkResponse.errorCode == "OK" &&
+          introLinkResponse.introLinkJson != null) {
         MultiLanguageItemData introLinkData = introLinkResponse.introLinkData;
         ItemMultiLanguageData itemIntroLink =
             ItemMultiLanguageData.link(introLinkData);

@@ -3,13 +3,8 @@ import 'package:qpp_example/main.dart';
 // kReleaseMode 若在 release -> true / 若在 debug & profile -> false
 // server 常數放置
 class ServerConst {
-  /// TODO: 先改成目前站點
-  // static const routerHost = "https://qpptec.com";
-  // static const routerHost = "https://webside-dev.qpptec.com";
-  static final routerHost = Setting().baseHref;
-
-  /// 測試用連結
-  // static final testRouterHost = "${Setting().baseHref}/";
+  /// base href
+  static final routerHost = Uri.base.origin;
 
   /// 依照裝置跳轉Google Play Store or Apple App Store
   static const appStoreUrl = 'https://qpptec.com/app/go';

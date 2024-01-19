@@ -12,6 +12,7 @@ class NFTTeachInfoZone1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
         itemCount: 6,
         shrinkWrap: true,
         // 禁止 list 內容 滾動

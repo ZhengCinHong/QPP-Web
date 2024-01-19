@@ -10,15 +10,21 @@ class MultiLanguageItemIntroLinkSelectRequest {
 
 /// 搜尋物品多語系連結資訊
 class MultiLanguageItemIntroLinkSelectInfoResponse extends BaseClientResponse {
-  final MultiLanguageItemData introLinkData;
+  // 若無資料會跳 exception, 所以多一層轉接
+  final dynamic introLinkJson;
 
   const MultiLanguageItemIntroLinkSelectInfoResponse(
-      {required this.introLinkData, required super.json});
+      {required this.introLinkJson, required super.json});
 
   factory MultiLanguageItemIntroLinkSelectInfoResponse.fromJson(
       Map<String, dynamic> json) {
     return MultiLanguageItemIntroLinkSelectInfoResponse(
-        json: json,
-        introLinkData: MultiLanguageItemData.fromJson(json['introLink']));
+      json: json,
+      introLinkJson: json['introLink'],
+    );
+  }
+
+  MultiLanguageItemData get introLinkData {
+    return MultiLanguageItemData.fromJson(introLinkJson);
   }
 }

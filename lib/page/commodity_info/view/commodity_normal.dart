@@ -16,7 +16,7 @@ class NormalItemInfo extends StatelessWidget {
       Container(
           constraints: const BoxConstraints(maxWidth: 1280),
           width: double.infinity,
-          padding: EdgeInsets.only(bottom: 20, top: isDesktop ? 0 : 10),
+          padding: const EdgeInsets.only(bottom: 20, top: 0),
           child: Column(
             children: [
               // 類別欄位

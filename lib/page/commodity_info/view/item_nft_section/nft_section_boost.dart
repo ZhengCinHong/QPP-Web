@@ -34,7 +34,8 @@ class BoostContent extends NFTSectionInfoContent<List> {
   Widget get child => ListView.builder(
       padding: listPadding,
       // 關掉 over scroll 效果
-      physics: const BouncingScrollPhysics(),
+      // physics: const BouncingScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
       itemCount: data.length,
