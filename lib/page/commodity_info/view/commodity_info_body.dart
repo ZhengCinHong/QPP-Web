@@ -231,7 +231,7 @@ class InfoCard extends StatelessWidget {
                       ? const NFTItemInfo.desktop()
                       : const NFTItemInfo.mobile();
                 } else if (voteDataState.isCompleted) {
-                  // 取得票券資料
+                  // 取得問券資料
                   return isDesktop
                       ? const VoteItemInfo.desktop()
                       : const VoteItemInfo.mobile();

@@ -288,7 +288,7 @@ class VoteOptionsItem extends StatelessWidget {
                                     child: Padding(
                                       padding: EdgeInsets.only(
                                         left: (!(isCreater || isExpired || isEnded) && !isSelected && isVoted) // 非選擇，但已投票(並且不為創建者)，需要內縮
-                                            ? inwardRetractionSpacing
+                                            ? inwardRetractionSpacing // 內縮間距
                                             : 0,
                                       ),
                                       child: Text(
@@ -320,7 +320,7 @@ class VoteOptionsItem extends StatelessWidget {
                                   padding: EdgeInsets.only(
                                     left: (isCreater || isExpired || isEnded)
                                         ? 0
-                                        : inwardRetractionSpacing
+                                        : inwardRetractionSpacing // 內縮間距
                                   ),
                                   child: Column(
                                     crossAxisAlignment:
@@ -425,30 +425,3 @@ class VoteOptionsItem extends StatelessWidget {
     );
   }
 }
-
-// class _SelectCheckBoxWidget extends StatelessWidget {
-//   final Widget child;
-
-//   final bool isEnableTap;
-//   final (int, int) indexPath;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MouseRegion(
-//       cursor:
-//           isEnableTap ? MaterialStateMouseCursor.clickable : MouseCursor.defer,
-//       child: GestureDetector(
-//         child: child.disabledSelectionContainer,
-//         onTap: () {
-//           if (isEnableTap) {
-//             notifier.selectedOption(indexPath.$1, indexPath.$2);
-//             notifier.updateErrorOptions(
-//               index,
-//               false,
-//             );
-//           }
-//         },
-//       ),
-//     );
-//   }
-// }

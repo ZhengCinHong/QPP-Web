@@ -47,35 +47,40 @@ class HomePage extends StatelessWidget {
               scrollPoint <= 0 ? 0 : scrollPoint);
         }
 
-        return SingleChildScrollView(
-          controller: scrollController,
-          child: child,
-        );
+        return child ?? const SizedBox.shrink();
       },
-      child: Column(
-        children: [
-          HomePageIntroduce(key: introduceKey),
-          HomePageFeature(key: featureKey),
-          HomePageDescription(key: descriptionKey),
-          HomePageContact(key: contactKey),
-          const HomePageFooter(),
-        ],
+      child: SingleChildScrollView(
+        controller: scrollController,
+        child: Column(
+          children: [
+            HomePageIntroduce(key: introduceKey),
+            HomePageFeature(key: featureKey),
+            HomePageDescription(key: descriptionKey),
+            HomePageContact(key: contactKey),
+            const HomePageFooter(),
+          ],
+        ),
       ),
-      //     ListView.builder(
-      //   padding: EdgeInsets.zero,
-      //   itemCount: 5,
-      //   primary: false,
-      //   shrinkWrap: true,
-      //   itemBuilder: (context, index) {
-      //     return switch (index) {
-      //       0 => HomePageIntroduce(key: introduceKey),
-      //       1 => HomePageFeature(key: featureKey),
-      //       2 => HomePageDescription(key: descriptionKey),
-      //       3 => HomePageContact(key: contactKey),
-      //       _ => const HomePageFooter(),
-      //     };
-      //   },
-      // ),
+
+      // CustomScrollView(
+      //   controller: scrollController,
+      //   slivers: [
+      //     SliverList(
+      //       delegate: SliverChildBuilderDelegate(
+      //         (context, index) {
+      //           return switch (index) {
+      //             0 => HomePageIntroduce(key: introduceKey),
+      //             1 => HomePageFeature(key: featureKey),
+      //             2 => HomePageDescription(key: descriptionKey),
+      //             3 => HomePageContact(key: contactKey),
+      //             _ => const HomePageFooter(),
+      //           };
+      //         },
+      //         childCount: 5,
+      //       ),
+      //     ),
+      //   ],
+      // )
     );
   }
 }
