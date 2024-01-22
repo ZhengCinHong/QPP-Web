@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qpp_example/common_ui/qpp_text/read_more_text.dart';
 import 'package:qpp_example/common_ui/qpp_universal_link/universal_link_widget.dart';
 import 'package:qpp_example/extension/string/url.dart';
+import 'package:qpp_example/extension/widget/disable_selection_container.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/user_information/view_model/user_information_view_model.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
@@ -55,12 +56,10 @@ class _UserInformationOuterFrameState extends State<UserInformationOuterFrame> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(
-                flex: 1280,
                 child: LayoutBuilder(
                   builder: (context, constraints) {
-                    final bool isDesktopStyle = screenWidthWithoutContext()
-                        .determineScreenStyle()
-                        .isDesktop;
+                    final bool isDesktopStyle =
+                        constraints.maxWidth.determineScreenStyle().isDesktop;
 
                     return Container(
                       constraints: const BoxConstraints(maxWidth: 1280),
@@ -73,6 +72,7 @@ class _UserInformationOuterFrameState extends State<UserInformationOuterFrame> {
                         right: 20,
                       ),
                       child: ClipRRect(
+                        clipBehavior: Clip.antiAlias,
                         borderRadius: BorderRadius.circular(12),
                         child: Column(
                           children: [
@@ -158,8 +158,10 @@ class _AvatarWidget extends ConsumerWidget {
                   ),
                 ), // 遮罩
                 Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: isDesktopStyle ? 36 : 24, horizontal: 10),
+                  padding: EdgeInsets.symmetric(
+                    vertical: isDesktopStyle ? 36 : 24,
+                    horizontal: 10,
+                  ),
                   child: Center(
                     child: Column(
                       children: [

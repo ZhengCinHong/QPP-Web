@@ -250,19 +250,27 @@ class _MobileStyleContent extends StatelessWidget {
       Expanded(
         child: Container(
           color: QppColors.oxfordBlue,
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                context.tr(type.title),
-                style: QppTextStyles.mobile_18pt_title_m_bold_sky_white_C,
+              Flexible(
+                child: AutoSizeText(
+                  context.tr(type.title),
+                  style: QppTextStyles.mobile_18pt_title_m_bold_sky_white_C,
+                  softWrap: true,
+                  overflow: TextOverflow.clip,
+                ),
               ),
               const SizedBox(height: 19),
-              Text(
-                context.tr(type.directions),
-                style: QppTextStyles.mobile_14pt_body_white_C,
-                textAlign: TextAlign.center,
+              Flexible(
+                child: AutoSizeText(
+                  context.tr(type.directions),
+                  style: QppTextStyles.mobile_14pt_body_white_C,
+                  softWrap: true,
+                  overflow: TextOverflow.clip,
+                  textAlign: TextAlign.center,
+                ),
               )
             ],
           ),
