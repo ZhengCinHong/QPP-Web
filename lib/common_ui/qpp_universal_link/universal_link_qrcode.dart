@@ -15,19 +15,26 @@ class UniversalLinkQRCode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
+      padding: EdgeInsets.zero,
+      shrinkWrap: true,
+      primary: false,
       children: [
-        Container(
-          decoration: const BoxDecoration(
+        Center(
+          child: Container(
+            decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(6))),
-          child: QPPQRCode(data: UrlGenerator.getQRCodeUrl(url), size: size),
+              borderRadius: BorderRadius.all(Radius.circular(6)),
+            ),
+            child: QPPQRCode(data: UrlGenerator.getQRCodeUrl(url), size: size),
+          ),
         ),
         const SizedBox(height: 16),
-        Text(
-          softWrap: true,
-          context.tr(QppLocales.commodityInfoScanViaQPP),
-          style: QppTextStyles.web_16pt_body_canary_yellow_C,
+        Center(
+          child: Text(
+            context.tr(QppLocales.commodityInfoScanViaQPP),
+            style: QppTextStyles.web_16pt_body_canary_yellow_C,
+          ),
         ),
       ],
     );

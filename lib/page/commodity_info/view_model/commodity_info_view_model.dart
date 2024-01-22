@@ -115,7 +115,7 @@ class CommodityInfoModel extends ChangeNotifier {
     client.postItemSelect(requestBody).then((itemSelectResponse) {
       if (itemSelectResponse.errorCode == "OK" &&
           itemSelectResponse.itemList.isNotEmpty) {
-        ItemData itemData = itemSelectResponse.getItem(0)!;
+        ItemData itemData = itemSelectResponse.getItem(0);
         QppItem item = QppItem.create(itemData);
 
         if (item.category == ItemCategory.questionnaire) {

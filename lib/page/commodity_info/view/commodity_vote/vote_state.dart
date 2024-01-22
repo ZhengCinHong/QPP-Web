@@ -127,6 +127,7 @@ class _VoteStateItem extends StatelessWidget {
             style: isDesktopStyle
                 ? QppTextStyles.web_16pt_body_category_text_L
                 : QppTextStyles.mobile_12pt_body_category_text_L,
+            textAlign: TextAlign.center,
           ),
           const SizedBox(width: 10),
           // 內容
