@@ -1,5 +1,8 @@
+import 'dart:js_interop';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/model/enum/item/nft_info_teach_anchor.dart';
@@ -7,6 +10,7 @@ import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_1.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_2.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_3.dart';
 import 'package:qpp_example/universal_link/universal_link_data.dart';
+import 'package:qpp_example/utils/nft_info_teach_img_size.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
@@ -57,20 +61,45 @@ class StateNFTInfoTeach extends State<NFTInfoTeachScaffold>
   final GlobalKey k3 = GlobalKey();
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    preCacheAssetImages();
+  }
+
+  /// 預先載入大圖
+  Future<void> preCacheAssetImages() async {
+    var imgLen = infoTeachImgList.length;
+    for (var i = 0; i < imgLen; i++) {
+      precacheImage(
+        AssetImage(infoTeachImgList[i]),
+        context,
+      );
+    }
+  }
+
+  @override
   void initState() {
-    super.initState();
+    // preCacheAssetImages();
     if (widget.anchor != NFTInfoTeachAnchor.none) {
-      // 有帶 anchor
       WidgetsBinding.instance.addObserver(this);
+      // // 有帶 anchor
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         // 這裡會在 build 之後呼叫
-        Future.delayed(const Duration(seconds: 1), () {
+        Future.delayed(const Duration(milliseconds: 2000), () {
           // 延遲 1 秒後開始移動到指定位置
           Scrollable.ensureVisible(anchorKey(widget.anchor).currentContext!,
               duration: Duration(milliseconds: widget.anchor.scrollDuration));
         });
       });
     }
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   GlobalKey anchorKey(NFTInfoTeachAnchor anchor) {
@@ -116,20 +145,26 @@ class StateNFTInfoTeach extends State<NFTInfoTeachScaffold>
             width: double.infinity,
             // SingleChildScrollView 生成時會把內容都做出來
             child: SingleChildScrollView(
+              key: const ValueKey('NFTInfoTeachScroll'),
               child: Column(
+                key: const ValueKey('NFTInfoTeachMainFrameColumn'),
+                // mainAxisSize: MainAxisSize.min,
                 children: [
                   // top margin
                   const SizedBox(
+                    key: ValueKey('SizedBoxMarginTop'),
                     height: 80,
                   ),
                   // title
                   Text(
                     context.tr(QppLocales.nftInfoTeachTitle),
+                    key: const ValueKey('NFTInfoTeachTitle'),
                     textAlign: TextAlign.center,
                     style: QppTextStyles.web_44pt_Display_L_Maya_blue_L,
                   ),
                   // divider
                   Container(
+                    key: const ValueKey('NFTInfoTeachDivider'),
                     margin: const EdgeInsets.only(top: 23, bottom: 40),
                     height: 1,
                     color: QppColors.midnightBlue,
@@ -140,6 +175,7 @@ class StateNFTInfoTeach extends State<NFTInfoTeachScaffold>
                     isDesktop: screenStyle.isDesktop,
                   ),
                   const SizedBox(
+                    key: ValueKey('SizeBoxDivider1'),
                     height: 64,
                   ),
                   // zone 2
@@ -148,12 +184,14 @@ class StateNFTInfoTeach extends State<NFTInfoTeachScaffold>
                     isDesktop: screenStyle.isDesktop,
                   ),
                   const SizedBox(
+                    key: ValueKey('SizeBoxDivider2'),
                     height: 64,
                   ),
                   // zone 3
                   NFTTeachInfoZone3(key: k3, isDesktop: screenStyle.isDesktop),
                   // bottom margin
                   const SizedBox(
+                    key: ValueKey('SizeBoxDivider3'),
                     height: 40,
                   ),
                 ],
@@ -165,3 +203,31 @@ class StateNFTInfoTeach extends State<NFTInfoTeachScaffold>
     ));
   }
 }
+
+/// NFT 教學頁 大圖列表
+final List<String> infoTeachImgList = [
+  QPPImages.desktop_pic_nft_instruction_01,
+  QPPImages.desktop_pic_nft_instruction_02,
+  QPPImages.desktop_pic_nft_instruction_03,
+  QPPImages.desktop_pic_nft_instruction_04,
+  QPPImages.desktop_pic_nft_instruction_05,
+  QPPImages.desktop_pic_nft_instruction_06,
+  QPPImages.desktop_pic_nft_instruction_07,
+  QPPImages.desktop_pic_nft_instruction_08,
+  QPPImages.desktop_pic_nft_instruction_09,
+  QPPImages.desktop_pic_nft_instruction_10,
+  QPPImages.desktop_pic_nft_instruction_11,
+  QPPImages.desktop_pic_nft_instruction_12,
+  QPPImages.desktop_pic_nft_instruction_13,
+  QPPImages.desktop_pic_nft_instruction_14,
+  QPPImages.desktop_pic_nft_instruction_15,
+  QPPImages.desktop_pic_nft_instruction_16,
+  QPPImages.desktop_pic_nft_instruction_17,
+  QPPImages.desktop_pic_nft_instruction_18,
+  QPPImages.desktop_pic_nft_instruction_19,
+  QPPImages.desktop_pic_nft_instruction_20,
+  QPPImages.desktop_pic_nft_instruction_21,
+  QPPImages.desktop_pic_nft_instruction_22,
+  QPPImages.desktop_pic_nft_instruction_23,
+  QPPImages.desktop_pic_nft_instruction_24,
+];
