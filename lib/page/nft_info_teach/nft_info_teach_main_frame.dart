@@ -1,8 +1,5 @@
-import 'dart:js_interop';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/model/enum/item/nft_info_teach_anchor.dart';
@@ -10,7 +7,6 @@ import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_1.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_2.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_3.dart';
 import 'package:qpp_example/universal_link/universal_link_data.dart';
-import 'package:qpp_example/utils/nft_info_teach_img_size.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
@@ -80,7 +76,6 @@ class StateNFTInfoTeach extends State<NFTInfoTeachScaffold>
 
   @override
   void initState() {
-    // preCacheAssetImages();
     if (widget.anchor != NFTInfoTeachAnchor.none) {
       WidgetsBinding.instance.addObserver(this);
       // // 有帶 anchor

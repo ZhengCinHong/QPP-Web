@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
+import 'package:qpp_example/page/nft_info_teach/nft_info_teach_main_frame.dart';
 
-class NFTInfoTeachImgSize {
+class NFTInfoTeachImgUtil {
   static final List<Size> mobileSizeList = [
     const Size(255, 454),
     const Size(255, 553),
@@ -67,5 +68,18 @@ class NFTInfoTeachImgSize {
 
   static Size getSize(int index, bool isDesktop) {
     return isDesktop ? desktopSizeList[index] : mobileSizeList[index];
+  }
+  /// 取得對應圖片 Widget
+  static Widget getImg(int index, bool isDesktop) {
+    Size size = getSize(index, isDesktop);
+    return SizedBox(
+      width: size.width,
+      height: size.height,
+      child: Image.asset(
+        infoTeachImgList[index],
+        cacheHeight: size.height.toInt(),
+        cacheWidth: size.width.toInt(),
+      ),
+    );
   }
 }
