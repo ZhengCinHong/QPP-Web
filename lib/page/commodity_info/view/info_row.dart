@@ -8,6 +8,7 @@ import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/string/url.dart';
 import 'package:qpp_example/extension/widget/disable_selection_container.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
+import 'package:qpp_example/main.dart';
 import 'package:qpp_example/model/item_multi_language_data.dart';
 import 'package:qpp_example/model/qpp_item.dart';
 import 'package:qpp_example/model/qpp_user.dart';
@@ -85,6 +86,7 @@ class InfoRowInfo extends InfoRow {
   ApiResponse getResponse(WidgetRef ref) {
     return ref.watch(itemSelectInfoProvider).itemSelectInfoState;
   }
+
   // 手機裝置調整 padding top
   @override
   rowPadding() {
@@ -168,9 +170,13 @@ class InfoRowCreator extends InfoRow {
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
             onTap: () {
-              // TODO: isTesting
-              '${ServerConst.routerHost}/app/information?phoneNumber=${data.displayID}&testing=true&action=stay&lang=${context.locale}'
-                  .launchURL(isNewTab: false);
+              // set phone number
+              var result = ServerConst.information
+                  .modifyUrlParameter("phoneNumber", data.displayID)
+                  .modifyUrlParameter("lang", context.locale.toString())
+                  .modifyUrlParameter("action", 'stay')
+                  .modifyUrlParameter('testing', Setting().isTest.toString());
+              result.launchURL(isNewTab: false);
             },
             child: Row(
               children: [

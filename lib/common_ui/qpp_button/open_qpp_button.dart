@@ -27,7 +27,6 @@ class OpenQppButton extends StatelessWidget {
         if (url.isNullOrEmpty) {
           ServerConst.appStoreUrl.launchURL();
         } else {
-          // TODO: url check
           // 檢查 帶入 &action=download
           UrlGenerator.getQRCodeUrl(url ?? '').launchURL(isNewTab: false);
         }
