@@ -7,6 +7,7 @@ import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_1.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_2.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_3.dart';
 import 'package:qpp_example/universal_link/universal_link_data.dart';
+import 'package:qpp_example/utils/nft_info_teach_img_util.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
@@ -55,6 +56,7 @@ class StateNFTInfoTeach extends State<NFTInfoTeachScaffold>
   final GlobalKey k1 = GlobalKey();
   final GlobalKey k2 = GlobalKey();
   final GlobalKey k3 = GlobalKey();
+  final GlobalKey mainScrollKey = GlobalKey();
 
   @override
   void didChangeDependencies() {
@@ -65,10 +67,10 @@ class StateNFTInfoTeach extends State<NFTInfoTeachScaffold>
 
   /// 預先載入大圖
   Future<void> preCacheAssetImages() async {
-    var imgLen = infoTeachImgList.length;
+    var imgLen = NFTInfoTeachImgUtil.infoTeachImgList.length;
     for (var i = 0; i < imgLen; i++) {
       precacheImage(
-        AssetImage(infoTeachImgList[i]),
+        AssetImage(NFTInfoTeachImgUtil.infoTeachImgList[i]),
         context,
       );
     }
@@ -140,10 +142,9 @@ class StateNFTInfoTeach extends State<NFTInfoTeachScaffold>
             width: double.infinity,
             // SingleChildScrollView 生成時會把內容都做出來
             child: SingleChildScrollView(
-              key: const ValueKey('NFTInfoTeachScroll'),
+              key: mainScrollKey,
               child: Column(
                 key: const ValueKey('NFTInfoTeachMainFrameColumn'),
-                // mainAxisSize: MainAxisSize.min,
                 children: [
                   // top margin
                   const SizedBox(
@@ -198,31 +199,3 @@ class StateNFTInfoTeach extends State<NFTInfoTeachScaffold>
     ));
   }
 }
-
-/// NFT 教學頁 大圖列表
-final List<String> infoTeachImgList = [
-  QPPImages.desktop_pic_nft_instruction_01,
-  QPPImages.desktop_pic_nft_instruction_02,
-  QPPImages.desktop_pic_nft_instruction_03,
-  QPPImages.desktop_pic_nft_instruction_04,
-  QPPImages.desktop_pic_nft_instruction_05,
-  QPPImages.desktop_pic_nft_instruction_06,
-  QPPImages.desktop_pic_nft_instruction_07,
-  QPPImages.desktop_pic_nft_instruction_08,
-  QPPImages.desktop_pic_nft_instruction_09,
-  QPPImages.desktop_pic_nft_instruction_10,
-  QPPImages.desktop_pic_nft_instruction_11,
-  QPPImages.desktop_pic_nft_instruction_12,
-  QPPImages.desktop_pic_nft_instruction_13,
-  QPPImages.desktop_pic_nft_instruction_14,
-  QPPImages.desktop_pic_nft_instruction_15,
-  QPPImages.desktop_pic_nft_instruction_16,
-  QPPImages.desktop_pic_nft_instruction_17,
-  QPPImages.desktop_pic_nft_instruction_18,
-  QPPImages.desktop_pic_nft_instruction_19,
-  QPPImages.desktop_pic_nft_instruction_20,
-  QPPImages.desktop_pic_nft_instruction_21,
-  QPPImages.desktop_pic_nft_instruction_22,
-  QPPImages.desktop_pic_nft_instruction_23,
-  QPPImages.desktop_pic_nft_instruction_24,
-];

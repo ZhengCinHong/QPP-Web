@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:qpp_example/page/nft_info_teach/nft_info_teach_main_frame.dart';
+import 'package:qpp_example/utils/qpp_image.dart';
 
 class NFTInfoTeachImgUtil {
   static final List<Size> mobileSizeList = [
@@ -56,6 +56,34 @@ class NFTInfoTeachImgUtil {
     const Size(600, 283),
   ];
 
+  /// NFT 教學頁 大圖列表
+  static final List<String> infoTeachImgList = [
+    QPPImages.desktop_pic_nft_instruction_01,
+    QPPImages.desktop_pic_nft_instruction_02,
+    QPPImages.desktop_pic_nft_instruction_03,
+    QPPImages.desktop_pic_nft_instruction_04,
+    QPPImages.desktop_pic_nft_instruction_05,
+    QPPImages.desktop_pic_nft_instruction_06,
+    QPPImages.desktop_pic_nft_instruction_07,
+    QPPImages.desktop_pic_nft_instruction_08,
+    QPPImages.desktop_pic_nft_instruction_09,
+    QPPImages.desktop_pic_nft_instruction_10,
+    QPPImages.desktop_pic_nft_instruction_11,
+    QPPImages.desktop_pic_nft_instruction_12,
+    QPPImages.desktop_pic_nft_instruction_13,
+    QPPImages.desktop_pic_nft_instruction_14,
+    QPPImages.desktop_pic_nft_instruction_15,
+    QPPImages.desktop_pic_nft_instruction_16,
+    QPPImages.desktop_pic_nft_instruction_17,
+    QPPImages.desktop_pic_nft_instruction_18,
+    QPPImages.desktop_pic_nft_instruction_19,
+    QPPImages.desktop_pic_nft_instruction_20,
+    QPPImages.desktop_pic_nft_instruction_21,
+    QPPImages.desktop_pic_nft_instruction_22,
+    QPPImages.desktop_pic_nft_instruction_23,
+    QPPImages.desktop_pic_nft_instruction_24,
+  ];
+
   static int getWidth(int index, bool isDesktop) {
     Size size = isDesktop ? desktopSizeList[index] : mobileSizeList[index];
     return size.width.toInt();
@@ -69,6 +97,7 @@ class NFTInfoTeachImgUtil {
   static Size getSize(int index, bool isDesktop) {
     return isDesktop ? desktopSizeList[index] : mobileSizeList[index];
   }
+
   /// 取得對應圖片 Widget
   static Widget getImg(int index, bool isDesktop) {
     Size size = getSize(index, isDesktop);
