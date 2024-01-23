@@ -126,10 +126,13 @@ class _CommodityInfoPageState extends State<CommodityInfoPage> {
           right: 15,
           child: Consumer(
             builder: (context, ref, child) {
-              final isQuestionnaire = ref.watch(itemSelectInfoProvider.select(
+              final isQuestionnaire = ref.watch(
+                itemSelectInfoProvider.select(
                   (value) =>
                       value.voteDataState.data?.item.category ==
-                      ItemCategory.questionnaire));
+                      ItemCategory.questionnaire,
+                ),
+              );
 
               return isQuestionnaire
                   ? child ?? const SizedBox.shrink()
@@ -228,7 +231,7 @@ class InfoCard extends StatelessWidget {
                       ? const NFTItemInfo.desktop()
                       : const NFTItemInfo.mobile();
                 } else if (voteDataState.isCompleted) {
-                  // 取得票券資料
+                  // 取得問券資料
                   return isDesktop
                       ? const VoteItemInfo.desktop()
                       : const VoteItemInfo.mobile();
