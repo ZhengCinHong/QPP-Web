@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qpp_example/common_ui/qpp_text/read_more_text.dart';
 import 'package:qpp_example/common_ui/qpp_universal_link/universal_link_widget.dart';
 import 'package:qpp_example/extension/string/url.dart';
-import 'package:qpp_example/extension/widget/disable_selection_container.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/user_information/view_model/user_information_view_model.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
