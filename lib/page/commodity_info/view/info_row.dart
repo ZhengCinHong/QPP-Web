@@ -170,12 +170,8 @@ class InfoRowCreator extends InfoRow {
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
             onTap: () {
-              // set phone number
-              var result = ServerConst.information
-                  .modifyUrlParameter("phoneNumber", data.displayID)
-                  .modifyUrlParameter("lang", context.locale.toString())
-                  .modifyUrlParameter("action", 'stay')
-                  .modifyUrlParameter('testing', Setting().isTest.toString());
+              // 點擊前往發行者頁面
+              var result = data.createInformationUrl(context);
               result.launchURL(isNewTab: false);
             },
             child: Row(
