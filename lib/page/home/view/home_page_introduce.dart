@@ -193,7 +193,7 @@ class _Qrcode extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                HomePageModel.introducePicKvImage,
+                HomePageModel.introduceKvRegisteredIcon,
                 width: isDesktopStyle ? 36 : 28,
                 height: isDesktopStyle ? 36 : 28,
                 cacheWidth: isDesktopStyle ? 36 : 28,
