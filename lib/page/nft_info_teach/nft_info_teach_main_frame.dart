@@ -7,6 +7,7 @@ import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_1.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_2.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_3.dart';
 import 'package:qpp_example/universal_link/universal_link_data.dart';
+import 'package:qpp_example/utils/nft_info_teach_img_util.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
@@ -55,22 +56,47 @@ class StateNFTInfoTeach extends State<NFTInfoTeachScaffold>
   final GlobalKey k1 = GlobalKey();
   final GlobalKey k2 = GlobalKey();
   final GlobalKey k3 = GlobalKey();
+  final GlobalKey mainScrollKey = GlobalKey();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    preCacheAssetImages();
+  }
+
+  /// 預先載入大圖
+  Future<void> preCacheAssetImages() async {
+    var imgLen = NFTInfoTeachImgUtil.infoTeachImgList.length;
+    for (var i = 0; i < imgLen; i++) {
+      precacheImage(
+        AssetImage(NFTInfoTeachImgUtil.infoTeachImgList[i]),
+        context,
+      );
+    }
+  }
 
   @override
   void initState() {
-    super.initState();
     if (widget.anchor != NFTInfoTeachAnchor.none) {
-      // 有帶 anchor
       WidgetsBinding.instance.addObserver(this);
+      // // 有帶 anchor
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         // 這裡會在 build 之後呼叫
-        Future.delayed(const Duration(seconds: 1), () {
+        Future.delayed(const Duration(milliseconds: 1800), () {
           // 延遲 1 秒後開始移動到指定位置
           Scrollable.ensureVisible(anchorKey(widget.anchor).currentContext!,
               duration: Duration(milliseconds: widget.anchor.scrollDuration));
         });
       });
     }
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   GlobalKey anchorKey(NFTInfoTeachAnchor anchor) {
@@ -116,20 +142,25 @@ class StateNFTInfoTeach extends State<NFTInfoTeachScaffold>
             width: double.infinity,
             // SingleChildScrollView 生成時會把內容都做出來
             child: SingleChildScrollView(
+              key: mainScrollKey,
               child: Column(
+                key: const ValueKey('NFTInfoTeachMainFrameColumn'),
                 children: [
                   // top margin
                   const SizedBox(
+                    key: ValueKey('SizedBoxMarginTop'),
                     height: 80,
                   ),
                   // title
                   Text(
                     context.tr(QppLocales.nftInfoTeachTitle),
+                    key: const ValueKey('NFTInfoTeachTitle'),
                     textAlign: TextAlign.center,
                     style: QppTextStyles.web_44pt_Display_L_Maya_blue_L,
                   ),
                   // divider
                   Container(
+                    key: const ValueKey('NFTInfoTeachDivider'),
                     margin: const EdgeInsets.only(top: 23, bottom: 40),
                     height: 1,
                     color: QppColors.midnightBlue,
@@ -140,6 +171,7 @@ class StateNFTInfoTeach extends State<NFTInfoTeachScaffold>
                     isDesktop: screenStyle.isDesktop,
                   ),
                   const SizedBox(
+                    key: ValueKey('SizeBoxDivider1'),
                     height: 64,
                   ),
                   // zone 2
@@ -148,12 +180,14 @@ class StateNFTInfoTeach extends State<NFTInfoTeachScaffold>
                     isDesktop: screenStyle.isDesktop,
                   ),
                   const SizedBox(
+                    key: ValueKey('SizeBoxDivider2'),
                     height: 64,
                   ),
                   // zone 3
                   NFTTeachInfoZone3(key: k3, isDesktop: screenStyle.isDesktop),
                   // bottom margin
                   const SizedBox(
+                    key: ValueKey('SizeBoxDivider3'),
                     height: 40,
                   ),
                 ],

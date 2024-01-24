@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_teach_section.dart';
-import 'package:qpp_example/utils/qpp_image.dart';
+import 'package:qpp_example/utils/nft_info_teach_img_util.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 
 class NFTTeachInfoZone2 extends StatelessWidget {
@@ -13,7 +13,7 @@ class NFTTeachInfoZone2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: 4,
         shrinkWrap: true,
         // 禁止 list 內容 滾動
@@ -62,8 +62,8 @@ class Info1 extends NFTTeachInfoExpand {
                   contentKey:
                       QppLocales.nftInfoTeachSubtitle2ContentTeach1ContentStep1,
                   displayImg: [
-                    Image.asset(QPPImages.desktop_pic_nft_instruction_02),
-                    Image.asset(QPPImages.desktop_pic_nft_instruction_03),
+                    NFTInfoTeachImgUtil.getImg(1, isDesktop),
+                    NFTInfoTeachImgUtil.getImg(2, isDesktop),
                   ],
                   isDesktop: isDesktop,
                 ),
@@ -72,8 +72,8 @@ class Info1 extends NFTTeachInfoExpand {
                   contentKey:
                       QppLocales.nftInfoTeachSubtitle2ContentTeach1ContentStep2,
                   displayImg: [
-                    Image.asset(QPPImages.desktop_pic_nft_instruction_04),
-                    Image.asset(QPPImages.desktop_pic_nft_instruction_05),
+                    NFTInfoTeachImgUtil.getImg(3, isDesktop),
+                    NFTInfoTeachImgUtil.getImg(4, isDesktop),
                   ],
                   isDesktop: isDesktop,
                 ),
@@ -82,7 +82,7 @@ class Info1 extends NFTTeachInfoExpand {
                   contentKey:
                       QppLocales.nftInfoTeachSubtitle2ContentTeach1ContentStep3,
                   displayImg: [
-                    Image.asset(QPPImages.desktop_pic_nft_instruction_06),
+                    NFTInfoTeachImgUtil.getImg(5, isDesktop),
                   ],
                   isDesktop: isDesktop,
                 ),
@@ -91,7 +91,7 @@ class Info1 extends NFTTeachInfoExpand {
                   contentKey:
                       QppLocales.nftInfoTeachSubtitle2ContentTeach1ContentStep4,
                   displayImg: [
-                    Image.asset(QPPImages.desktop_pic_nft_instruction_07),
+                    NFTInfoTeachImgUtil.getImg(6, isDesktop),
                   ],
                   isDesktop: isDesktop,
                 ),
@@ -100,9 +100,9 @@ class Info1 extends NFTTeachInfoExpand {
                   contentKey:
                       QppLocales.nftInfoTeachSubtitle2ContentTeach1ContentStep5,
                   displayImg: [
-                    Image.asset(QPPImages.desktop_pic_nft_instruction_08),
-                    Image.asset(QPPImages.desktop_pic_nft_instruction_09),
-                    Image.asset(QPPImages.desktop_pic_nft_instruction_10),
+                    NFTInfoTeachImgUtil.getImg(7, isDesktop),
+                    NFTInfoTeachImgUtil.getImg(8, isDesktop),
+                    NFTInfoTeachImgUtil.getImg(9, isDesktop),
                   ],
                   isDesktop: isDesktop,
                 ),
@@ -137,7 +137,7 @@ class Info2 extends NFTTeachInfoExpand {
                   contentKey:
                       QppLocales.nftInfoTeachSubtitle2ContentTeach2ContentStep1,
                   displayImg: [
-                    Image.asset(QPPImages.desktop_pic_nft_instruction_11),
+                    NFTInfoTeachImgUtil.getImg(10, isDesktop),
                   ],
                   isDesktop: isDesktop,
                 ),
@@ -146,10 +146,8 @@ class Info2 extends NFTTeachInfoExpand {
                   contentKey:
                       QppLocales.nftInfoTeachSubtitle2ContentTeach2ContentStep2,
                   displayImg: [
-                    Image.asset(
-                      QPPImages.desktop_pic_nft_instruction_12,
-                    ),
-                    Image.asset(QPPImages.desktop_pic_nft_instruction_13),
+                    NFTInfoTeachImgUtil.getImg(11, isDesktop),
+                    NFTInfoTeachImgUtil.getImg(12, isDesktop),
                   ],
                   isDesktop: isDesktop,
                 ),
@@ -158,9 +156,7 @@ class Info2 extends NFTTeachInfoExpand {
                   contentKey:
                       QppLocales.nftInfoTeachSubtitle2ContentTeach2ContentStep3,
                   displayImg: [
-                    Image.asset(
-                      QPPImages.desktop_pic_nft_instruction_14,
-                    ),
+                    NFTInfoTeachImgUtil.getImg(13, isDesktop),
                   ],
                   isDesktop: isDesktop,
                 ),
@@ -169,9 +165,7 @@ class Info2 extends NFTTeachInfoExpand {
                   contentKey:
                       QppLocales.nftInfoTeachSubtitle2ContentTeach2ContentStep4,
                   displayImg: [
-                    Image.asset(
-                      QPPImages.desktop_pic_nft_instruction_15,
-                    ),
+                    NFTInfoTeachImgUtil.getImg(14, isDesktop),
                   ],
                   isDesktop: isDesktop,
                 ),
@@ -180,12 +174,8 @@ class Info2 extends NFTTeachInfoExpand {
                   contentKey:
                       QppLocales.nftInfoTeachSubtitle2ContentTeach2ContentStep5,
                   displayImg: [
-                    Image.asset(
-                      QPPImages.desktop_pic_nft_instruction_16,
-                    ),
-                    Image.asset(
-                      QPPImages.desktop_pic_nft_instruction_17,
-                    ),
+                    NFTInfoTeachImgUtil.getImg(15, isDesktop),
+                    NFTInfoTeachImgUtil.getImg(16, isDesktop),
                   ],
                   isDesktop: isDesktop,
                 ),
@@ -220,7 +210,7 @@ class Info3 extends NFTTeachInfoExpand {
                   contentKey:
                       QppLocales.nftInfoTeachSubtitle2ContentTeach3ContentStep1,
                   displayImg: [
-                    Image.asset(QPPImages.desktop_pic_nft_instruction_18),
+                    NFTInfoTeachImgUtil.getImg(17, isDesktop),
                   ],
                   isDesktop: isDesktop,
                 ),
@@ -229,7 +219,7 @@ class Info3 extends NFTTeachInfoExpand {
                   contentKey:
                       QppLocales.nftInfoTeachSubtitle2ContentTeach3ContentStep2,
                   displayImg: [
-                    Image.asset(QPPImages.desktop_pic_nft_instruction_19),
+                    NFTInfoTeachImgUtil.getImg(18, isDesktop),
                   ],
                   isDesktop: isDesktop,
                 ),
@@ -238,7 +228,7 @@ class Info3 extends NFTTeachInfoExpand {
                   contentKey:
                       QppLocales.nftInfoTeachSubtitle2ContentTeach3ContentStep3,
                   displayImg: [
-                    Image.asset(QPPImages.desktop_pic_nft_instruction_20),
+                    NFTInfoTeachImgUtil.getImg(19, isDesktop),
                   ],
                   isDesktop: isDesktop,
                 ),
@@ -247,7 +237,7 @@ class Info3 extends NFTTeachInfoExpand {
                   contentKey:
                       QppLocales.nftInfoTeachSubtitle2ContentTeach3ContentStep4,
                   displayImg: [
-                    Image.asset(QPPImages.desktop_pic_nft_instruction_21),
+                    NFTInfoTeachImgUtil.getImg(20, isDesktop),
                   ],
                   isDesktop: isDesktop,
                 ),

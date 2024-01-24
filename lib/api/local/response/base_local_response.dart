@@ -17,12 +17,22 @@ class BaseLocalResponse {
         return null;
       }
 
+      List<LocalResponseErrorInfo> errorInfoList = [];
       final data = List<dynamic>.from(errorInfo);
+      // TODO: map 取代
+      final int len = data.length;
+      for (var i = 0; i < len; i++) {
+        var msg = data[i];
+        var errorInfo =
+            LocalResponseErrorInfo(json: msg as Map<String, dynamic>? ?? {});
+        errorInfoList.add(errorInfo);
+      }
+      return errorInfoList;
 
-      return data
-          .map((e) =>
-              LocalResponseErrorInfo(json: e as Map<String, dynamic>? ?? {}))
-          .toList();
+      // return data
+      //     .map((e) =>
+      //         LocalResponseErrorInfo(json: e as Map<String, dynamic>? ?? {}))
+      //     .toList();
     } catch (exception) {
       print({'ErrorInfoArray Error: $exception'});
       return null;

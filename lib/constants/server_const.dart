@@ -15,6 +15,8 @@ class ServerConst {
 
   /// Apple App Store Url
   static const appleStoreUrl = 'https://apps.apple.com/tw/app/qpp/id1501319938';
+  /// 個人資訊
+  static final information = '$routerHost/app/information?';
 
   /// 隱私權網址
   static final privacyPolicyUrl = "$routerHost/privacy";

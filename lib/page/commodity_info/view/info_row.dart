@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qpp_example/api/core/api_response.dart';
 import 'package:qpp_example/common_ui/qpp_text/info_row_link_read_more_text.dart';
-import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/string/url.dart';
 import 'package:qpp_example/extension/widget/disable_selection_container.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
@@ -85,6 +84,7 @@ class InfoRowInfo extends InfoRow {
   ApiResponse getResponse(WidgetRef ref) {
     return ref.watch(itemSelectInfoProvider).itemSelectInfoState;
   }
+
   // 手機裝置調整 padding top
   @override
   rowPadding() {
@@ -168,9 +168,9 @@ class InfoRowCreator extends InfoRow {
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
             onTap: () {
-              // TODO: isTesting
-              '${ServerConst.routerHost}/app/information?phoneNumber=${data.displayID}&testing=true&action=stay&lang=${context.locale}'
-                  .launchURL(isNewTab: false);
+              // 點擊前往發行者頁面
+              var result = data.createInformationUrl(context);
+              result.launchURL(isNewTab: false);
             },
             child: Row(
               children: [

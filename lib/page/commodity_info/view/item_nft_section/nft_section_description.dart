@@ -3,11 +3,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qpp_example/api/core/api_response.dart';
 import 'package:qpp_example/common_ui/qpp_text/info_row_link_read_more_text.dart';
-import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/string/url.dart';
 import 'package:qpp_example/extension/widget/disable_selection_container.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/model/nft/qpp_nft.dart';
+import 'package:qpp_example/model/qpp_user.dart';
 import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
 import 'package:qpp_example/page/commodity_info/view/info_row.dart';
 import 'package:qpp_example/page/commodity_info/view/item_nft_section/nft_section.dart';
@@ -97,9 +97,10 @@ class NFTInfoRowPublisher extends InfoRow {
         child: GestureDetector(
           onTap: () {
             // 點擊前往發行者頁面
-            // TODO: isTesting
-            '${ServerConst.routerHost}/app/information?phoneNumber=${data.displayID}&testing=true&action=stay&lang=${context.locale}'
-                .launchURL(isNewTab: false);
+            if (data is QppUser) {
+              var result = data.createInformationUrl(context);
+              result.launchURL(isNewTab: false);
+            }
           },
           child: Row(
             children: [

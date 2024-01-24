@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/widgets.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_teach_section.dart';
-import 'package:qpp_example/utils/qpp_image.dart';
+import 'package:qpp_example/utils/nft_info_teach_img_util.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 
 class NFTTeachInfoZone1 extends StatelessWidget {
@@ -12,7 +12,7 @@ class NFTTeachInfoZone1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: 6,
         shrinkWrap: true,
         // 禁止 list 內容 滾動
@@ -73,7 +73,7 @@ class Info2 extends NFTTeachInfoExpand {
         contentKey: QppLocales.nftInfoTeachSubtitle1ContentA2,
         tipKey: QppLocales.nftInfoTeachSubtitle1ContentA2Tip,
         displayImg: [
-          Image.asset(QPPImages.desktop_pic_nft_instruction_01),
+          NFTInfoTeachImgUtil.getImg(0, isDesktop),
         ],
         isDesktop: isDesktop,
       );
