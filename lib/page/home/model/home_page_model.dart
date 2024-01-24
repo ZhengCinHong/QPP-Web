@@ -7,6 +7,9 @@ class HomePageModel {
   static const introduceQppTextImage = QPPImages.desktop_image_qpp_text;
   /// 產品介紹手機圖片
   static const introducePicKvImage = QPPImages.desktop_pic_kv;
+  /// 產品介紹即刻登入Icon
+  static const introduceKvRegisteredIcon = QPPImages.desktop_icon_kv_registered;
+  /// 產品介紹雙向下箭頭
   static const introduceArrowdonDoubleIcon = QPPImages.desktop_icon_arrowdown_double;
 
   /// 產品特色背景圖
@@ -44,6 +47,8 @@ class HomePageModel {
       [
         introduceQppTextImage,
         introducePicKvImage,
+        introduceKvRegisteredIcon,
+        introduceArrowdonDoubleIcon,
         featureLeftImage,
         descriptionBgImage,
         contactDesktopBgImage,
