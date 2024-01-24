@@ -14,6 +14,8 @@ import 'package:qpp_example/page/nft_info_teach/nft_info_teach_main_frame.dart';
 import 'package:qpp_example/page/user_information/view/user_information.dart';
 import 'package:qpp_example/universal_link/universal_link_data.dart';
 import 'package:qpp_example/utils/display_url.dart';
+import 'package:qpp_example/page/nft_info_teach/nft_info_teach_scaffold.dart'
+    deferred as nft_info_teach_box;
 
 /// QPP路由
 class QppGoRouter {
@@ -127,8 +129,11 @@ class QppGoRouter {
       GoRoute(
         path: nftInfoTeach,
         name: nftInfoTeach,
-        builder: (context, state) =>
-            NFTInfoTeachPageMainFrame(routerState: state),
+        builder: (context, state) {
+          return NFTInfoTeachPageMainFrame(routerState: state,(context){
+            return nft_info_teach_box.NFTInfoTeachScaffold()
+          });
+        },
       ),
       // 隱私權政策頁
       GoRoute(
