@@ -5,7 +5,6 @@ import 'package:qpp_example/common_ui/qpp_app_bar/view/qpp_app_bar_view.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/home/model/home_page_model.dart';
 import 'package:qpp_example/page/home/view_model/home_page_view_model.dart';
-import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
 
@@ -36,8 +35,8 @@ class HomePageFeature extends StatelessWidget {
             image: DecorationImage(
               image: AssetImage(
                 isDesktopStyle
-                    ? QPPImages.desktop_bg_area_01
-                    : QPPImages.mobile_bg_area_01,
+                    ? HomePageModel.featureBgImages[0]
+                    : HomePageModel.featureBgImages[1],
               ),
               fit: BoxFit.cover,
             ),
@@ -88,7 +87,7 @@ class _Left extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         isDesktopStyle
-            ? Image.asset(QPPImages.desktop_pic_area_01)
+            ? Image.asset(HomePageModel.featureLeftImage)
             : const SizedBox(),
       ],
     );
@@ -153,6 +152,8 @@ class _FeatureInfoItem extends StatelessWidget {
                   isHighlight ? type.highlightImage : type.image,
                   width: 50,
                   height: 50,
+                  cacheWidth: 50,
+                  cacheHeight: 50,
                 ),
                 const SizedBox(height: 16, width: 27),
                 Expanded(

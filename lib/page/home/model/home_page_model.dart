@@ -1,7 +1,61 @@
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
-import 'package:qpp_example/utils/screen.dart';
+
+class HomePageModel {
+  /// 產品介紹QPP文字圖片
+  static const introduceQppTextImage = QPPImages.desktop_image_qpp_text;
+  /// 產品介紹手機圖片
+  static const introducePicKvImage = QPPImages.desktop_pic_kv;
+  static const introduceArrowdonDoubleIcon = QPPImages.desktop_icon_arrowdown_double;
+
+  /// 產品特色背景圖
+  static const featureBgImages = [
+    QPPImages.desktop_bg_area_01,
+    QPPImages.mobile_bg_area_01
+  ];
+
+  /// 產品特色左側Image
+  static const featureLeftImage = QPPImages.desktop_pic_area_01;
+
+  /// 使用說明背景圖
+  static const descriptionBgImage = QPPImages.desktop_image_qpp_logo_01;
+
+  /// 聯繫我們背景圖(桌面樣式)
+  static const contactDesktopBgImage = QPPImages.desktop_bg_area_03;
+
+  /// 聯繫我們背景圖(手機樣式)
+  static const contactMobileBgImage = QPPImages.mobile_bg_area_03;
+
+  /// 聯繫我們官方Icon
+  static const contactOfficialIcon = QPPImages.desktop_icon_area_04_official;
+
+  /// 聯繫我們益處圖片
+  static const constBenefitImage = QPPImages.desktop_bg_area_03_box;
+
+  /// footer Logo圖片
+  static const footerLogoImages = [
+    QPPImages.desktop_pic_qpp_logo_03,
+    QPPImages.mobile_pic_qpp_logo_03
+  ];
+
+  /// 首頁所有圖片
+  static List<String> images = featureBgImages +
+      [
+        introduceQppTextImage,
+        introducePicKvImage,
+        featureLeftImage,
+        descriptionBgImage,
+        contactDesktopBgImage,
+        contactMobileBgImage,
+        contactOfficialIcon,
+        constBenefitImage
+      ] +
+      footerLogoImages +
+      PlayStoreType.values.map((e) => e.image).toList() +
+      HomePageFeatureInfoType.values.map((e) => e.image).toList() +
+      HomePageDescriptionType.values.map((e) => e.image).toList();
+}
 
 // -----------------------------------------------------------------------------
 /// 應用程式商店類型
@@ -129,16 +183,14 @@ enum HomePageDescriptionType {
     }
   }
 
-  String image(ScreenStyle screenStyle) {
-    final isDesktopStyle = screenStyle.isDesktop;
-
+  String get image {
     switch (this) {
       case HomePageDescriptionType.phone:
-        return  isDesktopStyle ? QPPImages.desktop_pic_area_02_01 : QPPImages.mobile_pic_area_02_01;
+        return QPPImages.desktop_pic_area_02_01;
       case HomePageDescriptionType.directory:
-        return isDesktopStyle ? QPPImages.desktop_pic_area_02_02 : QPPImages.mobile_pic_area_02_02;
+        return QPPImages.desktop_pic_area_02_02;
       case HomePageDescriptionType.forum:
-        return isDesktopStyle ? QPPImages.desktop_pic_area_02_03 : QPPImages.mobile_pic_area_02_03;
+        return QPPImages.desktop_pic_area_02_03;
     }
   }
 

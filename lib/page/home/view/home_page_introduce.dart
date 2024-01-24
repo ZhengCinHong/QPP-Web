@@ -12,7 +12,6 @@ import 'package:qpp_example/extension/widget/disable_selection_container.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/home/model/home_page_model.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
-import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
 
@@ -65,7 +64,8 @@ class _DesktopBody extends StatelessWidget {
         const SizedBox(width: 31),
         Expanded(
           flex: 2,
-          child: Image.asset(QPPImages.desktop_pic_kv, fit: BoxFit.cover),
+          child:
+              Image.asset(HomePageModel.introducePicKvImage, fit: BoxFit.cover),
         ),
         const Spacer(),
       ],
@@ -109,9 +109,11 @@ class _Info extends StatelessWidget {
                 : MainAxisAlignment.center,
             children: [
               Image.asset(
-                QPPImages.desktop_image_qpp_text,
+                HomePageModel.introduceQppTextImage,
                 width: isDesktopStyle ? 103 : 69,
                 height: isDesktopStyle ? 36 : 24,
+                cacheWidth: isDesktopStyle ? 103 : 69,
+                cacheHeight: isDesktopStyle ? 36 : 24,
               ),
               const SizedBox(width: 11),
               Text(
@@ -132,7 +134,8 @@ class _Info extends StatelessWidget {
           ),
           isDesktopStyle
               ? const SizedBox.shrink()
-              : Image.asset(QPPImages.desktop_pic_kv, fit: BoxFit.cover),
+              : Image.asset(HomePageModel.introducePicKvImage,
+                  fit: BoxFit.cover),
           SizedBox(height: isDesktopStyle ? 61 : 56.4),
           isDesktopStyle ? const _Qrcode.desktop() : const _Qrcode.mobile(),
           SizedBox(height: isDesktopStyle ? 63 : 37),
@@ -190,9 +193,11 @@ class _Qrcode extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                QPPImages.desktop_icon_kv_registered,
+                HomePageModel.introducePicKvImage,
                 width: isDesktopStyle ? 36 : 28,
                 height: isDesktopStyle ? 36 : 28,
+                cacheWidth: isDesktopStyle ? 36 : 28,
+                cacheHeight: isDesktopStyle ? 36 : 28,
               ),
               SizedBox(width: isDesktopStyle ? 20 : 12),
               Flexible(
@@ -310,6 +315,8 @@ class _PlayStoreButtonState extends State<_PlayStoreButton>
               fit: BoxFit.cover,
               width: isDesktopStyle ? 174 : 157,
               height: isDesktopStyle ? 52 : 47,
+              cacheWidth: isDesktopStyle ? 174 : 157,
+              cacheHeight: isDesktopStyle ? 52 : 47,
             ),
             AnimatedPositioned(
               duration: const Duration(milliseconds: 300),
@@ -385,7 +392,8 @@ class _MoreAboutQPPButtonState extends State<MoreAboutQPPButton>
                 builder: (context, child) {
                   return Transform.translate(
                     offset: _offsetTween.evaluate(_controller),
-                    child: Image.asset(QPPImages.desktop_icon_arrowdown_double),
+                    child:
+                        Image.asset(HomePageModel.introduceArrowdonDoubleIcon),
                   );
                 },
               )

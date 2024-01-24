@@ -7,7 +7,6 @@ import 'package:qpp_example/extension/string/url.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/home/model/home_page_model.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
-import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
 
@@ -31,8 +30,8 @@ class HomePageContact extends StatelessWidget {
       decoration: BoxDecoration(
         image: DecorationImage(
           image: maxWidth.determineScreenStyle().isDesktop // 換背景用一般的螢幕樣式去判斷
-              ? const AssetImage(QPPImages.desktop_bg_area_03)
-              : const AssetImage(QPPImages.mobile_bg_area_03),
+              ? const AssetImage(HomePageModel.contactDesktopBgImage)
+              : const AssetImage(HomePageModel.contactMobileBgImage),
           fit: BoxFit.cover,
         ),
       ),
@@ -92,9 +91,11 @@ class _TitleContent extends StatelessWidget {
                   bottom: isDesktopStyle ? 0 : 11,
                 ),
                 child: Image.asset(
-                  QPPImages.desktop_icon_area_04_official,
+                  HomePageModel.contactOfficialIcon,
                   width: isDesktopStyle ? 180 : 140,
                   height: isDesktopStyle ? 185 : 144,
+                  cacheWidth: isDesktopStyle ? 180 : 140,
+                  cacheHeight: isDesktopStyle ? 185 : 144,
                 ),
               ),
             ),
@@ -295,7 +296,7 @@ class _BenefitItem extends StatelessWidget {
         child: Stack(
           alignment: AlignmentDirectional.center,
           children: [
-            SizedBox(child: Image.asset(QPPImages.desktop_bg_area_03_box)),
+            SizedBox(child: Image.asset(HomePageModel.constBenefitImage)),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 30),
               constraints: BoxConstraints(maxWidth: isDesktopStyle ? 280 : 235),
