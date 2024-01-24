@@ -83,7 +83,7 @@ class StateNFTInfoTeach extends State<NFTInfoTeachScaffold>
       // // 有帶 anchor
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         // 這裡會在 build 之後呼叫
-        Future.delayed(const Duration(milliseconds: 2000), () {
+        Future.delayed(const Duration(milliseconds: 1800), () {
           // 延遲 1 秒後開始移動到指定位置
           Scrollable.ensureVisible(anchorKey(widget.anchor).currentContext!,
               duration: Duration(milliseconds: widget.anchor.scrollDuration));
