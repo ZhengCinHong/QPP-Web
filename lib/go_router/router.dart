@@ -109,14 +109,14 @@ class QppGoRouter {
           context.setLocale(locale);
           // 更新網址列
           DisplayUrl.updateParam('lang', locale.toString());
-          return MainFramework(child: HomePage());
+          return const MainFramework(child: HomePage());
         },
         routes: _getRouters(home) +
             [
               GoRoute(
                 path: app,
                 name: app,
-                builder: (context, state) => MainFramework(
+                builder: (context, state) => const MainFramework(
                   child: HomePage(),
                 ),
                 routes: appRouters + _getRouters(app),

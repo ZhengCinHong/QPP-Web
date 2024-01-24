@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/model/qpp_app_bar_model.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/view_model/qpp_app_bar_view_model.dart';
+import 'package:qpp_example/page/home/model/home_page_model.dart';
 import 'package:qpp_example/page/home/view/home_page_contact.dart';
 import 'package:qpp_example/page/home/view/home_page_description.dart';
 import 'package:qpp_example/page/home/view/home_page_feature.dart';
@@ -9,11 +10,17 @@ import 'package:qpp_example/page/home/view/home_page_footer.dart';
 import 'package:qpp_example/page/home/view/home_page_introduce.dart';
 
 /// 首頁
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final ScrollController scrollController = ScrollController();
 
+  /// 滑動到指定位置
   void scrollTo(
     StateController<MainMenu?> notifier,
     ScrollController scrollController,
@@ -26,6 +33,19 @@ class HomePage extends StatelessWidget {
             curve: Curves.fastOutSlowIn,
           )
         }).then((value) => notifier.state = null);
+  }
+
+  Future<void> precacheAssetImages() async {
+    for (var element in HomePageModel.images) {
+      precacheImage(AssetImage(element), context);
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    precacheAssetImages();
   }
 
   @override

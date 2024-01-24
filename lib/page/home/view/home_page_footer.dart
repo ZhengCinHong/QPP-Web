@@ -10,7 +10,6 @@ import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/home/model/home_page_model.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
-import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
 
@@ -93,8 +92,8 @@ class _Info extends StatelessWidget {
         IconButton(
           icon: Image.asset(
             isDesktopStyle
-                ? QPPImages.desktop_pic_qpp_logo_03
-                : QPPImages.mobile_pic_qpp_logo_03,
+                ? HomePageModel.footerLogoImages[0]
+                : HomePageModel.footerLogoImages[1],
           ),
           onPressed: () => html.window.location.reload(),
         ),

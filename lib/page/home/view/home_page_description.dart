@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/home/model/home_page_model.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
-import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
 import 'package:qpp_example/utils/screen.dart';
 
@@ -89,7 +88,7 @@ class _PhoneDescriptionState extends State<_PhoneDescription> {
                     isDesktopStyle
                         ? const Spacer(flex: 104)
                         : const SizedBox.shrink(),
-                    Image.asset(QPPImages.desktop_image_qpp_logo_01),
+                    Image.asset(HomePageModel.descriptionBgImage),
                     const SizedBox(height: 16, width: 36),
                     Flexible(
                       flex: isDesktopStyle ? 504 : 0,
@@ -329,7 +328,7 @@ class _BgWidget extends StatelessWidget {
         decoration: BoxDecoration(
           image: isShowBackground
               ? DecorationImage(
-                  image: AssetImage(type.image(screenStyle)),
+                  image: AssetImage(type.image),
                   fit: BoxFit.cover,
                 )
               : null,
