@@ -71,62 +71,18 @@ class _HomePageState extends State<HomePage> {
       },
       child: SingleChildScrollView(
         controller: scrollController,
-        child: Column(children: createWidgets()
-            // [
-            // HomePageIntroduce(key: introduceKey),
-            // HomePageFeature(key: featureKey),
-            // HomePageDescription(key: descriptionKey),
-            // HomePageContact(key: contactKey),
-            // HomePageFooter(),
-            // ],
+        child: Column(
+          children: [
+            HomePageIntroduce(key: introduceKey),
+            HomePageFeature(key: featureKey),
+            HomePageDescription(key: descriptionKey),
+            HomePageContact(key: contactKey),
+            const HomePageFooter(
+              key: ValueKey('homeFooter'),
             ),
+          ],
+        ),
       ),
-
-      // CustomScrollView(
-      //   controller: scrollController,
-      //   slivers: [
-      //     SliverList(
-      //       delegate: SliverChildBuilderDelegate(
-      //         (context, index) {
-      //           return switch (index) {
-      //             0 => HomePageIntroduce(key: introduceKey),
-      //             1 => HomePageFeature(key: featureKey),
-      //             2 => HomePageDescription(key: descriptionKey),
-      //             3 => HomePageContact(key: contactKey),
-      //             _ => const HomePageFooter(),
-      //           };
-      //         },
-      //         childCount: 5,
-      //       ),
-      //     ),
-      //   ],
-      // )
     );
   }
-}
-
-List<Widget> createWidgets() {
-  List<Widget> li = [];
-  int count = 100;
-  Color color = Colors.white;
-  double size = 30.0;
-  Color bgColor = Colors.black;
-  li.add(HomePageIntroduce(key: introduceKey));
-  li.add(Text(
-    '1',
-    style: TextStyle(color: color, fontSize: size, backgroundColor: bgColor),
-  ));
-  for (int i = 0; i < count; i++) {
-    li.add(HomePageIntroduce(key: ValueKey('testKey$i')));
-    // li.add(SizedBox(
-    //     height: 80, child: Image.asset(HomePageModel.introducePicKvImage)
-    //     // Text(
-    //     //   i.toString(),
-    //     //   style:
-    //     //       TextStyle(color: color, fontSize: size, backgroundColor: bgColor),
-    //     // ),
-    //     ));
-  }
-
-  return li;
 }
