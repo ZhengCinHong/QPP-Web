@@ -27,6 +27,7 @@ import 'package:qpp_example/utils/shared_prefs_utils.dart';
 
 AppBar qppAppBar(bool isDesktop) {
   return AppBar(
+    key: const ValueKey('AppBar'),
     automaticallyImplyLeading: false, // 關閉返回按鈕
     toolbarHeight: isDesktop ? kToolbarDesktopHeight : kToolbarMobileHeight,
     backgroundColor: QppColors.barMask,
@@ -183,11 +184,13 @@ class MenuBtns extends StatelessWidget {
                 MouseRegionCustomWidget(
                   builder: (event) => MouseRegion(
                     cursor: SystemMouseCursors.click, // 改鼠標樣式
-                    child: Consumer(builder: (context, ref, child) {
-                      final scrollToContextNotifier =
-                          ref.read(scrollToContextProvider.notifier);
+                    child: Consumer(
+                      builder: (context, ref, child) {
+                        final scrollToContextNotifier =
+                            ref.read(scrollToContextProvider.notifier);
 
-                      return GestureDetector(
+                        return GestureDetector(
+                          behavior: HitTestBehavior.translucent,
                           onTap: () {
                             final bool isHomePage = Uri.base.path.isHomePage;
 
@@ -210,13 +213,16 @@ class MenuBtns extends StatelessWidget {
                               );
                             }
                           }.throttleWithTimeout(timeout: 1000),
-                          child: _MenuBtnText(
-                            type: e,
-                            isHorizontal: isHorizontal,
-                            event: event,
-                            fontSize: fontSize,
-                          ));
-                    }),
+                          child: child,
+                        );
+                      },
+                      child: _MenuBtnText(
+                        type: e,
+                        isHorizontal: isHorizontal,
+                        event: event,
+                        fontSize: fontSize,
+                      ),
+                    ),
                   ),
                 ),
                 _MenuBtnSpacing(

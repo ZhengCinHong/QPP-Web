@@ -27,13 +27,15 @@ class _HomePageState extends State<HomePage> {
     ScrollController scrollController,
     double scrollPoint,
   ) {
-    Future.microtask(() => {
-          scrollController.animateTo(
-            scrollPoint,
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.fastOutSlowIn,
-          )
-        }).then((value) => notifier.state = null);
+    Future.microtask(
+      () => {
+        scrollController.animateTo(
+          scrollPoint,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.fastOutSlowIn,
+        )
+      },
+    ).then((value) => notifier.state = null);
   }
 
   Future<void> precacheAssetImages() async {

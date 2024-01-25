@@ -59,10 +59,12 @@ class _MainScaffoldState extends State<_MainScaffold> {
     return SelectionArea(
       key: global,
       child: Scaffold(
+        key: const ValueKey('Scaffold'),
         extendBodyBehindAppBar: true, // 設定可以在appBar後面擴充body
         backgroundColor: QppColors.oxfordBlue,
         appBar: qppAppBar(widget.isDesktopStyle),
         body: Container(
+          key: const ValueKey('bg'),
           height: double.infinity,
           width: double.infinity,
           decoration: BoxDecoration(

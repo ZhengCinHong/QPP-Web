@@ -1,13 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/model/qpp_app_bar_model.dart';
+import 'package:qpp_example/common_ui/qpp_app_bar/view_model/qpp_app_bar_view_model.dart';
 import 'package:qpp_example/common_ui/qpp_universal_link/universal_link_qrcode.dart';
 import 'package:qpp_example/constants/qpp_contanst.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/extension/color/color_to_string.dart';
 import 'package:qpp_example/extension/string/url.dart';
+import 'package:qpp_example/extension/throttle_debounce.dart';
 import 'package:qpp_example/extension/widget/disable_selection_container.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/home/model/home_page_model.dart';
@@ -372,13 +375,17 @@ class _MoreAboutQPPButtonState extends State<MoreAboutQPPButton>
   Widget build(BuildContext context) {
     return Column(
       children: [
-        InkWell(
-          onTap: () {
-            final currentContext = featureKey.currentContext;
-            if (currentContext != null) {
-              Scrollable.ensureVisible(currentContext,
-                  duration: const Duration(seconds: 1));
-            }
+        Consumer(
+          builder: (context, ref, child) {
+            final scrollToContextNotifier =
+                ref.read(scrollToContextProvider.notifier);
+
+            return GestureDetector(
+              onTap: () {
+                scrollToContextNotifier.state = MainMenu.feature;
+              }.throttleWithTimeout(timeout: 1000),
+              child: child,
+            );
           },
           child: Column(
             children: [
