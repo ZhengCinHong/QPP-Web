@@ -239,9 +239,14 @@ class _Benefit extends StatelessWidget {
                 (e) => Flexible(
                   child: Padding(
                     padding: EdgeInsets.only(
-                        top: e.contentOfTop ? 0 : space,
-                        bottom: e.contentOfTop ? space : 0),
-                    child: _BenefitItem(e, screenStyle: screenStyle),
+                      top: e.contentOfTop ? 0 : space,
+                      bottom: e.contentOfTop ? space : 0,
+                    ),
+                    child: _BenefitItem(
+                      key: ValueKey(e.title),
+                      e,
+                      screenStyle: screenStyle,
+                    ),
                   ),
                 ),
               )
@@ -255,13 +260,21 @@ class _Benefit extends StatelessWidget {
               children: types.filterLast
                   .map(
                     (e) => Flexible(
-                      child: _BenefitItem(e, screenStyle: screenStyle),
+                      child: _BenefitItem(
+                        key: ValueKey(e.title),
+                        e,
+                        screenStyle: screenStyle,
+                      ),
                     ),
                   )
                   .toList(),
             ),
             const SizedBox(height: 45),
-            _BenefitItem(types.last, screenStyle: screenStyle)
+            _BenefitItem(
+              key: ValueKey(types.last.title),
+              types.last,
+              screenStyle: screenStyle,
+            )
           ],
         );
       case ScreenStyle.mobile:
@@ -271,7 +284,8 @@ class _Benefit extends StatelessWidget {
                     padding: EdgeInsets.only(
                       top: e == HomePageContactType.first ? 0 : 67,
                     ),
-                    child: _BenefitItem(e, screenStyle: screenStyle),
+                    child: _BenefitItem(
+                        key: ValueKey(e.title), e, screenStyle: screenStyle),
                   ))
               .toList(),
         );
@@ -281,7 +295,7 @@ class _Benefit extends StatelessWidget {
 
 /// 益處Item
 class _BenefitItem extends StatelessWidget {
-  const _BenefitItem(this.type, {required this.screenStyle});
+  const _BenefitItem(this.type, {super.key, required this.screenStyle});
 
   final ScreenStyle screenStyle;
   final HomePageContactType type;
