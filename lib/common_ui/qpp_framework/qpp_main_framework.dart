@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/view/qpp_app_bar_view.dart';
+import 'package:qpp_example/constants/qpp_contanst.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
@@ -50,14 +51,14 @@ class _MainScaffold extends StatefulWidget {
 }
 
 class _MainScaffoldState extends State<_MainScaffold> {
-  final GlobalKey global = GlobalKey();
+  final GlobalKey globalKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     // debugPrint(toString());
 
     return SelectionArea(
-      key: global,
+      key: globalKey,
       child: Scaffold(
         key: const ValueKey('Scaffold'),
         extendBodyBehindAppBar: true, // 設定可以在appBar後面擴充body

@@ -190,7 +190,8 @@ class MenuBtns extends StatelessWidget {
                             ref.read(scrollToContextProvider.notifier);
 
                         return GestureDetector(
-                          behavior: HitTestBehavior.translucent,
+                          behavior: HitTestBehavior
+                              .translucent, // 穿透點擊事件，讓整個元件都可以觸發點擊
                           onTap: () {
                             final bool isHomePage = Uri.base.path.isHomePage;
 
