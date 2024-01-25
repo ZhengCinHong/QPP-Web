@@ -85,26 +85,6 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-
-      // CustomScrollView(
-      //   controller: scrollController,
-      //   slivers: [
-      //     SliverList(
-      //       delegate: SliverChildBuilderDelegate(
-      //         (context, index) {
-      //           return switch (index) {
-      //             0 => HomePageIntroduce(key: introduceKey),
-      //             1 => HomePageFeature(key: featureKey),
-      //             2 => HomePageDescription(key: descriptionKey),
-      //             3 => HomePageContact(key: contactKey),
-      //             _ => const HomePageFooter(),
-      //           };
-      //         },
-      //         childCount: 5,
-      //       ),
-      //     ),
-      //   ],
-      // )
     );
   }
 }

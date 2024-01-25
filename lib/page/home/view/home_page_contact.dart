@@ -37,6 +37,7 @@ class HomePageContact extends StatelessWidget {
       ),
       padding: EdgeInsets.symmetric(vertical: isDesktopStyle ? 152 : 72),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 36),
@@ -71,6 +72,7 @@ class _TitleContent extends StatelessWidget {
     final int flex = isDesktopStyle ? 1 : 0;
 
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           context.tr(QppLocales.homeDigibagTitle),
@@ -90,12 +92,14 @@ class _TitleContent extends StatelessWidget {
                   top: isDesktopStyle ? 30 : 50,
                   bottom: isDesktopStyle ? 0 : 11,
                 ),
-                child: Image.asset(
-                  HomePageModel.contactOfficialIcon,
+                child: SizedBox(
                   width: isDesktopStyle ? 180 : 140,
                   height: isDesktopStyle ? 185 : 144,
-                  cacheWidth: isDesktopStyle ? 180 : 140,
-                  cacheHeight: isDesktopStyle ? 185 : 144,
+                  child: Image.asset(
+                    HomePageModel.contactOfficialIcon,
+                    cacheWidth: isDesktopStyle ? 180 : 140,
+                    cacheHeight: isDesktopStyle ? 185 : 144,
+                  ),
                 ),
               ),
             ),
@@ -216,6 +220,56 @@ class _LinkTextState extends State<_LinkText> {
   }
 }
 
+// for loop 替代 map
+List<Widget> get benefitDesktopWidget {
+  var types = HomePageContactType.values;
+  List<Widget> widgets = [];
+  const double space = 64;
+  for (int i = 0; i < types.length; i++) {
+    var type = types[i];
+    widgets.add(Flexible(
+      child: Padding(
+        padding: EdgeInsets.only(
+            top: type.contentOfTop ? 0 : space,
+            bottom: type.contentOfTop ? space : 0),
+        child: _BenefitItem(key: ValueKey(type.title), type, screenStyle: ScreenStyle.desktop),
+      ),
+    ));
+  }
+  return widgets;
+}
+
+// for loop 替代 map
+List<Widget> get benefitTabletWidget {
+  var types = HomePageContactType.values.filterLast;
+  List<Widget> widgets = [];
+  for (int i = 0; i < types.length; i++) {
+    var type = types[i];
+    widgets.add(
+      Flexible(
+        child: _BenefitItem(key: ValueKey(type.title), type, screenStyle: ScreenStyle.tablet),
+      ),
+    );
+  }
+  return widgets;
+}
+
+// for loop 替代 map
+List<Widget> get benefitMobileWidget {
+  var types = HomePageContactType.values;
+  List<Widget> widgets = [];
+  for (int i = 0; i < types.length; i++) {
+    var type = types[i];
+    widgets.add(Padding(
+      padding: EdgeInsets.only(
+        top: type == HomePageContactType.first ? 0 : 67,
+      ),
+      child: _BenefitItem(key: ValueKey(type.title), type, screenStyle: ScreenStyle.mobile),
+    ));
+  }
+  return widgets;
+}
+
 /// 益處
 class _Benefit extends StatelessWidget {
   const _Benefit.desktop() : screenStyle = ScreenStyle.desktop;
@@ -230,44 +284,16 @@ class _Benefit extends StatelessWidget {
 
     switch (screenStyle) {
       case ScreenStyle.desktop:
-        const double space = 64;
-
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: types
-              .map(
-                (e) => Flexible(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      top: e.contentOfTop ? 0 : space,
-                      bottom: e.contentOfTop ? space : 0,
-                    ),
-                    child: _BenefitItem(
-                      key: ValueKey(e.title),
-                      e,
-                      screenStyle: screenStyle,
-                    ),
-                  ),
-                ),
-              )
-              .toList(),
+          children: benefitDesktopWidget,
         );
       case ScreenStyle.tablet:
         return Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: types.filterLast
-                  .map(
-                    (e) => Flexible(
-                      child: _BenefitItem(
-                        key: ValueKey(e.title),
-                        e,
-                        screenStyle: screenStyle,
-                      ),
-                    ),
-                  )
-                  .toList(),
+              children: benefitTabletWidget,
             ),
             const SizedBox(height: 45),
             _BenefitItem(
@@ -279,15 +305,7 @@ class _Benefit extends StatelessWidget {
         );
       case ScreenStyle.mobile:
         return Column(
-          children: types
-              .map((e) => Padding(
-                    padding: EdgeInsets.only(
-                      top: e == HomePageContactType.first ? 0 : 67,
-                    ),
-                    child: _BenefitItem(
-                        key: ValueKey(e.title), e, screenStyle: screenStyle),
-                  ))
-              .toList(),
+          children: benefitMobileWidget,
         );
     }
   }
@@ -310,7 +328,12 @@ class _BenefitItem extends StatelessWidget {
         child: Stack(
           alignment: AlignmentDirectional.center,
           children: [
-            SizedBox(child: Image.asset(HomePageModel.constBenefitImage)),
+            SizedBox(
+                child: Image.asset(
+              HomePageModel.constBenefitImage,
+              cacheWidth: 442,
+              cacheHeight: 298,
+            )),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 30),
               constraints: BoxConstraints(maxWidth: isDesktopStyle ? 280 : 235),

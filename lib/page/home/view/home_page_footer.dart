@@ -94,6 +94,8 @@ class _Info extends StatelessWidget {
             isDesktopStyle
                 ? HomePageModel.footerLogoImages[0]
                 : HomePageModel.footerLogoImages[1],
+            cacheWidth: isDesktopStyle ? 74 : 151,
+            cacheHeight: isDesktopStyle ? 83 : 47,
           ),
           onPressed: () => html.window.location.reload(),
         ),

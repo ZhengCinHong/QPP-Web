@@ -111,12 +111,14 @@ class _Info extends StatelessWidget {
                 ? MainAxisAlignment.start
                 : MainAxisAlignment.center,
             children: [
-              Image.asset(
-                HomePageModel.introduceQppTextImage,
+              SizedBox(
                 width: isDesktopStyle ? 103 : 69,
                 height: isDesktopStyle ? 36 : 24,
-                cacheWidth: isDesktopStyle ? 103 : 69,
-                cacheHeight: isDesktopStyle ? 36 : 24,
+                child: Image.asset(
+                  HomePageModel.introduceQppTextImage,
+                  cacheWidth: isDesktopStyle ? 103 : 69,
+                  cacheHeight: isDesktopStyle ? 36 : 24,
+                ),
               ),
               const SizedBox(width: 11),
               Text(
@@ -138,8 +140,8 @@ class _Info extends StatelessWidget {
           isDesktopStyle
               ? const SizedBox.shrink()
               : Image.asset(HomePageModel.introducePicKvImage,
-                  fit: BoxFit.cover),
-          SizedBox(height: isDesktopStyle ? 61 : 56.4),
+                  cacheWidth: 375, cacheHeight: 375),
+          SizedBox(height: isDesktopStyle ? 61 : 0),
           isDesktopStyle ? const _Qrcode.desktop() : const _Qrcode.mobile(),
           SizedBox(height: isDesktopStyle ? 63 : 37),
           isDesktopStyle
@@ -195,12 +197,14 @@ class _Qrcode extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                HomePageModel.introduceKvRegisteredIcon,
+              SizedBox(
                 width: isDesktopStyle ? 36 : 28,
                 height: isDesktopStyle ? 36 : 28,
-                cacheWidth: isDesktopStyle ? 36 : 28,
-                cacheHeight: isDesktopStyle ? 36 : 28,
+                child: Image.asset(
+                  HomePageModel.introduceKvRegisteredIcon,
+                  cacheWidth: isDesktopStyle ? 36 : 28,
+                  cacheHeight: isDesktopStyle ? 36 : 28,
+                ),
               ),
               SizedBox(width: isDesktopStyle ? 20 : 12),
               Flexible(
@@ -313,13 +317,15 @@ class _PlayStoreButtonState extends State<_PlayStoreButton>
       child: InkWell(
         child: Stack(
           children: [
-            Image.asset(
-              widget.type.image,
-              fit: BoxFit.cover,
+            SizedBox(
               width: isDesktopStyle ? 174 : 157,
               height: isDesktopStyle ? 52 : 47,
-              cacheWidth: isDesktopStyle ? 174 : 157,
-              cacheHeight: isDesktopStyle ? 52 : 47,
+              child: Image.asset(
+                widget.type.image,
+                fit: BoxFit.cover,
+                cacheWidth: isDesktopStyle ? 174 : 157,
+                cacheHeight: isDesktopStyle ? 52 : 47,
+              ),
             ),
             AnimatedPositioned(
               duration: const Duration(milliseconds: 300),
