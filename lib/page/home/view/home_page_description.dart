@@ -88,7 +88,11 @@ class _PhoneDescriptionState extends State<_PhoneDescription> {
                     isDesktopStyle
                         ? const Spacer(flex: 104)
                         : const SizedBox.shrink(),
-                    Image.asset(HomePageModel.descriptionBgImage),
+                    Image.asset(
+                      HomePageModel.descriptionBgImage,
+                      cacheWidth: 148,
+                      cacheHeight: 46,
+                    ),
                     const SizedBox(height: 16, width: 36),
                     Flexible(
                       flex: isDesktopStyle ? 504 : 0,
@@ -319,21 +323,36 @@ class _BgWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      height: isShowBackground ? null : 0,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
-      transform: Matrix4.identity()..scale(isHovered ? 1.1 : 1.0),
-      child: Container(
-        decoration: BoxDecoration(
-          image: isShowBackground
-              ? DecorationImage(
-                  image: AssetImage(type.image),
-                  fit: BoxFit.cover,
-                )
-              : null,
-        ),
-      ),
-    );
+    var cacheSize = type.getCacheSize(screenStyle);
+
+    return screenStyle == ScreenStyle.desktop
+        ? AnimatedContainer(
+            height: isShowBackground ? null : 0,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+            transform: Matrix4.identity()..scale(isHovered ? 1.1 : 1.0),
+            child: Container(
+              decoration: BoxDecoration(
+                image: isShowBackground
+                    ? DecorationImage(
+                        image: ResizeImage(AssetImage(type.image),
+                            width: cacheSize.width.toInt(),
+                            height: cacheSize.height.toInt()),
+                        fit: BoxFit.cover,
+                      )
+                    : null,
+              ),
+            ),
+          )
+        : Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: ResizeImage(AssetImage(type.image),
+                    width: cacheSize.width.toInt(),
+                    height: cacheSize.height.toInt()),
+                fit: BoxFit.cover,
+              ),
+            ),
+          );
   }
 }
