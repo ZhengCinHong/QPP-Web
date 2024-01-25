@@ -71,15 +71,15 @@ class _HomePageState extends State<HomePage> {
       },
       child: SingleChildScrollView(
         controller: scrollController,
-        child: Column(
-          children: [
-            HomePageIntroduce(key: introduceKey),
-            HomePageFeature(key: featureKey),
-            HomePageDescription(key: descriptionKey),
-            HomePageContact(key: contactKey),
-            const HomePageFooter(),
-          ],
-        ),
+        child: Column(children: createWidgets()
+            // [
+            // HomePageIntroduce(key: introduceKey),
+            // HomePageFeature(key: featureKey),
+            // HomePageDescription(key: descriptionKey),
+            // HomePageContact(key: contactKey),
+            // HomePageFooter(),
+            // ],
+            ),
       ),
 
       // CustomScrollView(
@@ -103,4 +103,30 @@ class _HomePageState extends State<HomePage> {
       // )
     );
   }
+}
+
+List<Widget> createWidgets() {
+  List<Widget> li = [];
+  int count = 100;
+  Color color = Colors.white;
+  double size = 30.0;
+  Color bgColor = Colors.black;
+  li.add(HomePageIntroduce(key: introduceKey));
+  li.add(Text(
+    '1',
+    style: TextStyle(color: color, fontSize: size, backgroundColor: bgColor),
+  ));
+  for (int i = 0; i < count; i++) {
+    li.add(HomePageIntroduce(key: ValueKey('testKey$i')));
+    // li.add(SizedBox(
+    //     height: 80, child: Image.asset(HomePageModel.introducePicKvImage)
+    //     // Text(
+    //     //   i.toString(),
+    //     //   style:
+    //     //       TextStyle(color: color, fontSize: size, backgroundColor: bgColor),
+    //     // ),
+    //     ));
+  }
+
+  return li;
 }
