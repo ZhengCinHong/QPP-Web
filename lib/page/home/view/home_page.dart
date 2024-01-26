@@ -19,6 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final ScrollController scrollController = ScrollController();
+  final global = GlobalKey();
 
   /// 滑動到指定位置
   void scrollTo(
@@ -70,6 +71,7 @@ class _HomePageState extends State<HomePage> {
         return child ?? const SizedBox.shrink();
       },
       child: SingleChildScrollView(
+        key: global,
         controller: scrollController,
         child: Column(
           children: [
@@ -77,7 +79,7 @@ class _HomePageState extends State<HomePage> {
             HomePageFeature(key: featureKey),
             HomePageDescription(key: descriptionKey),
             HomePageContact(key: contactKey),
-            const HomePageFooter(),
+            const HomePageFooter(key: ValueKey('HomePageFooter')),
           ],
         ),
       ),
