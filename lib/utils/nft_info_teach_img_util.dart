@@ -102,10 +102,12 @@ class NFTInfoTeachImgUtil {
   static Widget getImg(int index, bool isDesktop) {
     Size size = getSize(index, isDesktop);
     return SizedBox(
+      key: ValueKey('sb$index'),
       width: size.width,
       height: size.height,
       child: Image.asset(
         infoTeachImgList[index],
+        key: ValueKey(infoTeachImgList[index]),
         cacheHeight: size.height.toInt(),
         cacheWidth: size.width.toInt(),
       ),
