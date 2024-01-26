@@ -22,8 +22,12 @@ class HomePageFeature extends StatelessWidget {
         final int flex = isDesktopStyle ? 1 : 0;
         final double topAndBottomSpacing = isDesktopStyle ? 200 : 80;
         const double leftAndRightSpacing = 24;
+        final String image = isDesktopStyle
+            ? HomePageModel.featureBgImages[0]
+            : HomePageModel.featureBgImages[1];
 
         return Container(
+          key: ValueKey(image),
           width: constraints.maxWidth,
           padding: EdgeInsets.only(
             top: topAndBottomSpacing,
@@ -33,11 +37,7 @@ class HomePageFeature extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(
-                isDesktopStyle
-                    ? HomePageModel.featureBgImages[0]
-                    : HomePageModel.featureBgImages[1],
-              ),
+              image: AssetImage(image),
               fit: BoxFit.cover,
             ),
           ),
@@ -87,7 +87,7 @@ class _Left extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         isDesktopStyle
-            ? Image.asset(HomePageModel.featureLeftImage)
+            ? Image.asset(key: const ValueKey(HomePageModel.featureLeftImage), HomePageModel.featureLeftImage)
             : const SizedBox(),
       ],
     );
@@ -149,6 +149,7 @@ class _FeatureInfoItem extends StatelessWidget {
               direction: isDesktopStyle ? Axis.horizontal : Axis.vertical,
               children: [
                 Image.asset(
+                  key: ValueKey(type.image),
                   isHighlight ? type.highlightImage : type.image,
                   width: 50,
                   height: 50,

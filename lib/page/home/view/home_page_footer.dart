@@ -85,15 +85,18 @@ class _Info extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDesktopStyle = screenStyle.isDesktop;
 
+    final String image = isDesktopStyle
+        ? HomePageModel.footerLogoImages[0]
+        : HomePageModel.footerLogoImages[1];
+
     return Flex(
       direction: isDesktopStyle ? Axis.horizontal : Axis.vertical,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         IconButton(
+          key: ValueKey(image),
           icon: Image.asset(
-            isDesktopStyle
-                ? HomePageModel.footerLogoImages[0]
-                : HomePageModel.footerLogoImages[1],
+            image,
             cacheWidth: isDesktopStyle ? 74 : 151,
             cacheHeight: isDesktopStyle ? 83 : 47,
           ),

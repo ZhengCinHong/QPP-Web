@@ -26,6 +26,7 @@ class HomePageContact extends StatelessWidget {
     final isDesktopStyle = contactScreenStyle.isDesktop;
 
     return Container(
+      key: const ValueKey('HomePageContactContainer'),
       width: maxWidth,
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -96,6 +97,7 @@ class _TitleContent extends StatelessWidget {
                   width: isDesktopStyle ? 180 : 140,
                   height: isDesktopStyle ? 185 : 144,
                   child: Image.asset(
+                    key: const ValueKey(HomePageModel.contactOfficialIcon),
                     HomePageModel.contactOfficialIcon,
                     cacheWidth: isDesktopStyle ? 180 : 140,
                     cacheHeight: isDesktopStyle ? 185 : 144,
@@ -340,6 +342,7 @@ class _BenefitItem extends StatelessWidget {
           children: [
             SizedBox(
                 child: Image.asset(
+              key: const ValueKey(HomePageModel.constBenefitImage),
               HomePageModel.constBenefitImage,
               cacheWidth: 442,
               cacheHeight: 298,

@@ -67,8 +67,10 @@ class _DesktopBody extends StatelessWidget {
         const SizedBox(width: 31),
         Expanded(
           flex: 2,
-          child:
-              Image.asset(HomePageModel.introducePicKvImage, fit: BoxFit.cover),
+          child: Image.asset(
+              key: const ValueKey(HomePageModel.introducePicKvImage),
+              HomePageModel.introducePicKvImage,
+              fit: BoxFit.cover),
         ),
         const Spacer(),
       ],
@@ -115,6 +117,7 @@ class _Info extends StatelessWidget {
                 width: isDesktopStyle ? 103 : 69,
                 height: isDesktopStyle ? 36 : 24,
                 child: Image.asset(
+                  key: const ValueKey(HomePageModel.introduceQppTextImage),
                   HomePageModel.introduceQppTextImage,
                   cacheWidth: isDesktopStyle ? 103 : 69,
                   cacheHeight: isDesktopStyle ? 36 : 24,
@@ -139,8 +142,11 @@ class _Info extends StatelessWidget {
           ),
           isDesktopStyle
               ? const SizedBox.shrink()
-              : Image.asset(HomePageModel.introducePicKvImage,
-                  cacheWidth: 375, cacheHeight: 375),
+              : Image.asset(
+                  key: const ValueKey(HomePageModel.introducePicKvImage),
+                  HomePageModel.introducePicKvImage,
+                  cacheWidth: 375,
+                  cacheHeight: 375),
           SizedBox(height: isDesktopStyle ? 61 : 0),
           isDesktopStyle ? const _Qrcode.desktop() : const _Qrcode.mobile(),
           SizedBox(height: isDesktopStyle ? 63 : 37),
@@ -201,6 +207,7 @@ class _Qrcode extends StatelessWidget {
                 width: isDesktopStyle ? 36 : 28,
                 height: isDesktopStyle ? 36 : 28,
                 child: Image.asset(
+                  key: const ValueKey(HomePageModel.introduceKvRegisteredIcon),
                   HomePageModel.introduceKvRegisteredIcon,
                   cacheWidth: isDesktopStyle ? 36 : 28,
                   cacheHeight: isDesktopStyle ? 36 : 28,
@@ -321,6 +328,7 @@ class _PlayStoreButtonState extends State<_PlayStoreButton>
               width: isDesktopStyle ? 174 : 157,
               height: isDesktopStyle ? 52 : 47,
               child: Image.asset(
+                key: ValueKey(widget.type.image),
                 widget.type.image,
                 fit: BoxFit.cover,
                 cacheWidth: isDesktopStyle ? 174 : 157,
@@ -405,8 +413,10 @@ class _MoreAboutQPPButtonState extends State<MoreAboutQPPButton>
                 builder: (context, child) {
                   return Transform.translate(
                     offset: _offsetTween.evaluate(_controller),
-                    child:
-                        Image.asset(HomePageModel.introduceArrowdonDoubleIcon),
+                    child: Image.asset(
+                        key: const ValueKey(
+                            HomePageModel.introduceArrowdonDoubleIcon),
+                        HomePageModel.introduceArrowdonDoubleIcon),
                   );
                 },
               )

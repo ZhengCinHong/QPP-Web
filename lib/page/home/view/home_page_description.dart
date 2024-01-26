@@ -89,6 +89,7 @@ class _PhoneDescriptionState extends State<_PhoneDescription> {
                         ? const Spacer(flex: 104)
                         : const SizedBox.shrink(),
                     Image.asset(
+                      key: const ValueKey(HomePageModel.descriptionBgImage),
                       HomePageModel.descriptionBgImage,
                       cacheWidth: 148,
                       cacheHeight: 46,
@@ -332,6 +333,7 @@ class _BgWidget extends StatelessWidget {
             curve: Curves.easeInOut,
             transform: Matrix4.identity()..scale(isHovered ? 1.1 : 1.0),
             child: Container(
+              key: ValueKey(type.image),
               decoration: BoxDecoration(
                 image: isShowBackground
                     ? DecorationImage(
@@ -345,6 +347,7 @@ class _BgWidget extends StatelessWidget {
             ),
           )
         : Container(
+            key: ValueKey(type.image),
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: ResizeImage(AssetImage(type.image),
