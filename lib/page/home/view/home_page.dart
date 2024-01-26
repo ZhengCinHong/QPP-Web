@@ -8,6 +8,7 @@ import 'package:qpp_example/page/home/view/home_page_description.dart';
 import 'package:qpp_example/page/home/view/home_page_feature.dart';
 import 'package:qpp_example/page/home/view/home_page_footer.dart';
 import 'package:qpp_example/page/home/view/home_page_introduce.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
 /// 首頁
 class HomePage extends StatefulWidget {
@@ -18,7 +19,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final ScrollController scrollController = ScrollController();
+  final scrollController = AutoScrollController();
   final global = GlobalKey();
 
   /// 滑動到指定位置
@@ -54,37 +55,56 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(context) {
     return Consumer(
-      builder: (context, ref, child) {
-        final scrollToContext = ref.watch(scrollToContextProvider);
-        final scrollToContextNotifier =
-            ref.read(scrollToContextProvider.notifier);
+        builder: (context, ref, child) {
+          final scrollToContext = ref.watch(scrollToContextProvider);
+          final scrollToContextNotifier =
+              ref.read(scrollToContextProvider.notifier);
 
-        if (scrollToContext != null) {
-          final container =
-              scrollToContext.currentContext?.findRenderObject() as RenderBox;
-          final scrollPoint =
-              container.localToGlobal(Offset(0, scrollController.offset)).dy -
-                  (Scaffold.of(context).appBarMaxHeight ?? 0);
+          if (scrollToContext != null) {
+            final container =
+                scrollToContext.currentContext?.findRenderObject() as RenderBox;
+            final scrollPoint =
+                container.localToGlobal(Offset(0, scrollController.offset)).dy -
+                    (Scaffold.of(context).appBarMaxHeight ?? 0);
 
-          scrollTo(scrollToContextNotifier, scrollController,
-              scrollPoint <= 0 ? 0 : scrollPoint);
-        }
+            scrollTo(scrollToContextNotifier, scrollController,
+                scrollPoint <= 0 ? 0 : scrollPoint);
+          }
 
-        return child ?? const SizedBox.shrink();
-      },
-      child: SingleChildScrollView(
-        key: global,
-        controller: scrollController,
-        child: Column(
-          children: [
-            HomePageIntroduce(key: introduceKey),
-            HomePageFeature(key: featureKey),
-            HomePageDescription(key: descriptionKey),
-            HomePageContact(key: contactKey),
-            const HomePageFooter(key: ValueKey('HomePageFooter')),
-          ],
-        ),
-      ),
-    );
+          return child ?? const SizedBox.shrink();
+        },
+        child: ListView.builder(
+          itemCount: 5,
+          itemBuilder: (context, index) {
+            return AutoScrollTag(
+              key: ValueKey('$index'),
+              controller: scrollController,
+              index: index,
+              child: switch (index) {
+                0 => HomePageIntroduce(key: introduceKey),
+                1 => HomePageFeature(key: featureKey),
+                2 => HomePageDescription(key: descriptionKey),
+                3 => HomePageContact(key: contactKey),
+                _ => const HomePageFooter(key: ValueKey('HomePageFooter')),
+              },
+            );
+          },
+          controller: scrollController,
+        )
+
+        // SingleChildScrollView(
+        //   key: global,
+        //   controller: scrollController,
+        //   child: Column(
+        //     children: [
+        //       HomePageIntroduce(key: introduceKey),
+        //       HomePageFeature(key: featureKey),
+        //       HomePageDescription(key: descriptionKey),
+        //       HomePageContact(key: contactKey),
+        //       const HomePageFooter(key: ValueKey('HomePageFooter')),
+        //     ],
+        //   ),
+        // ),
+        );
   }
 }
