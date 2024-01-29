@@ -93,15 +93,13 @@ class _TitleContent extends StatelessWidget {
                   top: isDesktopStyle ? 30 : 50,
                   bottom: isDesktopStyle ? 0 : 11,
                 ),
-                child: SizedBox(
+                child: Image.asset(
+                  key: const ValueKey(HomePageModel.contactOfficialIcon),
+                  HomePageModel.contactOfficialIcon,
                   width: isDesktopStyle ? 180 : 140,
                   height: isDesktopStyle ? 185 : 144,
-                  child: Image.asset(
-                    key: const ValueKey(HomePageModel.contactOfficialIcon),
-                    HomePageModel.contactOfficialIcon,
-                    cacheWidth: isDesktopStyle ? 180 : 140,
-                    cacheHeight: isDesktopStyle ? 185 : 144,
-                  ),
+                  cacheWidth: isDesktopStyle ? 180 : 140,
+                  cacheHeight: isDesktopStyle ? 185 : 144,
                 ),
               ),
             ),
