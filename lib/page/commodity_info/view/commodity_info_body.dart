@@ -58,8 +58,10 @@ class _CommodityInfoPageState extends State<CommodityInfoPage> {
 
   /// 滑動到最底部
   Future _scrollToBottom() async {
-    await controller.scrollToIndex(count - 1,
-        preferPosition: AutoScrollPosition.begin);
+    await controller.scrollToIndex(
+      count - 1,
+      preferPosition: AutoScrollPosition.begin,
+    );
     controller.highlight(count - 1);
   }
 
@@ -101,77 +103,46 @@ class _CommodityInfoPageState extends State<CommodityInfoPage> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        SizedBox(
-            width: double.infinity,
-            child: ListView.builder(
-              itemCount: count,
-              primary: false,
+        ListView.builder(
+          itemCount: count,
+          primary: false,
+          controller: controller,
+          itemBuilder: (context, index) {
+            return AutoScrollTag(
+              key: ValueKey(index),
               controller: controller,
-              itemBuilder: (context, index) {
-                return AutoScrollTag(
-                  key: ValueKey(index),
-                  controller: controller,
-                  index: index,
-                  child: switch (index) {
-                    0 => // 上方資料區
-                      isDesktopStyle
-                          ? const InfoCard.desktop()
-                          : const InfoCard.mobile(),
-                    1 => // 下方 QR Code / 按鈕
-                      Consumer(
-                        builder: (context, ref, child) {
-                          final isQuestionnaire = ref.watch(
-                              itemSelectInfoProvider.select((value) =>
-                                  value.voteDataState.data?.item.category ==
-                                  ItemCategory.questionnaire));
-
-                          return isQuestionnaire
-                              ? const SizedBox.shrink()
-                              : child ?? const SizedBox.shrink();
-                        },
-                        child: UniversalLinkWidget(
-                          url: qrCodeUrl,
-                          mobileText: QppLocales.commodityInfoLaunchQPP,
+              index: index,
+              child: switch (index) {
+                0 => // 上方資料區
+                  isDesktopStyle
+                      ? const InfoCard.desktop()
+                      : const InfoCard.mobile(),
+                1 => // 下方 QR Code / 按鈕
+                  Consumer(
+                    builder: (context, ref, child) {
+                      final isQuestionnaire = ref.watch(
+                        itemSelectInfoProvider.select(
+                          (value) =>
+                              value.voteDataState.data?.item.category ==
+                              ItemCategory.questionnaire,
                         ),
-                      ),
-                    _ => // 底部間距
-                      const SizedBox(height: 40),
-                  },
-                );
+                      );
+
+                      return isQuestionnaire
+                          ? const SizedBox.shrink()
+                          : child ?? const SizedBox.shrink();
+                    },
+                    child: UniversalLinkWidget(
+                      url: qrCodeUrl,
+                      mobileText: QppLocales.commodityInfoLaunchQPP,
+                    ),
+                  ),
+                _ => // 底部間距
+                  const SizedBox(height: 40),
               },
-            )
-
-            // SingleChildScrollView(
-            //   controller: _scrollController,
-            //   child: Column(
-            //     children: [
-            //       // 上方資料區
-            //       isDesktopStyle
-            //           ? const InfoCard.desktop()
-            //           : const InfoCard.mobile(),
-            //       // 下方 QR Code / 按鈕
-            //       Consumer(
-            //         builder: (context, ref, child) {
-            //           final isQuestionnaire = ref.watch(
-            //               itemSelectInfoProvider.select((value) =>
-            //                   value.voteDataState.data?.item.category ==
-            //                   ItemCategory.questionnaire));
-
-            //           return isQuestionnaire
-            //               ? const SizedBox.shrink()
-            //               : child ?? const SizedBox.shrink();
-            //         },
-            //         child: UniversalLinkWidget(
-            //           url: qrCodeUrl,
-            //           mobileText: QppLocales.commodityInfoLaunchQPP,
-            //         ),
-            //       ),
-            //       // 底部間距
-            //       const SizedBox(height: 40)
-            //     ],
-            //   ),
-            // ),
-            ),
+            );
+          },
+        ),
         Positioned(
           bottom: 15,
           right: 15,
@@ -192,11 +163,6 @@ class _CommodityInfoPageState extends State<CommodityInfoPage> {
             child: IconButton(
               onPressed: () {
                 _scrollToBottom();
-                // _scrollController.animateTo(
-                //   _scrollController.position.maxScrollExtent,
-                //   duration: const Duration(milliseconds: 300),
-                //   curve: Curves.easeOut,
-                // );
               }.throttle(),
               icon: Image.asset(
                 QPPImages.desktop_button_down_send_normal,
