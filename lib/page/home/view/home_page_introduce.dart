@@ -26,16 +26,17 @@ class HomePageIntroduce extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDesktopStyle = MediaQuery.of(context).size.width >= 1300; // 特殊螢幕風格
+    final isDesktopStyle = MediaQuery.of(context).size.width >= 1250; // 特殊螢幕風格
 
     return Padding(
       padding: EdgeInsets.only(
-          top: isDesktopStyle
-              ? 133 + kToolbarDesktopHeight
-              : 48 + kToolbarMobileHeight,
-          bottom: isDesktopStyle ? 113 : 73,
-          left: 24,
-          right: 24),
+        top: isDesktopStyle
+            ? 133 + kToolbarDesktopHeight
+            : 48 + kToolbarMobileHeight,
+        bottom: isDesktopStyle ? 113 : 73,
+        left: 24,
+        right: 24,
+      ),
       child: Column(
         children: [
           isDesktopStyle ? const _DesktopBody() : const _MobileBody(),
@@ -62,17 +63,17 @@ class _DesktopBody extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Spacer(),
+        const Spacer(flex: 2),
         const _Info.desktop(),
-        const SizedBox(width: 31),
-        Expanded(
-          flex: 2,
-          child: Image.asset(
-              key: const ValueKey(HomePageModel.introducePicKvImage),
-              HomePageModel.introducePicKvImage,
-              fit: BoxFit.cover),
-        ),
         const Spacer(),
+        Image.asset(
+          key: const ValueKey(HomePageModel.introducePicKvImage),
+          HomePageModel.introducePicKvImage,
+          height: 555,
+          cacheHeight: 555,
+          fit: BoxFit.cover,
+        ),
+        const Spacer(flex: 2),
       ],
     );
   }
@@ -145,8 +146,9 @@ class _Info extends StatelessWidget {
               : Image.asset(
                   key: const ValueKey(HomePageModel.introducePicKvImage),
                   HomePageModel.introducePicKvImage,
+                  width: 375,
                   cacheWidth: 375,
-                  cacheHeight: 375),
+                ),
           SizedBox(height: isDesktopStyle ? 61 : 0),
           isDesktopStyle ? const _Qrcode.desktop() : const _Qrcode.mobile(),
           SizedBox(height: isDesktopStyle ? 63 : 37),
