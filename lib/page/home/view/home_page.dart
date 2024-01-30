@@ -18,22 +18,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final ScrollController scrollController = ScrollController();
+  // late AutoScrollController scrollController;
+  final scrollController = ScrollController();
   final global = GlobalKey();
 
   /// 滑動到指定位置
   void scrollTo(
     StateController<MainMenu?> notifier,
-    ScrollController scrollController,
     double scrollPoint,
   ) {
-    Future.microtask(() => {
-          scrollController.animateTo(
-            scrollPoint,
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.fastOutSlowIn,
-          )
-        }).then((value) => notifier.state = null);
+    Future.microtask(
+      () => {
+        // scrollController.scrollToIndex(3,
+        //     preferPosition: AutoScrollPosition.begin)
+        scrollController.animateTo(
+          scrollPoint,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.fastOutSlowIn,
+        )
+      },
+    ).then((value) => notifier.state = null);
   }
 
   Future<void> precacheAssetImages() async {
@@ -49,60 +53,71 @@ class _HomePageState extends State<HomePage> {
     precacheAssetImages();
   }
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   scrollController = AutoScrollController(
+  //     viewportBoundaryGetter: () =>
+  //         Rect.fromLTRB(Scaffold.of(context).appBarMaxHeight ?? 0, 0, 0, 0),
+  //   );
+  // }
+
   @override
   Widget build(context) {
     return Consumer(
-      builder: (context, ref, child) {
-        final scrollToContext = ref.watch(scrollToContextProvider);
-        final scrollToContextNotifier =
-            ref.read(scrollToContextProvider.notifier);
+        builder: (context, ref, child) {
+          final scrollToContext = ref.watch(scrollToContextProvider);
+          final scrollToContextNotifier =
+              ref.read(scrollToContextProvider.notifier);
 
-        if (scrollToContext != null) {
-          final container =
-              scrollToContext.currentContext?.findRenderObject() as RenderBox;
-          final scrollPoint =
-              container.localToGlobal(Offset(0, scrollController.offset)).dy -
-                  (Scaffold.of(context).appBarMaxHeight ?? 0);
+          if (scrollToContext != null) {
+            final container =
+                scrollToContext.currentContext?.findRenderObject() as RenderBox;
+            final scrollPoint =
+                container.localToGlobal(Offset(0, scrollController.offset)).dy -
+                    (Scaffold.of(context).appBarMaxHeight ?? 0);
 
-          scrollTo(scrollToContextNotifier, scrollController,
-              scrollPoint <= 0 ? 0 : scrollPoint);
-        }
+            scrollTo(
+              scrollToContextNotifier,
+              scrollPoint <= 0 ? 0 : scrollPoint,
+            );
+          }
 
-        return child ?? const SizedBox.shrink();
-      },
-      child: SingleChildScrollView(
-        key: global,
-        controller: scrollController,
-        child: Column(
-          children: [
-            HomePageIntroduce(key: introduceKey),
-            HomePageFeature(key: featureKey),
-            HomePageDescription(key: descriptionKey),
-            HomePageContact(key: contactKey),
-            const HomePageFooter(key: ValueKey('HomePageFooter')),
-          ],
+          return child ?? const SizedBox.shrink();
+        },
+        child: 
+        // ListView.builder(
+        //   itemCount: 5,
+        //   itemBuilder: (context, index) {
+        //     return AutoScrollTag(
+        //       key: ValueKey('$index'),
+        //       controller: scrollController,
+        //       index: index,
+        //       child: switch (index) {
+        //         0 => HomePageIntroduce(key: introduceKey),
+        //         1 => HomePageFeature(key: featureKey),
+        //         2 => HomePageDescription(key: descriptionKey),
+        //         3 => HomePageContact(key: contactKey),
+        //         _ => const HomePageFooter(key: ValueKey('HomePageFooter')),
+        //       },
+        //     );
+        //   },
+        //   controller: scrollController,
+        // )
+
+        SingleChildScrollView(
+          key: global,
+          controller: scrollController,
+          child: Column(
+            children: [
+              HomePageIntroduce(key: introduceKey),
+              HomePageFeature(key: featureKey),
+              HomePageDescription(key: descriptionKey),
+              HomePageContact(key: contactKey),
+              const HomePageFooter(key: ValueKey('HomePageFooter')),
+            ],
+          ),
         ),
-      ),
-
-      // CustomScrollView(
-      //   controller: scrollController,
-      //   slivers: [
-      //     SliverList(
-      //       delegate: SliverChildBuilderDelegate(
-      //         (context, index) {
-      //           return switch (index) {
-      //             0 => HomePageIntroduce(key: introduceKey),
-      //             1 => HomePageFeature(key: featureKey),
-      //             2 => HomePageDescription(key: descriptionKey),
-      //             3 => HomePageContact(key: contactKey),
-      //             _ => const HomePageFooter(),
-      //           };
-      //         },
-      //         childCount: 5,
-      //       ),
-      //     ),
-      //   ],
-      // )
-    );
+        );
   }
 }
