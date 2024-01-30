@@ -1,13 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/model/qpp_app_bar_model.dart';
+import 'package:qpp_example/common_ui/qpp_app_bar/view_model/qpp_app_bar_view_model.dart';
 import 'package:qpp_example/common_ui/qpp_universal_link/universal_link_qrcode.dart';
 import 'package:qpp_example/constants/qpp_contanst.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/extension/color/color_to_string.dart';
 import 'package:qpp_example/extension/string/url.dart';
+import 'package:qpp_example/extension/throttle_debounce.dart';
 import 'package:qpp_example/extension/widget/disable_selection_container.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/home/model/home_page_model.dart';
@@ -23,16 +26,17 @@ class HomePageIntroduce extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDesktopStyle = MediaQuery.of(context).size.width >= 1300; // 特殊螢幕風格
+    final isDesktopStyle = MediaQuery.of(context).size.width >= 1250; // 特殊螢幕風格
 
     return Padding(
       padding: EdgeInsets.only(
-          top: isDesktopStyle
-              ? 133 + kToolbarDesktopHeight
-              : 48 + kToolbarMobileHeight,
-          bottom: isDesktopStyle ? 113 : 73,
-          left: 24,
-          right: 24),
+        top: isDesktopStyle
+            ? 133 + kToolbarDesktopHeight
+            : 48 + kToolbarMobileHeight,
+        bottom: isDesktopStyle ? 113 : 73,
+        left: 24,
+        right: 24,
+      ),
       child: Column(
         children: [
           isDesktopStyle ? const _DesktopBody() : const _MobileBody(),
@@ -59,15 +63,17 @@ class _DesktopBody extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Spacer(),
+        const Spacer(flex: 2),
         const _Info.desktop(),
-        const SizedBox(width: 31),
-        Expanded(
-          flex: 2,
-          child:
-              Image.asset(HomePageModel.introducePicKvImage, fit: BoxFit.cover),
-        ),
         const Spacer(),
+        Image.asset(
+          key: const ValueKey(HomePageModel.introducePicKvImage),
+          HomePageModel.introducePicKvImage,
+          height: 555,
+          cacheHeight: 555,
+          fit: BoxFit.cover,
+        ),
+        const Spacer(flex: 2),
       ],
     );
   }
@@ -108,12 +114,15 @@ class _Info extends StatelessWidget {
                 ? MainAxisAlignment.start
                 : MainAxisAlignment.center,
             children: [
-              Image.asset(
-                HomePageModel.introduceQppTextImage,
+              SizedBox(
                 width: isDesktopStyle ? 103 : 69,
                 height: isDesktopStyle ? 36 : 24,
-                cacheWidth: isDesktopStyle ? 103 : 69,
-                cacheHeight: isDesktopStyle ? 36 : 24,
+                child: Image.asset(
+                  key: const ValueKey(HomePageModel.introduceQppTextImage),
+                  HomePageModel.introduceQppTextImage,
+                  cacheWidth: isDesktopStyle ? 103 : 69,
+                  cacheHeight: isDesktopStyle ? 36 : 24,
+                ),
               ),
               const SizedBox(width: 11),
               Text(
@@ -134,9 +143,13 @@ class _Info extends StatelessWidget {
           ),
           isDesktopStyle
               ? const SizedBox.shrink()
-              : Image.asset(HomePageModel.introducePicKvImage,
-                  fit: BoxFit.cover),
-          SizedBox(height: isDesktopStyle ? 61 : 56.4),
+              : Image.asset(
+                  key: const ValueKey(HomePageModel.introducePicKvImage),
+                  HomePageModel.introducePicKvImage,
+                  width: 375,
+                  cacheWidth: 375,
+                ),
+          SizedBox(height: isDesktopStyle ? 61 : 0),
           isDesktopStyle ? const _Qrcode.desktop() : const _Qrcode.mobile(),
           SizedBox(height: isDesktopStyle ? 63 : 37),
           isDesktopStyle
@@ -192,12 +205,15 @@ class _Qrcode extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                HomePageModel.introduceKvRegisteredIcon,
+              SizedBox(
                 width: isDesktopStyle ? 36 : 28,
                 height: isDesktopStyle ? 36 : 28,
-                cacheWidth: isDesktopStyle ? 36 : 28,
-                cacheHeight: isDesktopStyle ? 36 : 28,
+                child: Image.asset(
+                  key: const ValueKey(HomePageModel.introduceKvRegisteredIcon),
+                  HomePageModel.introduceKvRegisteredIcon,
+                  cacheWidth: isDesktopStyle ? 36 : 28,
+                  cacheHeight: isDesktopStyle ? 36 : 28,
+                ),
               ),
               SizedBox(width: isDesktopStyle ? 20 : 12),
               Flexible(
@@ -310,13 +326,16 @@ class _PlayStoreButtonState extends State<_PlayStoreButton>
       child: InkWell(
         child: Stack(
           children: [
-            Image.asset(
-              widget.type.image,
-              fit: BoxFit.cover,
+            SizedBox(
               width: isDesktopStyle ? 174 : 157,
               height: isDesktopStyle ? 52 : 47,
-              cacheWidth: isDesktopStyle ? 174 : 157,
-              cacheHeight: isDesktopStyle ? 52 : 47,
+              child: Image.asset(
+                key: ValueKey(widget.type.image),
+                widget.type.image,
+                fit: BoxFit.cover,
+                cacheWidth: isDesktopStyle ? 174 : 157,
+                cacheHeight: isDesktopStyle ? 52 : 47,
+              ),
             ),
             AnimatedPositioned(
               duration: const Duration(milliseconds: 300),
@@ -372,13 +391,17 @@ class _MoreAboutQPPButtonState extends State<MoreAboutQPPButton>
   Widget build(BuildContext context) {
     return Column(
       children: [
-        InkWell(
-          onTap: () {
-            final currentContext = featureKey.currentContext;
-            if (currentContext != null) {
-              Scrollable.ensureVisible(currentContext,
-                  duration: const Duration(seconds: 1));
-            }
+        Consumer(
+          builder: (context, ref, child) {
+            final scrollToContextNotifier =
+                ref.read(scrollToContextProvider.notifier);
+
+            return GestureDetector(
+              onTap: () {
+                scrollToContextNotifier.state = MainMenu.feature;
+              }.throttleWithTimeout(timeout: 1000),
+              child: child,
+            );
           },
           child: Column(
             children: [
@@ -392,8 +415,10 @@ class _MoreAboutQPPButtonState extends State<MoreAboutQPPButton>
                 builder: (context, child) {
                   return Transform.translate(
                     offset: _offsetTween.evaluate(_controller),
-                    child:
-                        Image.asset(HomePageModel.introduceArrowdonDoubleIcon),
+                    child: Image.asset(
+                        key: const ValueKey(
+                            HomePageModel.introduceArrowdonDoubleIcon),
+                        HomePageModel.introduceArrowdonDoubleIcon),
                   );
                 },
               )

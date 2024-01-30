@@ -39,7 +39,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      theme: ThemeData(useMaterial3: true),
+      theme: ThemeData(
+        useMaterial3: true,
+        textSelectionTheme: TextSelectionThemeData(
+          selectionColor: Colors.blueAccent.shade100,
+        ),
+      ),
       routerConfig: QppGoRouter.router,
       locale: context.locale,
       supportedLocales: context.supportedLocales,

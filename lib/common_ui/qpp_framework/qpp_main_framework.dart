@@ -50,19 +50,21 @@ class _MainScaffold extends StatefulWidget {
 }
 
 class _MainScaffoldState extends State<_MainScaffold> {
-  final GlobalKey global = GlobalKey();
+  final GlobalKey globalKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     // debugPrint(toString());
 
     return SelectionArea(
-      key: global,
+      key: globalKey,
       child: Scaffold(
+        key: const ValueKey('Scaffold'),
         extendBodyBehindAppBar: true, // 設定可以在appBar後面擴充body
         backgroundColor: QppColors.oxfordBlue,
         appBar: qppAppBar(widget.isDesktopStyle),
         body: Container(
+          key: const ValueKey('bg'),
           height: double.infinity,
           width: double.infinity,
           decoration: BoxDecoration(
