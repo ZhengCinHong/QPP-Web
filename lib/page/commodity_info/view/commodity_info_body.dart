@@ -104,6 +104,7 @@ class _CommodityInfoPageState extends State<CommodityInfoPage> {
     return Stack(
       children: [
         ListView.builder(
+          padding: EdgeInsets.zero,
           itemCount: count,
           primary: false,
           controller: controller,
@@ -219,7 +220,7 @@ class InfoCard extends StatelessWidget {
             Card(
               // 切子元件超出範圍
               clipBehavior: Clip.hardEdge,
-              semanticContainer: false,
+              semanticContainer: true,
               // 容器與四周間距
               margin: isDesktop
                   ? const EdgeInsets.fromLTRB(
@@ -237,29 +238,34 @@ class InfoCard extends StatelessWidget {
               ),
               // Card 陰影
               elevation: 0,
-              child: () {
-                if (itemInfoState.isCompleted) {
-                  // 有取得物品資料
-                  return isDesktop
-                      ? const NormalItemInfo.desktop()
-                      : const NormalItemInfo.mobile();
-                } else if (nftMetaState.isCompleted) {
-                  // 有取得 NFT Meta
-                  return isDesktop
-                      ? const NFTItemInfo.desktop()
-                      : const NFTItemInfo.mobile();
-                } else if (voteDataState.isCompleted) {
-                  // 取得問券資料
-                  return isDesktop
-                      ? const VoteItemInfo.desktop()
-                      : const VoteItemInfo.mobile();
-                } else {
-                  // 沒有取得物品資料
-                  return isDesktop
-                      ? const EmptyInfo.desktop()
-                      : const EmptyInfo.mobile();
-                }
-              }(),
+              // 特定裝置會吃不到 card clip, 多加一層切圓角
+              child: ClipRRect(
+                clipBehavior: Clip.hardEdge,
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                child: () {
+                  if (itemInfoState.isCompleted) {
+                    // 有取得物品資料
+                    return isDesktop
+                        ? const NormalItemInfo.desktop()
+                        : const NormalItemInfo.mobile();
+                  } else if (nftMetaState.isCompleted) {
+                    // 有取得 NFT Meta
+                    return isDesktop
+                        ? const NFTItemInfo.desktop()
+                        : const NFTItemInfo.mobile();
+                  } else if (voteDataState.isCompleted) {
+                    // 取得問券資料
+                    return isDesktop
+                        ? const VoteItemInfo.desktop()
+                        : const VoteItemInfo.mobile();
+                  } else {
+                    // 沒有取得物品資料
+                    return isDesktop
+                        ? const EmptyInfo.desktop()
+                        : const EmptyInfo.mobile();
+                  }
+                }(),
+              ),
             ),
             voteDataState.isCompleted
                 ? context.isDesktopPlatform
