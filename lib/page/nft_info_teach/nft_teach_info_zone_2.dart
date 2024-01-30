@@ -19,6 +19,7 @@ class NFTTeachInfoZone2 extends StatelessWidget {
         // 禁止 list 內容 滾動
         primary: false,
         itemBuilder: (context, index) {
+          ValueKey key = ValueKey('info$index');
           return switch (index) {
             0 => Container(
                 margin: const EdgeInsets.only(bottom: 12),
@@ -29,9 +30,9 @@ class NFTTeachInfoZone2 extends StatelessWidget {
                       : QppTextStyles.mobile_20pt_title_L_maya_blue_L,
                 ),
               ),
-            1 => isDesktop ? const Info1.desktop() : const Info1.mobile(),
-            2 => isDesktop ? const Info2.desktop() : const Info2.mobile(),
-            3 => isDesktop ? const Info3.desktop() : const Info3.mobile(),
+            1 => isDesktop ?  Info1.desktop(key: key,) :  Info1.mobile(key: key,),
+            2 => isDesktop ?  Info2.desktop(key: key,) :  Info2.mobile(key: key,),
+            3 => isDesktop ?  Info3.desktop(key: key,) :  Info3.mobile(key: key,),
             _ => const SizedBox.shrink(),
           };
         });
@@ -52,6 +53,7 @@ class Info1 extends NFTTeachInfoExpand {
   Widget get content => Container(
         margin: const EdgeInsets.only(top: 20),
         child: ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: 5,
           shrinkWrap: true,
           // 禁止 list 內容 滾動
@@ -130,6 +132,7 @@ class Info2 extends NFTTeachInfoExpand {
           shrinkWrap: true,
           // 禁止 list 內容 滾動
           primary: false,
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: 5,
           itemBuilder: ((context, index) {
             return switch (index) {
@@ -203,6 +206,7 @@ class Info3 extends NFTTeachInfoExpand {
           shrinkWrap: true,
           // 禁止 list 內容 滾動
           primary: false,
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: 4,
           itemBuilder: (context, index) {
             return switch (index) {
