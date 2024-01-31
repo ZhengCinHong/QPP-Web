@@ -102,12 +102,15 @@ class NFTInfoTeachImgUtil {
   static Widget getImg(int index, bool isDesktop) {
     Size size = getSize(index, isDesktop);
     return SizedBox(
+      key: ValueKey('sb$index'),
       width: size.width,
       height: size.height,
       child: Image.asset(
         infoTeachImgList[index],
-        cacheHeight: size.height.toInt(),
-        cacheWidth: size.width.toInt(),
+        key: ValueKey(infoTeachImgList[index]),
+        // TODO: 先拿掉 cache size, android 手機吃 cavakit render 圖片會變很小
+        // cacheHeight: size.height.toInt(),
+        // cacheWidth: size.width.toInt(),
       ),
     );
   }

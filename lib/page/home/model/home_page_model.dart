@@ -1,16 +1,22 @@
+import 'package:flutter/widgets.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
+import 'package:qpp_example/utils/screen.dart';
 
 class HomePageModel {
   /// 產品介紹QPP文字圖片
   static const introduceQppTextImage = QPPImages.desktop_image_qpp_text;
+
   /// 產品介紹手機圖片
   static const introducePicKvImage = QPPImages.desktop_pic_kv;
+
   /// 產品介紹即刻登入Icon
   static const introduceKvRegisteredIcon = QPPImages.desktop_icon_kv_registered;
+
   /// 產品介紹雙向下箭頭
-  static const introduceArrowdonDoubleIcon = QPPImages.desktop_icon_arrowdown_double;
+  static const introduceArrowdonDoubleIcon =
+      QPPImages.desktop_icon_arrowdown_double;
 
   /// 產品特色背景圖
   static const featureBgImages = [
@@ -196,6 +202,19 @@ enum HomePageDescriptionType {
         return QPPImages.desktop_pic_area_02_02;
       case HomePageDescriptionType.forum:
         return QPPImages.desktop_pic_area_02_03;
+    }
+  }
+
+  Size getCacheSize(ScreenStyle style) {
+    if (style == ScreenStyle.desktop) {
+      return const Size(375, 300);
+    } else {
+      switch (this) {
+        case HomePageDescriptionType.phone:
+          return const Size(952, 980);
+        default:
+          return const Size(484, 490);
+      }
     }
   }
 

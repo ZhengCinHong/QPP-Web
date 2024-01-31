@@ -35,7 +35,7 @@ class MainFramework extends StatelessWidget {
 }
 
 /// 主鷹架
-class _MainScaffold extends StatelessWidget {
+class _MainScaffold extends StatefulWidget {
   const _MainScaffold({
     required this.child,
     required this.isDesktopStyle,
@@ -46,28 +46,38 @@ class _MainScaffold extends StatelessWidget {
   final bool isDesktopStyle;
 
   @override
+  State<_MainScaffold> createState() => _MainScaffoldState();
+}
+
+class _MainScaffoldState extends State<_MainScaffold> {
+  final GlobalKey globalKey = GlobalKey();
+
+  @override
   Widget build(BuildContext context) {
     // debugPrint(toString());
 
     return SelectionArea(
+      key: globalKey,
       child: Scaffold(
+        key: const ValueKey('Scaffold'),
         extendBodyBehindAppBar: true, // 設定可以在appBar後面擴充body
         backgroundColor: QppColors.oxfordBlue,
-        appBar: qppAppBar(isDesktopStyle),
+        appBar: qppAppBar(widget.isDesktopStyle),
         body: Container(
+          key: const ValueKey('bg'),
           height: double.infinity,
           width: double.infinity,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
-                isDesktopStyle
+                widget.isDesktopStyle
                     ? QPPImages.desktop_bg_kv
                     : QPPImages.mobile_bg_kv,
               ),
               fit: BoxFit.cover,
             ),
           ),
-          child: child,
+          child: widget.child,
         ),
       ),
     );
