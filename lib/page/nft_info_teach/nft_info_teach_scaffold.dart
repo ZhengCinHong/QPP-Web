@@ -1,10 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/model/enum/item/nft_info_teach_anchor.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_1.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_2.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_teach_info_zone_3.dart';
+import 'package:qpp_example/universal_link/universal_link_data.dart';
 import 'package:qpp_example/utils/nft_info_teach_img_util.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
@@ -13,11 +15,22 @@ import 'package:qpp_example/utils/screen.dart';
 
 class NFTInfoTeachScaffold extends StatefulWidget {
   // 錨點
-  final NFTInfoTeachAnchor anchor;
-  const NFTInfoTeachScaffold({super.key, required this.anchor});
+  // final NFTInfoTeachAnchor anchor;
+  final GoRouterState state;
+  const NFTInfoTeachScaffold({super.key,required this.state});
 
   @override
   StateNFTInfoTeach createState() => StateNFTInfoTeach();
+
+   NFTInfoTeachAnchor findAnchor() {
+    // 取得 link 參數資料
+    UniversalLinkParamData universalLinkParamData =
+        UniversalLinkParamData.fromJson(state.uri.queryParameters);
+    if (universalLinkParamData.anchor != null) {
+      return NFTInfoTeachAnchor.findTypeByValue(universalLinkParamData.anchor!);
+    }
+    return NFTInfoTeachAnchor.none;
+  }
 }
 
 /// NFT 教學頁 骨架
@@ -49,15 +62,15 @@ class StateNFTInfoTeach extends State<NFTInfoTeachScaffold>
 
   @override
   void initState() {
-    if (widget.anchor != NFTInfoTeachAnchor.none) {
+    if (widget.findAnchor() != NFTInfoTeachAnchor.none) {
       WidgetsBinding.instance.addObserver(this);
       // // 有帶 anchor
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         // 這裡會在 build 之後呼叫
         Future.delayed(const Duration(milliseconds: 1800), () {
           // 延遲 1 秒後開始移動到指定位置
-          Scrollable.ensureVisible(anchorKey(widget.anchor).currentContext!,
-              duration: Duration(milliseconds: widget.anchor.scrollDuration));
+          Scrollable.ensureVisible(anchorKey(widget.findAnchor()).currentContext!,
+              duration: Duration(milliseconds: widget.findAnchor().scrollDuration));
         });
       });
     }
