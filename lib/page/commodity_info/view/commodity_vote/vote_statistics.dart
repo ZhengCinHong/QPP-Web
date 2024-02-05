@@ -43,18 +43,20 @@ class VoteStatistics extends InfoRow {
                     ),
                   ),
                   // 紅字(投票結果將於結束後公佈)
-                  data.voteShowType == VoteShowType.questionMark &&
-                          data.voteType == VoteType.inProgress
-                      ? Text(
-                          context.tr(QppLocales.commodityInfoVoteAfter),
-                          style: contentTextStyle,
-                        )
-                      : data.voteType == VoteType.expired
-                          ? Text(
-                              context.tr(QppLocales.commodityInfoVoteOver),
-                              style: contentTextStyle,
-                            )
-                          : const SizedBox.shrink(),
+                  Flexible(
+                    child: data.voteShowType == VoteShowType.questionMark &&
+                            data.voteType == VoteType.inProgress
+                        ? Text(
+                            context.tr(QppLocales.commodityInfoVoteAfter),
+                            style: contentTextStyle,
+                          )
+                        : data.voteType == VoteType.expired
+                            ? Text(
+                                context.tr(QppLocales.commodityInfoVoteOver),
+                                style: contentTextStyle,
+                              )
+                            : const SizedBox.shrink(),
+                  ),
                 ],
               );
             },

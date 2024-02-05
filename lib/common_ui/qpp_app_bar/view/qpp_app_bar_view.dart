@@ -130,6 +130,8 @@ class _Logo extends StatelessWidget {
     final bool isDesktopStyle = screenStyle.isDesktop;
 
     return IconButton(
+      splashColor: Colors.transparent, // 移除點擊特
+      highlightColor: Colors.transparent, // 移除點擊特效
       icon: Image.asset(
         QPPImages.desktop_image_qpp_logo_01,
         width: isDesktopStyle ? 147.2 : 89,

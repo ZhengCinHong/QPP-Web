@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qpp_example/api/core/api_response.dart';
+import 'package:qpp_example/common_view_model/auth_service/view_model/auth_service_view_model.dart';
 import 'package:qpp_example/extension/widget/disable_selection_container.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/model/enum/item/vote_show_type.dart';
@@ -145,6 +146,7 @@ class VoteOptionsItem extends StatelessWidget {
                     : QppTextStyles.mobile_14pt_body_outrageous_orange_L;
 
                 return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
                       width: titleWidth,
@@ -228,6 +230,10 @@ class VoteOptionsItem extends StatelessWidget {
                       final notifier =
                           ref.read(itemSelectInfoProvider.notifier);
 
+                      /// 登入授權通知
+                      final authServiceNotifier =
+                          ref.watch(authServiceProvider.notifier);
+
                       /// 已選擇的字型
                       final selectedTextStyle = isDesktopStyle
                           ? QppTextStyles.web_16pt_body_pastel_yellow_L
@@ -251,13 +257,17 @@ class VoteOptionsItem extends StatelessWidget {
                           isExpired ||
                           isEnded ||
                           (!isSelected && isVoted);
+
                       /// 確認框右邊間距
                       final double checkboxRightSpacing =
                           isDesktopStyle ? 8 : 12;
+
                       /// 確認框寬度
                       final double checkboxWidth = isDesktopStyle ? 20 : 16;
+
                       /// 內縮間距
-                      final double inwardRetractionSpacing = checkboxRightSpacing + checkboxWidth;
+                      final double inwardRetractionSpacing =
+                          checkboxRightSpacing + checkboxWidth;
 
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -289,7 +299,11 @@ class VoteOptionsItem extends StatelessWidget {
                                   Flexible(
                                     child: Padding(
                                       padding: EdgeInsets.only(
-                                        left: (!(isCreater || isExpired || isEnded) && !isSelected && isVoted) // 非選擇，但已投票(並且不為創建者)，需要內縮
+                                        left: (!(isCreater ||
+                                                    isExpired ||
+                                                    isEnded) &&
+                                                !isSelected &&
+                                                isVoted) // 非選擇，但已投票(並且不為創建者)，需要內縮
                                             ? inwardRetractionSpacing // 內縮間距
                                             : 0,
                                       ),
@@ -308,6 +322,7 @@ class VoteOptionsItem extends StatelessWidget {
                               ).disabledSelectionContainer,
                               onTap: () {
                                 if (isEnableTap) {
+                                  authServiceNotifier.resetGetLoginTokenState();
                                   notifier.selectedOption(index, itemIndex);
                                   notifier.updateErrorOptions(
                                     index,
@@ -320,10 +335,10 @@ class VoteOptionsItem extends StatelessWidget {
                           voteShowType != VoteShowType.noShow
                               ? Padding(
                                   padding: EdgeInsets.only(
-                                    left: (isCreater || isExpired || isEnded)
-                                        ? 0
-                                        : inwardRetractionSpacing // 內縮間距
-                                  ),
+                                      left: (isCreater || isExpired || isEnded)
+                                          ? 0
+                                          : inwardRetractionSpacing // 內縮間距
+                                      ),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
