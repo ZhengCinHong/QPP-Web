@@ -48,7 +48,10 @@ class LevelsContent extends NFTSectionInfoContent<List> {
   // 取得顯示 level 的 trait
   NFTTrait? getLevel() {
     for (NFTTrait trait in data) {
-      if (trait.traitType == 'LV' || trait.traitType == '等級') {
+      // TODO: 之後要跟 server 拿資料取得 type
+      if (trait.traitType == 'LV' ||
+          trait.traitType == '等級' ||
+          trait.traitType == 'Lv') {
         return trait;
       }
     }

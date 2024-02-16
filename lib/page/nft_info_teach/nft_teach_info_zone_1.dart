@@ -18,6 +18,7 @@ class NFTTeachInfoZone1 extends StatelessWidget {
         // 禁止 list 內容 滾動
         primary: false,
         itemBuilder: (context, index) {
+          ValueKey key = ValueKey('info$index');
           return switch (index) {
             0 => Container(
                 margin: const EdgeInsets.only(bottom: 12),
@@ -28,11 +29,41 @@ class NFTTeachInfoZone1 extends StatelessWidget {
                       : QppTextStyles.mobile_20pt_title_L_maya_blue_L,
                 ),
               ),
-            1 => isDesktop ? const Info1.desktop() : const Info1.mobile(),
-            2 => isDesktop ? const Info2.desktop() : const Info2.mobile(),
-            3 => isDesktop ? const Info3.desktop() : const Info3.mobile(),
-            4 => isDesktop ? const Info4.desktop() : const Info4.mobile(),
-            5 => isDesktop ? const Info5.desktop() : const Info5.mobile(),
+            1 => isDesktop
+                ? Info1.desktop(
+                    key: key,
+                  )
+                : Info1.mobile(
+                    key: key,
+                  ),
+            2 => isDesktop
+                ? Info2.desktop(
+                    key: key,
+                  )
+                : Info2.mobile(
+                    key: key,
+                  ),
+            3 => isDesktop
+                ? Info3.desktop(
+                    key: key,
+                  )
+                : Info3.mobile(
+                    key: key,
+                  ),
+            4 => isDesktop
+                ? Info4.desktop(
+                    key: key,
+                  )
+                : Info4.mobile(
+                    key: key,
+                  ),
+            5 => isDesktop
+                ? Info5.desktop(
+                    key: key,
+                  )
+                : Info5.mobile(
+                    key: key,
+                  ),
             _ => const SizedBox.shrink(),
           };
         });

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:qpp_example/extension/string/url.dart';
 import 'package:qpp_example/main.dart';
 
@@ -24,7 +25,7 @@ class UrlGenerator {
       path: path,
       queryParameters: origin.queryParameters,
     );
-    print('test generated ${generated.toString()}');
+    debugPrint('test generated ${generated.toString()}');
     return generated.toString();
   }
 }

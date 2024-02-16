@@ -8,9 +8,10 @@ import 'package:qpp_example/utils/screen.dart';
 
 /// 主框架
 class MainFramework extends StatelessWidget {
-  const MainFramework({super.key, required this.child});
-
-  final Widget child;
+  final Future libFuture;
+  final WidgetBuilder child;
+  const MainFramework(
+      {super.key, required this.child, required this.libFuture});
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +20,26 @@ class MainFramework extends StatelessWidget {
     final isDesktopStyle = screenStyle.isDesktop;
 
     // 設定頁籤上方顯示內容
-    return Title(
-      title: context.tr(QppLocales.homeWebtitle),
-      color: QppColors.platinum,
-      child: Stack(
-        children: [
-          _MainScaffold(isDesktopStyle: isDesktopStyle, child: child),
-          isDesktopStyle
-              ? const SizedBox.shrink()
-              : const FullScreenMenuBtnPage(),
-        ],
-      ),
+    return FutureBuilder(
+      future: libFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Title(
+            title: context.tr(QppLocales.homeWebtitle),
+            color: QppColors.platinum,
+            child: Stack(
+              children: [
+                _MainScaffold(
+                    isDesktopStyle: isDesktopStyle, child: child.call(context)),
+                isDesktopStyle
+                    ? const SizedBox.shrink()
+                    : const FullScreenMenuBtnPage(),
+              ],
+            ),
+          );
+        }
+        return const Material(child: Center(child: Text('Loading...')));
+      },
     );
   }
 }
@@ -54,8 +64,6 @@ class _MainScaffoldState extends State<_MainScaffold> {
 
   @override
   Widget build(BuildContext context) {
-    // debugPrint(toString());
-
     return SelectionArea(
       key: globalKey,
       child: Scaffold(

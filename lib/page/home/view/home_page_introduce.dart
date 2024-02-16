@@ -8,7 +8,6 @@ import 'package:qpp_example/common_ui/qpp_universal_link/universal_link_qrcode.d
 import 'package:qpp_example/constants/qpp_contanst.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/build_context.dart';
-import 'package:qpp_example/extension/color/color_to_string.dart';
 import 'package:qpp_example/extension/string/url.dart';
 import 'package:qpp_example/extension/throttle_debounce.dart';
 import 'package:qpp_example/extension/widget/disable_selection_container.dart';
