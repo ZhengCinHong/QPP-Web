@@ -23,19 +23,22 @@ class MainFramework extends StatelessWidget {
     return FutureBuilder(
       future: libFuture,
       builder: (context, snapshot) {
-        return Title(
-          title: context.tr(QppLocales.homeWebtitle),
-          color: QppColors.platinum,
-          child: Stack(
-            children: [
-              _MainScaffold(
-                  isDesktopStyle: isDesktopStyle, child: child.call(context)),
-              isDesktopStyle
-                  ? const SizedBox.shrink()
-                  : const FullScreenMenuBtnPage(),
-            ],
-          ),
-        );
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Title(
+            title: context.tr(QppLocales.homeWebtitle),
+            color: QppColors.platinum,
+            child: Stack(
+              children: [
+                _MainScaffold(
+                    isDesktopStyle: isDesktopStyle, child: child.call(context)),
+                isDesktopStyle
+                    ? const SizedBox.shrink()
+                    : const FullScreenMenuBtnPage(),
+              ],
+            ),
+          );
+        }
+        return const Material(child: Center(child: Text('Loading...')));
       },
     );
   }
@@ -61,8 +64,6 @@ class _MainScaffoldState extends State<_MainScaffold> {
 
   @override
   Widget build(BuildContext context) {
-    // debugPrint(toString());
-
     return SelectionArea(
       key: globalKey,
       child: Scaffold(
