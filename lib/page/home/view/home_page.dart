@@ -110,10 +110,10 @@ class _HomePageState extends State<HomePage> {
           controller: scrollController,
           child: Column(
             children: [
-              HomePageIntroduce(key: introduceKey),
-              HomePageFeature(key: featureKey),
-              HomePageDescription(key: descriptionKey),
-              HomePageContact(key: contactKey),
+              RepaintBoundary(child: HomePageIntroduce(key: introduceKey)),
+              RepaintBoundary(child: HomePageFeature(key: featureKey)),
+              RepaintBoundary(child: HomePageDescription(key: descriptionKey)),
+              RepaintBoundary(child: HomePageContact(key: contactKey)),
               const HomePageFooter(key: ValueKey('HomePageFooter')),
             ],
           ),

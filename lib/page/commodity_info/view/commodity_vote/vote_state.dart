@@ -64,7 +64,7 @@ class VoteItemState extends ConsumerWidget {
                               child: Container(
                                 margin:
                                     const EdgeInsets.symmetric(vertical: 10),
-                                color: QppColors.ashGray,
+                                color: QppColors.darkGray,
                               ),
                             ),
                     ),

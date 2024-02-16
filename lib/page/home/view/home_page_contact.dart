@@ -338,13 +338,12 @@ class _BenefitItem extends StatelessWidget {
         child: Stack(
           alignment: AlignmentDirectional.center,
           children: [
-            SizedBox(
-                child: Image.asset(
+            Image.asset(
               key: const ValueKey(HomePageModel.constBenefitImage),
               HomePageModel.constBenefitImage,
               cacheWidth: 442,
               cacheHeight: 298,
-            )),
+            ),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 30),
               constraints: BoxConstraints(maxWidth: isDesktopStyle ? 280 : 235),

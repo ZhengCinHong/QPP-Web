@@ -98,7 +98,7 @@ class SendVoteButton extends StatelessWidget {
         }
 
         Future.microtask(() {
-          // 成功取得login toke顯示Login dialog
+          // 成功取得login token顯示Login dialog
           if (getLoginTokenState.isCompleted && !isLogin) {
             showLoginDialog();
           } else if (votedState.$1 && isFirstLogin) {

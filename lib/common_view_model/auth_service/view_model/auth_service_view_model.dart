@@ -80,12 +80,12 @@ class AuthServiceStateNotifier extends ChangeNotifier {
           voteToken = checkLoginTokenResponse.voteToken;
 
           final loginInfoMap = LoginInfo(
-                  expiredTimestamp: null,
-                  refreshTimestamp: DateTime.timestamp().millisecondsSinceEpoch,
-                  voteToken: voteToken ?? '',
-                  uid: checkLoginTokenResponse.uid,
-                  uidImage: checkLoginTokenResponse.uidImage)
-              .toMap;
+            expiredTimestamp: null,
+            refreshTimestamp: DateTime.timestamp().millisecondsSinceEpoch,
+            voteToken: voteToken ?? '',
+            uid: checkLoginTokenResponse.uid,
+            uidImage: checkLoginTokenResponse.uidImage,
+          ).toMap;
 
           final loginInfoJson = json.encode(loginInfoMap);
 
@@ -125,5 +125,10 @@ class AuthServiceStateNotifier extends ChangeNotifier {
       logoutState = ApiResponse.error(error);
       notifyListeners();
     });
+  }
+
+  /// 重置取得token狀態
+  void resetGetLoginTokenState() {
+    getLoginTokenState = ApiResponse.initial();
   }
 }
