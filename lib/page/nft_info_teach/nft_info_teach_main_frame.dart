@@ -32,11 +32,14 @@ class NFTInfoTeachPageMainFrame extends StatelessWidget {
     return FutureBuilder(
         future: libFuture,
         builder: (context, snapshot) {
-          // 設定頁籤上方顯示內容
-          return Title(
-              title: context.tr(QppLocales.homeWebtitle),
-              color: QppColors.platinum,
-              child: child.call(context));
+          if (snapshot.connectionState == ConnectionState.done) {
+            // 設定頁籤上方顯示內容
+            return Title(
+                title: context.tr(QppLocales.homeWebtitle),
+                color: QppColors.platinum,
+                child: child.call(context));
+          }
+          return const Material(child: Center(child: Text('Loading...')));
         });
   }
 }
