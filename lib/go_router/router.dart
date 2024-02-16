@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:qpp_example/common_ui/qpp_framework/qpp_main_framework.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
-import 'package:qpp_example/page/instructions/instructions_page.dart';
+import 'package:qpp_example/page/instructions/instructions_frame.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_info_teach_main_frame.dart';
 import 'package:qpp_example/universal_link/universal_link_data.dart';
 import 'package:qpp_example/utils/display_url.dart';
@@ -19,6 +19,8 @@ import 'package:qpp_example/page/error_page/view/error_page.dart'
     deferred as error_box;
 import 'package:qpp_example/page/nft_info_teach/nft_info_teach_scaffold.dart'
     deferred as nft_info_teach_box;
+import 'package:qpp_example/page/instructions/instructions_page.dart'
+    deferred as instructions_box;
 
 /// QPP路由
 class QppGoRouter {
@@ -161,7 +163,12 @@ class QppGoRouter {
         name: privacy,
         builder: (context, state) {
           setLocale(context);
-          return InstructionsPage.privacy();
+          return InstructionsFrame(
+            libFuture: instructions_box.loadLibrary(),
+            child: (context) {
+              return instructions_box.InstructionsPage.privacy();
+            },
+          );
         },
       ),
       GoRoute(
@@ -170,7 +177,12 @@ class QppGoRouter {
         name: term,
         builder: (context, state) {
           setLocale(context);
-          return InstructionsPage.term();
+          return InstructionsFrame(
+            libFuture: instructions_box.loadLibrary(),
+            child: (context) {
+              return instructions_box.InstructionsPage.term();
+            },
+          );
         },
       ),
       // only app path

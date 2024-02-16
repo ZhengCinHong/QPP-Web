@@ -57,6 +57,11 @@ abstract final class QppColors {
   static const Color navyBlue = Color(0xff143173);
 }
 
+/// 顏色轉成 hex 字串
+extension ColorToHexString on Color {
+  String toHexString() =>
+      '#${(value & 0xFFFFFF).toRadixString(16).padLeft(6, '0').toUpperCase()}';
+}
 // Opacity(不透明度) of the color
 // 100% - FF
 // 95% - F2
