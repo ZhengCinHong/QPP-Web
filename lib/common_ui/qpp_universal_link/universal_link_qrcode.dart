@@ -53,6 +53,7 @@ class QPPQRCode extends StatelessWidget {
     return QrImageView(
       data: data,
       embeddedImage: const AssetImage(QPPImages.pic_qrcode),
+      embeddedImageStyle: const QrEmbeddedImageStyle(size: Size(30, 30)),
       size: size,
       padding: const EdgeInsets.all(11),
     );
