@@ -1,4 +1,5 @@
-import 'package:flutter/widgets.dart';
+import 'dart:ui';
+import 'package:flutter/material.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
 
 class NFTInfoTeachImgUtil {
@@ -101,17 +102,74 @@ class NFTInfoTeachImgUtil {
   /// 取得對應圖片 Widget
   static Widget getImg(int index, bool isDesktop) {
     Size size = getSize(index, isDesktop);
+    String path = infoTeachImgList[index];
     return SizedBox(
       key: ValueKey('sb$index'),
       width: size.width,
       height: size.height,
-      child: Image.asset(
-        infoTeachImgList[index],
-        key: ValueKey(infoTeachImgList[index]),
-        // TODO: 先拿掉 cache size, android 手機吃 cavakit render 圖片會變很小
-        // cacheHeight: size.height.toInt(),
-        // cacheWidth: size.width.toInt(),
-      ),
+      child: Builder(builder: (context) {
+        return GestureDetector(
+          onTap: () {
+            // 顯示自訂 dialog
+            showGeneralDialog(
+              // 點擊跳出圖片 dialog
+              context: context,
+              pageBuilder: (_, animation, secondaryAnimation) {
+                // dialog 自訂顯示元件
+                return Stack(children: [
+                  ClipRect(
+                    // 毛玻璃效果
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                      child: const SizedBox(
+                        width: double.infinity,
+                        height: double.infinity,
+                      ),
+                    ),
+                  ),
+                  Center(
+                    // 可縮放及移動元件
+                    child: InteractiveViewer(
+                      clipBehavior: Clip.none,
+                      child: Image.asset(
+                        path,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const SizedBox.shrink();
+                        },
+                      ),
+                    ),
+                  ),
+                ]);
+              },
+              barrierDismissible: true,
+              // 語義化標籤(HTML)
+              barrierLabel:
+                  MaterialLocalizations.of(context).modalBarrierDismissLabel,
+              // 動畫時間
+              transitionDuration: const Duration(milliseconds: 150),
+              // 自訂動畫
+              transitionBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                // 使用縮放動畫
+                return ScaleTransition(
+                  scale: CurvedAnimation(
+                    parent: animation,
+                    curve: Curves.easeOut,
+                  ),
+                  child: child,
+                );
+              },
+            );
+          },
+          child: Image.asset(
+            path,
+            key: ValueKey(infoTeachImgList[index]),
+            // TODO: 先拿掉 cache size, android 手機吃 cavakit render 圖片會變很小
+            // cacheHeight: size.height.toInt(),
+            // cacheWidth: size.width.toInt(),
+          ),
+        );
+      }),
     );
   }
 }
