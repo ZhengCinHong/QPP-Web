@@ -117,3 +117,15 @@ flutter:
 #
 # For details regarding fonts from package dependencies,
 # see https://flutter.dev/custom-fonts/#from-packages
+fonts:
+  - family: Noto_Sans_TC
+    fonts:
+      - asset: assets/fonts/Noto_Sans_TC/NotoSansTC-Black.ttf
+      - asset: assets/fonts/Noto_Sans_TC/NotoSansTC-Bold.ttf
+      - asset: assets/fonts/Noto_Sans_TC/NotoSansTC-ExtraBold.ttf
+      - asset: assets/fonts/Noto_Sans_TC/NotoSansTC-ExtraLight.ttf
+      - asset: assets/fonts/Noto_Sans_TC/NotoSansTC-Light.ttf
+      - asset: assets/fonts/Noto_Sans_TC/NotoSansTC-Medium.ttf
+      - asset: assets/fonts/Noto_Sans_TC/NotoSansTC-Regular.ttf
+      - asset: assets/fonts/Noto_Sans_TC/NotoSansTC-SemiBold.ttf
+      - asset: assets/fonts/Noto_Sans_TC/NotoSansTC-Thin.ttf
