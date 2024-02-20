@@ -48,11 +48,11 @@ class HomePageContact extends StatelessWidget {
             },
           ),
           SizedBox(height: isDesktopStyle ? 45 : 60),
-          // switch (contactScreenStyle) {
-          //   ScreenStyle.desktop => const _Benefit.desktop(),
-          //   ScreenStyle.tablet => const _Benefit.tablete(),
-          //   ScreenStyle.mobile => const _Benefit.mobile()
-          // }
+          switch (contactScreenStyle) {
+            ScreenStyle.desktop => const _Benefit.desktop(),
+            ScreenStyle.tablet => const _Benefit.tablete(),
+            ScreenStyle.mobile => const _Benefit.mobile()
+          }
         ],
       ),
     );
@@ -316,11 +316,7 @@ class _Benefit extends StatelessWidget {
           ],
         );
       case ScreenStyle.mobile:
-        return Column(
-          children: types
-              .map((e) => _BenefitItem(e, screenStyle: screenStyle))
-              .toList(),
-        );
+        return Column(children: benefitMobileWidget);
     }
   }
 }
