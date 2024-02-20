@@ -16,7 +16,6 @@ class HomePageFeature extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        print(123131312);
         /// 螢幕樣式
         final ScreenStyle screenStyle = constraints.screenStyle;
         final bool isDesktopStyle = screenStyle.isDesktop;

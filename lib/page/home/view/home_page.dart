@@ -78,11 +78,11 @@ class _HomePageState extends State<HomePage> {
         controller: scrollController,
         child: Column(
           children: [
-            RepaintBoundary(child: HomePageDescription()),
-            RepaintBoundary(child: HomePageDescription()),
-            RepaintBoundary(child: HomePageDescription()),
-            RepaintBoundary(child: HomePageDescription()),
-            RepaintBoundary(child: HomePageDescription()),
+            RepaintBoundary(child: HomePageContact()),
+            RepaintBoundary(child: HomePageContact()),
+            RepaintBoundary(child: HomePageContact()),
+            RepaintBoundary(child: HomePageContact()),
+            RepaintBoundary(child: HomePageContact()),
             // RepaintBoundary(child: HomePageFeature(key: featureKey)),
             // RepaintBoundary(child: HomePageDescription(key: descriptionKey)),
             // RepaintBoundary(child: HomePageContact(key: contactKey)),
