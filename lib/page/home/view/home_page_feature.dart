@@ -16,6 +16,7 @@ class HomePageFeature extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
+        print(123131312);
         /// 螢幕樣式
         final ScreenStyle screenStyle = constraints.screenStyle;
         final bool isDesktopStyle = screenStyle.isDesktop;
@@ -105,18 +106,13 @@ class _FeatureInfo extends StatelessWidget {
 
   final types = HomePageFeatureInfoType.values;
 
-  List<_FeatureInfoItem> getItems() {
-    List<_FeatureInfoItem> array = [];
-
-    for (var type in HomePageFeatureInfoType.values) {
-      array.add(_FeatureInfoItem(screenStyle, type: type));
-    }
-    return array;
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Column(children: getItems());
+    return Column(
+      children: HomePageFeatureInfoType.values.map((type) {
+        return _FeatureInfoItem(screenStyle, type: type);
+      }).toList(),
+    );
   }
 }
 
