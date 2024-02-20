@@ -144,13 +144,13 @@ class _ShadowText extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        // shadows: <Shadow>[
-        //   Shadow(
-        //     color: Colors.black.withOpacity(0.35),
-        //     blurRadius: 20,
-        //     offset: Offset.zero,
-        //   ),
-        // ],
+        shadows: <Shadow>[
+          Shadow(
+            color: Colors.black.withOpacity(0.35),
+            blurRadius: 20,
+            offset: Offset.zero,
+          ),
+        ],
         color: style.color,
         fontSize: style.fontSize,
       ),
