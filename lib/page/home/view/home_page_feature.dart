@@ -105,14 +105,18 @@ class _FeatureInfo extends StatelessWidget {
 
   final types = HomePageFeatureInfoType.values;
 
+  List<_FeatureInfoItem> getItems() {
+    List<_FeatureInfoItem> array = [];
+
+    for (var type in HomePageFeatureInfoType.values) {
+      array.add(_FeatureInfoItem(screenStyle, type: type));
+    }
+    return array;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: types.length,
-      itemBuilder: (context, index) {
-        return _FeatureInfoItem(screenStyle, type: types[index]);
-      },
-    );
+    return Column(children: getItems());
   }
 }
 
