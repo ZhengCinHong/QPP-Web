@@ -40,7 +40,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       theme: ThemeData(
-        fontFamily: "Noto_Sans_TC",
         useMaterial3: true,
         textSelectionTheme: TextSelectionThemeData(
           selectionColor: Colors.blueAccent.shade100,
