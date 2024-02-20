@@ -316,7 +316,11 @@ class _Benefit extends StatelessWidget {
           ],
         );
       case ScreenStyle.mobile:
-        return Column(children: benefitMobileWidget);
+        return Column(
+          children: types
+              .map((e) => _BenefitItem(e, screenStyle: screenStyle))
+              .toList(),
+        );
     }
   }
 }
