@@ -48,11 +48,11 @@ class HomePageContact extends StatelessWidget {
             },
           ),
           SizedBox(height: isDesktopStyle ? 45 : 60),
-          switch (contactScreenStyle) {
-            ScreenStyle.desktop => const _Benefit.desktop(),
-            ScreenStyle.tablet => const _Benefit.tablete(),
-            ScreenStyle.mobile => const _Benefit.mobile()
-          }
+          // switch (contactScreenStyle) {
+          //   ScreenStyle.desktop => const _Benefit.desktop(),
+          //   ScreenStyle.tablet => const _Benefit.tablete(),
+          //   ScreenStyle.mobile => const _Benefit.mobile()
+          // }
         ],
       ),
     );
