@@ -229,6 +229,7 @@
         function useCanvas() {
           let nav = window.navigator;
           let userAgent = nav.userAgent;
+          let uad = nav.userAgentData;
           if (uad != null) {
             if (uad.platform == "Android" && userAgent.includes("wv") == true) {
               return true;
@@ -241,17 +242,14 @@
           serviceWorker: {
             serviceWorkerVersion: serviceWorkerVersion,
           },
-          onEntrypointLoaded: function (engineInitializer) {
+          onEntrypointLoaded: async function (engineInitializer) {
             // 修改渲染模式, 加速載入中文
             let config = {
               renderer: useCanvas() ? "canvaskit" : "html",
               useColorEmoji: true,
             };
-            engineInitializer
-              .initializeEngine(config)
-              .then(function (appRunner) {
-                appRunner.runApp();
-              });
+            let appRunner = await engineInitializer.initializeEngine(config);
+            await appRunner.runApp();
           },
         });
       });
