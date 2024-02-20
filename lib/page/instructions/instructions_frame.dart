@@ -16,7 +16,7 @@ class InstructionsFrame extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             return child.call(context);
           }
-          return const Material(child: Center(child: Text('Loading...')));
+          return const SizedBox.shrink();
         });
   }
 }
