@@ -2,7 +2,7 @@ name: QPP-Web
 on:
   push:
     branches:
-      - homepage
+      - main
 jobs:
   build:
     name: Build Web
