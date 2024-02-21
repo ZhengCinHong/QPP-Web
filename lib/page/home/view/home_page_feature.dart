@@ -87,7 +87,9 @@ class _Left extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         isDesktopStyle
-            ? Image.asset(key: const ValueKey(HomePageModel.featureLeftImage), HomePageModel.featureLeftImage)
+            ? Image.asset(
+                key: const ValueKey(HomePageModel.featureLeftImage),
+                HomePageModel.featureLeftImage)
             : const SizedBox(),
       ],
     );
@@ -106,9 +108,9 @@ class _FeatureInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: HomePageFeatureInfoType.values
-          .map((e) => _FeatureInfoItem(screenStyle, type: e))
-          .toList(),
+      children: HomePageFeatureInfoType.values.map((type) {
+        return _FeatureInfoItem(screenStyle, type: type);
+      }).toList(),
     );
   }
 }
