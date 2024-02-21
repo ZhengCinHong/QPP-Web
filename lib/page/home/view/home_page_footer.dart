@@ -33,42 +33,53 @@ class _FooterInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-            colors: [Color(0xFF12162e), Color(0xFF193363)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter),
-      ),
-      padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 24),
-      child: LayoutBuilder(builder: (context, constraints) {
-        final bool isDesktopStyle = constraints.maxWidth > 981; // 特殊樣式，防止多語系跑版
+    return Stack(
+      children: [
+        // 背景顏色
+        Positioned.fill(
+          child: Container(color: QppColors.oxfordBlue),
+        ),
+        // 遮罩
+        Positioned.fill(
+          child: Container(color: QppColors.maskAlpha60),
+        ),
+        // 內容
+        Container(
+          // decoration: const BoxDecoration(color: QppColors.oxfordBlue),
+          padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 24),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final bool isDesktopStyle =
+                  constraints.maxWidth > 981; // 特殊樣式，防止多語系跑版
 
-        return Flex(
-          direction: isDesktopStyle ? Axis.horizontal : Axis.vertical,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            isDesktopStyle ? const Spacer() : const SizedBox.shrink(),
-            isDesktopStyle
-                ? const _Info(ScreenStyle.desktop)
-                : const _Info(ScreenStyle.mobile),
-            isDesktopStyle ? const Spacer() : const SizedBox(height: 50),
-            isDesktopStyle ? const _Guide() : const _MobileGuide(),
-            isDesktopStyle
-                ? Flexible(
-                    child: Container(
-                      constraints: const BoxConstraints(maxWidth: 100),
-                    ),
-                  )
-                : const SizedBox.shrink(),
-            isDesktopStyle
-                ? const LanguageDropdownMenu(ScreenStyle.desktop)
-                : const SizedBox.shrink(),
-            isDesktopStyle ? const Spacer() : const SizedBox.shrink(),
-          ],
-        );
-      }),
+              return Flex(
+                direction: isDesktopStyle ? Axis.horizontal : Axis.vertical,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  isDesktopStyle ? const Spacer() : const SizedBox.shrink(),
+                  isDesktopStyle
+                      ? const _Info(ScreenStyle.desktop)
+                      : const _Info(ScreenStyle.mobile),
+                  isDesktopStyle ? const Spacer() : const SizedBox(height: 50),
+                  isDesktopStyle ? const _Guide() : const _MobileGuide(),
+                  isDesktopStyle
+                      ? Flexible(
+                          child: Container(
+                            constraints: const BoxConstraints(maxWidth: 100),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                  isDesktopStyle
+                      ? const LanguageDropdownMenu(ScreenStyle.desktop)
+                      : const SizedBox.shrink(),
+                  isDesktopStyle ? const Spacer() : const SizedBox.shrink(),
+                ],
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }
@@ -356,7 +367,7 @@ class _CompanyName extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 45,
-      color: QppColors.oxfordBlue,
+      color: QppColors.darkOxfordBlue,
       child: const Center(
         child: Text(
           '©2023 HOLY BUSINESS CO., LTD',
