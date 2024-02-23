@@ -38,7 +38,7 @@ class MainFramework extends StatelessWidget {
             ),
           );
         }
-        return const Material(child: Center(child: Text('Loading...')));
+        return const SizedBox.shrink();
       },
     );
   }

@@ -39,7 +39,7 @@ class NFTInfoTeachPageMainFrame extends StatelessWidget {
                 color: QppColors.platinum,
                 child: child.call(context));
           }
-          return const Material(child: Center(child: Text('Loading...')));
+          return const SizedBox.shrink();
         });
   }
 }

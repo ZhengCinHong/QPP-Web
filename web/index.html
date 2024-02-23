@@ -1,276 +1,288 @@
 <!DOCTYPE html>
 <html>
-<!-- QPPWeb ver 240124_2 -->
+  <!-- QPPWeb ver 240221_1 -->
 
-<head>
-  <base href="$FLUTTER_BASE_HREF" />
-  <meta charset="UTF-8" />
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
-  <meta name="description" content="A new Flutter project." />
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <meta name="apple-mobile-web-app-title" content="qpp_example" />
-  <link rel="apple-touch-icon" href="icons/Icon-192.png" />
-  <!-- 修正mobile css寬度錯誤的問題 -->
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <title></title>
-  <link rel="manifest" href="manifest.json" />
-  <script>
-    // The value below is injected by flutter build, do not touch.
-    var serviceWorkerVersion = null;
-  </script>
-  <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer></script>
-</head>
+  <head>
+    <title rel="alternate" hreflang="x-default">
+      QPP - The Digital Backpack
+    </title>
+    <base href="$FLUTTER_BASE_HREF" />
+    <meta charset="UTF-8" />
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
+    <meta name="author" content="HOLY BUSINESS CO., LTD" />
+    <!-- default description -->
+    <meta
+      name="description"
+      rel="alternate"
+      hreflang="x-default"
+      content="QPP can bring users the most convenient experience while keeping the membership card services safe for the seller. "
+    />
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="qpp_example" />
+    <link rel="apple-touch-icon" href="icons/Icon-192.png" />
+    <!-- 修正mobile css寬度錯誤的問題 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="manifest" href="manifest.json" />
+    <script>
+      // The value below is injected by flutter build, do not touch.
+      var serviceWorkerVersion = null;
+    </script>
+    <!-- This script adds the flutter initialization JS code -->
+    <script src="flutter.js" defer></script>
+  </head>
 
-<!-- 背景顏色 -->
-<style>
-  body {
-    background-image: radial-gradient(circle at center, #1e4287, #000b2b);
-  }
+  <!-- 背景顏色 -->
+  <style>
+    body {
+      background-image: radial-gradient(circle at center, #1e4287, #000b2b);
+    }
 
-  html {
-    height: 100%;
-  }
-</style>
+    html {
+      height: 100%;
+    }
+  </style>
 
-<!--loading 样式 -->
-<style type="text/css">
-  .loading-logoFadeIn {
-    background-image: radial-gradient(circle at center, #1e4287, #000b2b);
-    width: 100%;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9999;
-  }
+  <!--loading 样式 -->
+  <style type="text/css">
+    .loading-logoFadeIn {
+      background-image: radial-gradient(circle at center, #1e4287, #000b2b);
+      width: 100%;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+    }
 
-  .loading-logoFadeIn .loadingArea {
-    max-width: 300px;
-    margin: 0 auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-  }
+    .loading-logoFadeIn .loadingArea {
+      max-width: 300px;
+      margin: 0 auto;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      -o-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
 
-  .loading-logoFadeIn .loadingArea .icon.loading-left {
-    opacity: 0;
-    position: relative;
-    -webkit-animation: fadeIn_left 1s linear 0ms forwards;
-    -moz-animation: fadeIn_left 1s linear 0ms forwards;
-    animation: fadeIn_left 1s linear 0ms forwards;
-  }
-
-  .loading-logoFadeIn .loadingArea .icon.loading-right {
-    position: relative;
-    opacity: 0;
-    -webkit-animation: fadeIn_right 1s linear 0ms forwards;
-    -moz-animation: fadeIn_right 1s linear 0ms forwards;
-    animation: fadeIn_right 1s linear 0ms forwards;
-  }
-
-  .loading-logoFadeIn img {
-    max-height: 64px;
-    vertical-align: middle;
-  }
-
-  @-webkit-keyframes fadeIn_left {
-    0% {
+    .loading-logoFadeIn .loadingArea .icon.loading-left {
       opacity: 0;
-      transform: translateX(-20px);
+      position: relative;
+      -webkit-animation: fadeIn_left 1s linear 0ms forwards;
+      -moz-animation: fadeIn_left 1s linear 0ms forwards;
+      animation: fadeIn_left 1s linear 0ms forwards;
     }
 
-    to {
-      opacity: 1;
-      transform: translateX(-2px);
-    }
-  }
-
-  @-moz-keyframes fadeIn_left {
-    0% {
+    .loading-logoFadeIn .loadingArea .icon.loading-right {
+      position: relative;
       opacity: 0;
-      transform: translateX(-20px);
+      -webkit-animation: fadeIn_right 1s linear 0ms forwards;
+      -moz-animation: fadeIn_right 1s linear 0ms forwards;
+      animation: fadeIn_right 1s linear 0ms forwards;
     }
 
-    to {
-      opacity: 1;
-      transform: translateX(-2px);
-    }
-  }
-
-  @keyframes fadeIn_left {
-    0% {
-      opacity: 0;
-      transform: translateX(-20px);
+    .loading-logoFadeIn img {
+      max-height: 64px;
+      vertical-align: middle;
     }
 
-    to {
-      opacity: 1;
-      transform: translateX(-2px);
-    }
-  }
-
-  @-webkit-keyframes fadeIn_right {
-    0% {
-      opacity: 0;
-      transform: translateX(20px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateX(2px);
-    }
-  }
-
-  @-moz-keyframes fadeIn_right {
-    0% {
-      opacity: 0;
-      transform: translateX(20px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateX(2px);
-    }
-  }
-
-  @keyframes fadeIn_right {
-    0% {
-      opacity: 0;
-      transform: translateX(20px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateX(2px);
-    }
-  }
-
-  .fadeOut {
-    -webkit-animation: fadeOut 300ms ease-in-out forwards;
-    -moz-animation: fadeOut 300ms ease-in-out forwards;
-    animation: fadeOut 300ms ease-in-out forwards;
-  }
-
-  @keyframes fadeOut {
-    from {
-      opacity: 1;
-    }
-
-    to {
-      opacity: 0;
-    }
-  }
-
-  @-webkit-keyframes fadeOut {
-    from {
-      opacity: 1;
-    }
-
-    to {
-      opacity: 0;
-    }
-  }
-
-  @-moz-keyframes fadeOut {
-    from {
-      opacity: 1;
-    }
-
-    to {
-      opacity: 0;
-    }
-  }
-</style>
-
-<body>
-  <div class="loading-logoFadeIn">
-    <div class="loadingArea align-self-center">
-      <img src="assets/assets/pic-animation-icon-2.png" alt class="icon loading-left img-fluid" /><img
-        src="assets/assets/pic-animation-qpp.png" alt class="icon loading-right img-fluid" />
-    </div>
-  </div>
-
-  <script>
-    const loadingLogo = document.querySelector(".loading-logoFadeIn");
-
-    // Flutter 渲染的第一幀完成就關閉載入動畫
-    window.addEventListener("flutter-first-frame", function () {
-      setTimeout(() => {
-        // 動畫淡出
-        loadingLogo.classList.add("fadeOut");
-      }, 1000);
-    });
-
-    // 移除載入元件
-    loadingLogo.addEventListener("animationend", (event) => {
-      if (event.animationName === "fadeOut") {
-        loadingLogo.remove();
+    @-webkit-keyframes fadeIn_left {
+      0% {
+        opacity: 0;
+        transform: translateX(-20px);
       }
-    });
 
-    window.addEventListener("load", function (ev) {
-      function useCanvas() {
-        let nav = window.navigator;
-        let uad = nav.userAgentData;
-        if (uad != null) {
-          if (uad.platform == "Android" && uad.mobile == true) {
-            return true;
-          } else {
+      to {
+        opacity: 1;
+        transform: translateX(-2px);
+      }
+    }
+
+    @-moz-keyframes fadeIn_left {
+      0% {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(-2px);
+      }
+    }
+
+    @keyframes fadeIn_left {
+      0% {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(-2px);
+      }
+    }
+
+    @-webkit-keyframes fadeIn_right {
+      0% {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(2px);
+      }
+    }
+
+    @-moz-keyframes fadeIn_right {
+      0% {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(2px);
+      }
+    }
+
+    @keyframes fadeIn_right {
+      0% {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(2px);
+      }
+    }
+
+    .fadeOut {
+      -webkit-animation: fadeOut 300ms ease-in-out forwards;
+      -moz-animation: fadeOut 300ms ease-in-out forwards;
+      animation: fadeOut 300ms ease-in-out forwards;
+    }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+      }
+    }
+
+    @-webkit-keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+      }
+    }
+
+    @-moz-keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+      }
+    }
+  </style>
+
+  <body>
+    <div class="loading-logoFadeIn">
+      <div class="loadingArea align-self-center">
+        <img
+          src="assets/assets/pic-animation-icon-2.png"
+          alt
+          class="icon loading-left img-fluid"
+        /><img
+          src="assets/assets/pic-animation-qpp.png"
+          alt
+          class="icon loading-right img-fluid"
+        />
+      </div>
+    </div>
+
+    <script>
+      const loadingLogo = document.querySelector(".loading-logoFadeIn");
+
+      // Flutter 渲染的第一幀完成就關閉載入動畫
+      window.addEventListener("flutter-first-frame", function () {
+        setTimeout(() => {
+          // 動畫淡出
+          loadingLogo.classList.add("fadeOut");
+        }, 1000);
+      });
+
+      // 移除載入元件
+      loadingLogo.addEventListener("animationend", (event) => {
+        if (event.animationName === "fadeOut") {
+          loadingLogo.remove();
+        }
+      });
+
+      window.addEventListener("load", function (ev) {
+        function useCanvas() {
+          let nav = window.navigator;
+          let userAgent = nav.userAgent;
+          let uad = nav.userAgentData;
+          if (uad != null) {
+            if (uad.platform == "Android" && userAgent.includes("wv") == true) {
+              return true;
+            }
             return false;
           }
+          return false;
         }
-        return false;
-      }
-      _flutter.loader.loadEntrypoint({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        },
-        onEntrypointLoaded: function (engineInitializer) {
-          // 修改渲染模式, 加速載入中文
-          let config = {
-            renderer: useCanvas() ? "canvaskit" : "html",
-            useColorEmoji: true,
-          };
-          engineInitializer
-            .initializeEngine(config)
-            .then(function (appRunner) {
-              appRunner.runApp();
-            });
-        },
+        _flutter.loader.loadEntrypoint({
+          serviceWorker: {
+            serviceWorkerVersion: serviceWorkerVersion,
+          },
+          onEntrypointLoaded: async function (engineInitializer) {
+            // 修改渲染模式, 加速載入中文
+            let config = {
+              renderer: useCanvas() ? "canvaskit" : "html",
+              useColorEmoji: true,
+            };
+            let appRunner = await engineInitializer.initializeEngine(config);
+            await appRunner.runApp();
+          },
+        });
       });
-    });
-  </script>
+    </script>
 
-  <!-- 修正 iOS webview 無法滾動問題 -->
-  <script>
-    var element = document.getElementsByTagName("body")[0];
+    <!-- 修正 iOS webview 無法滾動問題 -->
+    <script>
+      var element = document.getElementsByTagName("body")[0];
 
-    var handleScroll = function () {
-      // required when scroll bar is drgged
-      element.scrollTo(0, 0);
-    };
+      var handleScroll = function () {
+        // required when scroll bar is drgged
+        element.scrollTo(0, 0);
+      };
 
-    element.addEventListener("scroll", handleScroll, false);
+      element.addEventListener("scroll", handleScroll, false);
 
-    var handleEvent = function (e) {
-      // disables scrolling by mouse wheel and touch move
-      e.preventDefault();
-    };
+      var handleEvent = function (e) {
+        // disables scrolling by mouse wheel and touch move
+        e.preventDefault();
+      };
 
-    element.addEventListener("scroll", handleEvent, { passive: false });
-    element.addEventListener("mousewheel", handleEvent, { passive: false });
-    element.addEventListener("touchmove", handleEvent, { passive: false });
-  </script>
-</body>
-
+      element.addEventListener("scroll", handleEvent, { passive: false });
+      element.addEventListener("mousewheel", handleEvent, { passive: false });
+      element.addEventListener("touchmove", handleEvent, { passive: false });
+    </script>
+  </body>
 </html>
