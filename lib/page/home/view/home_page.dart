@@ -82,7 +82,9 @@ class _HomePageState extends State<HomePage> {
             RepaintBoundary(child: HomePageFeature(key: featureKey)),
             RepaintBoundary(child: HomePageDescription(key: descriptionKey)),
             RepaintBoundary(child: HomePageContact(key: contactKey)),
-            const HomePageFooter(key: ValueKey('HomePageFooter')),
+            const RepaintBoundary(
+              child: HomePageFooter(key: ValueKey('HomePageFooter')),
+            ),
           ],
         ),
       ),

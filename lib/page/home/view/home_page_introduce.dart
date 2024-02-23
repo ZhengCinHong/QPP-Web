@@ -182,8 +182,9 @@ class _Qrcode extends StatelessWidget {
         isDesktopPlatform
             ? Container(
                 decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(6))),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(6)),
+                ),
                 child: MouseRegion(
                   cursor: SystemMouseCursors.click, // 改鼠標樣式
                   child: GestureDetector(
