@@ -6,6 +6,7 @@ import 'package:qpp_example/common_ui/qpp_framework/qpp_main_framework.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/instructions/instructions_frame.dart';
+import 'package:qpp_example/page/news_feed/view/test_news_feed_page.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_info_teach_main_frame.dart';
 import 'package:qpp_example/universal_link/universal_link_data.dart';
 import 'package:qpp_example/utils/display_url.dart';
@@ -21,6 +22,7 @@ import 'package:qpp_example/page/nft_info_teach/nft_info_teach_scaffold.dart'
     deferred as nft_info_teach_box;
 import 'package:qpp_example/page/instructions/instructions_page.dart'
     deferred as instructions_box;
+import 'package:qpp_example/utils/qpp_color.dart';
 
 /// QPP路由
 class QppGoRouter {
@@ -120,11 +122,15 @@ class QppGoRouter {
         name: home,
         builder: (context, state) {
           setLocale(context);
-          return MainFramework(
-              libFuture: home_box.loadLibrary(),
-              child: (context) {
-                return home_box.HomePage();
-              });
+          return const Scaffold(
+            backgroundColor: QppColors.oxfordBlue,
+            body: TestNewsFeedPage(),
+          );
+          // MainFramework(
+          //     libFuture: home_box.loadLibrary(),
+          //     child: (context) {
+          //       return home_box.HomePage();
+          //     });
         },
       ),
       GoRoute(

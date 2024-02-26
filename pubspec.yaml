@@ -59,6 +59,7 @@ dependencies:
   # easy_localization_generator: ^0.3.2
   universal_html: ^2.2.4
   scroll_to_index: ^3.0.1
+  easy_refresh: ^3.3.4
 
 # 解決有衝突的套件
 dependency_overrides:
