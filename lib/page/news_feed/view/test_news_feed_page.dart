@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qpp_example/api/core/api_response.dart';
 import 'package:qpp_example/page/news_feed/view/empty_news_feed.dart';
-import 'package:qpp_example/page/news_feed/view_model/test_item_news_feed_model.dart';
+import 'package:qpp_example/page/news_feed/view/test_item_news_feed.dart';
 import 'package:qpp_example/page/news_feed/view_model/test_news_feed_view_model.dart';
 
 late ChangeNotifierProvider<TestNewsFeedModel> newsFeedProvider;
@@ -40,9 +40,12 @@ class StateTestNewsFeedPage extends State {
         return EasyRefresh(
           onRefresh: _onRefresh,
           child: newsFeedState.isCompleted
-              ? ListView.builder(
-                  itemCount: newsFeedState.data,
-                  itemBuilder: testItemNewsFeedModel)
+              ? ListView.separated(
+                  separatorBuilder: (context, index) => const SizedBox(
+                        height: 8,
+                      ),
+                  itemCount: newsFeedState.data!,
+                  itemBuilder: testItemNewsFeed)
               : const EmptyNewsFeed(),
         );
       },
