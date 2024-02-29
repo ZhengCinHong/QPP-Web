@@ -5,7 +5,8 @@ import 'package:qpp_example/utils/qpp_text_styles.dart';
 
 /// 物件上方
 class ItemNewsHeader extends StatelessWidget {
-  const ItemNewsHeader({super.key});
+  final int index;
+  const ItemNewsHeader({super.key, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,9 @@ class ItemNewsHeader extends StatelessWidget {
         const SizedBox(
           width: 12,
         ),
-        NewsUserNamePostInfo(),
+        NewsUserNamePostInfo(
+          index: index,
+        ),
         const Spacer(),
         NewsBtnMore(),
         const SizedBox(
@@ -68,15 +71,16 @@ Widget _userImg(String? path) {
 
 /// 用戶名稱, post date, 觀看權限
 class NewsUserNamePostInfo extends StatelessWidget {
-  const NewsUserNamePostInfo({super.key});
+  final int index;
+  const NewsUserNamePostInfo({super.key, required this.index});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'name',
+        Text(
+          'User $index',
           style: QppTextStyles.mobile_14pt_body_linktext_L,
         ),
         const SizedBox(

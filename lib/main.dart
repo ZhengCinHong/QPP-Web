@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qpp_example/api/core/http_service.dart';
@@ -45,6 +46,15 @@ class MyApp extends StatelessWidget {
           selectionColor: Colors.blueAccent.shade100,
         ),
       ),
+      // 如果用原生 RefreshIndicator 要打開
+      // scrollBehavior: const MaterialScrollBehavior().copyWith(
+      //   dragDevices: {
+      //     PointerDeviceKind.mouse,
+      //     PointerDeviceKind.touch,
+      //     PointerDeviceKind.stylus,
+      //     PointerDeviceKind.unknown
+      //   },
+      // ),
       routerConfig: QppGoRouter.router,
       locale: context.locale,
       supportedLocales: context.supportedLocales,

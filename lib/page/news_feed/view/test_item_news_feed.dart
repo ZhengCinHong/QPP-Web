@@ -26,7 +26,9 @@ class ItemNews extends StatelessWidget {
         const SizedBox(
           height: 12,
         ),
-        const ItemNewsHeader(),
+        ItemNewsHeader(
+          index: index + 1,
+        ),
         const SizedBox(
           height: 12,
         ),
