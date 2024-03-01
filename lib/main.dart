@@ -39,12 +39,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      theme: ThemeData(
-        useMaterial3: true,
-        textSelectionTheme: TextSelectionThemeData(
-          selectionColor: Colors.blueAccent.shade100,
-        ),
-      ),
+      // 改顏色導致選取時中文字體背景會有問題, 確認後不改選取顏色
+      // theme: ThemeData(
+      //   useMaterial3: true,
+      //   textSelectionTheme: TextSelectionThemeData(
+      //     selectionColor: Colors.blueAccent.shade100,
+      //   ),
+      // ),
       routerConfig: QppGoRouter.router,
       locale: context.locale,
       supportedLocales: context.supportedLocales,
