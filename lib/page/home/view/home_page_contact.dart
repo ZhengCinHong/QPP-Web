@@ -186,36 +186,34 @@ class _LinkTextState extends State<_LinkText> {
   Widget build(BuildContext context) {
     final isDesktopStyle = widget.screenStyle.isDesktop;
 
-    return StatefulBuilder(
-      builder: (context, setState) {
-        return InkWell(
-          onTap: () => ServerConst.mailUrl.launchURL(isNewTab: false),
-          onHover: (value) => setState(() {
-            isHovered = value;
-          }),
-          child: Container(
-            padding: const EdgeInsets.only(
-              bottom: 3,
-            ), // space between underline and text
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color: QppColors.mayaBlue
-                      .withOpacity(isHovered ? 1 : 0), // Text colour here
-                  width: 3, // Underline width
-                ),
-              ),
-            ),
-            child: _ShadowText(
-              ServerConst.mailStr,
-              style: isDesktopStyle
-                  ? QppTextStyles.web_40pt_Display_m_linktext_L
-                  : QppTextStyles.web_24pt_title_L_link_text_C,
-              textAlign: isDesktopStyle ? TextAlign.left : TextAlign.center,
+    return InkWell(
+      onTap: () => ServerConst.mailUrl.launchURL(isNewTab: false),
+      onHover: (value) => isDesktopStyle
+          ? setState(() {
+              isHovered = value;
+            })
+          : null,
+      child: Container(
+        padding: const EdgeInsets.only(
+          bottom: 3,
+        ), // space between underline and text
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: QppColors.mayaBlue
+                  .withOpacity(isHovered ? 1 : 0), // Text colour here
+              width: 3, // Underline width
             ),
           ),
-        );
-      },
+        ),
+        child: _ShadowText(
+          ServerConst.mailStr,
+          style: isDesktopStyle
+              ? QppTextStyles.web_40pt_Display_m_linktext_L
+              : QppTextStyles.web_24pt_title_L_link_text_C,
+          textAlign: isDesktopStyle ? TextAlign.left : TextAlign.center,
+        ),
+      ),
     );
   }
 }

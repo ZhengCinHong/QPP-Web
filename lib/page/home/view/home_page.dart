@@ -8,6 +8,7 @@ import 'package:qpp_example/page/home/view/home_page_description.dart';
 import 'package:qpp_example/page/home/view/home_page_feature.dart';
 import 'package:qpp_example/page/home/view/home_page_footer.dart';
 import 'package:qpp_example/page/home/view/home_page_introduce.dart';
+import 'package:qpp_example/page/home/view_model/home_page_view_model.dart';
 
 /// 首頁
 class HomePage extends StatefulWidget {
@@ -19,7 +20,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final scrollController = ScrollController();
-  final global = GlobalKey();
 
   /// 滑動到指定位置
   void scrollTo(
@@ -83,6 +83,98 @@ class _HomePageState extends State<HomePage> {
               HomePageDescription(key: descriptionKey),
               HomePageContact(key: contactKey),
               const HomePageFooter(key: ValueKey('HomePageFooter')),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// 手機版首頁
+class MobileHomePage extends StatefulWidget {
+  const MobileHomePage({super.key});
+
+  @override
+  State<MobileHomePage> createState() => _MobileHomePageState();
+}
+
+class _MobileHomePageState extends State<MobileHomePage>
+    with TickerProviderStateMixin {
+  late TabController _tabController;
+
+  final menus = MainMenu.values;
+
+  @override
+  void initState() {
+    _tabController = TabController(length: MainMenu.values.length, vsync: this);
+    super.initState();
+  }
+
+  Future<void> precacheAssetImages() async {
+    for (var element in HomePageModel.images) {
+      precacheImage(AssetImage(element), context);
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    precacheAssetImages();
+  }
+
+  @override
+  Widget build(context) {
+    const footerWidget = HomePageFooter(key: ValueKey('HomePageFooter'));
+
+    return RepaintBoundary(
+      child: Consumer(
+        builder: (context, ref, child) {
+          final selectedIndex = ref.watch(selectedIndexProvider);
+    
+          _tabController.animateTo(selectedIndex);
+    
+          return child ?? const SizedBox.shrink();
+        },
+        child: DefaultTabController(
+          length: menus.length,
+          child: TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: _tabController,
+            children: const [
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    HomePageIntroduce(),
+                    footerWidget,
+                  ],
+                ),
+              ),
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    HomePageFeature(),
+                    footerWidget,
+                  ],
+                ),
+              ),
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    HomePageDescription(),
+                    footerWidget,
+                  ],
+                ),
+              ),
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    HomePageContact(),
+                    footerWidget,
+                  ],
+                ),
+              ),
             ],
           ),
         ),

@@ -182,8 +182,9 @@ class _Qrcode extends StatelessWidget {
         isDesktopPlatform
             ? Container(
                 decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(6))),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(6)),
+                ),
                 child: MouseRegion(
                   cursor: SystemMouseCursors.click, // 改鼠標樣式
                   child: GestureDetector(
@@ -268,19 +269,28 @@ class _PlayStoreButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDesktopStyle = screenStyle.isDesktop;
 
-    return Row(
-      mainAxisAlignment:
-          isDesktopStyle ? MainAxisAlignment.start : MainAxisAlignment.center,
-      children: [
-        isDesktopStyle
-            ? const _PlayStoreButton.desktop(type: PlayStoreType.google)
-            : const _PlayStoreButton.mobile(type: PlayStoreType.google),
-        SizedBox(width: isDesktopStyle ? 14 : 12),
-        isDesktopStyle
-            ? const _PlayStoreButton.desktop(type: PlayStoreType.apple)
-            : const _PlayStoreButton.mobile(type: PlayStoreType.apple),
-      ],
-    );
+    final googleBtn = isDesktopStyle
+        ? const _PlayStoreButton.desktop(type: PlayStoreType.google)
+        : const _PlayStoreButton.mobile(type: PlayStoreType.google);
+
+    final appleBtn = isDesktopStyle
+        ? const _PlayStoreButton.desktop(type: PlayStoreType.apple)
+        : const _PlayStoreButton.mobile(type: PlayStoreType.apple);
+
+    return context.isDesktopPlatform
+        ? Row(
+            mainAxisAlignment: isDesktopStyle
+                ? MainAxisAlignment.start
+                : MainAxisAlignment.center,
+            children: [
+              googleBtn,
+              SizedBox(width: isDesktopStyle ? 14 : 12),
+              appleBtn,
+            ],
+          )
+        : context.isAndroid
+            ? googleBtn
+            : appleBtn;
   }
 }
 
@@ -392,12 +402,10 @@ class _MoreAboutQPPButtonState extends State<MoreAboutQPPButton>
       children: [
         Consumer(
           builder: (context, ref, child) {
-            final scrollToContextNotifier =
-                ref.read(scrollToContextProvider.notifier);
-
             return GestureDetector(
               onTap: () {
-                scrollToContextNotifier.state = MainMenu.feature;
+                selectedMainMenu(MainMenu.feature,
+                    ref: ref, isDesktopPlatform: true);
               }.throttleWithTimeout(timeout: 1000),
               child: child,
             );

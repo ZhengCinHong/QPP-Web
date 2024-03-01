@@ -15,6 +15,12 @@ extension BuildContextExtension on BuildContext {
     };
   }
 
+  /// 是否為iOS裝置平台
+  bool get isIOS => Theme.of(this).platform == TargetPlatform.iOS;
+
+  /// 是否為Android裝置平台
+  bool get isAndroid => Theme.of(this).platform == TargetPlatform.android;
+
   /// 螢幕樣式
   ScreenStyle get screenStyle =>
       MediaQuery.of(this).size.width.determineScreenStyle();

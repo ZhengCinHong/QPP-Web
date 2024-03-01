@@ -265,10 +265,12 @@ class MobileStyleContent extends StatelessWidget {
                   style: QppTextStyles.mobile_18pt_title_m_bold_sky_white_C,
                   softWrap: true,
                   overflow: TextOverflow.clip,
+                  textAlign: TextAlign.center,
                 ),
               ),
-              const SizedBox(height: 19),
+              const SizedBox(height: 15),
               Flexible(
+                flex: 2,
                 child: AutoSizeText(
                   context.tr(type.directions),
                   style: QppTextStyles.mobile_14pt_body_white_C,
