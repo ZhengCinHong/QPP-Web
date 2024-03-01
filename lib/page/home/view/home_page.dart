@@ -75,16 +75,16 @@ class _HomePageState extends State<HomePage> {
       },
       child: SingleChildScrollView(
         controller: scrollController,
-        child: Column(
-          children: [
-            RepaintBoundary(child: HomePageIntroduce(key: introduceKey)),
-            RepaintBoundary(child: HomePageFeature(key: featureKey)),
-            RepaintBoundary(child: HomePageDescription(key: descriptionKey)),
-            RepaintBoundary(child: HomePageContact(key: contactKey)),
-            const RepaintBoundary(
-              child: HomePageFooter(key: ValueKey('HomePageFooter')),
-            ),
-          ],
+        child: RepaintBoundary(
+          child: Column(
+            children: [
+              HomePageIntroduce(key: introduceKey),
+              HomePageFeature(key: featureKey),
+              HomePageDescription(key: descriptionKey),
+              HomePageContact(key: contactKey),
+              const HomePageFooter(key: ValueKey('HomePageFooter')),
+            ],
+          ),
         ),
       ),
     );
@@ -126,57 +126,57 @@ class _MobileHomePageState extends State<MobileHomePage>
 
   @override
   Widget build(context) {
-    const footerWidget = RepaintBoundary(
-      child: HomePageFooter(key: ValueKey('HomePageFooter')),
-    );
+    const footerWidget = HomePageFooter(key: ValueKey('HomePageFooter'));
 
-    return Consumer(
-      builder: (context, ref, child) {
-        final selectedIndex = ref.watch(selectedIndexProvider);
-
-        _tabController.animateTo(selectedIndex);
-
-        return child ?? const SizedBox.shrink();
-      },
-      child: DefaultTabController(
-        length: menus.length,
-        child: TabBarView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: _tabController,
-          children: const [
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  RepaintBoundary(child: HomePageIntroduce()),
-                  footerWidget,
-                ],
+    return RepaintBoundary(
+      child: Consumer(
+        builder: (context, ref, child) {
+          final selectedIndex = ref.watch(selectedIndexProvider);
+    
+          _tabController.animateTo(selectedIndex);
+    
+          return child ?? const SizedBox.shrink();
+        },
+        child: DefaultTabController(
+          length: menus.length,
+          child: TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: _tabController,
+            children: const [
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    HomePageIntroduce(),
+                    footerWidget,
+                  ],
+                ),
               ),
-            ),
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  RepaintBoundary(child: HomePageFeature()),
-                  footerWidget,
-                ],
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    HomePageFeature(),
+                    footerWidget,
+                  ],
+                ),
               ),
-            ),
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  RepaintBoundary(child: HomePageDescription()),
-                  footerWidget,
-                ],
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    HomePageDescription(),
+                    footerWidget,
+                  ],
+                ),
               ),
-            ),
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  RepaintBoundary(child: HomePageContact()),
-                  footerWidget,
-                ],
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    HomePageContact(),
+                    footerWidget,
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

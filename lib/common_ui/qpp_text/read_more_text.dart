@@ -323,8 +323,10 @@ class ReadMoreTextState extends State<ReadMoreText> {
     // url RegExp exp = RegExp(r'(https|http):\/\/?[\w/\-?=%.]+\.[\w/\-?=%.&]+');
     // mail RegExp exp = RegExp(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}');
     // 判斷 url & mail 的正則
-    RegExp exp = RegExp(r'(?:[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|'
-        r'(https|http):\/\/?[\w/\-?=%.]+\.[\w/\-?=%.&]+)');
+    RegExp exp = RegExp(
+        r'(?:[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|'
+        r'(https|http):\/\/?[\w/\-?=%.]+\.[\w/\-?=%.&]+)',
+        caseSensitive: false);
 
     List<TextSpan> contents = [];
 

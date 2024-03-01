@@ -61,58 +61,60 @@ class _QppAppBarTitle extends ConsumerWidget {
     final bool isLogin = ((SharedPrefs.getLoginInfo()?.isLogin == true) ||
         (checkLoginTokenState.data?.isSuccess == true));
 
-    return Row(
-      children: [
-        // 最左邊間距
-        isDesktopStyle ? const Spacer(flex: 320) : const SizedBox(width: 29),
-        isDesktopStyle
-            ? const _Logo(ScreenStyle.desktop)
-            : const _Logo(ScreenStyle.mobile),
-        // QPP -> Button 間距
-        Spacer(
-          flex: isDesktopStyle
-              ? isLogin
-                  ? 362
-                  : 527
-              : 210,
-        ),
-        // 選單按鈕
-        isDesktopStyle
-            ? const MenuBtns.horizontal(padding: 73, fontSize: 18)
-            : const SizedBox.shrink(),
-        isLogin
-            ? Container(
-                constraints: const BoxConstraints(minWidth: 20, maxWidth: 64))
-            : const SizedBox.shrink(),
-        // 用戶資訊
-        isLogin
-            ? isDesktopStyle
-                ? const _UserInfo(ScreenStyle.desktop)
-                : const _UserInfo(ScreenStyle.mobile)
-            : const SizedBox.shrink(),
-        Spacer(
-          flex: isDesktopStyle
-              ? isLogin
-                  ? 48
-                  : 64
-              : 20,
-        ),
-        // 語系
-        isDesktopStyle
-            ? const LanguageDropdownMenu(ScreenStyle.desktop)
-            : const LanguageDropdownMenu(ScreenStyle.mobile),
-        // 三條 or 最右邊間距
-        isDesktopStyle
-            ? const Flexible(child: SizedBox.shrink())
-            : Opacity(
-                opacity: style.isSrcMenuVisible ? 1 : 0,
-                child: const Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: AnimationMenuBtn(isClose: false),
+    return RepaintBoundary(
+      child: Row(
+        children: [
+          // 最左邊間距
+          isDesktopStyle ? const Spacer(flex: 320) : const SizedBox(width: 29),
+          isDesktopStyle
+              ? const _Logo(ScreenStyle.desktop)
+              : const _Logo(ScreenStyle.mobile),
+          // QPP -> Button 間距
+          Spacer(
+            flex: isDesktopStyle
+                ? isLogin
+                    ? 362
+                    : 527
+                : 210,
+          ),
+          // 選單按鈕
+          isDesktopStyle
+              ? const MenuBtns.horizontal(padding: 73, fontSize: 18)
+              : const SizedBox.shrink(),
+          isLogin
+              ? Container(
+                  constraints: const BoxConstraints(minWidth: 20, maxWidth: 64))
+              : const SizedBox.shrink(),
+          // 用戶資訊
+          isLogin
+              ? isDesktopStyle
+                  ? const _UserInfo(ScreenStyle.desktop)
+                  : const _UserInfo(ScreenStyle.mobile)
+              : const SizedBox.shrink(),
+          Spacer(
+            flex: isDesktopStyle
+                ? isLogin
+                    ? 48
+                    : 64
+                : 20,
+          ),
+          // 語系
+          isDesktopStyle
+              ? const LanguageDropdownMenu(ScreenStyle.desktop)
+              : const LanguageDropdownMenu(ScreenStyle.mobile),
+          // 三條 or 最右邊間距
+          isDesktopStyle
+              ? const Flexible(child: SizedBox.shrink())
+              : Opacity(
+                  opacity: style.isSrcMenuVisible ? 1 : 0,
+                  child: const Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: AnimationMenuBtn(isClose: false),
+                  ),
                 ),
-              ),
-        isDesktopStyle ? const Spacer(flex: 319) : const SizedBox(width: 24)
-      ],
+          isDesktopStyle ? const Spacer(flex: 319) : const SizedBox(width: 24)
+        ],
+      ),
     );
   }
 }

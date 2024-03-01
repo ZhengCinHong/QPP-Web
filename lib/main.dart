@@ -41,9 +41,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       theme: ThemeData(
         useMaterial3: true,
-        textSelectionTheme: TextSelectionThemeData(
-          selectionColor: Colors.blueAccent.shade100,
-        ),
       ),
       routerConfig: QppGoRouter.router,
       locale: context.locale,
