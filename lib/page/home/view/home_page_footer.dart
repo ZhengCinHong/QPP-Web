@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/view_model/qpp_app_bar_view_model.dart';
+import 'package:qpp_example/extension/build_context.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -44,8 +45,7 @@ class _FooterInfo extends StatelessWidget {
           child: Container(color: QppColors.maskAlpha60),
         ),
         // 內容
-        Container(
-          // decoration: const BoxDecoration(color: QppColors.oxfordBlue),
+        Padding(
           padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 24),
           child: LayoutBuilder(
             builder: (context, constraints) {
@@ -298,25 +298,24 @@ class _MenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegionCustomWidget(
-      builder: (event) => Container(
-        constraints: const BoxConstraints(maxWidth: 100),
-        child: Consumer(
-          builder: (context, ref, child) {
-            final scrollToContextNotifier =
-                ref.read(scrollToContextProvider.notifier);
-
-            return CUnderlineText(
-              text: context.tr(type.text),
-              style: QppTextStyles.mobile_16pt_title_white_bold_L,
-              onTap: () {
-                scrollToContextNotifier.state = type;
-              },
-              softWrap: true,
-              overflow: TextOverflow.clip,
-            );
-          },
-        ),
+    return Container(
+      constraints: const BoxConstraints(maxWidth: 100),
+      child: Consumer(
+        builder: (context, ref, child) {
+          return CUnderlineText(
+            text: context.tr(type.text),
+            style: QppTextStyles.mobile_16pt_title_white_bold_L,
+            onTap: () {
+              selectedMainMenu(
+                type,
+                ref: ref,
+                isDesktopPlatform: context.isDesktopPlatform,
+              );
+            },
+            softWrap: true,
+            overflow: TextOverflow.clip,
+          );
+        },
       ),
     );
   }

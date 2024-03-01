@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qpp_example/common_ui/qpp_framework/qpp_main_framework.dart';
 import 'package:qpp_example/constants/server_const.dart';
+import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/instructions/instructions_frame.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_info_teach_main_frame.dart';
@@ -121,10 +122,14 @@ class QppGoRouter {
         builder: (context, state) {
           setLocale(context);
           return MainFramework(
-              libFuture: home_box.loadLibrary(),
-              child: (context) {
-                return home_box.HomePage();
-              });
+            libFuture: home_box.loadLibrary(),
+            child: (context) {
+              // return const DynamicWall();
+              return context.isDesktopPlatform
+                  ? home_box.HomePage()
+                  : home_box.MobileHomePage();
+            },
+          );
         },
       ),
       GoRoute(

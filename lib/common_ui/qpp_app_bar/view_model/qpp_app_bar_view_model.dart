@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/model/qpp_app_bar_model.dart';
+import 'package:qpp_example/page/home/view_model/home_page_view_model.dart';
 
 /// 是否顯示全螢幕選單Provider
 final ChangeNotifierProvider<FullScreenMenuPageStateNotifier>
@@ -106,3 +108,17 @@ class MouseRegionStateNotifier extends StateNotifier<PointerEvent> {
 
 /// 滑動到context位置
 final scrollToContextProvider = StateProvider<MainMenu?>((ref) => null);
+
+/// 選擇主頁選單
+void selectedMainMenu(
+  MainMenu type, {
+  required WidgetRef ref,
+  required bool isDesktopPlatform,
+}) {
+  final scrollToContextNotifier = ref.read(scrollToContextProvider.notifier);
+  final selectedIndexNotiifer = ref.watch(selectedIndexProvider.notifier);
+
+  isDesktopPlatform
+      ? scrollToContextNotifier.state = type
+      : selectedIndexNotiifer.state = type.index;
+}

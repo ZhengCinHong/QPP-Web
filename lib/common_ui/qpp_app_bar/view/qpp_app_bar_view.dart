@@ -188,19 +188,21 @@ class MenuBtns extends StatelessWidget {
                     cursor: SystemMouseCursors.click, // 改鼠標樣式
                     child: Consumer(
                       builder: (context, ref, child) {
-                        final scrollToContextNotifier =
-                            ref.read(scrollToContextProvider.notifier);
-
                         return GestureDetector(
                           behavior: HitTestBehavior
                               .translucent, // 穿透點擊事件，讓整個元件都可以觸發點擊
                           onTap: () {
                             final bool isHomePage = Uri.base.path.isHomePage;
 
+                            // 桌機平台
+                            final isDesktopPlatform = context.isDesktopPlatform;
+
                             if (isHomePage) {
-                              if (e.currentContext != null) {
-                                scrollToContextNotifier.state = e;
-                              }
+                                selectedMainMenu(
+                                  e,
+                                  ref: ref,
+                                  isDesktopPlatform: isDesktopPlatform,
+                                );
                             } else {
                               if (context.canPop()) {
                                 context.pop();
@@ -209,9 +211,13 @@ class MenuBtns extends StatelessWidget {
                               }
 
                               Future.delayed(
-                                const Duration(milliseconds: 500),
+                                const Duration(milliseconds: 300),
                                 () => e.currentContext != null
-                                    ? scrollToContextNotifier.state = e
+                                    ? selectedMainMenu(
+                                        e,
+                                        ref: ref,
+                                        isDesktopPlatform: isDesktopPlatform,
+                                      )
                                     : null,
                               );
                             }
@@ -427,6 +433,7 @@ class _UserInfo extends StatelessWidget {
                         errorBuilder: (context, error, stackTrace) =>
                             Image.asset(
                           QPPImages.mobile_icon_actionbar_profile_login_default,
+                          width: 24,
                         ),
                       ),
                     ),
@@ -651,8 +658,6 @@ class _FullScreenMenuBtnPageState extends ConsumerState<FullScreenMenuBtnPage>
     final fullScreenMenuPageStateNotifier =
         ref.read(fullScreenMenuPageStateProvider.notifier);
 
-    final scrollToContextNotifier = ref.read(scrollToContextProvider.notifier);
-
     // 播放動畫
     _controller.reset();
     if (fullScreenMenuPageState == FullScreenMenuPageStyle.animateToShow) {
@@ -703,10 +708,16 @@ class _FullScreenMenuBtnPageState extends ConsumerState<FullScreenMenuBtnPage>
                               // 滾動
                               final bool isHomePage = Uri.base.path.isHomePage;
 
+                              // 桌機平台
+                              final isDesktopPlatform =
+                                  context.isDesktopPlatform;
+
                               if (isHomePage) {
-                                if (e.currentContext != null) {
-                                  scrollToContextNotifier.state = e;
-                                }
+                                selectedMainMenu(
+                                  e,
+                                  ref: ref,
+                                  isDesktopPlatform: isDesktopPlatform,
+                                );
                               } else {
                                 if (context.canPop()) {
                                   context.pop();
@@ -715,10 +726,12 @@ class _FullScreenMenuBtnPageState extends ConsumerState<FullScreenMenuBtnPage>
                                 }
 
                                 Future.delayed(
-                                  const Duration(milliseconds: 500),
-                                  () => e.currentContext != null
-                                      ? scrollToContextNotifier.state = e
-                                      : null,
+                                  const Duration(milliseconds: 300),
+                                  () => selectedMainMenu(
+                                    e,
+                                    ref: ref,
+                                    isDesktopPlatform: isDesktopPlatform,
+                                  ),
                                 );
                               }
                             }.throttleWithTimeout(timeout: 1000),
