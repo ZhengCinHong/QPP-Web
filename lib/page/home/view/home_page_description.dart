@@ -57,8 +57,7 @@ class _PhoneDescription extends StatelessWidget {
         final hoveredTypeNotifier = ref.read(hoveredTypeProvider.notifier);
 
         return MouseRegion(
-          onEnter: (event) =>
-              {print(type.toString()), hoveredTypeNotifier.state = type},
+          onEnter: (event) => hoveredTypeNotifier.state = type,
           onExit: (event) => hoveredTypeNotifier.state = null,
           child: child,
         );
@@ -178,12 +177,14 @@ class _Content extends StatelessWidget {
       final hoveredTypeNotifier = ref.read(hoveredTypeProvider.notifier);
 
       return MouseRegion(
-        onEnter: (event) => type == HomePageDescriptionType.phone // 手機板塊在外層實現了，這邊就不需要了，不然會有衝突
-            ? null
-            : hoveredTypeNotifier.state = type,
-        onExit: (event) => type == HomePageDescriptionType.phone // 手機板塊在外層實現了，這邊就不需要了，不然會有衝突
-            ? null
-            : hoveredTypeNotifier.state = null,
+        onEnter: (event) =>
+            type == HomePageDescriptionType.phone // 手機板塊在外層實現了，這邊就不需要了，不然會有衝突
+                ? null
+                : hoveredTypeNotifier.state = type,
+        onExit: (event) =>
+            type == HomePageDescriptionType.phone // 手機板塊在外層實現了，這邊就不需要了，不然會有衝突
+                ? null
+                : hoveredTypeNotifier.state = null,
         child: screenStyle.isDesktop
             ? DesktopStyleContent(
                 key: ValueKey(type),
