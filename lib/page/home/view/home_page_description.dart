@@ -177,8 +177,14 @@ class _Content extends StatelessWidget {
       final hoveredTypeNotifier = ref.read(hoveredTypeProvider.notifier);
 
       return MouseRegion(
-        onEnter: (event) => hoveredTypeNotifier.state = type,
-        onExit: (event) => hoveredTypeNotifier.state = null,
+        onEnter: (event) =>
+            type == HomePageDescriptionType.phone // 手機板塊在外層實現了，這邊就不需要了，不然會有衝突
+                ? null
+                : hoveredTypeNotifier.state = type,
+        onExit: (event) =>
+            type == HomePageDescriptionType.phone // 手機板塊在外層實現了，這邊就不需要了，不然會有衝突
+                ? null
+                : hoveredTypeNotifier.state = null,
         child: screenStyle.isDesktop
             ? DesktopStyleContent(
                 key: ValueKey(type),
@@ -329,16 +335,23 @@ class _BgWidget extends StatelessWidget {
             builder: (context, ref, child) {
               final hoveredType = ref.watch(hoveredTypeProvider);
 
-              return AnimatedContainer(
-                height: isShowBackground ? null : 0,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeInOut,
-                transform: Matrix4.identity()
-                  ..scale(
-                    hoveredType == type ? 1.1 : 1.0,
+              return LayoutBuilder(builder: (context, constraints) {
+                final height = constraints.maxHeight;
+                final width = constraints.maxWidth;
+
+                return ClipRect(
+                  child: AnimatedContainer(
+                    height: isShowBackground ? null : 0,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                    transform: Matrix4.identity()
+                      ..translate(width / 2, height / 2) // 将中心点移动到容器的中心
+                      ..scale(hoveredType == type ? 1.1 : 1.0)
+                      ..translate(-width / 2, -height / 2), // 将中心点移回容器的中心
+                    child: Center(child: child),
                   ),
-                child: child,
-              );
+                );
+              });
             },
             child: Container(
               key: ValueKey(type.image),
