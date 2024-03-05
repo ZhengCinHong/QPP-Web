@@ -73,9 +73,9 @@ class _HomePageState extends State<HomePage> {
 
         return child ?? const SizedBox.shrink();
       },
-      child: SingleChildScrollView(
-        controller: scrollController,
-        child: RepaintBoundary(
+      child: RepaintBoundary(
+        child: SingleChildScrollView(
+          controller: scrollController,
           child: Column(
             children: [
               HomePageIntroduce(key: introduceKey),
