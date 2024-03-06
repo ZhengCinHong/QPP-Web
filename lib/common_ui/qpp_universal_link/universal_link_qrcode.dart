@@ -52,7 +52,7 @@ class QPPQRCode extends StatelessWidget {
   Widget build(BuildContext context) {
     return QrImageView(
       version: QrVersions.auto,
-      errorCorrectionLevel: QrErrorCorrectLevel.H,
+      errorCorrectionLevel: QrErrorCorrectLevel.Q,
       data: data,
       embeddedImage: const AssetImage(QPPImages.pic_qrcode),
       embeddedImageStyle: const QrEmbeddedImageStyle(size: Size(30, 30)),
