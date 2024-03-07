@@ -20,7 +20,7 @@ class _LocalApi implements LocalApi {
 
   @override
   Future<GetLoginTokenResponse> postGetLoginToken(dynamic lang) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
     _headers.removeWhere((k, v) => v == null);
@@ -49,7 +49,7 @@ class _LocalApi implements LocalApi {
 
   @override
   Future<CheckLoginTokenResponse> postCheckLoginToken(dynamic data) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
     _headers.removeWhere((k, v) => v == null);
@@ -78,7 +78,7 @@ class _LocalApi implements LocalApi {
 
   @override
   Future<GetVoteStatusResponse> postGetVoteStatus(dynamic data) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
     _headers.removeWhere((k, v) => v == null);
@@ -107,10 +107,10 @@ class _LocalApi implements LocalApi {
 
   @override
   Future<HttpResponse<dynamic>> getLogout(String token) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result =
         await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
       method: 'GET',
@@ -135,7 +135,7 @@ class _LocalApi implements LocalApi {
 
   @override
   Future<GetVoteInfoResponse> postGetVoteInfo(dynamic data) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
     _headers.removeWhere((k, v) => v == null);
@@ -164,7 +164,7 @@ class _LocalApi implements LocalApi {
 
   @override
   Future<UserVoteResponse> postUserVote(dynamic data) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
     _headers.removeWhere((k, v) => v == null);

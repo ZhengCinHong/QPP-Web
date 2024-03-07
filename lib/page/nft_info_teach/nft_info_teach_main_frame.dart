@@ -9,13 +9,9 @@ import 'package:qpp_example/utils/qpp_color.dart';
 /// NFT 教學頁
 class NFTInfoTeachPageMainFrame extends StatelessWidget {
   final GoRouterState routerState;
-  final WidgetBuilder child;
-  final Future libFuture;
+  final Widget child;
   const NFTInfoTeachPageMainFrame(
-      {super.key,
-      required this.libFuture,
-      required this.routerState,
-      required this.child});
+      {super.key, required this.routerState, required this.child});
 
   NFTInfoTeachAnchor findAnchor() {
     // 取得 link 參數資料
@@ -29,17 +25,10 @@ class NFTInfoTeachPageMainFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: libFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            // 設定頁籤上方顯示內容
-            return Title(
-                title: context.tr(QppLocales.homeWebtitle),
-                color: QppColors.platinum,
-                child: child.call(context));
-          }
-          return const SizedBox.shrink();
-        });
+    // 設定頁籤上方顯示內容
+    return Title(
+        title: context.tr(QppLocales.homeWebtitle),
+        color: QppColors.platinum,
+        child: child);
   }
 }

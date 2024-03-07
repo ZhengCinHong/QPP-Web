@@ -6,22 +6,16 @@ import 'package:qpp_example/common_ui/qpp_framework/qpp_main_framework.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
-import 'package:qpp_example/page/instructions/instructions_frame.dart';
 import 'package:qpp_example/page/nft_info_teach/nft_info_teach_main_frame.dart';
 import 'package:qpp_example/universal_link/universal_link_data.dart';
 import 'package:qpp_example/utils/display_url.dart';
 import 'package:qpp_example/page/error_page/model/error_page_model.dart';
-import 'package:qpp_example/page/user_information/view/user_information.dart'
-    deferred as user_information_box;
-import 'package:qpp_example/page/home/view/home_page.dart' deferred as home_box;
-import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart'
-    deferred as commodity_info_box;
-import 'package:qpp_example/page/error_page/view/error_page.dart'
-    deferred as error_box;
-import 'package:qpp_example/page/nft_info_teach/nft_info_teach_scaffold.dart'
-    deferred as nft_info_teach_box;
-import 'package:qpp_example/page/instructions/instructions_page.dart'
-    deferred as instructions_box;
+import 'package:qpp_example/page/user_information/view/user_information.dart';
+import 'package:qpp_example/page/home/view/home_page.dart';
+import 'package:qpp_example/page/commodity_info/view/commodity_info_body.dart';
+import 'package:qpp_example/page/error_page/view/error_page.dart';
+import 'package:qpp_example/page/nft_info_teach/nft_info_teach_scaffold.dart';
+import 'package:qpp_example/page/instructions/instructions_page.dart';
 
 /// QPP路由
 class QppGoRouter {
@@ -130,13 +124,9 @@ class QppGoRouter {
         builder: (context, state) {
           setLocale(context);
           return MainFramework(
-            libFuture: home_box.loadLibrary(),
-            child: (context) {
-              // return const DynamicWall();
-              return context.isDesktopPlatform
-                  ? home_box.HomePage()
-                  : home_box.MobileHomePage();
-            },
+            child: context.isDesktopPlatform
+                ? const HomePage()
+                : const MobileHomePage(),
           );
         },
       ),
@@ -146,12 +136,7 @@ class QppGoRouter {
         name: app,
         builder: (context, state) {
           setLocale(context);
-          return MainFramework(
-            libFuture: home_box.loadLibrary(),
-            child: (context) {
-              return home_box.HomePage();
-            },
-          );
+          return const MainFramework(child: HomePage());
         },
       ),
       GoRoute(
@@ -161,13 +146,10 @@ class QppGoRouter {
         builder: (context, state) {
           setLocale(context);
           return NFTInfoTeachPageMainFrame(
-              libFuture: nft_info_teach_box.loadLibrary(),
               routerState: state,
-              child: (context) {
-                return nft_info_teach_box.NFTInfoTeachScaffold(
-                  state: state,
-                );
-              });
+              child: NFTInfoTeachScaffold(
+                state: state,
+              ));
         },
       ),
       GoRoute(
@@ -176,12 +158,7 @@ class QppGoRouter {
         name: privacy,
         builder: (context, state) {
           setLocale(context);
-          return InstructionsFrame(
-            libFuture: instructions_box.loadLibrary(),
-            child: (context) {
-              return instructions_box.InstructionsPage.privacy();
-            },
-          );
+          return InstructionsPage.privacy();
         },
       ),
       GoRoute(
@@ -190,12 +167,7 @@ class QppGoRouter {
         name: term,
         builder: (context, state) {
           setLocale(context);
-          return InstructionsFrame(
-            libFuture: instructions_box.loadLibrary(),
-            child: (context) {
-              return instructions_box.InstructionsPage.term();
-            },
-          );
+          return InstructionsPage.term();
         },
       ),
       // 外部連結
@@ -205,14 +177,10 @@ class QppGoRouter {
         builder: (context, state) {
           setLocale(context);
           return MainFramework(
-            libFuture: error_box.loadLibrary(),
-            child: (context) {
-              return error_box.ErrorPage(
-                type: ErrorPageType.troubleshootingInstructions,
-                url: state.fullURL,
-              );
-            },
-          );
+              child: ErrorPage(
+            type: ErrorPageType.troubleshootingInstructions,
+            url: state.fullURL,
+          ));
         },
       ),
       // 外部連結(app)
@@ -222,14 +190,10 @@ class QppGoRouter {
         builder: (context, state) {
           setLocale(context);
           return MainFramework(
-            libFuture: error_box.loadLibrary(),
-            child: (context) {
-              return error_box.ErrorPage(
-                type: ErrorPageType.troubleshootingInstructions,
-                url: state.fullURL,
-              );
-            },
-          );
+              child: ErrorPage(
+            type: ErrorPageType.troubleshootingInstructions,
+            url: state.fullURL,
+          ));
         },
       ),
       // 物品移轉
@@ -239,14 +203,10 @@ class QppGoRouter {
         builder: (context, state) {
           setLocale(context);
           return MainFramework(
-            libFuture: error_box.loadLibrary(),
-            child: (context) {
-              return error_box.ErrorPage(
-                type: ErrorPageType.troubleshootingInstructions,
-                url: state.fullURL,
-              );
-            },
-          );
+              child: ErrorPage(
+            type: ErrorPageType.troubleshootingInstructions,
+            url: state.fullURL,
+          ));
         },
       ),
       // 物品移轉V2
@@ -256,14 +216,10 @@ class QppGoRouter {
         builder: (context, state) {
           setLocale(context);
           return MainFramework(
-            libFuture: error_box.loadLibrary(),
-            child: (context) {
-              return error_box.ErrorPage(
-                type: ErrorPageType.troubleshootingInstructions,
-                url: state.fullURL,
-              );
-            },
-          );
+              child: ErrorPage(
+            type: ErrorPageType.troubleshootingInstructions,
+            url: state.fullURL,
+          ));
         },
       ),
       // 物品移轉(app)
@@ -273,14 +229,10 @@ class QppGoRouter {
         builder: (context, state) {
           setLocale(context);
           return MainFramework(
-            libFuture: error_box.loadLibrary(),
-            child: (context) {
-              return error_box.ErrorPage(
-                type: ErrorPageType.troubleshootingInstructions,
-                url: state.fullURL,
-              );
-            },
-          );
+              child: ErrorPage(
+            type: ErrorPageType.troubleshootingInstructions,
+            url: state.fullURL,
+          ));
         },
       ),
       // 物品移轉V2(app)
@@ -290,14 +242,10 @@ class QppGoRouter {
         builder: (context, state) {
           setLocale(context);
           return MainFramework(
-            libFuture: error_box.loadLibrary(),
-            child: (context) {
-              return error_box.ErrorPage(
-                type: ErrorPageType.troubleshootingInstructions,
-                url: state.fullURL,
-              );
-            },
-          );
+              child: ErrorPage(
+            type: ErrorPageType.troubleshootingInstructions,
+            url: state.fullURL,
+          ));
         },
       ),
       // nft物品資訊頁(只有app有)
@@ -306,12 +254,7 @@ class QppGoRouter {
         name: nftInfo,
         builder: (context, state) {
           setLocale(context);
-          return MainFramework(
-            libFuture: commodity_info_box.loadLibrary(),
-            child: (context) {
-              return commodity_info_box.CommodityInfoPage(routerState: state);
-            },
-          );
+          return MainFramework(child: CommodityInfoPage(routerState: state));
         },
       ),
       // common path
@@ -324,14 +267,10 @@ class QppGoRouter {
           final data =
               UniversalLinkParamData.fromJson(state.uri.queryParameters);
           return MainFramework(
-            libFuture: user_information_box.loadLibrary(),
-            child: (context) {
-              return user_information_box.UserInformationOuterFrame(
-                userID: data.phoneNumber ?? "",
-                url: state.fullURL,
-              );
-            },
-          );
+              child: UserInformationOuterFrame(
+            userID: data.phoneNumber ?? "",
+            url: state.fullURL,
+          ));
         },
       ),
       // 物品資訊頁
@@ -340,12 +279,7 @@ class QppGoRouter {
         name: commodityInfo,
         builder: (context, state) {
           setLocale(context);
-          return MainFramework(
-            libFuture: commodity_info_box.loadLibrary(),
-            child: (context) {
-              return commodity_info_box.CommodityInfoPage(routerState: state);
-            },
-          );
+          return MainFramework(child: CommodityInfoPage(routerState: state));
         },
       ),
       // 物品出示頁
@@ -355,9 +289,7 @@ class QppGoRouter {
         builder: (context, state) {
           setLocale(context);
           return MainFramework(
-            libFuture: commodity_info_box.loadLibrary(),
-            child: (context) =>
-                commodity_info_box.CommodityInfoPage(routerState: state),
+            child: CommodityInfoPage(routerState: state),
           );
         },
       ),
@@ -371,14 +303,10 @@ class QppGoRouter {
           final data =
               UniversalLinkParamData.fromJson(state.uri.queryParameters);
           return MainFramework(
-            libFuture: user_information_box.loadLibrary(),
-            child: (context) {
-              return user_information_box.UserInformationOuterFrame(
-                userID: data.phoneNumber ?? "",
-                url: state.fullURL,
-              );
-            },
-          );
+              child: UserInformationOuterFrame(
+            userID: data.phoneNumber ?? "",
+            url: state.fullURL,
+          ));
         },
       ),
       // 物品資訊頁 app path
@@ -387,12 +315,7 @@ class QppGoRouter {
         name: appCommodityInfo,
         builder: (context, state) {
           setLocale(context);
-          return MainFramework(
-            libFuture: commodity_info_box.loadLibrary(),
-            child: (context) {
-              return commodity_info_box.CommodityInfoPage(routerState: state);
-            },
-          );
+          return MainFramework(child: CommodityInfoPage(routerState: state));
         },
       ),
       // 物品出示頁 app path
@@ -402,9 +325,7 @@ class QppGoRouter {
         builder: (context, state) {
           setLocale(context);
           return MainFramework(
-            libFuture: commodity_info_box.loadLibrary(),
-            child: (context) =>
-                commodity_info_box.CommodityInfoPage(routerState: state),
+            child: CommodityInfoPage(routerState: state),
           );
         },
       ),
@@ -413,12 +334,7 @@ class QppGoRouter {
       // 錯誤頁面
       setLocale(context);
       return MainFramework(
-        libFuture: error_box.loadLibrary(),
-        child: (context) {
-          return error_box.ErrorPage(
-              type: ErrorPageType.urlIsWrong, url: state.fullURL);
-        },
-      );
+          child: ErrorPage(type: ErrorPageType.urlIsWrong, url: state.fullURL));
     },
   );
 }

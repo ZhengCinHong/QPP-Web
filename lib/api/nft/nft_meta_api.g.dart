@@ -20,10 +20,10 @@ class _NftMetaApi implements NftMetaApi {
 
   @override
   Future<NftMetaDataResponse> getNFTMeta(String nftID) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<NftMetaDataResponse>(Options(
       method: 'GET',

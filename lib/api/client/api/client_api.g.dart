@@ -20,7 +20,7 @@ class _ClientApi implements ClientApi {
 
   @override
   Future<ItemSelectInfoResponse> postItemSelect(dynamic itemIds) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
     _headers.removeWhere((k, v) => v == null);
@@ -50,7 +50,7 @@ class _ClientApi implements ClientApi {
   @override
   Future<MultiLanguageItemDescriptionSelectInfoResponse>
       postMultiLanguageItemDescriptionSelect(dynamic itemId) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
     _headers.removeWhere((k, v) => v == null);
@@ -81,7 +81,7 @@ class _ClientApi implements ClientApi {
   @override
   Future<MultiLanguageItemIntroLinkSelectInfoResponse>
       postMultiLanguageItemIntroLinkSelect(dynamic itemId) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
     _headers.removeWhere((k, v) => v == null);
@@ -111,7 +111,7 @@ class _ClientApi implements ClientApi {
 
   @override
   Future<UserSelectInfoResponse> postUserSelect(dynamic userId) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
     _headers.removeWhere((k, v) => v == null);
