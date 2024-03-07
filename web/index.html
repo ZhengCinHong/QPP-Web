@@ -248,9 +248,10 @@
           return false;
         }
         _flutter.loader.loadEntrypoint({
-          serviceWorker: {
-            // serviceWorkerVersion: serviceWorkerVersion,
-          },
+          // disable pwa
+          // serviceWorker: {
+          //   serviceWorkerVersion: serviceWorkerVersion,
+          // },
           onEntrypointLoaded: async function (engineInitializer) {
             // 修改渲染模式, 加速載入中文
             let config = {
