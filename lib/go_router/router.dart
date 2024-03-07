@@ -55,6 +55,10 @@ class QppGoRouter {
   /// 外部登入
   static const String vendorLogin = '/vendor_login';
 
+  // 物品移轉
+  static const String commodityRequest = '/commodity_request';
+  static const String commodityRequestV2 = '/commodity_request_v2';
+
   // static const String membershipFetch = 'membership_fetch';
 
   // -----------------------------------------------------------------------------
@@ -80,9 +84,10 @@ class QppGoRouter {
 
   /// 外部登入
   static const String appVendorLogin = '$app/vendor_login';
+
   // 物品移轉
-  static const String commodityRequest = '$app/commodity_request';
-  static const String commodityRequestV2 = '$app/commodity_request_v2';
+  static const String appCommodityRequest = '$app/commodity_request';
+  static const String appCommodityRequestV2 = '$app/commodity_request_v2';
 
   /// 動態牆登入授權頁(只有app有)
   static const String loginAuth = 'login_auth';
@@ -244,10 +249,44 @@ class QppGoRouter {
           );
         },
       ),
-      // 物品移轉
+      // 物品移轉V2
       GoRoute(
         path: commodityRequestV2,
         name: commodityRequestV2,
+        builder: (context, state) {
+          setLocale(context);
+          return MainFramework(
+            libFuture: error_box.loadLibrary(),
+            child: (context) {
+              return error_box.ErrorPage(
+                type: ErrorPageType.troubleshootingInstructions,
+                url: state.fullURL,
+              );
+            },
+          );
+        },
+      ),
+      // 物品移轉(app)
+      GoRoute(
+        path: appCommodityRequest,
+        name: appCommodityRequest,
+        builder: (context, state) {
+          setLocale(context);
+          return MainFramework(
+            libFuture: error_box.loadLibrary(),
+            child: (context) {
+              return error_box.ErrorPage(
+                type: ErrorPageType.troubleshootingInstructions,
+                url: state.fullURL,
+              );
+            },
+          );
+        },
+      ),
+      // 物品移轉V2(app)
+      GoRoute(
+        path: appCommodityRequestV2,
+        name: appCommodityRequestV2,
         builder: (context, state) {
           setLocale(context);
           return MainFramework(
