@@ -52,6 +52,9 @@ class QppGoRouter {
   /// nft教學頁(只有home有)
   static const String nftInfoTeach = '/nft_info_teach';
 
+  /// 外部登入
+  static const String vendorLogin = '/vendor_login';
+
   // static const String membershipFetch = 'membership_fetch';
 
   // -----------------------------------------------------------------------------
@@ -75,8 +78,8 @@ class QppGoRouter {
   /// nft物品資訊頁(只有app有)
   static const String nftInfo = '$app/nft_info';
 
-  /// 外部登入(只有app有)
-  static const String vendorLogin = '$app/vendor_login';
+  /// 外部登入
+  static const String appVendorLogin = '$app/vendor_login';
   // 物品移轉
   static const String commodityRequest = '$app/commodity_request';
   static const String commodityRequestV2 = '$app/commodity_request_v2';
@@ -190,10 +193,27 @@ class QppGoRouter {
           );
         },
       ),
-      // only app path
+      // 外部連結
       GoRoute(
         path: vendorLogin,
         name: vendorLogin,
+        builder: (context, state) {
+          setLocale(context);
+          return MainFramework(
+            libFuture: error_box.loadLibrary(),
+            child: (context) {
+              return error_box.ErrorPage(
+                type: ErrorPageType.troubleshootingInstructions,
+                url: state.fullURL,
+              );
+            },
+          );
+        },
+      ),
+      // 外部連結(app)
+      GoRoute(
+        path: appVendorLogin,
+        name: appVendorLogin,
         builder: (context, state) {
           setLocale(context);
           return MainFramework(
