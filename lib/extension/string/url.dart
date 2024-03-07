@@ -22,6 +22,15 @@ extension UrlExtension on String {
     return modifiedUri.toString();
   }
 
+  /// 檢查 path 的開頭是否為 /app
+  String pathAppCheck() {
+    if (startsWith('/app')) {
+      return this;
+    } else {
+      return '/app$this';
+    }
+  }
+
   /// 檢查 nft 的 url 參數, 強制將 nft 資訊的 type 轉回 nft_info
   String nftTypeCheck() {
     // 類型是一般物品 但是 帶的參數是 metadataID

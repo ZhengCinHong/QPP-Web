@@ -18,11 +18,13 @@ class UrlGenerator {
     String host = 'qpptec.com';
     // 有 port 要拿掉, 不然會被當成 path 塞進去
     String path = origin.path.replaceAll(Setting().port.toString(), '');
+    // 確認 path 是否為 /app 開頭
+    String pathCheck = path.pathAppCheck();
 
     Uri generated = Uri(
       scheme: scheme,
       host: host,
-      path: path,
+      path: pathCheck,
       queryParameters: origin.queryParameters,
     );
     debugPrint('test generated ${generated.toString()}');

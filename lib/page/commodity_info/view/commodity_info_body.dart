@@ -259,10 +259,15 @@ class InfoCard extends StatelessWidget {
                         ? const VoteItemInfo.desktop()
                         : const VoteItemInfo.mobile();
                   } else {
-                    // 沒有取得物品資料
-                    return isDesktop
-                        ? const EmptyInfo.desktop()
-                        : const EmptyInfo.mobile();
+                    if (itemInfoState.isError || voteDataState.isError) {
+                      // 沒有取得物品資料
+                      return isDesktop
+                          ? const EmptyInfo.desktop()
+                          : const EmptyInfo.mobile();
+                    } else {
+                      // 還沒確定 state 前顯示空白
+                      return const SizedBox.shrink();
+                    }
                   }
                 }(),
               ),

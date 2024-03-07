@@ -366,13 +366,8 @@ class CommodityInfoModel extends ChangeNotifier {
         votedState =
             (vote?.haveOptionError == false || isCreater, VotedState.none);
       } else {
-        // 取資料失敗
-        voteDataState = ApiResponse.error(
-            getVoteStatusResponse.errorInfoArray?.first.errorMessage);
-
-        // 更新成未投票狀態
+        // 取資料失敗 更新成未投票狀態
         votedState = (false, VotedState.unkown);
-
         // 取問券資料
         getQuestionnaire(item);
       }
