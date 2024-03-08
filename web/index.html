@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <!-- QPPWeb ver 240306_1 -->
+  <!-- QPPWeb ver 240307_2 -->
 
   <head>
     <title rel="alternate" hreflang="x-default">
@@ -26,7 +26,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png" />
-    <link rel="manifest" href="manifest.json" />
+    <!-- <link rel="manifest" href="manifest.json" /> -->
     <script>
       // The value below is injected by flutter build, do not touch.
       var serviceWorkerVersion = null;
@@ -248,9 +248,10 @@
           return false;
         }
         _flutter.loader.loadEntrypoint({
-          serviceWorker: {
-            // serviceWorkerVersion: serviceWorkerVersion,
-          },
+          // disable pwa
+          // serviceWorker: {
+          //   serviceWorkerVersion: serviceWorkerVersion,
+          // },
           onEntrypointLoaded: async function (engineInitializer) {
             // 修改渲染模式, 加速載入中文
             let config = {

@@ -22,7 +22,6 @@ class UniversalLinkQRCode extends StatelessWidget {
       children: [
         Center(
           child: Container(
-            padding: const EdgeInsets.all(11),
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(6)),
@@ -51,14 +50,17 @@ class QPPQRCode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return QrImageView(
-      version: QrVersions.auto,
-      errorCorrectionLevel: QrErrorCorrectLevel.Q,
-      data: data,
-      embeddedImage: const AssetImage(QPPImages.pic_qrcode),
-      embeddedImageStyle: const QrEmbeddedImageStyle(size: Size(30, 30)),
-      size: size,
-      padding: const EdgeInsets.all(0),
+    return Container(
+      padding: const EdgeInsets.all(11),
+      child: QrImageView(
+        version: QrVersions.auto,
+        errorCorrectionLevel: QrErrorCorrectLevel.Q,
+        data: data,
+        embeddedImage: const AssetImage(QPPImages.pic_qrcode),
+        embeddedImageStyle: const QrEmbeddedImageStyle(size: Size(30, 30)),
+        size: size,
+        padding: const EdgeInsets.all(0),
+      ),
     );
   }
 }
