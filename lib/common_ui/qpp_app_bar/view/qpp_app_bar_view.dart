@@ -8,6 +8,7 @@ import 'package:qpp_example/common_ui/qpp_menu/c_menu_anchor.dart';
 import 'package:qpp_example/common_view_model/auth_service/view_model/auth_service_view_model.dart';
 import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/extension/go_router/go_router_extension.dart';
+import 'package:qpp_example/extension/string/url.dart';
 import 'package:qpp_example/extension/void/dialog_void.dart';
 import 'package:qpp_example/extension/throttle_debounce.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/model/qpp_app_bar_model.dart';
@@ -141,7 +142,7 @@ class _Logo extends StatelessWidget {
           ? null
           : context.canPop()
               ? context.pop()
-              : context.go(QppGoRouter.home),
+              : QppGoRouter.home.launchURL(isNewTab: false),
     );
   }
 }
@@ -207,7 +208,8 @@ class MenuBtns extends StatelessWidget {
                               if (context.canPop()) {
                                 context.pop();
                               } else {
-                                context.go(QppGoRouter.home);
+                                // context.go(QppGoRouter.home);
+                                QppGoRouter.home.launchURL(isNewTab: false);
                               }
 
                               Future.delayed(
@@ -722,7 +724,8 @@ class _FullScreenMenuBtnPageState extends ConsumerState<FullScreenMenuBtnPage>
                                 if (context.canPop()) {
                                   context.pop();
                                 } else {
-                                  context.go(QppGoRouter.home);
+                                  // context.go(QppGoRouter.home);
+                                  QppGoRouter.home.launchURL(isNewTab: false);
                                 }
 
                                 Future.delayed(
