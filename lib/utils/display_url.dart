@@ -5,15 +5,27 @@ import 'dart:html';
 class DisplayUrl {
   /// 更新網址 params
   static updateParam(String key, String value) {
+    // final decodeQuery = Uri.decodeComponent(Uri.base.query);
+    // Uri.base.
+    // final encodePath = Uri.encodeComponent(decodeQuery);
+
+    final baseUri = Uri.base;
+    final uri = Uri(
+      scheme: baseUri.scheme,
+      host: baseUri.host,
+      path: baseUri.path,
+      query: Uri.encodeFull(baseUri.query),
+    );
+
     // 先檢查是否有 query
-    if (Uri.base.queryParameters.isNotEmpty) {
+    if (uri.queryParameters.isNotEmpty) {
       // params 字串
-      String params = Uri.base.toString().split('?')[1];
+      String params = uri.toString().split('?')[1];
 
       // 有 query, 檢查是否有 lang parameter
-      if (Uri.base.queryParameters.containsKey(key)) {
+      if (uri.queryParameters.containsKey(key)) {
         // 有 lang parameter
-        String lang = Uri.base.queryParameters[key].toString();
+        String lang = uri.queryParameters[key].toString();
         int startIndex = params.indexOf(key);
         int endIndex = startIndex + 'lang'.length + lang.length + 1;
         params = params.replaceRange(startIndex, endIndex, 'lang=$value');
@@ -22,11 +34,11 @@ class DisplayUrl {
         params += '&lang=$value';
       }
       // window.history.pushState({}, '', '${Uri.base.path}?$params');
-      setQuery('${Uri.base.path}?$params');
+      setQuery('${uri.path}?$params');
     } else {
       // 沒有 query, 加上去
       // window.history.pushState({}, '', '${Uri.base.path}?lang=$value');
-      setQuery('${Uri.base.path}?lang=$value');
+      setQuery('${uri.path}?lang=$value');
     }
   }
 

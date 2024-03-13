@@ -9,8 +9,10 @@ import 'package:qpp_example/utils/screen.dart';
 /// 主框架
 class MainFramework extends StatelessWidget {
   final Widget child;
-  const MainFramework(
-      {super.key, required this.child,});
+  const MainFramework({
+    super.key,
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +26,7 @@ class MainFramework extends StatelessWidget {
       color: QppColors.platinum,
       child: Stack(
         children: [
-          _MainScaffold(
-              isDesktopStyle: isDesktopStyle, child: child),
+          _MainScaffold(isDesktopStyle: isDesktopStyle, child: child),
           isDesktopStyle
               ? const SizedBox.shrink()
               : const FullScreenMenuBtnPage(),
