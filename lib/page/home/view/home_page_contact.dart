@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/list/list.dart';
 import 'package:qpp_example/extension/string/url.dart';
@@ -187,34 +188,61 @@ class _LinkTextState extends State<_LinkText> {
     final isDesktopStyle = widget.screenStyle.isDesktop;
 
     return InkWell(
-      onTap: () => ServerConst.mailUrl.launchURL(isNewTab: false),
-      onHover: (value) => isDesktopStyle
-          ? setState(() {
-              isHovered = value;
-            })
-          : null,
-      child: Container(
-        padding: const EdgeInsets.only(
-          bottom: 3,
-        ), // space between underline and text
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: QppColors.mayaBlue
-                  .withOpacity(isHovered ? 1 : 0), // Text colour here
-              width: 3, // Underline width
-            ),
-          ),
-        ),
-        child: _ShadowText(
-          ServerConst.mailStr,
-          style: isDesktopStyle
-              ? QppTextStyles.web_40pt_Display_m_linktext_L
-              : QppTextStyles.web_24pt_title_L_link_text_C,
-          textAlign: isDesktopStyle ? TextAlign.left : TextAlign.center,
-        ),
-      ),
-    );
+        onTap: () => ServerConst.mailUrl.launchURL(isNewTab: false),
+        onHover: (value) => isDesktopStyle
+            ? setState(() {
+                isHovered = value;
+              })
+            : null,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Stack(
+              children: [
+                Positioned(
+                  // 负值表示向上偏移
+                  bottom: 5,
+                  child: Container(
+                    height: 3,
+                    width: constraints.maxWidth,
+                    color: QppColors.mayaBlue
+                        .withOpacity(isHovered ? 1 : 0), // Text colour here,
+                  ),
+                ),
+                _ShadowText(
+                  ServerConst.mailStr,
+                  style: isDesktopStyle
+                      ? QppTextStyles.web_40pt_Display_m_linktext_L
+                      : QppTextStyles.web_24pt_title_L_link_text_C,
+                  textAlign: isDesktopStyle ? TextAlign.left : TextAlign.center,
+                ),
+              ],
+            );
+          }
+        )
+
+        // Container(
+
+        //   // margin: const EdgeInsets.only(
+        //   //   bottom: 0,
+        //   // ), // space between underline and text
+        //   decoration: BoxDecoration(
+        //     border: Border(
+        //       bottom: BorderSide(
+        //         color: QppColors.mayaBlue
+        //             .withOpacity(isHovered ? 1 : 0), // Text colour here
+        //         width: 3, // Underline width
+        //       ),
+        //     ),
+        //   ),
+        //   child: _ShadowText(
+        //     ServerConst.mailStr,
+        //     style: isDesktopStyle
+        //         ? QppTextStyles.web_40pt_Display_m_linktext_L
+        //         : QppTextStyles.web_24pt_title_L_link_text_C,
+        //     textAlign: isDesktopStyle ? TextAlign.left : TextAlign.center,
+        //   ),
+        // ),
+        );
   }
 }
 
