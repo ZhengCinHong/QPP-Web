@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qpp_example/common_ui/qpp_menu/c_menu_anchor.dart';
 import 'package:qpp_example/common_view_model/auth_service/view_model/auth_service_view_model.dart';
-import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/extension/go_router/go_router_extension.dart';
 import 'package:qpp_example/extension/string/url.dart';
@@ -141,9 +140,9 @@ class _Logo extends StatelessWidget {
       ),
       onPressed: () => Uri.base.path == QppGoRouter.home
           ? null
-          : ServerConst.routerHost
-              .modifyUrlParameter("lang", context.locale.toString())
-              .launchURL(isNewTab: false),
+          : context.canPop()
+              ? context.pop()
+              : QppGoRouter.home.launchURL(isNewTab: false),
     );
   }
 }
@@ -200,16 +199,17 @@ class MenuBtns extends StatelessWidget {
                             final isDesktopPlatform = context.isDesktopPlatform;
 
                             if (isHomePage) {
-                                selectedMainMenu(
-                                  e,
-                                  ref: ref,
-                                  isDesktopPlatform: isDesktopPlatform,
-                                );
+                              selectedMainMenu(
+                                e,
+                                ref: ref,
+                                isDesktopPlatform: isDesktopPlatform,
+                              );
                             } else {
                               if (context.canPop()) {
                                 context.pop();
                               } else {
-                                context.go(QppGoRouter.home);
+                                // context.go(QppGoRouter.home);
+                                QppGoRouter.home.launchURL(isNewTab: false);
                               }
 
                               Future.delayed(
@@ -724,7 +724,8 @@ class _FullScreenMenuBtnPageState extends ConsumerState<FullScreenMenuBtnPage>
                                 if (context.canPop()) {
                                   context.pop();
                                 } else {
-                                  context.go(QppGoRouter.home);
+                                  // context.go(QppGoRouter.home);
+                                  QppGoRouter.home.launchURL(isNewTab: false);
                                 }
 
                                 Future.delayed(
