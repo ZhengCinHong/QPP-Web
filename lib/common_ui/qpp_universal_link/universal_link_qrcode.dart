@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:qpp_example/go_router/router.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
@@ -31,10 +32,19 @@ class UniversalLinkQRCode extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Center(
-          child: Text(
-            context.tr(QppLocales.commodityInfoScanViaQPP),
-            style: QppTextStyles.web_16pt_body_canary_yellow_C,
-          ),
+          child: Column(children: [
+            Text(
+              context.tr(QppLocales.commodityInfoScanViaQPP),
+              style: QppTextStyles.web_16pt_body_canary_yellow_C,
+            ),
+            // 路由為 membershipFetch, 顯示領取字樣
+            url.contains(QppGoRouter.membershipFetch)
+                ? Text(
+                    context.tr(QppLocales.errorPageClaim),
+                    style: QppTextStyles.web_16pt_body_canary_yellow_C,
+                  )
+                : const SizedBox.shrink(),
+          ]),
         ),
       ],
     );

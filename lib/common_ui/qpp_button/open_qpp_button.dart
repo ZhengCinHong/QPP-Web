@@ -5,6 +5,7 @@ import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/extension/string/text.dart';
 import 'package:qpp_example/extension/string/url.dart';
 import 'package:qpp_example/extension/throttle_debounce.dart';
+import 'package:qpp_example/go_router/router.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_text_styles.dart';
@@ -17,11 +18,21 @@ class OpenQppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    displayTxt() {
+      if (!url.isNullOrEmpty) {
+        if (url!.contains(QppGoRouter.membershipFetch)) {
+          // 判斷是否為 member fetch
+          return context.tr(QppLocales.errorPageOpenQppReceived);
+        }
+      }
+      return context.tr(QppLocales.errorPageOpenQpp);
+    }
+
     return CButton.rectangle(
       height: 48,
       width: 154,
       color: QppColors.mayaBlue,
-      text: context.tr(QppLocales.errorPageOpenQpp),
+      text: displayTxt(),
       textStyle: QppTextStyles.mobile_16pt_title_m_bold_oxford_blue_C,
       onTap: () {
         if (url.isNullOrEmpty) {
