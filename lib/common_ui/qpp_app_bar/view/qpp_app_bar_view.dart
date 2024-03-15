@@ -52,8 +52,6 @@ class _QppAppBarTitle extends ConsumerWidget {
 
     final bool isDesktopStyle = screenStyle.isDesktop;
 
-    final style = ref.watch(fullScreenMenuPageStateProvider).state;
-
     final checkLoginTokenState = ref.watch(
         authServiceProvider.select((value) => value.checkLoginTokenState));
 
@@ -104,12 +102,9 @@ class _QppAppBarTitle extends ConsumerWidget {
           // 三條 or 最右邊間距
           isDesktopStyle
               ? const Flexible(child: SizedBox.shrink())
-              : Opacity(
-                  opacity: style.isSrcMenuVisible ? 1 : 0,
-                  child: const Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: AnimationMenuBtn(isClose: false),
-                  ),
+              : const Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: AnimationMenuBtn(isClose: false),
                 ),
           isDesktopStyle ? const Spacer(flex: 319) : const SizedBox(width: 24)
         ],
@@ -418,14 +413,22 @@ class _UserInfo extends StatelessWidget {
               final isOpenNotifier =
                   ref.read(isOpenControllerProvider.notifier);
 
-              Future.microtask(
-                () => isOpen ? controller.open() : controller.close(),
-              );
+              if (context.isDesktopPlatform) {
+                Future.microtask(() {
+                  // 避免被銷毀時，強制設定會直接死機。
+                  if (!context.mounted) {
+                    return;
+                  }
+
+                  isOpen ? controller.open() : controller.close();
+                });
+              }
 
               return CMouseRegion(
                 onEnter: (event) => isOpenNotifier.state = true,
                 onExit: (event) => isOpenNotifier.state = false,
-                onTap: () => isOpenNotifier.state = !isOpenNotifier.state,
+                onTap: () =>
+                    controller.isOpen ? controller.close() : controller.open(),
                 child: Row(
                   children: [
                     ClipOval(
@@ -678,28 +681,14 @@ class _FullScreenMenuBtnPageState extends ConsumerState<FullScreenMenuBtnPage>
             sizeFactor: _animation,
             axis: Axis.vertical,
             axisAlignment: -1,
-            child: Stack(
-              children: [
-                const Scaffold(
-                  backgroundColor: Color.fromARGB(153, 0, 0, 0),
-                  body: SizedBox(
-                    height: kToolbarMobileHeight,
-                    child: Row(
-                      children: [
-                        // 最左邊間距
-                        SizedBox(width: 29),
-                        _Logo(ScreenStyle.mobile),
-                        Spacer(),
-                        // 三條 or 最右邊間距
-                        AnimationMenuBtn(isClose: true),
-                        SizedBox(width: 24)
-                      ],
-                    ),
-                  ),
-                ),
-                Center(
+            child: Scaffold(
+              backgroundColor: const Color.fromARGB(153, 0, 0, 0),
+              appBar: qppAppBar(false),
+              body: SingleChildScrollView(
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.only(top: 50),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: MainMenu.values
                         .map(
                           (e) => TextButton(
@@ -750,7 +739,21 @@ class _FullScreenMenuBtnPageState extends ConsumerState<FullScreenMenuBtnPage>
                         .toList(),
                   ),
                 ),
-              ],
+              ),
+              // const SizedBox(
+              //   height: kToolbarMobileHeight,
+              //   child: Row(
+              //     children: [
+              //       // 最左邊間距
+              //       SizedBox(width: 29),
+              //       _Logo(ScreenStyle.mobile),
+              //       Spacer(),
+              //       // 三條 or 最右邊間距
+              //       AnimationMenuBtn(isClose: true),
+              //       SizedBox(width: 24)
+              //     ],
+              //   ),
+              // ),
             ),
           );
   }

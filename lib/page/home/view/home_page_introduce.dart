@@ -31,7 +31,7 @@ class HomePageIntroduce extends StatelessWidget {
       padding: EdgeInsets.only(
         top: isDesktopStyle
             ? 133 + kToolbarDesktopHeight
-            : 48 + kToolbarMobileHeight,
+            : HomePageModel.mobilePageTopSpacing,
         bottom: isDesktopStyle ? 113 : 73,
         left: 24,
         right: 24,

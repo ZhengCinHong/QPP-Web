@@ -2,6 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/view/qpp_app_bar_view.dart';
+import 'package:qpp_example/constants/qpp_contanst.dart';
+import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/home/model/home_page_model.dart';
 import 'package:qpp_example/page/home/view_model/home_page_view_model.dart';
@@ -14,55 +16,58 @@ class HomePageFeature extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        /// 螢幕樣式
-        final ScreenStyle screenStyle = constraints.screenStyle;
-        final bool isDesktopStyle = screenStyle.isDesktop;
-        final int flex = isDesktopStyle ? 1 : 0;
-        final double topAndBottomSpacing = isDesktopStyle ? 200 : 80;
-        const double leftAndRightSpacing = 24;
-        final String image = isDesktopStyle
-            ? HomePageModel.featureBgImages[0]
-            : HomePageModel.featureBgImages[1];
-
-        return Container(
-          key: ValueKey(image),
-          width: constraints.maxWidth,
-          padding: EdgeInsets.only(
-            top: topAndBottomSpacing,
-            bottom: topAndBottomSpacing,
-            left: leftAndRightSpacing,
-            right: leftAndRightSpacing,
-          ),
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(image),
-              fit: BoxFit.cover,
+    return Padding(
+      padding: EdgeInsets.only(top: context.isDesktopPlatform ? 0 : kToolbarMobileHeight),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          /// 螢幕樣式
+          final ScreenStyle screenStyle = constraints.screenStyle;
+          final bool isDesktopStyle = screenStyle.isDesktop;
+          final int flex = isDesktopStyle ? 1 : 0;
+          final double topAndBottomSpacing = isDesktopStyle ? 200 : 80;
+          const double leftAndRightSpacing = 24;
+          final String image = isDesktopStyle
+              ? HomePageModel.featureBgImages[0]
+              : HomePageModel.featureBgImages[1];
+    
+          return Container(
+            key: ValueKey(image),
+            width: constraints.maxWidth,
+            padding: EdgeInsets.only(
+              top: topAndBottomSpacing,
+              bottom: topAndBottomSpacing,
+              left: leftAndRightSpacing,
+              right: leftAndRightSpacing,
             ),
-          ),
-          child: Flex(
-            direction: isDesktopStyle ? Axis.horizontal : Axis.vertical,
-            crossAxisAlignment: isDesktopStyle
-                ? CrossAxisAlignment.start
-                : CrossAxisAlignment.center,
-            children: [
-              Expanded(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(image),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Flex(
+              direction: isDesktopStyle ? Axis.horizontal : Axis.vertical,
+              crossAxisAlignment: isDesktopStyle
+                  ? CrossAxisAlignment.start
+                  : CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                    flex: flex,
+                    child: isDesktopStyle
+                        ? const _Left(ScreenStyle.desktop)
+                        : const _Left(ScreenStyle.mobile)),
+                const SizedBox(height: 24, width: 24),
+                Expanded(
                   flex: flex,
                   child: isDesktopStyle
-                      ? const _Left(ScreenStyle.desktop)
-                      : const _Left(ScreenStyle.mobile)),
-              const SizedBox(height: 24, width: 24),
-              Expanded(
-                flex: flex,
-                child: isDesktopStyle
-                    ? const _FeatureInfo.desktop()
-                    : const _FeatureInfo.mobile(),
-              ),
-            ],
-          ),
-        );
-      },
+                      ? const _FeatureInfo.desktop()
+                      : const _FeatureInfo.mobile(),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

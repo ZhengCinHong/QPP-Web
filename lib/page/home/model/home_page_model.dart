@@ -1,10 +1,14 @@
 import 'package:flutter/widgets.dart';
+import 'package:qpp_example/constants/qpp_contanst.dart';
 import 'package:qpp_example/constants/server_const.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
 import 'package:qpp_example/utils/screen.dart';
 
 class HomePageModel {
+  /// 手機版面上方間距
+  static const mobilePageTopSpacing = 48 + kToolbarMobileHeight;
+
   /// 產品介紹QPP文字圖片
   static const introduceQppTextImage = QPPImages.desktop_image_qpp_text;
 

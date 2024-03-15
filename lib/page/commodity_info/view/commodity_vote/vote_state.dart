@@ -35,57 +35,58 @@ class VoteItemState extends ConsumerWidget {
               left: isDesktopStyle ? 37 : 0,
               right: isDesktopStyle ? 37 : 0,
             ),
-            child: Table(
-              columnWidths: {
-                1: FixedColumnWidth(isDesktopStyle ? 18 : 1),
-              },
-              children: [
-                TableRow(
-                  children: [
-                    // 狀態
-                    Container(
-                      child: isDesktopStyle
-                          ? _VoteStateItem.desktop(
-                              type: VoteItemStateType.state,
-                              data: voteData,
-                            )
-                          : _VoteStateItem.mobile(
-                              type: VoteItemStateType.state,
-                              data: voteData,
-                            ),
-                    ),
-                    // 間距
-                    TableCell(
-                      verticalAlignment: TableCellVerticalAlignment.fill,
-                      child: isDesktopStyle
-                          ? const SizedBox()
-                          : Container(
-                              color: QppColors.prussianBlue,
-                              child: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                color: QppColors.darkGray,
-                              ),
-                            ),
-                    ),
-                    // 投票人數
-                    TableCell(
-                      verticalAlignment: TableCellVerticalAlignment.fill,
-                      child: Container(
+            child: ColoredBox(
+              color: QppColors.prussianBlue,
+              child: Table(
+                border: TableBorder.all(color: Colors.transparent), // 將邊界設置為透明色
+                columnWidths: {
+                  1: FixedColumnWidth(isDesktopStyle ? 18 : 1),
+                },
+                children: [
+                  TableRow(
+                    children: [
+                      // 狀態
+                      Container(
                         child: isDesktopStyle
                             ? _VoteStateItem.desktop(
-                                type: VoteItemStateType.voteCount,
+                                type: VoteItemStateType.state,
                                 data: voteData,
                               )
                             : _VoteStateItem.mobile(
-                                type: VoteItemStateType.voteCount,
+                                type: VoteItemStateType.state,
                                 data: voteData,
                               ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      // 間距
+                      TableCell(
+                        verticalAlignment: TableCellVerticalAlignment.fill,
+                        child: isDesktopStyle
+                            ? const SizedBox()
+                            : Container(
+                              margin:
+                                  const EdgeInsets.symmetric(vertical: 10),
+                              color: QppColors.midnightBlue,
+                            ),
+                      ),
+                      // 投票人數
+                      TableCell(
+                        verticalAlignment: TableCellVerticalAlignment.fill,
+                        child: Container(
+                          child: isDesktopStyle
+                              ? _VoteStateItem.desktop(
+                                  type: VoteItemStateType.voteCount,
+                                  data: voteData,
+                                )
+                              : _VoteStateItem.mobile(
+                                  type: VoteItemStateType.voteCount,
+                                  data: voteData,
+                                ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           )
         : const SizedBox.shrink();
@@ -117,7 +118,6 @@ class _VoteStateItem extends StatelessWidget {
         left: 24,
         right: 24,
       ),
-      color: QppColors.prussianBlue,
       child: Flex(
         direction: isDesktopStyle ? Axis.horizontal : Axis.vertical,
         children: [
