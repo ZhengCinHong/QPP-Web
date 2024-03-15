@@ -132,9 +132,9 @@ class _MobileHomePageState extends State<MobileHomePage>
       child: Consumer(
         builder: (context, ref, child) {
           final selectedIndex = ref.watch(selectedIndexProvider);
-    
+
           _tabController.animateTo(selectedIndex);
-    
+
           return child ?? const SizedBox.shrink();
         },
         child: DefaultTabController(

@@ -2,6 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:qpp_example/constants/qpp_contanst.dart';
+import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/page/home/model/home_page_model.dart';
 import 'package:qpp_example/page/home/view_model/home_page_view_model.dart';
@@ -15,25 +17,30 @@ class HomePageDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final ScreenStyle screenStyle = constraints.screenStyle;
+    return Padding(
+      padding: EdgeInsets.only(
+        top: context.isDesktopPlatform ? 0 : kToolbarMobileHeight,
+      ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final ScreenStyle screenStyle = constraints.screenStyle;
 
-        return switch (screenStyle) {
-          ScreenStyle.desktop => const Row(
-              children: [
-                Expanded(child: _PhoneDescription.desktop()),
-                Expanded(child: _DirectoryAndForumDescription.desktop())
-              ],
-            ),
-          _ => const Column(
-              children: [
-                _PhoneDescription.mobile(),
-                _DirectoryAndForumDescription.mobile()
-              ],
-            ),
-        };
-      },
+          return switch (screenStyle) {
+            ScreenStyle.desktop => const Row(
+                children: [
+                  Expanded(child: _PhoneDescription.desktop()),
+                  Expanded(child: _DirectoryAndForumDescription.desktop())
+                ],
+              ),
+            _ => const Column(
+                children: [
+                  _PhoneDescription.mobile(),
+                  _DirectoryAndForumDescription.mobile()
+                ],
+              ),
+          };
+        },
+      ),
     );
   }
 }
@@ -51,6 +58,7 @@ class _PhoneDescription extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
     final isDesktopStyle = screenStyle.isDesktop;
     const type = HomePageDescriptionType.phone;
+    final orientation = MediaQuery.of(context).orientation;
 
     return Consumer(
       builder: (context, ref, child) {
@@ -73,7 +81,12 @@ class _PhoneDescription extends StatelessWidget {
             Column(
               children: [
                 Expanded(
-                  flex: isDesktopStyle ? 1 : 2,
+                  flex: (isDesktopStyle)
+                      ? 1
+                      : (!context.isDesktopPlatform &&
+                              orientation == Orientation.landscape) // 手機版橫向
+                          ? 1
+                          : 2,
                   child: Container(
                     color: QppColors.barMask,
                     padding: isDesktopStyle
@@ -256,8 +269,12 @@ class MobileStyleContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final orientation = MediaQuery.of(context).orientation;
+
     return Column(children: [
-      _Bg(ScreenStyle.mobile, type: type, flex: 2),
+      _Bg(ScreenStyle.mobile, type: type, flex: (!context.isDesktopPlatform &&
+                        orientation == Orientation.landscape) // 手機版橫向 
+                        ? 1 : 2),
       Expanded(
         child: Container(
           color: QppColors.oxfordBlue,
