@@ -53,6 +53,9 @@ class QppGoRouter {
   static const String commodityRequest = '/commodity_request';
   static const String commodityRequestV2 = '/commodity_request_v2';
 
+  // 物品領取
+  static const String membershipFetch = '/membership_fetch';
+
   // static const String membershipFetch = 'membership_fetch';
 
   // -----------------------------------------------------------------------------
@@ -82,6 +85,9 @@ class QppGoRouter {
   // 物品移轉
   static const String appCommodityRequest = '$app/commodity_request';
   static const String appCommodityRequestV2 = '$app/commodity_request_v2';
+
+  // 物品領取
+  static const String appMembershipFetch = '$app$membershipFetch';
 
   /// 動態牆登入授權頁(只有app有)
   static const String loginAuth = 'login_auth';
@@ -327,6 +333,24 @@ class QppGoRouter {
           return MainFramework(
             child: CommodityInfoPage(routerState: state),
           );
+        },
+      ),
+      // 物品領取
+      GoRoute(
+        path: membershipFetch,
+        name: membershipFetch,
+        builder: (context, state) {
+          setLocale(context);
+          return MainFramework(child: CommodityInfoPage(routerState: state));
+        },
+      ),
+      // 物品領取
+      GoRoute(
+        path: appMembershipFetch,
+        name: appMembershipFetch,
+        builder: (context, state) {
+          setLocale(context);
+          return MainFramework(child: CommodityInfoPage(routerState: state));
         },
       ),
     ],

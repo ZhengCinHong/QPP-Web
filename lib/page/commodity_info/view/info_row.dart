@@ -124,7 +124,7 @@ class InfoRowInfo extends InfoRow {
               textAlign: TextAlign.center,
               style: isDesktop
                   ? QppTextStyles.web_16pt_body_platinum_L
-                  : QppTextStyles.mobile_14pt_body_category_text_L,
+                  : QppTextStyles.mobile_14pt_body_platinum_L,
             ),
             // 間隔
             const SizedBox(
