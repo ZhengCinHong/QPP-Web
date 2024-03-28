@@ -55,5 +55,9 @@ enum AppBarUserInfo implements CMeunAnchorData {
   }
 
   @override
-  String? get image => QPPImages.mobile_icon_actionbar_list_logout_pressed;
+  String? image(bool isHighlight) {
+    return isHighlight
+        ? QPPImages.mobile_icon_actionbar_list_logout_pressed
+        : QPPImages.mobile_icon_actionbar_list_logout_normal;
+  }
 }

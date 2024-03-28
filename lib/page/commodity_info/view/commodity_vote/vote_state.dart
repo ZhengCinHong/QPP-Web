@@ -61,7 +61,7 @@ class VoteItemState extends ConsumerWidget {
                       TableCell(
                         verticalAlignment: TableCellVerticalAlignment.fill,
                         child: isDesktopStyle
-                            ? const SizedBox()
+                            ? const ColoredBox(color: QppColors.oxfordBlue)
                             : Container(
                               margin:
                                   const EdgeInsets.symmetric(vertical: 10),

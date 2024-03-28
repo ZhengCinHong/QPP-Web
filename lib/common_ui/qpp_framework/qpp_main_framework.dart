@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:qpp_example/common_ui/qpp_app_bar/view/qpp_app_bar_view.dart';
+import 'package:qpp_example/extension/build_context.dart';
 import 'package:qpp_example/localization/qpp_locales.dart';
 import 'package:qpp_example/utils/qpp_color.dart';
 import 'package:qpp_example/utils/qpp_image.dart';
@@ -18,7 +19,12 @@ class MainFramework extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final screenStyle = screenSize.width.determineScreenStyle();
-    final isDesktopStyle = screenStyle.isDesktop;
+    final isDesktopStyle = context.isDesktopPlatform
+        ? screenStyle.isDesktop
+        : screenStyle.isDesktop &&
+            MediaQuery.of(context).orientation != Orientation.landscape;
+
+    print(MediaQuery.of(context).orientation);
 
     // 設定頁籤上方顯示內容
     return Title(

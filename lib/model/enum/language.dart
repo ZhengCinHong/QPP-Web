@@ -55,7 +55,7 @@ enum Language implements CMeunAnchorData {
   }
 
   @override
-  String? get image => null;
+  String? image(bool isHighlight) => null;
 
   /// 取得對應 Locale
   Locale get locale {
