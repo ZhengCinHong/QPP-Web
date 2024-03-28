@@ -9,7 +9,7 @@ import '../qpp_app_bar/view/qpp_app_bar_view.dart';
 /// 客製化選單資料
 abstract class CMeunAnchorData {
   String get title;
-  String? get image;
+  String? image(bool isHighlight);
 }
 
 /// 客製化選單
@@ -42,10 +42,7 @@ class CMenuAnchor extends StatelessWidget {
               onEnter: (event) => isOpenNotifier.state = true,
               onExit: (event) => isOpenNotifier.state = false,
               builder: (event) {
-                final Color color = event is PointerEnterEvent
-                    ? QppColors.canaryYellow
-                    : QppColors.white;
-                final image = e.image;
+                final image = e.image(event is PointerEnterEvent);
                 final isShowImage = image != null;
 
                 return MenuItemButton(
@@ -62,10 +59,7 @@ class CMenuAnchor extends StatelessWidget {
                     child: Row(
                       children: [
                         isShowImage
-                            ? Image.asset(
-                                image,
-                                color: color,
-                              )
+                            ? Image.asset(image)
                             : const SizedBox.shrink(),
                         isShowImage
                             ? const SizedBox(width: 6)
